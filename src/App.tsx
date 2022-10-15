@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {FC} from 'react'
+import './index.css'
+import Header from './components/Header';
+import ContentContainer from "./components/ContentContainer";
+import Account from "./components/Account";
+import {Route, Routes } from 'react-router-dom';
+// import {useAppDispatch, useAppSelector} from "./hooks/redux";
+// import {login} from "./store/reducers/auth/authAction";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: FC = () => {
+	// const { userId } = useAppSelector(state => state.authReducer)
+	// const disptach = useAppDispatch()
+	//
+	// useEffect(() => {
+	// 	disptach(login({
+	// 		login: 'bruce',
+	// 		password: 'bruce1234'
+	// 	}))
+	// }, [disptach])
+
+	return (
+		<div className='App'>
+			<Header/>
+			<ContentContainer>
+				<Routes>
+					<Route path={'profile'} element={<Account/>}/>
+				</Routes>
+			</ContentContainer>
+		</div>
+	)
 }
 
-export default App;
+export default App
