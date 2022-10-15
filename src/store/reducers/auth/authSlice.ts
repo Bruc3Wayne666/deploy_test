@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { login } from './authAction'
+import { login } from './authActions'
 
 interface IAuthState {
-	userId: string | null
+	session: string | null
 	error: string
 }
 
 const initialState: IAuthState = {
-	userId: '',
+	session: '',
 	error: '',
 }
 
 export interface AuthPayloadType {
-	userId: string
+	session: string
 }
 
 export const authSlice = createSlice({
@@ -20,7 +20,7 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {
 		logout(state) {
-			state.userId = null
+			state.session = null
 		},
 	},
 	extraReducers: {
@@ -29,7 +29,7 @@ export const authSlice = createSlice({
 		// }
 		[login.fulfilled.type]: (state, action: PayloadAction<AuthPayloadType>) => {
 			state.error = ''
-			state.userId = action.payload.userId
+			state.session = action.payload.session
 		},
 		[login.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.error = action.payload
