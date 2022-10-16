@@ -10,7 +10,7 @@ const Header: FC = () => {
                     <Link to="/">Спорт</Link>
                     <Link id="thm-live" to="/">Live <span/></Link>
                     <Link to="/">Киберспорт</Link>
-                    <Link to="/">Акции</Link>
+                    <Link to="/discounts">Акции</Link>
                     <Link to="/">Статистика</Link>
                 </div>
                 <div id="th-lk">

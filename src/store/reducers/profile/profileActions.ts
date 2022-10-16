@@ -3,8 +3,9 @@ import {ApiService} from "../../../api";
 
 export const getProfile = createAsyncThunk(
     'profile/getProfile',
-    async (session: string,
-           {rejectWithValue}
+    async (
+        {session}: { session: string },
+        {rejectWithValue}
     ) => {
         try {
             return await ApiService.getProfile(session)

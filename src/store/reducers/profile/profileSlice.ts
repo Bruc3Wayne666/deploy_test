@@ -4,17 +4,20 @@ import { getProfile } from './profileActions'
 interface IProfileState {
     error: boolean,
     message: null | string,
+    login: null | string,
     result: {
         balance: string,
         bid_history: string[][],
-        id: string
+        id: string,
+        login: string
     } | null
 }
 
 const initialState: IProfileState = {
     error: false,
     message: null,
-    result: null
+    result: null,
+    login: null
 }
 
 export interface ProfilePayloadType {
@@ -23,8 +26,9 @@ export interface ProfilePayloadType {
     result: {
         balance: string,
         bid_history: string[][],
-        id: string
-    } | null
+        id: string,
+        login: string
+    } | null,
 }
 
 export const profileSlice = createSlice({

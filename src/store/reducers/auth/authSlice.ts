@@ -12,7 +12,7 @@ const initialState: IAuthState = {
 }
 
 export interface AuthPayloadType {
-	session: string
+	user_id: string
 }
 
 export const authSlice = createSlice({
@@ -29,7 +29,7 @@ export const authSlice = createSlice({
 		// }
 		[login.fulfilled.type]: (state, action: PayloadAction<AuthPayloadType>) => {
 			state.error = ''
-			state.session = action.payload.session
+			state.session = action.payload.user_id
 		},
 		[login.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.error = action.payload

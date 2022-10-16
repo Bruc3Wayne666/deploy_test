@@ -1,5 +1,6 @@
-import axios, {AxiosResponse} from 'axios'
+import axios from 'axios'
 import { AuthPayloadType } from '../store/reducers/auth/authSlice'
+import { GamePayloadType } from '../store/reducers/games/gameSlice';
 import {ProfilePayloadType} from "../store/reducers/profile/profileSlice";
 
 const instance = axios.create({
@@ -14,11 +15,9 @@ export class ApiService {
         login: string,
         password: string
     ): Promise<AuthPayloadType> {
-        const {data} = await instance.get('user_check_pass', {
-            data: {
+        const {data} = await instance.post('user_check_pass', {
                 login,
                 password
-            },
         })
         return data
     }
@@ -26,9 +25,22 @@ export class ApiService {
     static async getProfile(
         session: string
     ): Promise<ProfilePayloadType> {
-        const {data} = await instance.get('user_info', {
-            data: {user_id: session}
+        const {data} = await instance.post('user_info', {
+            user_id: session
         })
+        return data
+    }
+
+
+    static async getGames(
+        params: {
+            sport_name: string,
+            time: string,
+            quotes: string,
+            country: string
+        }
+    ): Promise<GamePayloadType> {
+        const {data} = await instance.post('game_list', params)
         return data
     }
 }
