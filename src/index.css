@@ -862,6 +862,24 @@ header {
     cursor: pointer;
 }
 
+.frb-one-opts {
+    cursor: pointer;
+    font-size: 9px;
+    background-color: black;
+    /*margin-top: -12px;*/
+    line-height: 20px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.frb-one-opt:hover {
+    color: grey;
+}
+
 .frb-one .global-ico {
     width: 4px;
     margin-left: 5px;

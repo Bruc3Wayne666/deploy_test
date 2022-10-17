@@ -20,8 +20,8 @@ const App: FC = () => {
 
     useEffect(() => {
         disptach(login({
-            login: 'bruce',
-            password: 'bruce1234'
+            login: 'osel',
+            password: 'osel'
         }))
     }, [disptach])
 

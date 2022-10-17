@@ -3,6 +3,9 @@ import '../index.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
+import Dropdown from 'react-dropdown';
+import {log} from "util";
+
 
 
 const RightBar: FC<any> = () => {
@@ -123,7 +126,6 @@ const GameCategoryItem: FC<any> = ({categorie}) => {
     )
 }
 
-
 const GameItem: FC<{ind: number, game: IGame}> = ({ind, game}) => {
     const {name, score, time_start, quotes} = game
     const time = new Date(time_start)
@@ -159,6 +161,53 @@ const GameItemChild: FC<any> = () => {
     )
 }
 
+const Filter: FC<any> = ({handleChangeParams, params}) => {
+    const sp_opts = [
+        { value: 'all', label: 'Все', className: 'frb-one-opt'},
+        { value: 'basketball', label: 'Баскетбол', className: 'frb-one-opt'},
+        { value: 'icehockey', label: 'Хоккей', className: 'frb-one-opt'},
+        { value: 'soccer', label: 'Футбол', className: 'frb-one-opt'},
+    ]
+
+    const events_opts = [
+        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'},
+        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'},
+        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'},
+        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'}
+    ]
+
+    return (
+        <div className="filter-results">
+            <div className="fr-bttns">
+                <Dropdown options={sp_opts} placeholder={'Вид спорта'}
+                          controlClassName={'frb-one'}
+                          menuClassName={'frb-one-opts'}
+                          onChange={e => handleChangeParams({...params, sport_name: e.value})}
+                />
+                <Dropdown options={events_opts} placeholder={'Все события'}
+                          controlClassName={'frb-one'}
+                          menuClassName={'frb-one-opts'}
+                />
+                <div className="frb-one"><span>Дата [сделать штуку которая выбирает время]</span>
+                    <div className="global-ico gi-arrow-bot"/>
+                </div>
+                <div className="frb-one"><span>Время [и тут тоже сделать кое-что]</span>
+                    <div className="global-ico gi-arrow-bot"/>
+                </div>
+            </div>
+            <div className="fr-ticks">
+                <div className="frt-sqr"><span/>Только текущие</div>
+                <div className="frt-circle"><span/>Сортировать по номеру</div>
+                <div className="frt-circle"><span/>Сортировать по времени</div>
+            </div>
+            <div className="fr-search">
+                <span>Поиск</span>
+                <div className="global-ico gi-search"/>
+            </div>
+        </div>
+    )
+}
+
 const Results:FC = () => {
     const {result} = useAppSelector(state => state.gameReducer)
     const dispatch = useAppDispatch()
@@ -166,14 +215,16 @@ const Results:FC = () => {
         sport_name: 'all',
         time: 'all',
         quotes: 'all',
-        country: 'all'
+        country: 'all',
+        league_id: 'all'
     })
 
     const handleChangeParams = (params: {
         sport_name: string,
         time: string,
         quotes: string,
-        country: string
+        country: string,
+        league_id: string
     }) => {
         setParams({...params})
     }
@@ -183,7 +234,7 @@ const Results:FC = () => {
     useEffect(() => {
         dispatch(getGames(params))
         if (result) console.log(result)
-    }, [dispatch])
+    }, [params])
 
     return (
         <div id="content-wr">
@@ -194,32 +245,11 @@ const Results:FC = () => {
                 </div>
                 <h3>[Сделать формой с сортировкой]</h3>
                 <div id="table-main">
-                    <div className="filter-results">
-                        <div className="fr-bttns">
-                            <div className="frb-one"><span>Вид спорта</span>
-                                <div className="global-ico gi-arrow-bot"/>
-                            </div>
-                            <div className="frb-one"><span>Все события</span>
-                                <div className="global-ico gi-arrow-bot"/>
-                            </div>
-                            <div className="frb-one"><span>Дата</span>
-                                <div className="global-ico gi-arrow-bot"/>
-                            </div>
-                            <div className="frb-one"><span>Время</span>
-                                <div className="global-ico gi-arrow-bot"/>
-                            </div>
-                        </div>
-                        <div className="fr-ticks">
-                            <div className="frt-sqr"><span/>Только текущие</div>
-                            <div className="frt-circle"><span/>Сортировать по номеру</div>
-                            <div className="frt-circle"><span/>Сортировать по времени</div>
-                        </div>
-                        <div className="fr-search">
-                            <span>Поиск</span>
-                            <div className="global-ico gi-search"/>
-                        </div>
-                    </div>
 
+                    <Filter
+                        handleChangeParams={handleChangeParams}
+                        params={params}
+                    />
 
                     <div className="table-one-cat">
 

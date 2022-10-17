@@ -8,12 +8,14 @@ export const getGames = createAsyncThunk(
             sport_name,
             time,
             quotes,
-            country
-         }: {
+            country,
+            league_id
+        }: {
             sport_name: string,
             time: string,
             quotes: string,
-            country: string
+            country: string,
+            league_id: string
         },
         {rejectWithValue}
     ) => {
@@ -22,7 +24,8 @@ export const getGames = createAsyncThunk(
                 sport_name,
                 time,
                 quotes,
-                country
+                country,
+                league_id
             })
         } catch (e) {
             return rejectWithValue(e)

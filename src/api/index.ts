@@ -37,7 +37,8 @@ export class ApiService {
             sport_name: string,
             time: string,
             quotes: string,
-            country: string
+            country: string,
+            league_id: string
         }
     ): Promise<GamePayloadType> {
         const {data} = await instance.post('game_list', params)
