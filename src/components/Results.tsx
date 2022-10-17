@@ -7,7 +7,6 @@ import Dropdown from 'react-dropdown';
 import {log} from "util";
 
 
-
 const RightBar: FC<any> = () => {
     return (
         <div id="two-right">
@@ -126,7 +125,7 @@ const GameCategoryItem: FC<any> = ({categorie}) => {
     )
 }
 
-const GameItem: FC<{ind: number, game: IGame}> = ({ind, game}) => {
+const GameItem: FC<{ ind: number, game: IGame }> = ({ind, game}) => {
     const {name, score, time_start, quotes} = game
     const time = new Date(time_start)
 
@@ -163,10 +162,10 @@ const GameItemChild: FC<any> = () => {
 
 const Filter: FC<any> = ({handleChangeParams, params}) => {
     const sp_opts = [
-        { value: 'all', label: 'Все', className: 'frb-one-opt'},
-        { value: 'basketball', label: 'Баскетбол', className: 'frb-one-opt'},
-        { value: 'icehockey', label: 'Хоккей', className: 'frb-one-opt'},
-        { value: 'soccer', label: 'Футбол', className: 'frb-one-opt'},
+        {value: 'all', label: 'Все', className: 'frb-one-opt'},
+        {value: 'basketball', label: 'Баскетбол', className: 'frb-one-opt'},
+        {value: 'icehockey', label: 'Хоккей', className: 'frb-one-opt'},
+        {value: 'soccer', label: 'Футбол', className: 'frb-one-opt'},
     ]
 
     const events_opts = [
@@ -208,78 +207,94 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
     )
 }
 
-const Results:FC = () => {
-    const {result} = useAppSelector(state => state.gameReducer)
-    const dispatch = useAppDispatch()
-    const [params, setParams] = useState({
-        sport_name: 'all',
-        time: 'all',
-        quotes: 'all',
-        country: 'all',
-        league_id: 'all'
-    })
+const Results: FC<any> = () => {
+        const {result} = useAppSelector(state => state.gameReducer)
+        const dispatch = useAppDispatch()
+        const [params, setParams] = useState({
+            sport_name: 'all',
+            time: 'all',
+            quotes: 'all',
+            country: 'all',
+            league_id: 'all'
+        })
 
-    const handleChangeParams = (params: {
-        sport_name: string,
-        time: string,
-        quotes: string,
-        country: string,
-        league_id: string
-    }) => {
-        setParams({...params})
-    }
+        const handleChangeParams = (params: {
+            sport_name: string,
+            time: string,
+            quotes: string,
+            country: string,
+            league_id: string
+        }) => {
+            setParams({...params})
+        }
 
 
-
-    useEffect(() => {
-        dispatch(getGames(params))
-        if (result) console.log(result)
-    }, [params])
+        useEffect(() => {
+                dispatch(getGames(params))
+                console.log(result)
+            }
+            , [params])
 
     return (
-        <div id="content-wr">
-            <div id="two-left">
-                <div id="page-title">
-                    <div id="pt-text">Результаты</div>
-                    <div id="pt-stripe"/>
-                </div>
-                <h3>[Сделать формой с сортировкой]</h3>
-                <div id="table-main">
+            <div id="content-wr">
+                <div id="two-left">
+                    <div id="page-title">
+                        <div id="pt-text">Результаты</div>
+                        <div id="pt-stripe"/>
+                    </div>
+                    <h3>[Сделать формой с сортировкой]</h3>
+                    <div id="table-main">
 
-                    <Filter
-                        handleChangeParams={handleChangeParams}
-                        params={params}
-                    />
+                        <Filter
+                            handleChangeParams={handleChangeParams}
+                            params={params}
+                        />
 
-                    <div className="table-one-cat">
 
-                        {/* Пока проверяем. дальше по сортировке всё будет */}
+                        <div className="table-one-cat">
+                            {
+                                result && Object.keys(result.country)
+                                    .map(co => {
+                                        // @ts-ignore
+                                        return Object.keys(result.country[co])
+                                            .map(sport => {
+                                                // @ts-ignore
+                                                return Object.keys(result.country[co][sport])
+                                                    .map(status => {
+                                                        // @ts-ignore
+                                                        return Object.keys(result.country[co][sport][status])
+                                                            .map((game, index) => {
+                                                                // @ts-ignore
 
-                        {/*{result && result?.country?.ru?.icehockey?.not_started.map(*/}
-                        {/*    game => (*/}
-                        {/*        <GameItem {...game}/>*/}
-                        {/*    )*/}
-                        {/*)}*/}
+                                                                // console.log(result.country[co][sport][status][game])
+                                                                // @ts-ignore
 
-                        {result && result.country.ru?.icehockey?.["not started"]
-                            .map((game, index) => (
-                                <GameItem ind={index} game={game}/>
-                            ))}
+                                                                // @ts-ignore
+                                                                return <GameItem
+                                                                    ind={index}
+                                                                    // @ts-ignore
 
+                                                                    game={result.country[co][sport][status][game]}
+                                                                />
+                                                            })
+                                                    })
+                                            })
+                                    })
+
+                            }
+
+                        </div>
 
 
                     </div>
-
-
-
                 </div>
+
+
+                {/*Доделать*/}
+                <RightBar/>
             </div>
-
-
-            {/*Доделать*/}
-            <RightBar/>
-        </div>
-    );
-};
+        );
+    }
+;
 
 export default Results;

@@ -35,16 +35,23 @@ const initialState: IGameState = {
 export interface GamePayloadType {
     error: boolean,
     result: {
-        country: {
-            ru?: { // переделать чтобы несколько стран было (enum)
-                basketball?: {
-                    end: IGame[],
-                    live: IGame[],
-                    "not started": IGame[]
-                }
-            }
-        }
-    } | null
+        country: any
+            // {
+            // ru?: { // переделать чтобы несколько стран было (enum)
+            //     basketball?: {
+            //         end: IGame[],
+            //         live: IGame[],
+            //         "not started": IGame[]
+            //     }
+            // },
+            // gb?: { // переделать чтобы несколько стран было (enum)
+            // basketball?: {
+            //     end: IGame[],
+            //     live: IGame[],
+            //     "not started": IGame[]
+            // }
+        // }
+        } | null
 }
 
 export const gameSlice = createSlice({
