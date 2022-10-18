@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { login } from './authActions'
+import { login, register } from './authActions'
 
 interface IAuthState {
 	session: string | null
@@ -34,6 +34,14 @@ export const authSlice = createSlice({
 		[login.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.error = action.payload
 		},
+		[register.fulfilled.type]: (state, action: PayloadAction<AuthPayloadType>) => {
+			state.error = ''
+			state.session = action.payload.user_id
+		},
+		[register.rejected.type]: (state, action: PayloadAction<string>) => {
+			state.error = action.payload
+		}
+
 	},
 })
 

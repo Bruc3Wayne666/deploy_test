@@ -5,6 +5,7 @@ import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
 import Dropdown from 'react-dropdown';
 import {log} from "util";
+import axios from "axios";
 
 
 const RightBar: FC<any> = () => {
@@ -115,12 +116,15 @@ const RightBar: FC<any> = () => {
     )
 }
 
-const GameCategoryItem: FC<any> = ({categorie}) => {
+const LeagueItem: FC<any> = ({league}) => {
     return (
         <div className="toc-title">
             <div className="global-ico gi-football"/>
             <div className="global-ico gi-rus"/>
-            <span>Футбол. Россия. Премьер-лига</span>
+            <span>{league}</span>
+            {
+
+            }
         </div>
     )
 }
@@ -231,7 +235,6 @@ const Results: FC<any> = () => {
 
         useEffect(() => {
                 dispatch(getGames(params))
-                console.log(result)
             }
             , [params])
 

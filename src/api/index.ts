@@ -22,6 +22,17 @@ export class ApiService {
         return data
     }
 
+    static async register(
+        login: string,
+        password: string
+    ): Promise<AuthPayloadType> {
+        const {data} = await instance.post('new_user', {
+            login,
+            password
+        })
+        return data
+    }
+
     static async getProfile(
         session: string
     ): Promise<ProfilePayloadType> {

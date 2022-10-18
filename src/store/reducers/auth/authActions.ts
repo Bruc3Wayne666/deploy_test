@@ -14,3 +14,17 @@ export const login = createAsyncThunk(
 		}
 	}
 )
+
+export const register = createAsyncThunk(
+	'auth/register',
+	async (
+		{ login, password }: { login: string; password: string },
+		{ rejectWithValue }
+	) => {
+		try {
+			return await ApiService.register(login, password)
+		} catch (e) {
+			return rejectWithValue(e)
+		}
+	}
+)
