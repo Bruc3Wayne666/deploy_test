@@ -1,10 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
-import '../index.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
 import Dropdown from 'react-dropdown';
-import {log} from "util";
 import axios from "axios";
 
 
@@ -116,34 +114,98 @@ const RightBar: FC<any> = () => {
     )
 }
 
-const LeagueItem: FC<any> = ({league}) => {
+const LeagueItem: FC<any> = ({league, result}) => {
+
+    // {
+    //     result && Object.keys(result.country)
+    //         .map(co => {
+    //             // @ts-ignore
+    //             return Object.keys(result.country[co])
+    //                 .map(sport => {
+    //                     // @ts-ignore
+    //                     return Object.keys(result.country[co][sport])
+    //                         .map(status => {
+    //                             // @ts-ignore
+    //                             return Object.keys(result.country[co][sport][status])
+    //                                 .forEach((game, index) => {
+    //                                     console.log(league[0], result.country[co][sport][status][game].league.id)
+    //                                 })
+    //                         })
+    //                 })
+    //         })
+    // }
+
     return (
-        <div className="toc-title">
-            <div className="global-ico gi-football"/>
-            <div className="global-ico gi-rus"/>
-            <span>{league}</span>
+        <>
+            <div className="toc-title">
+                <div className="global-ico gi-football"/>
+                <div className="global-ico gi-rus"/>
+                <span>{league[1]}</span>
+            </div>
             {
+                result && Object.keys(result.country)
+                    .map(co => {
+                        // @ts-ignore
+                        return Object.keys(result.country[co])
+                            .map(sport => {
+                                // @ts-ignore
+                                return Object.keys(result.country[co][sport])
+                                    .map(status => {
+                                        // @ts-ignore
+                                        return Object.keys(result.country[co][sport][status])
+                                            .map((game, index) => {
+                                                // @ts-ignore
+
+                                                // console.log(result.country[co][sport][status][game])
+                                                // @ts-ignore
+
+                                                // @ts-ignore
+                                                return result.country[co][sport][status][game].league.id === String(league[0]) &&
+                                                    <GameItem
+                                                        ind={index}
+                                                        // @ts-ignore
+                                                        status={{
+                                                            'not started': 'НЕ НАЧАЛСЯ',
+                                                            'live': 'LIVE',
+                                                            'end': 'ЗАВЕРШЁН'
+                                                        }[status]}
+
+                                                        game={result.country[co][sport][status][game]}
+                                                    />
+                                            })
+                                    })
+                            })
+                    })
 
             }
-        </div>
+        </>
     )
 }
 
-const GameItem: FC<{ ind: number, game: IGame }> = ({ind, game}) => {
+const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, status}) => {
     const {name, score, time_start, quotes} = game
     const time = new Date(time_start)
+
+    const styles = {
+        'НЕ НАЧАЛСЯ': '',
+        'LIVE': 's-red',
+        'ЗАВЕРШЁН': 's-blue'
+    }
 
     return (
         <div className="toc-item-res">
             <div className="tocir-num">{++ind}</div>
             <div className="tocir-name">{name}</div>
-            <div className="tocir-results">{score})</div>
+            <div className="tocir-results">{score}</div>
             <div className="torir-time">
                 <div className="global-ico gi-clock"/>
                 {time.getHours()}
             </div>
-            <div className="torir-status"><span className="s-blue">[доделать (не начат)]</span></div>
-            <div className="torir-comment">[ДОДЕЛАТЬ 1-й гол. 2-я на 35 мин]</div>
+            <div className="torir-status">
+                {    // @ts-ignore
+                    <span className={styles[status]}>{status}</span>
+                }
+            </div>
         </div>
     )
 }
@@ -166,7 +228,6 @@ const GameItemChild: FC<any> = () => {
 
 const Filter: FC<any> = ({handleChangeParams, params}) => {
     const sp_opts = [
-        {value: 'all', label: 'Все', className: 'frb-one-opt'},
         {value: 'basketball', label: 'Баскетбол', className: 'frb-one-opt'},
         {value: 'icehockey', label: 'Хоккей', className: 'frb-one-opt'},
         {value: 'soccer', label: 'Футбол', className: 'frb-one-opt'},
@@ -213,9 +274,10 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
 
 const Results: FC<any> = () => {
         const {result} = useAppSelector(state => state.gameReducer)
+        const [leagueList, setLeagueList] = useState({})
         const dispatch = useAppDispatch()
         const [params, setParams] = useState({
-            sport_name: 'all',
+            sport_name: 'soccer',
             time: 'all',
             quotes: 'all',
             country: 'all',
@@ -235,10 +297,22 @@ const Results: FC<any> = () => {
 
         useEffect(() => {
                 dispatch(getGames(params))
+                const fetchLeagueList = async () => {
+                    const {data} = await axios.post('http://gpbetapi.ru/league_list', {
+                        league_sport: params.sport_name,
+                        league_cc: 'all'
+                    })
+                    setLeagueList(data)
+                }
+                fetchLeagueList()
+                console.log(leagueList)
             }
             , [params])
 
-    return (
+        // @ts-ignore
+        // @ts-ignore
+        // @ts-ignore
+        return (
             <div id="content-wr">
                 <div id="two-left">
                     <div id="page-title">
@@ -256,34 +330,21 @@ const Results: FC<any> = () => {
 
                         <div className="table-one-cat">
                             {
-                                result && Object.keys(result.country)
-                                    .map(co => {
+                                Object.keys(leagueList)
+                                    .map(sp => {
                                         // @ts-ignore
-                                        return Object.keys(result.country[co])
-                                            .map(sport => {
+                                        return Object.keys(leagueList[sp])
+                                            .map(co => {
                                                 // @ts-ignore
-                                                return Object.keys(result.country[co][sport])
-                                                    .map(status => {
-                                                        // @ts-ignore
-                                                        return Object.keys(result.country[co][sport][status])
-                                                            .map((game, index) => {
-                                                                // @ts-ignore
-
-                                                                // console.log(result.country[co][sport][status][game])
-                                                                // @ts-ignore
-
-                                                                // @ts-ignore
-                                                                return <GameItem
-                                                                    ind={index}
-                                                                    // @ts-ignore
-
-                                                                    game={result.country[co][sport][status][game]}
-                                                                />
-                                                            })
+                                                return leagueList[sp][co]
+                                                    .map((league: any[]) => {
+                                                        return <LeagueItem
+                                                            league={league}
+                                                            result={result}
+                                                        />
                                                     })
                                             })
                                     })
-
                             }
 
                         </div>
