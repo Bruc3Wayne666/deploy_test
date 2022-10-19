@@ -114,7 +114,7 @@ const RightBar: FC<any> = () => {
     )
 }
 
-const LeagueItem: FC<any> = ({league, result}) => {
+const LeagueItem: FC<any> = ({filter, result}) => {
 
     // {
     //     result && Object.keys(result.country)
@@ -134,6 +134,8 @@ const LeagueItem: FC<any> = ({league, result}) => {
     //                 })
     //         })
     // }
+    const {league, time} = filter
+    // console.log(time)
 
     return (
         <>
@@ -154,13 +156,9 @@ const LeagueItem: FC<any> = ({league, result}) => {
                                         // @ts-ignore
                                         return Object.keys(result.country[co][sport][status])
                                             .map((game, index) => {
-                                                // @ts-ignore
-
-                                                // console.log(result.country[co][sport][status][game])
-                                                // @ts-ignore
-
-                                                // @ts-ignore
-                                                return result.country[co][sport][status][game].league.id === String(league[0]) &&
+                                                return (
+                                                        result.country[co][sport][status][game].league.id === String(league[0])
+                                                    ) &&
                                                     <GameItem
                                                         ind={index}
                                                         // @ts-ignore
@@ -172,6 +170,37 @@ const LeagueItem: FC<any> = ({league, result}) => {
 
                                                         game={result.country[co][sport][status][game]}
                                                     />
+
+                                                // if (time === 'all'){
+                                                //     // @ts-ignore
+                                                //     return result.country[co][sport][status][game].league.id === String(league[0]) &&
+                                                //         <GameItem
+                                                //             ind={index}
+                                                //             // @ts-ignore
+                                                //             status={{
+                                                //                 'not started': 'НЕ НАЧАЛСЯ',
+                                                //                 'live': 'LIVE',
+                                                //                 'end': 'ЗАВЕРШЁН'
+                                                //             }[status]}
+                                                //
+                                                //             game={result.country[co][sport][status][game]}
+                                                //         />
+                                                // } else {
+                                                //     return (
+                                                //         result.country[co][sport][status][game].league.id === String(league[0])
+                                                //         ) &&
+                                                //         <GameItem
+                                                //             ind={index}
+                                                //             // @ts-ignore
+                                                //             status={{
+                                                //                 'not started': 'НЕ НАЧАЛСЯ',
+                                                //                 'live': 'LIVE',
+                                                //                 'end': 'ЗАВЕРШЁН'
+                                                //             }[status]}
+                                                //
+                                                //             game={result.country[co][sport][status][game]}
+                                                //         />
+                                                // }
                                             })
                                     })
                             })
@@ -228,16 +257,17 @@ const GameItemChild: FC<any> = () => {
 
 const Filter: FC<any> = ({handleChangeParams, params}) => {
     const sp_opts = [
+        // {value: 'all', label: 'Все', className: 'frb-one-opt'},
         {value: 'basketball', label: 'Баскетбол', className: 'frb-one-opt'},
         {value: 'icehockey', label: 'Хоккей', className: 'frb-one-opt'},
         {value: 'soccer', label: 'Футбол', className: 'frb-one-opt'},
     ]
 
     const events_opts = [
-        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'},
-        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'},
-        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'},
-        {value: '', label: 'пока хз что тут', className: 'frb-one-opt'}
+        {value: 'all', label: 'Все события', className: 'frb-one-opt'},
+        {value: 'not started', label: 'НЕ НАЧАЛСЯ', className: 'frb-one-opt'},
+        {value: 'live', label: 'LIVE', className: 'frb-one-opt'},
+        {value: 'end', label: 'ЗАВЕРШЁН', className: 'frb-one-opt'},
     ]
 
     return (
@@ -251,6 +281,7 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                 <Dropdown options={events_opts} placeholder={'Все события'}
                           controlClassName={'frb-one'}
                           menuClassName={'frb-one-opts'}
+                          onChange={e => handleChangeParams({...params, time: e.value})}
                 />
                 <div className="frb-one"><span>Дата [сделать штуку которая выбирает время]</span>
                     <div className="global-ico gi-arrow-bot"/>
@@ -277,7 +308,7 @@ const Results: FC<any> = () => {
         const [leagueList, setLeagueList] = useState({})
         const dispatch = useAppDispatch()
         const [params, setParams] = useState({
-            sport_name: 'soccer',
+            sport_name: 'all',
             time: 'all',
             quotes: 'all',
             country: 'all',
@@ -305,7 +336,7 @@ const Results: FC<any> = () => {
                     setLeagueList(data)
                 }
                 fetchLeagueList()
-                console.log(leagueList)
+                console.log(params)
             }
             , [params])
 
@@ -339,7 +370,10 @@ const Results: FC<any> = () => {
                                                 return leagueList[sp][co]
                                                     .map((league: any[]) => {
                                                         return <LeagueItem
-                                                            league={league}
+                                                            filter={{
+                                                                league,
+                                                                status: params.time
+                                                            }}
                                                             result={result}
                                                         />
                                                     })
