@@ -134,7 +134,7 @@ const LeagueItem: FC<any> = ({filter, result}) => {
     //                 })
     //         })
     // }
-    const {league, time} = filter
+    const {league} = filter
     // console.log(time)
 
     return (
@@ -212,7 +212,7 @@ const LeagueItem: FC<any> = ({filter, result}) => {
 }
 
 const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, status}) => {
-    const {name, score, time_start, quotes} = game
+    const {name, score, time_start} = game
     const time = new Date(time_start)
 
     const styles = {
@@ -239,21 +239,21 @@ const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, 
     )
 }
 
-const GameItemChild: FC<any> = () => {
-    return (
-        <div className="toc-item-res res-child">
-            <div className="tocir-num">2</div>
-            <div className="tocir-name">Торпедо Москва – Сочи</div>
-            <div className="tocir-results">1:3 (0-2-1-1)</div>
-            <div className="torir-time">
-                <div className="global-ico gi-clock"/>
-                Сегодня в 15:00
-            </div>
-            <div className="torir-status"><span className="s-blue">Завершен</span></div>
-            <div className="torir-comment">1-й гол. 2-я на 35 мин</div>
-        </div>
-    )
-}
+// const GameItemChild: FC<any> = () => {
+//     return (
+//         <div className="toc-item-res res-child">
+//             <div className="tocir-num">2</div>
+//             <div className="tocir-name">Торпедо Москва – Сочи</div>
+//             <div className="tocir-results">1:3 (0-2-1-1)</div>
+//             <div className="torir-time">
+//                 <div className="global-ico gi-clock"/>
+//                 Сегодня в 15:00
+//             </div>
+//             <div className="torir-status"><span className="s-blue">Завершен</span></div>
+//             <div className="torir-comment">1-й гол. 2-я на 35 мин</div>
+//         </div>
+//     )
+// }
 
 const Filter: FC<any> = ({handleChangeParams, params}) => {
     const sp_opts = [
@@ -281,7 +281,7 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                 <Dropdown options={events_opts} placeholder={'Все события'}
                           controlClassName={'frb-one'}
                           menuClassName={'frb-one-opts'}
-                          onChange={e => handleChangeParams({...params, time: e.value})}
+                          onChange={e => handleChangeParams({...params, game_status: e.value})}
                 />
                 <div className="frb-one"><span>Дата [сделать штуку которая выбирает время]</span>
                     <div className="global-ico gi-arrow-bot"/>
@@ -309,18 +309,24 @@ const Results: FC<any> = () => {
         const dispatch = useAppDispatch()
         const [params, setParams] = useState({
             sport_name: 'all',
-            time: 'all',
+            game_status: 'all',
             quotes: 'all',
             country: 'all',
-            league_id: 'all'
+            league_id: 'all',
+            days: 10,
+            one_day: 0,
+            sort_number: false
         })
 
         const handleChangeParams = (params: {
             sport_name: string,
-            time: string,
+            game_status: string,
             quotes: string,
             country: string,
-            league_id: string
+            league_id: string,
+            days: number,
+            one_day: number,
+            sort_number: boolean
         }) => {
             setParams({...params})
         }
@@ -372,7 +378,7 @@ const Results: FC<any> = () => {
                                                         return <LeagueItem
                                                             filter={{
                                                                 league,
-                                                                status: params.time
+                                                                status: params.game_status
                                                             }}
                                                             result={result}
                                                         />

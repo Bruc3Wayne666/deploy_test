@@ -1,25 +1,35 @@
-import React, {FC, useEffect} from 'react'
+import React, {FC, useContext, useEffect, useState} from 'react'
 import './index.css'
 import Header from './components/Header';
 import ContentContainer from "./components/ContentContainer";
 import Account from "./components/Account";
-import {Link, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Results from "./components/Results";
-import {useAppDispatch, useAppSelector} from "./hooks/redux";
-import {login} from "./store/reducers/auth/authActions";
 import BetsScreen from "./components/BetsScreen";
 import VIP from "./components/VIP";
-import {getProfile} from './store/reducers/profile/profileActions';
 import {Discounts} from './components/Discounts';
-import Register from "./components/Authorize";
 import Authorize from "./components/Authorize";
+import {useAppDispatch, useAppSelector} from './hooks/redux';
+import {login} from "./store/reducers/auth/authActions";
+import Main from "./components/Main";
 
 const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
+    const dispatch = useAppDispatch()
+
 
     useEffect(()=> {
-        console.log(session)
-    }, [session])
+        if (localStorage.getItem('isAuth') === 'true'){
+            dispatch(login({
+                // @ts-ignore
+                login: localStorage.getItem('login'),
+                // @ts-ignore
+                password: localStorage.getItem('password'),
+                remember: true
+            }))
+        }
+    }, [])
+
 
     if (Number(session) === -1) return <>
         <h1>Wrong data</h1>
@@ -32,7 +42,7 @@ const App: FC = () => {
                 {
                     session ?
                         <Routes>
-                            <Route path={'/'} element={<h1>{session}</h1>}/>
+                            <Route path={'/'} element={<Main/>}/>
                             <Route path={'profile'} element={<Account/>}/>
                             <Route path={'discounts'} element={<Discounts/>}/>
                             <Route path={'results'} element={<Results/>}/>
@@ -41,7 +51,7 @@ const App: FC = () => {
                         </Routes>
                         :
                         <Routes>
-                            <Route path={'/'} element={<h1>Sign in now</h1>}/>
+                            <Route path={'/'} element={<Main/>}/>
                             <Route path={'profile'} element={<Authorize/>}/>
                             <Route path={'results'} element={<Results/>}/>
                             <Route path={'*'} element={<h1>404</h1>} />

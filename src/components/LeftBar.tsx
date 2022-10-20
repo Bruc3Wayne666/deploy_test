@@ -1,7 +1,12 @@
 import React, {FC} from 'react';
 import { Link } from 'react-router-dom';
+import {useAppDispatch} from "../hooks/redux";
+import {logout} from "../store/reducers/auth/authSlice";
+import {clear} from "../store/reducers/profile/profileSlice";
 
 const LeftBar: FC<any> = (active: string) => {
+    const dispatch = useAppDispatch()
+
     return (
         <div id="lk-left">
             <div id="lk-left-menu">
@@ -26,9 +31,15 @@ const LeftBar: FC<any> = (active: string) => {
                 <Link to="/" className="lklm-item">
                     <div className="global-ico gi-lk-tehpod"/>
                     <span>Техническая поддержка</span></Link>
-                <Link to="/" className="lklm-item lklmi-exit">
+                <div
+                    onClick={() => {
+                        dispatch(clear())
+                        dispatch(logout())
+                    }}
+                    className="lklm-item lklmi-exit">
                     <div className="global-ico"/>
-                    <span>Выйти</span></Link>
+                    <span>Выйти</span>
+                </div>
             </div>
         </div>
     );

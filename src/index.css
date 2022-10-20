@@ -472,7 +472,7 @@ header {
 
 #rec-menu {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 20px;
 }
 
@@ -487,6 +487,7 @@ header {
     background: #087537;
     border-radius: 5px;
     cursor: pointer;
+    margin-right: 8px;
 }
 
 .one-rec-menu .global-ico {
@@ -1033,6 +1034,7 @@ header {
 
 #lk-left .lklm-item {
     display: flex;
+    cursor: pointer;
     align-items: center;
     text-transform: uppercase;
     padding: 10px 0 10px 10px;

@@ -6,7 +6,7 @@ export interface IGame {
     };
     name: string;
     quotes?: {
-        "main_time_res": {
+        "Исход матча(основное время)": {
             id: number;
             kf: number;
             name: string;

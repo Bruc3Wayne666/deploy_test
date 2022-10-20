@@ -1,14 +1,23 @@
-import React, {FC, useState} from 'react';
-import {useAppDispatch} from "../hooks/redux";
+import React, {FC, useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
 
 const Authorize: FC = () => {
+    const {session} = useAppSelector(state => state.authReducer)
+    const {result} = useAppSelector(state => state.profileReducer)
+
     const dispatch = useAppDispatch()
     const [type, setType] = useState('login')
     const [form, setForm] = useState({
         login: '',
-        password: ''
+        password: '',
+        remember: false
     })
+
+    useEffect(()=> {
+        console.log(session)
+        console.log(result)
+    }, [])
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
@@ -40,11 +49,19 @@ const Authorize: FC = () => {
                             placeholder={'Ваш пароль'}
                             type="password"
                         />
+                        <div style={{display:'flex', justifyContent: "center", alignItems: "center"}}>
+                            Запомнить меня
+                            <input
+                                onChange={e => setForm({...form, remember: e.target.checked})}
+                                type={'checkbox'}
+                            />
+                        </div>
                         <p>Ещё нету аккаунта? <span onClick={() => {
                             setType('register')
                             setForm({
                                 login: '',
-                                password: ''
+                                password: '',
+                                remember: false
                             })
                         }}>Зарегистрироваться!</span></p>
                         <button type={'submit'}>Войти</button>
@@ -63,11 +80,19 @@ const Authorize: FC = () => {
                             placeholder={'Придумайте пароль'}
                             type="password"
                         />
+                        <div style={{display:'flex', justifyContent: "center", alignItems: "center"}}>
+                            Запомнить меня
+                            <input
+                                onChange={e => setForm({...form, remember: e.target.checked})}
+                                type={'checkbox'}
+                            />
+                        </div>
                         <p>Уже есть аккаунт? <span onClick={() => {
                             setType('login')
                             setForm({
                                 login: '',
-                                password: ''
+                                password: '',
+                                remember: false
                             })
                         }}>Войти!</span></p>
                         <button type={'submit'}>Зарегистрироваться!</button>

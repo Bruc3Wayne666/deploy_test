@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import {configureStore, combineReducers} from '@reduxjs/toolkit'
 import authReducer from "./reducers/auth/authSlice"
 import profileReducer from "./reducers/profile/profileSlice"
 import gameReducer from "./reducers/games/gameSlice"
@@ -6,7 +6,7 @@ import gameReducer from "./reducers/games/gameSlice"
 const rootReducer = combineReducers({
 	authReducer,
 	profileReducer,
-	gameReducer
+	gameReducer,
 })
 
 export const setupStore = () => {

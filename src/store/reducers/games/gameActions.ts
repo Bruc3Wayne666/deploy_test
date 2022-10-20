@@ -6,26 +6,35 @@ export const getGames = createAsyncThunk(
     async (
         {
             sport_name,
-            time,
+            game_status,
             quotes,
             country,
-            league_id
+            league_id,
+            days,
+            one_day,
+            sort_number
         }: {
             sport_name: string,
-            time: string,
+            game_status: string,
             quotes: string,
             country: string,
-            league_id: string
+            league_id: string,
+            days: number,
+            one_day: number,
+            sort_number: boolean
         },
         {rejectWithValue}
     ) => {
         try {
             return await ApiService.getGames({
                 sport_name,
-                time,
+                game_status,
                 quotes,
                 country,
-                league_id
+                league_id,
+                days,
+                one_day,
+                sort_number
             })
         } catch (e) {
             return rejectWithValue(e)

@@ -8,8 +8,6 @@ import {getProfile} from "../store/reducers/profile/profileActions";
 
 
 const Profile: FC<any> = (props: any) => {
-    // const {login, balance} = props.result
-
     return (
         <div id="lk-mid">
             <div id="lk-lk-info">
@@ -59,8 +57,6 @@ const Account: FC<any> = ({children}) => {
         if (session) {
             dispatch(getProfile({session}))
         }
-
-        console.log(result)
     }, [session])
 
     return (

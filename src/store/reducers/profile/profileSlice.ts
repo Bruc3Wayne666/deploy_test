@@ -7,7 +7,6 @@ interface IProfileState {
     login: null | string,
     result: {
         balance: string,
-        bid_history: string[][],
         id: string,
         login: string
     } | null
@@ -25,7 +24,6 @@ export interface ProfilePayloadType {
     message: null | string,
     result: {
         balance: string,
-        bid_history: string[][],
         id: string,
         login: string
     } | null,
@@ -34,7 +32,14 @@ export interface ProfilePayloadType {
 export const profileSlice = createSlice({
     name: 'profile',
     initialState,
-    reducers: {},
+    reducers: {
+        clear(state){
+            state.error = false
+            state.message = null
+            state.result = null
+            state.login = null
+        }
+    },
     extraReducers: {
         // [login.pending.type]: state => {
         // 	state.
@@ -49,5 +54,5 @@ export const profileSlice = createSlice({
     },
 })
 
-export const profileActions = profileSlice.actions
+export const {clear} = profileSlice.actions
 export default profileSlice.reducer

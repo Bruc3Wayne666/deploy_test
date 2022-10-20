@@ -46,10 +46,13 @@ export class ApiService {
     static async getGames(
         params: {
             sport_name: string,
-            time: string,
+            game_status: string,
             quotes: string,
             country: string,
-            league_id: string
+            league_id: string,
+            days: number,
+            one_day: number,
+            sort_number: boolean
         }
     ): Promise<GamePayloadType> {
         const {data} = await instance.post('game_list', params)
