@@ -58,4 +58,15 @@ export class ApiService {
         const {data} = await instance.post('game_list', params)
         return data
     }
+
+    static async placeBid(
+        {user_id, id_kot, sum_bid}: {user_id: string, id_kot: string, sum_bid: string}
+    ): Promise<{game_name: string, kf: number, name_kot: string}> {
+        const { data } = await instance.post('place_bid', {
+            user_id,
+            id_kot,
+            sum_bid
+        })
+        return data
+    }
 }

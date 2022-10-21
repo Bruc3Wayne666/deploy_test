@@ -24,7 +24,9 @@ const Header: FC = () => {
                     <div className="mhsl-one">
                         <div className="mhslo-wr">
                             <div className="mhslo-img">
-                                <img src={require("../assets/images/head-slider-1.png")} alt="img"/>
+                                <Link to='/'>
+                                    <img src={require("../assets/images/head-slider-1.png")} alt="img"/>
+                                </Link>
                             </div>
                             <div className="mhslo-text">
                                 <div className="slider-logo">

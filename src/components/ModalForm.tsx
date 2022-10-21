@@ -20,7 +20,10 @@ export const ModalForm: FC<{
     return <Modal
         closeTimeoutMS={200}
         isOpen={showModal}
-        onRequestClose={() => handleChangeShowModal(false)}
+        onRequestClose={() => {
+            setSumValue(0)
+            handleChangeShowModal(false)
+        }}
         style={{
             overlay: {
                 position: 'fixed',
@@ -82,11 +85,16 @@ export const ModalForm: FC<{
                 Сумма ставки
                 <div>
                     <span
-                        onClick={() => setSumValue(sumValue - 1)}
+                        onClick={() => {
+                            if ((sumValue - 10) >= 0) setSumValue(sumValue - 10)
+                        }}
                         style={{cursor: 'pointer'}}>-</span>
-                    <input type='number' value={sumValue} min={0} placeholder={'Введите сумму'}/>
+                    <input type='text' value={sumValue} placeholder={'Введите сумму'} onChange={e => {
+                        if (Number(e.target.value)) setSumValue(Number(e.target.value))
+                    }
+                    }/>
                     <span
-                        onClick={() => setSumValue(sumValue + 1)}
+                        onClick={() => setSumValue(sumValue + 10)}
                         style={{cursor: 'pointer'}}>+</span>
                 </div>
             </div>

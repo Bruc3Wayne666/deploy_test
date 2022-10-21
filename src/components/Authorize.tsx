@@ -14,10 +14,10 @@ const Authorize: FC = () => {
         remember: false
     })
 
-    useEffect(()=> {
-        console.log(session)
-        console.log(result)
-    }, [])
+    // useEffect(()=> {
+    //     console.log(session)
+    //     console.log(result)
+    // }, [])
 
     const handleSubmit = (e: any) => {
         e.preventDefault()

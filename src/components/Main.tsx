@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import axios from "axios";
 import {IGame} from "../models/IGame";
-import { ModalForm } from './ModalForm';
+import {ModalForm} from './ModalForm';
 
 
 const LeagueItem: FC<{
@@ -315,7 +315,6 @@ const Main: FC = () => {
         }
         , [params])
 
-
     return (
         <div id="content-wr">
             <div id="two-left">
@@ -363,13 +362,14 @@ const Main: FC = () => {
                     <div className="table-one-cat">
 
                         {
-                            Object.keys(leagueList)
+                             Object.keys(leagueList)
                                 .map(sp => {
                                     // @ts-ignore
                                     return Object.keys(leagueList[sp])
                                         .map(co => {
                                             // @ts-ignore
                                             return leagueList[sp][co]
+                                                // eslint-disable-next-line array-callback-return
                                                 .map((league: any[]) => {
                                                     if (params.country === 'all') {
                                                         return <LeagueItem
@@ -504,8 +504,7 @@ const Main: FC = () => {
                 </div>
             </div>
         </div>
-    )
-        ;
+    );
 };
 
 export default Main;
