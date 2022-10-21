@@ -3,10 +3,10 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import axios from "axios";
 import {IGame} from "../models/IGame";
+import ModalForm from "./ModalForm";
 
 
-const LeagueItem: FC<any> = ({result, league, showParam}) => {
-
+const LeagueItem: FC<{ result: any, league: any, showParam: string, handleChangeShowModal: (val: boolean) => void }> = ({result, league, showParam, handleChangeShowModal}) => {
     return (
         <>
             <div className="toc-title">
@@ -33,49 +33,18 @@ const LeagueItem: FC<any> = ({result, league, showParam}) => {
                                                         ind={index}
                                                         game={result.country[co][sport][status][game]}
                                                         showParam={showParam}
+                                                        handleChangeShowModal={handleChangeShowModal}
                                                     />
-
-                                                // if (time === 'all'){
-                                                //     // @ts-ignore
-                                                //     return result.country[co][sport][status][game].league.id === String(league[0]) &&
-                                                //         <GameItem
-                                                //             ind={index}
-                                                //             // @ts-ignore
-                                                //             status={{
-                                                //                 'not started': 'НЕ НАЧАЛСЯ',
-                                                //                 'live': 'LIVE',
-                                                //                 'end': 'ЗАВЕРШЁН'
-                                                //             }[status]}
-                                                //
-                                                //             game={result.country[co][sport][status][game]}
-                                                //         />
-                                                // } else {
-                                                //     return (
-                                                //         result.country[co][sport][status][game].league.id === String(league[0])
-                                                //         ) &&
-                                                //         <GameItem
-                                                //             ind={index}
-                                                //             // @ts-ignore
-                                                //             status={{
-                                                //                 'not started': 'НЕ НАЧАЛСЯ',
-                                                //                 'live': 'LIVE',
-                                                //                 'end': 'ЗАВЕРШЁН'
-                                                //             }[status]}
-                                                //
-                                                //             game={result.country[co][sport][status][game]}
-                                                //         />
-                                                // }
                                             })
                                     })
                             })
                     })
-
             }
         </>
     )
 }
 
-const GameItem: FC<{ ind: number, game: IGame, showParam: string }> = ({ind, game, showParam}) => {
+const GameItem: FC<{ ind: number, game: IGame, showParam: string, handleChangeShowModal: (val: boolean) => void}> = ({ind, game, showParam, handleChangeShowModal}) => {
     return (
         <div className="toc-item">
             <div className="toc-i-left-side">
@@ -97,46 +66,68 @@ const GameItem: FC<{ ind: number, game: IGame, showParam: string }> = ({ind, gam
             </div>
             <div className="toc-i-right-side">
                 <div className="tocirs-someinfo"><span>Матч дня</span></div>
-                <div className="tocirs-flcol tocirs-matchtime">
-                    <div className="tocirsmt-title">placeholder</div>
-                    <div className="tocirsmt-line">Основное время</div>
-                </div>
-                <div className="tocirs-flcol tocirs-koef">
-                    <div className="tocirsmt-title">
-                        {
-                            game.name.split(' VS ')[0]
-                        }
-                    </div>
-                    <div className="tocirsmt-line">
-                        {
-                            game.quotes && game.quotes['Исход матча(основное время)'][0]["kf"]
-                        }
-                    </div>
-                </div>
-                <div className="tocirs-flcol tocirs-koef">
-                    <div className="tocirsmt-title">
-                        {
-                            game.quotes && game.quotes['Исход матча(основное время)'][1]["name"]
-                        }
-                    </div>
-                    <div className="tocirsmt-line">
-                        {
-                            game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"]
-                        }
-                    </div>
-                </div>
-                <div className="tocirs-flcol tocirs-koef">
-                    <div className="tocirsmt-title">
-                        {
-                            game.name.split(' VS ')[1]
-                        }
-                    </div>
-                    <div className="tocirsmt-line">
-                        {
-                            game.quotes && game.quotes['Исход матча(основное время)'][2]["kf"]
-                        }
-                    </div>
-                </div>
+                {
+                    showParam !== 'ТОТАЛ' ?
+                        <>
+                            <div className="tocirs-flcol tocirs-matchtime">
+                                <div className="tocirsmt-title">placeholder</div>
+                                <div className="tocirsmt-line">Основное время</div>
+                            </div>
+                            <div className="tocirs-flcol tocirs-koef">
+                                <div className="tocirsmt-title">
+                                    {
+                                        game.name.split(' VS ')[0]
+                                    }
+                                </div>
+                                <div className="tocirsmt-line">
+                                    {
+                                        game.quotes && game.quotes['Исход матча(основное время)'][0]["kf"]
+                                    }
+                                </div>
+                            </div>
+                            <div className="tocirs-flcol tocirs-koef">
+                                <div className="tocirsmt-title">
+                                    {
+                                        game.quotes && game.quotes['Исход матча(основное время)'][1]["name"]
+                                    }
+                                </div>
+                                <div className="tocirsmt-line">
+                                    {
+                                        game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"]
+                                    }
+                                </div>
+                            </div>
+                            <div className="tocirs-flcol tocirs-koef">
+                                <div className="tocirsmt-title">
+                                    {
+                                        game.name.split(' VS ')[1]
+                                    }
+                                </div>
+                                <div className="tocirsmt-line">
+                                    {
+                                        game.quotes && game.quotes['Исход матча(основное время)'][2]["kf"]
+                                    }
+                                </div>
+                            </div>
+                        </> :
+                        <>
+                            <div className="tocirs-flcol tocirs-matchtime">
+                                <div className="tocirsmt-title">placeholder</div>
+                            </div>
+                            <div className="totals">
+                                <h3>ТОТАЛЫ</h3>
+                                {
+                                    // @ts-ignore
+                                game.quotes && game.quotes['ТОТАЛ']
+                                        .map((item: any) => (
+                                            <div className='total'>
+                                                {item.name}
+                                            </div>
+                                        ))
+                                }
+                            </div>
+                        </>
+                }
             </div>
         </div>
     )
@@ -170,10 +161,10 @@ const FilterCase: FC<any> = ({handleChangeShowParam}) => {
                 <span>[название спорта на русском]</span></div>
             <div className="fl-cases">
                 <div
-                    onClick={() => handleChangeShowParam('result')}
+                    onClick={() => handleChangeShowParam('Исход матча(основное время)')}
                     className="one-fl-case"><span>Исходы</span></div>
                 <div
-                    onClick={() => handleChangeShowParam('total')}
+                    onClick={() => handleChangeShowParam('ТОТАЛ')}
                     className="one-fl-case"><span>Тоталы</span></div>
                 {/*<div className="one-fl-case"><span>Двойные шансы</span></div>*/}
                 {/*<div className="one-fl-case"><span>Форы</span></div>*/}
@@ -197,7 +188,8 @@ const Main: FC = () => {
         one_day: 0,
         sort_number: false
     })
-    const [showParam, setShowParam] = useState('result')
+    const [showParam, setShowParam] = useState('Исход матча(основное время)')
+    const [showModal, setShowModal] = useState(false)
 
     const handleChangeParams = (params: {
         sport_name: string,
@@ -215,6 +207,10 @@ const Main: FC = () => {
         setShowParam(param)
     }
 
+    const handleChangeShowModal = (value: boolean)  => {
+        setShowModal(value)
+    }
+
 
     useEffect(() => {
             dispatch(getGames({...params, game_status: 'not started'}))
@@ -226,14 +222,13 @@ const Main: FC = () => {
                 setLeagueList(data)
             }
             fetchLeagueList()
-            console.log(params)
         }
         , [params])
 
 
     return (
         <div id="content-wr">
-
+        <ModalForm />
 
             <div id="two-left">
 
@@ -264,7 +259,9 @@ const Main: FC = () => {
                         handleChangeParams={handleChangeParams}
                         params={params}
                     />
-                    <FilterCase/>
+                    <FilterCase
+                        handleChangeShowParam={handleChangeShowParam}
+                    />
 
 
                     <div className="table-one-cat">
@@ -282,12 +279,15 @@ const Main: FC = () => {
                                                         return <LeagueItem
                                                             league={league}
                                                             result={result}
+                                                            showParam={showParam}
+                                                            handleChangeShowModal={handleChangeShowModal}
                                                         />
                                                     } else if (params.country === co) {
                                                         return <LeagueItem
                                                             league={league}
                                                             result={result}
                                                             showParam={showParam}
+                                                            handleChangeShowModal={handleChangeShowModal}
                                                         />
                                                     }
                                                 })

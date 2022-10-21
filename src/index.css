@@ -1625,3 +1625,22 @@ header {
     cursor: pointer;
 }
 
+.totals {
+    /*border: 1px solid white;*/
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.totals h3 {
+    display: block;
+    width: 100%;
+}
+
+.total {
+    background-color: green;
+    margin: 3px;
+    border-radius: 3px;
+    padding: 3px;
+}
+
