@@ -3,10 +3,22 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import axios from "axios";
 import {IGame} from "../models/IGame";
-import ModalForm from "./ModalForm";
+import { ModalForm } from './ModalForm';
 
 
-const LeagueItem: FC<{ result: any, league: any, showParam: string, handleChangeShowModal: (val: boolean) => void }> = ({result, league, showParam, handleChangeShowModal}) => {
+const LeagueItem: FC<{
+    result: any, league: any, showParam: string, handleChangeShowModal: (val: boolean) => void, handleSetCurrentGame: (val: IGame) => void, handleSetCurrentBet: ({
+                                                                                                                                                                      kf,
+                                                                                                                                                                      name
+                                                                                                                                                                  }: { kf: number, name: string }) => void
+}> = ({
+          result,
+          league,
+          showParam,
+          handleChangeShowModal,
+          handleSetCurrentGame,
+          handleSetCurrentBet
+      }) => {
     return (
         <>
             <div className="toc-title">
@@ -34,6 +46,8 @@ const LeagueItem: FC<{ result: any, league: any, showParam: string, handleChange
                                                         game={result.country[co][sport][status][game]}
                                                         showParam={showParam}
                                                         handleChangeShowModal={handleChangeShowModal}
+                                                        handleSetCurrentGame={handleSetCurrentGame}
+                                                        handleSetCurrentBet={handleSetCurrentBet}
                                                     />
                                             })
                                     })
@@ -44,7 +58,19 @@ const LeagueItem: FC<{ result: any, league: any, showParam: string, handleChange
     )
 }
 
-const GameItem: FC<{ ind: number, game: IGame, showParam: string, handleChangeShowModal: (val: boolean) => void}> = ({ind, game, showParam, handleChangeShowModal}) => {
+const GameItem: FC<{
+    ind: number, game: IGame, showParam: string, handleChangeShowModal: (val: boolean) => void, handleSetCurrentGame: (val: IGame) => void, handleSetCurrentBet: ({
+                                                                                                                                                                      kf,
+                                                                                                                                                                      name
+                                                                                                                                                                  }: { kf: number, name: string }) => void
+}> = ({
+          ind,
+          game,
+          showParam,
+          handleChangeShowModal,
+          handleSetCurrentGame,
+          handleSetCurrentBet
+      }) => {
     return (
         <div className="toc-item">
             <div className="toc-i-left-side">
@@ -79,7 +105,18 @@ const GameItem: FC<{ ind: number, game: IGame, showParam: string, handleChangeSh
                                         game.name.split(' VS ')[0]
                                     }
                                 </div>
-                                <div className="tocirsmt-line">
+                                <div
+                                    onClick={() => {
+                                        handleSetCurrentGame(game)
+                                        handleChangeShowModal(true)
+                                        handleSetCurrentBet({
+                                            name: 'П1',
+                                            //@ts-ignore
+                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][0]["kf"]
+                                        })
+                                    }}
+                                    className="tocirsmt-line"
+                                >
                                     {
                                         game.quotes && game.quotes['Исход матча(основное время)'][0]["kf"]
                                     }
@@ -91,7 +128,18 @@ const GameItem: FC<{ ind: number, game: IGame, showParam: string, handleChangeSh
                                         game.quotes && game.quotes['Исход матча(основное время)'][1]["name"]
                                     }
                                 </div>
-                                <div className="tocirsmt-line">
+                                <div
+                                    onClick={() => {
+                                        handleSetCurrentGame(game)
+                                        handleChangeShowModal(true)
+                                        handleSetCurrentBet({
+                                            name: 'НИЧЬЯ',
+                                            //@ts-ignore
+                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"]
+                                        })
+                                    }}
+                                    className="tocirsmt-line"
+                                >
                                     {
                                         game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"]
                                     }
@@ -103,7 +151,18 @@ const GameItem: FC<{ ind: number, game: IGame, showParam: string, handleChangeSh
                                         game.name.split(' VS ')[1]
                                     }
                                 </div>
-                                <div className="tocirsmt-line">
+                                <div
+                                    onClick={() => {
+                                        handleSetCurrentGame(game)
+                                        handleChangeShowModal(true)
+                                        handleSetCurrentBet({
+                                            name: 'П2',
+                                            //@ts-ignore
+                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][2]["kf"]
+                                        })
+                                    }}
+                                    className="tocirsmt-line"
+                                >
                                     {
                                         game.quotes && game.quotes['Исход матча(основное время)'][2]["kf"]
                                     }
@@ -115,16 +174,34 @@ const GameItem: FC<{ ind: number, game: IGame, showParam: string, handleChangeSh
                                 <div className="tocirsmt-title">placeholder</div>
                             </div>
                             <div className="totals">
-                                <h3>ТОТАЛЫ</h3>
-                                {
-                                    // @ts-ignore
-                                game.quotes && game.quotes['ТОТАЛ']
-                                        .map((item: any) => (
-                                            <div className='total'>
-                                                {item.name}
-                                            </div>
-                                        ))
-                                }
+                                <div>
+                                    <h3>ТОТАЛЫ</h3>
+                                </div>
+                                <div style={{display: 'flex'}}>
+                                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                                        {
+                                            // @ts-ignore
+                                            game.quotes && game.quotes['ТОТАЛ']
+                                                .map((item: any, index: number) => {
+                                                    if (index % 2 === 0) return <div className='total'>
+                                                        {item.name}
+                                                    </div>
+                                                })
+                                        }
+
+                                    </div>
+                                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                                        {
+                                            // @ts-ignore
+                                            game.quotes && game.quotes['ТОТАЛ']
+                                                .map((item: any, index: number) => {
+                                                    if (index % 2 === 1) return <div className='total'>
+                                                        {item.name}
+                                                    </div>
+                                                })
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </>
                 }
@@ -132,6 +209,7 @@ const GameItem: FC<{ ind: number, game: IGame, showParam: string, handleChangeSh
         </div>
     )
 }
+
 
 const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
     return (
@@ -188,6 +266,11 @@ const Main: FC = () => {
         one_day: 0,
         sort_number: false
     })
+    const [currentGame, setCurrentGame] = useState<IGame | null>(null)
+    const [currentBet, setCurrentBet] = useState({
+        name: '',
+        kf: 0
+    })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     const [showModal, setShowModal] = useState(false)
 
@@ -207,10 +290,17 @@ const Main: FC = () => {
         setShowParam(param)
     }
 
-    const handleChangeShowModal = (value: boolean)  => {
+    const handleChangeShowModal = (value: boolean) => {
         setShowModal(value)
     }
 
+    const handleSetCurrentGame = (bid: IGame) => {
+        setCurrentGame({...bid})
+    }
+
+    const handleSetCurrentBet = ({name, kf}: { name: string, kf: number }) => {
+        setCurrentBet({name, kf})
+    }
 
     useEffect(() => {
             dispatch(getGames({...params, game_status: 'not started'}))
@@ -228,12 +318,10 @@ const Main: FC = () => {
 
     return (
         <div id="content-wr">
-        <ModalForm />
-
             <div id="two-left">
 
                 <div id="page-title">
-                    <div id="pt-text">Рекомендуем</div>
+                    <div id="pt-text"> Рекомендуем</div>
                     <div id="pt-stripe"/>
                 </div>
 
@@ -254,6 +342,14 @@ const Main: FC = () => {
 
 
                 <div id="table-main">
+                    {
+                        currentGame && <ModalForm
+                            handleChangeShowModal={handleChangeShowModal}
+                            showModal={showModal}
+                            currentGame={currentGame}
+                            bet={currentBet}
+                        />
+                    }
 
                     <FilterCountry
                         handleChangeParams={handleChangeParams}
@@ -281,6 +377,8 @@ const Main: FC = () => {
                                                             result={result}
                                                             showParam={showParam}
                                                             handleChangeShowModal={handleChangeShowModal}
+                                                            handleSetCurrentGame={handleSetCurrentGame}
+                                                            handleSetCurrentBet={handleSetCurrentBet}
                                                         />
                                                     } else if (params.country === co) {
                                                         return <LeagueItem
@@ -288,6 +386,8 @@ const Main: FC = () => {
                                                             result={result}
                                                             showParam={showParam}
                                                             handleChangeShowModal={handleChangeShowModal}
+                                                            handleSetCurrentGame={handleSetCurrentGame}
+                                                            handleSetCurrentBet={handleSetCurrentBet}
                                                         />
                                                     }
                                                 })
@@ -404,7 +504,8 @@ const Main: FC = () => {
                 </div>
             </div>
         </div>
-    );
+    )
+        ;
 };
 
 export default Main;
