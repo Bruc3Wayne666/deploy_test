@@ -2,20 +2,35 @@ import React, {FC, useState} from "react";
 import {IGame} from "../models/IGame";
 // @ts-ignore
 import Modal from 'react-modal';
+import {IProfileState} from "../store/reducers/profile/profileSlice";
+import {ApiService} from "../api";
 
 export const ModalForm: FC<{
     handleChangeShowModal: (val: boolean) => void, showModal: boolean, currentGame: IGame, bet: {
         name: string,
-        kf: number
-    }
+        kf: number,
+        id: number
+    }, user: IProfileState, session: string
 }> = ({
           handleChangeShowModal,
           showModal,
           currentGame,
-          bet
+          bet,
+          user,
+          session
       }) => {
-    const {league, game_id, name, quotes} = currentGame
+    const {league, name} = currentGame
     const [sumValue, setSumValue] = useState(0)
+    const [bidSuccess, setBidSuccess] = useState(false)
+
+    const handleSubmit = () => {
+        ApiService.placeBid({
+            user_id: session,
+            id_kot: String(bet.id),
+            sum_bid: String(sumValue)
+        })
+            .then(res => setBidSuccess(true))
+    }
 
     return <Modal
         closeTimeoutMS={200}
@@ -52,59 +67,68 @@ export const ModalForm: FC<{
         }
         }
     >
-        <div className="modal_info">
-            <div className="league">
-                {/*<img src={require('../assets/pngegg.png')} height={16} alt=""/>*/}
-                {league.name}
-            </div>
-            <div className="teams">
+        { bidSuccess ? <h1>Ставка успешно сделана</h1>
+            :
+            <>
+                <div className="modal_info">
+                    <div className="league">
+                        {/*<img src={require('../assets/pngegg.png')} height={16} alt=""/>*/}
+                        {league.name}
+                    </div>
+                    <div className="teams">
                 <span>
                     {/*<img src={require('../assets/sp.png')} height={24} alt=""/>*/}
                     <span className='team'>{name}</span>
                     {/*<img src={require('../assets/cs.png')} height={24} alt=""/>*/}
                 </span>
-                {/*<div className="status">LIVE</div>*/}
-                <div className="status">НЕ НАЧАЛСЯ</div>
-                {/*<div className="count">2:0</div>*/}
-            </div>
-            <div className="totals">
+                        {/*<div className="status">LIVE</div>*/}
+                        <div className="status">НЕ НАЧАЛСЯ</div>
+                        {/*<div className="count">2:0</div>*/}
+                    </div>
+                    <div className="totals">
                 <span>
                 1Х2 {bet.name}
                 </span>
-                <span className='kf'>
+                        <span className='kf'>
                     {bet.kf}
                 </span>
-            </div>
-        </div>
-        <div className="modal_bid">
-            <div className="binf">
-                Итоговый коэффициент
-                <span>{bet.kf}</span>
-            </div>
-            <div className="binf">
-                Сумма ставки
-                <div>
+                    </div>
+                </div>
+                <div className="modal_bid">
+                    <div className="binf">
+                        Итоговый коэффициент
+                        <span>{bet.kf}</span>
+                    </div>
+                    <div className="binf">
+                        Сумма ставки
+                        <div>
                     <span
                         onClick={() => {
                             if ((sumValue - 10) >= 0) setSumValue(sumValue - 10)
                         }}
                         style={{cursor: 'pointer'}}>-</span>
-                    <input type='text' value={sumValue} placeholder={'Введите сумму'} onChange={e => {
-                        if (Number(e.target.value)) setSumValue(Number(e.target.value))
-                    }
-                    }/>
-                    <span
-                        onClick={() => setSumValue(sumValue + 10)}
-                        style={{cursor: 'pointer'}}>+</span>
+                            <input type='text' value={sumValue} placeholder={'Введите сумму'} onChange={e => {
+                                if (Number(e.target.value)) setSumValue(Number(e.target.value))
+                            }
+                            }/>
+                            <span
+                                onClick={() => setSumValue(sumValue + 10)}
+                                style={{cursor: 'pointer'}}>+</span>
+                        </div>
+                    </div>
+                    <div className="binf">
+                        Возможный выигрыш
+                        <span className='win'>{bet.kf * sumValue} RUB</span>
+                    </div>
                 </div>
-            </div>
-            <div className="binf">
-                Возможный выигрыш
-                <span className='win'>{bet.kf * sumValue} RUB</span>
-            </div>
-        </div>
-        <div className="modal_start">
-            <button>Сделать ставку</button>
-        </div>
+                <div className="modal_start">
+                    <button
+                        onClick={handleSubmit}
+                    >
+                        Сделать ставку
+                    </button>
+                </div>
+            </>
+        }
     </Modal>
 }

@@ -9,7 +9,7 @@ const Header: FC = () => {
                 <div id="th-menu">
                     <Link to="/">Спорт</Link>
                     <Link id="thm-live" to="/">Live <span/></Link>
-                    <Link to="/">Киберспорт</Link>
+                    <Link to="/results">Киберспорт</Link>
                     <Link to="/discounts">Акции</Link>
                     <Link to="/">Статистика</Link>
                 </div>

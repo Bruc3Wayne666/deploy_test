@@ -1,10 +1,12 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import '../index.css'
 import {Link} from "react-router-dom";
 import RightBar from "./RightBar";
 import LeftBar from "./LeftBar";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getProfile} from "../store/reducers/profile/profileActions";
+import {IProfileState} from '../store/reducers/profile/profileSlice';
+import {ApiService} from "../api";
 
 
 const Profile: FC<any> = (props: any) => {
@@ -48,16 +50,30 @@ const Profile: FC<any> = (props: any) => {
 }
 
 const Account: FC<any> = ({children}) => {
-    const { error, message, result } = useAppSelector(state => state.profileReducer)
-    const { session } = useAppSelector(state => state.authReducer)
-    const dispatch = useAppDispatch()
+    // const { error, message, result } = useAppSelector(state => state.profileReducer)
+    const [{result}, setUserInfo] = useState<IProfileState>({
+        error: false,
+        message: null,
+        result: null,
+    })
+    const {session} = useAppSelector(state => state.authReducer)
+    // const dispatch = useAppDispatch()
 
 
-    useEffect(() => {
-        if (session) {
-            dispatch(getProfile({session}))
+    useEffect(()  => {
+        const fetchUserInfo = async (session: string) => {
+            const data = await ApiService.getProfile(session)
+            setUserInfo(data)
         }
-    }, [session])
+        if (session){
+            fetchUserInfo(session)
+        }
+    }, [])
+    // useEffect(() => {
+    //     if (session) {
+    //         dispatch(getProfile({session}))
+    //     }
+    // }, [session])
 
     return (
         <div id="content-wr">

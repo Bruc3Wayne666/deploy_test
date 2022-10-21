@@ -3,9 +3,6 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
 
 const Authorize: FC = () => {
-    const {session} = useAppSelector(state => state.authReducer)
-    const {result} = useAppSelector(state => state.profileReducer)
-
     const dispatch = useAppDispatch()
     const [type, setType] = useState('login')
     const [form, setForm] = useState({
@@ -13,11 +10,6 @@ const Authorize: FC = () => {
         password: '',
         remember: false
     })
-
-    // useEffect(()=> {
-    //     console.log(session)
-    //     console.log(result)
-    // }, [])
 
     const handleSubmit = (e: any) => {
         e.preventDefault()

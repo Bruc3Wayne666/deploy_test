@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from 'react'
+import React, {FC, useEffect} from 'react'
 import './index.css'
 import Header from './components/Header';
 import ContentContainer from "./components/ContentContainer";
@@ -18,7 +18,7 @@ const App: FC = () => {
     const dispatch = useAppDispatch()
 
 
-    useEffect(()=> {
+    useEffect(() => {
         if (localStorage.getItem('isAuth') === 'true'){
             dispatch(login({
                 // @ts-ignore
@@ -30,10 +30,10 @@ const App: FC = () => {
         }
     }, [])
 
-
     if (Number(session) === -1) return <>
         <h1>Wrong data</h1>
     </>
+
 
     return (
         <div className='App'>

@@ -4,13 +4,16 @@ import {getGames} from "../store/reducers/games/gameActions";
 import axios from "axios";
 import {IGame} from "../models/IGame";
 import {ModalForm} from './ModalForm';
+import {IProfileState} from "../store/reducers/profile/profileSlice";
+import {ApiService} from "../api";
 
 
 const LeagueItem: FC<{
     result: any, league: any, showParam: string, handleChangeShowModal: (val: boolean) => void, handleSetCurrentGame: (val: IGame) => void, handleSetCurrentBet: ({
                                                                                                                                                                       kf,
-                                                                                                                                                                      name
-                                                                                                                                                                  }: { kf: number, name: string }) => void
+                                                                                                                                                                      name,
+        id
+                                                                                                                                                                  }: { kf: number, name: string, id: number }) => void
 }> = ({
           result,
           league,
@@ -61,8 +64,9 @@ const LeagueItem: FC<{
 const GameItem: FC<{
     ind: number, game: IGame, showParam: string, handleChangeShowModal: (val: boolean) => void, handleSetCurrentGame: (val: IGame) => void, handleSetCurrentBet: ({
                                                                                                                                                                       kf,
-                                                                                                                                                                      name
-                                                                                                                                                                  }: { kf: number, name: string }) => void
+                                                                                                                                                                      name,
+        id
+                                                                                                                                                                  }: { kf: number, name: string, id: number }) => void
 }> = ({
           ind,
           game,
@@ -112,7 +116,9 @@ const GameItem: FC<{
                                         handleSetCurrentBet({
                                             name: 'П1',
                                             //@ts-ignore
-                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][0]["kf"]
+                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][0]["kf"],
+                                            //@ts-ignore
+                                            id: game.quotes && game.quotes['Исход матча(основное время)'][0]["id"]
                                         })
                                     }}
                                     className="tocirsmt-line"
@@ -135,7 +141,9 @@ const GameItem: FC<{
                                         handleSetCurrentBet({
                                             name: 'НИЧЬЯ',
                                             //@ts-ignore
-                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"]
+                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"],
+                                            //@ts-ignore
+                                            id: game.quotes && game.quotes['Исход матча(основное время)'][1]["id"]
                                         })
                                     }}
                                     className="tocirsmt-line"
@@ -158,7 +166,9 @@ const GameItem: FC<{
                                         handleSetCurrentBet({
                                             name: 'П2',
                                             //@ts-ignore
-                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][2]["kf"]
+                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][2]["kf"],
+                                            //@ts-ignore
+                                            id: game.quotes && game.quotes['Исход матча(основное время)'][2]["id"]
                                         })
                                     }}
                                     className="tocirsmt-line"
@@ -254,7 +264,13 @@ const FilterCase: FC<any> = ({handleChangeShowParam}) => {
 
 
 const Main: FC = () => {
+    const [profile, setUserInfo] = useState<IProfileState>({
+        error: false,
+        message: null,
+        result: null,
+    })
     const {result} = useAppSelector(state => state.gameReducer)
+    const {session} = useAppSelector(state => state.authReducer)
     const [leagueList, setLeagueList] = useState({})
     const dispatch = useAppDispatch()
     const [params, setParams] = useState({
@@ -269,7 +285,8 @@ const Main: FC = () => {
     const [currentGame, setCurrentGame] = useState<IGame | null>(null)
     const [currentBet, setCurrentBet] = useState({
         name: '',
-        kf: 0
+        kf: 0,
+        id: 0
     })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     const [showModal, setShowModal] = useState(false)
@@ -298,8 +315,8 @@ const Main: FC = () => {
         setCurrentGame({...bid})
     }
 
-    const handleSetCurrentBet = ({name, kf}: { name: string, kf: number }) => {
-        setCurrentBet({name, kf})
+    const handleSetCurrentBet = ({name, kf, id}: { name: string, kf: number, id: number }) => {
+        setCurrentBet({name, kf, id})
     }
 
     useEffect(() => {
@@ -312,9 +329,19 @@ const Main: FC = () => {
                 setLeagueList(data)
             }
             fetchLeagueList()
-        }
-        , [params])
+        }, [params])
 
+    useEffect(()  => {
+        const fetchUserInfo = async (session: string) => {
+            const data = await ApiService.getProfile(session)
+            setUserInfo(data)
+        }
+        if (session){
+            fetchUserInfo(session)
+        }
+    }, [])
+
+    // @ts-ignore
     return (
         <div id="content-wr">
             <div id="two-left">
@@ -347,6 +374,9 @@ const Main: FC = () => {
                             showModal={showModal}
                             currentGame={currentGame}
                             bet={currentBet}
+                            user={profile}
+                            //@ts-ignore
+                            session={session}
                         />
                     }
 

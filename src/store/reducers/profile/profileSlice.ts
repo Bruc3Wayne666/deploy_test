@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getProfile } from './profileActions'
 
-interface IProfileState {
+export interface IProfileState {
     error: boolean,
     message: null | string,
-    login: null | string,
+    // login: null | string,
     result: {
         balance: string,
         id: string,
@@ -16,7 +16,7 @@ const initialState: IProfileState = {
     error: false,
     message: null,
     result: null,
-    login: null
+    // login: null
 }
 
 export interface ProfilePayloadType {
@@ -37,7 +37,7 @@ export const profileSlice = createSlice({
             state.error = false
             state.message = null
             state.result = null
-            state.login = null
+            // state.result = null
         }
     },
     extraReducers: {
