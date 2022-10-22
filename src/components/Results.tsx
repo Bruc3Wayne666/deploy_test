@@ -291,9 +291,18 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                 </div>
             </div>
             <div className="fr-ticks">
-                <div className="frt-sqr"><span/>Только текущие</div>
-                <div className="frt-circle"><span/>Сортировать по номеру</div>
-                <div className="frt-circle"><span/>Сортировать по времени</div>
+                <div
+                    onClick={() => {
+                        console.log(2)
+                        handleChangeParams({...params, sort_number: !params.sort_number})
+                    }}
+                    className='frt-circle'
+                >
+                    <span className={params.sort_number && 'checked'}/>
+                    {/*<span className={params.sort_number && 'checked'}/>*/}
+                    Сортировать по номеру
+                </div>
+                {/*<div className="frt-circle"><span/>Сортировать по времени</div>*/}
             </div>
             <div className="fr-search">
                 <span>Поиск</span>

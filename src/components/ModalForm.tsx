@@ -37,6 +37,7 @@ export const ModalForm: FC<{
         isOpen={showModal}
         onRequestClose={() => {
             setSumValue(0)
+            setBidSuccess(false)
             handleChangeShowModal(false)
         }}
         style={{
@@ -62,12 +63,56 @@ export const ModalForm: FC<{
                 outline: 'none',
                 padding: '20px',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                border: 'none'
             }
         }
         }
     >
-        { bidSuccess ? <h1>Ставка успешно сделана</h1>
+        {bidSuccess ?
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    flex: 1
+                }}
+            >
+                <img src={require('../assets/icons8-tick-64.png')} alt=""/>
+                <span
+                    style={{
+                        fontSize: 30,
+                        marginTop: 60
+                    }}
+                >
+                    Ставка успешно сделана
+                </span>
+                <div
+                    style={{
+                        position: 'absolute',
+                        bottom: 66
+                    }}
+                >
+                    <button
+                        onClick={() => {
+                            setSumValue(0)
+                            setBidSuccess(false)
+                            handleChangeShowModal(false)
+                        }}
+                        style={{
+                            backgroundColor: 'grey',
+                            color: 'white',
+                            fontSize: 20,
+                            borderRadius: 8,
+                            padding: 8,
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Вернутся на главный экран
+                    </button>
+                </div>
+            </div>
             :
             <>
                 <div className="modal_info">

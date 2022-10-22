@@ -933,6 +933,10 @@ header {
     background: #CC9933;
 }
 
+.frt-circle .checked{
+    background: #CC9933;
+}
+
 .frt-circle:last-child {
     margin: 0;
 }
@@ -959,6 +963,10 @@ header {
     padding: 8px 15px 8px 0;
     border-bottom: 1px solid #E6E6E6;
 }
+
+/*.toc-item-res:last-child {*/
+/*    border-bottom: none;*/
+/*}*/
 
 .tocir-num {
     width: 3%;
