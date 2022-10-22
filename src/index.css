@@ -853,6 +853,11 @@ header {
     display: flex;
     align-items: center;
     margin-left: 15px;
+    /*border: 1px solid white;*/
+    /*box-sizing: border-box;*/
+    max-height: 24px;
+    z-index: 3;
+    padding: 0;
 }
 
 .frb-one {
