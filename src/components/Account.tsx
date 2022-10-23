@@ -3,10 +3,11 @@ import '../index.css'
 import {Link} from "react-router-dom";
 import RightBar from "./RightBar";
 import LeftBar from "./LeftBar";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {getProfile} from "../store/reducers/profile/profileActions";
+import {useAppSelector} from "../hooks/redux";
 import {IProfileState} from '../store/reducers/profile/profileSlice';
 import {ApiService} from "../api";
+import spinner from '../assets/spinner.svg'
+import axios from "axios";
 
 
 const Profile: FC<any> = (props: any) => {
@@ -34,14 +35,13 @@ const Profile: FC<any> = (props: any) => {
             </div>
             <div id="lk-lk-foot">
                 <div id="lk-lk-menu">
-                    <h3>[Доделать]</h3>
                     <div id="lk-lk-menu-title">Любимые лиги</div>
-                    <Link className="lkm-item" to="/">Росси. Премьер лига</Link>
-                    <Link className="lkm-item" to="/">Росси. Премьер лига</Link>
-                    <Link className="lkm-item" to="/">Росси. Премьер лига</Link>
-                    <Link className="lkm-item" to="/">Росси. Премьер лига</Link>
-                    <Link className="lkm-item" to="/">Росси. Премьер лига</Link>
-                    <Link className="lkm-item" to="/">Росси. Премьер лига</Link>
+                    {
+                        props.leagues
+                            .map((league: any) => (
+                                <Link className="lkm-item" to="/">{league[1]}</Link>
+                            ))
+                    }
                 </div>
                 <div id="lk-lk-bttn-fast">Быстрая ставка</div>
             </div>
@@ -57,15 +57,23 @@ const Account: FC<any> = ({children}) => {
         result: null,
     })
     const {session} = useAppSelector(state => state.authReducer)
+    const [favoriteLeagues, setFavoriteLeagues] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     // const dispatch = useAppDispatch()
 
 
-    useEffect(()  => {
+    useEffect(() => {
+        setIsLoading(true)
         const fetchUserInfo = async (session: string) => {
             const data = await ApiService.getProfile(session)
+            const leagues = await axios.post('http://gpbetapi.ru/favourite_league', {
+                user_id: session
+            })
             setUserInfo(data)
+            setFavoriteLeagues(leagues.data)
+            setIsLoading(false)
         }
-        if (session){
+        if (session) {
             fetchUserInfo(session)
         }
     }, [])
@@ -78,9 +86,17 @@ const Account: FC<any> = ({children}) => {
     return (
         <div id="content-wr">
             <LeftBar/>
-            <Profile
-                result={result}
-            />
+            {
+                isLoading ?
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <img src={spinner} alt="Loading results..."/>
+                    </div>
+                    :
+                    <Profile
+                        result={result}
+                        leagues={favoriteLeagues}
+                    />
+            }
             <RightBar/>
         </div>
     );

@@ -19,4 +19,5 @@ export interface IGame {
     };
     score: string | null;
     time_start: number;
+    beautiful_time_start: string;
 }

@@ -3,7 +3,7 @@ import './index.css'
 import Header from './components/Header';
 import ContentContainer from "./components/ContentContainer";
 import Account from "./components/Account";
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import Results from "./components/Results";
 import BetsScreen from "./components/BetsScreen";
 import VIP from "./components/VIP";
@@ -31,7 +31,8 @@ const App: FC = () => {
     }, [])
 
     if (Number(session) === -1) return <>
-        <h1>Wrong data</h1>
+        {/*<Navigate to={'/profile'}/>*/}
+    <h1>Wrong data</h1>
     </>
 
 

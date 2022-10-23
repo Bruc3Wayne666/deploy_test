@@ -3,6 +3,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
 import Dropdown from 'react-dropdown';
+import spinner from '../assets/spinner.svg'
 import axios from "axios";
 
 
@@ -212,8 +213,8 @@ const LeagueItem: FC<any> = ({filter, result}) => {
 }
 
 const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, status}) => {
-    const {name, score, time_start} = game
-    const time = new Date(time_start)
+    const {name, score, beautiful_time_start} = game
+    // const time = new Date(time_start)
 
     const styles = {
         'НЕ НАЧАЛСЯ': '',
@@ -228,7 +229,8 @@ const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, 
             <div className="tocir-results">{score}</div>
             <div className="torir-time">
                 <div className="global-ico gi-clock"/>
-                {time.getHours()}
+                {/*{time.getHours()}*/}
+                {beautiful_time_start.split(' ')[1]}
             </div>
             <div className="torir-status">
                 {    // @ts-ignore
@@ -283,11 +285,33 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                           menuClassName={'frb-one-opts'}
                           onChange={e => handleChangeParams({...params, game_status: e.value})}
                 />
-                <div className="frb-one"><span>Дата [сделать штуку которая выбирает время]</span>
+                <div className="frb-one"><span>Дата</span>
                     <div className="global-ico gi-arrow-bot"/>
+                    <input
+                        onChange={e => console.log(e.target.value)}
+                        style={{
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            outline: 'none'
+                        }}
+                        type='date'
+                        // value={'11-11-2011'}
+                    />
                 </div>
-                <div className="frb-one"><span>Время [и тут тоже сделать кое-что]</span>
+                <div className="frb-one"><span>Время</span>
                     <div className="global-ico gi-arrow-bot"/>
+                    <input
+                        onChange={e => console.log(e.target.value)}
+                        style={{
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            outline: 'none'
+                        }}
+                        type='time'
+                        // value={'11-11-2011'}
+                    />
                 </div>
             </div>
             <div className="fr-ticks">
@@ -316,6 +340,7 @@ const Results: FC<any> = () => {
         const {result} = useAppSelector(state => state.gameReducer)
         const [leagueList, setLeagueList] = useState({})
         const dispatch = useAppDispatch()
+        const [isLoading, setIsLoading] = useState(false)
         const [params, setParams] = useState({
             sport_name: 'all',
             game_status: 'all',
@@ -342,6 +367,7 @@ const Results: FC<any> = () => {
 
 
         useEffect(() => {
+                setIsLoading(true)
                 dispatch(getGames(params))
                 const fetchLeagueList = async () => {
                     const {data} = await axios.post('http://gpbetapi.ru/league_list', {
@@ -349,6 +375,7 @@ const Results: FC<any> = () => {
                         league_cc: 'all'
                     })
                     setLeagueList(data)
+                    setIsLoading(false)
                 }
                 fetchLeagueList()
                 console.log(params)
@@ -365,7 +392,7 @@ const Results: FC<any> = () => {
                         <div id="pt-text">Результаты</div>
                         <div id="pt-stripe"/>
                     </div>
-                    <h3>[Сделать формой с сортировкой]</h3>
+                    {/*<h3>[Сделать формой с сортировкой]</h3>*/}
                     <div id="table-main">
 
                         <Filter
@@ -373,32 +400,35 @@ const Results: FC<any> = () => {
                             params={params}
                         />
 
-
-                        <div className="table-one-cat">
-                            {
-                                Object.keys(leagueList)
-                                    .map(sp => {
-                                        // @ts-ignore
-                                        return Object.keys(leagueList[sp])
-                                            .map(co => {
+                        {
+                            isLoading ?
+                                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                    <img src={spinner} alt="Loading results..."/>
+                                </div>
+                                :
+                                <div className="table-one-cat">
+                                    {
+                                        Object.keys(leagueList)
+                                            .map(sp => {
                                                 // @ts-ignore
-                                                return leagueList[sp][co]
-                                                    .map((league: any[]) => {
-                                                        return <LeagueItem
-                                                            filter={{
-                                                                league,
-                                                                status: params.game_status
-                                                            }}
-                                                            result={result}
-                                                        />
+                                                return Object.keys(leagueList[sp])
+                                                    .map(co => {
+                                                        // @ts-ignore
+                                                        return leagueList[sp][co]
+                                                            .map((league: any[]) => {
+                                                                return <LeagueItem
+                                                                    filter={{
+                                                                        league,
+                                                                        status: params.game_status
+                                                                    }}
+                                                                    result={result}
+                                                                />
+                                                            })
                                                     })
                                             })
-                                    })
-                            }
-
-                        </div>
-
-
+                                    }
+                                </div>
+                        }
                     </div>
                 </div>
 

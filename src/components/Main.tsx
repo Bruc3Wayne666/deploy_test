@@ -6,13 +6,14 @@ import {IGame} from "../models/IGame";
 import {ModalForm} from './ModalForm';
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
+import spinner from "../assets/spinner.svg";
 
 
 const LeagueItem: FC<{
     result: any, league: any, showParam: string, handleChangeShowModal: (val: boolean) => void, handleSetCurrentGame: (val: IGame) => void, handleSetCurrentBet: ({
                                                                                                                                                                       kf,
                                                                                                                                                                       name,
-        id
+                                                                                                                                                                      id
                                                                                                                                                                   }: { kf: number, name: string, id: number }) => void
 }> = ({
           result,
@@ -65,7 +66,7 @@ const GameItem: FC<{
     ind: number, game: IGame, showParam: string, handleChangeShowModal: (val: boolean) => void, handleSetCurrentGame: (val: IGame) => void, handleSetCurrentBet: ({
                                                                                                                                                                       kf,
                                                                                                                                                                       name,
-        id
+                                                                                                                                                                      id
                                                                                                                                                                   }: { kf: number, name: string, id: number }) => void
 }> = ({
           ind,
@@ -80,8 +81,8 @@ const GameItem: FC<{
             <div className="toc-i-left-side">
                 <div className="global-ico gi-star"/>
                 <div className="toc-i-time">
-                    <div className="tocit-daypart">[сделать время]</div>
-                    <div className="tocit-time">[сделать время]</div>
+                    <div className="tocit-daypart">{game.beautiful_time_start.split(' ')[0]}</div>
+                    <div className="tocit-time">{game.beautiful_time_start.split(' ')[1]}</div>
                 </div>
                 <div className="toc-i-teams">
                     <div>
@@ -240,13 +241,20 @@ const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
     )
 }
 
-const FilterCase: FC<any> = ({handleChangeShowParam}) => {
+const FilterCase: FC<any> = ({sport, handleChangeShowParam}) => {
+    const sports = {
+        'soccer': 'Футбол',
+        'icehockey': 'Хоккей'
+    }
     return (
         <div className="filter-name-cases">
             <div className="fl-name">
                 <div className="global-ico gi-star"/>
                 <div className="global-ico gi-football"/>
-                <span>[название спорта на русском]</span></div>
+                <span>
+                    {                // @ts-ignore
+                        sports[sport]}
+                </span></div>
             <div className="fl-cases">
                 <div
                     onClick={() => handleChangeShowParam('Исход матча(основное время)')}
@@ -273,6 +281,7 @@ const Main: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const [leagueList, setLeagueList] = useState({})
     const dispatch = useAppDispatch()
+    const [isLoading, setIsLoading] = useState(false)
     const [params, setParams] = useState({
         sport_name: 'all',
         quotes: 'all',
@@ -320,23 +329,25 @@ const Main: FC = () => {
     }
 
     useEffect(() => {
-            dispatch(getGames({...params, game_status: 'not started'}))
-            const fetchLeagueList = async () => {
-                const {data} = await axios.post('http://gpbetapi.ru/league_list', {
-                    league_sport: params.sport_name,
-                    league_cc: 'all'
-                })
-                setLeagueList(data)
-            }
-            fetchLeagueList()
-        }, [params])
+        setIsLoading(true)
+        dispatch(getGames({...params, game_status: 'not started'}))
+        const fetchLeagueList = async () => {
+            const {data} = await axios.post('http://gpbetapi.ru/league_list', {
+                league_sport: params.sport_name,
+                league_cc: 'all'
+            })
+            setLeagueList(data)
+            setIsLoading(false)
+        }
+        fetchLeagueList()
+    }, [params])
 
-    useEffect(()  => {
+    useEffect(() => {
         const fetchUserInfo = async (session: string) => {
             const data = await ApiService.getProfile(session)
             setUserInfo(data)
         }
-        if (session){
+        if (session) {
             fetchUserInfo(session)
         }
     }, [])
@@ -385,47 +396,54 @@ const Main: FC = () => {
                         params={params}
                     />
                     <FilterCase
+                        sport={params.sport_name}
                         handleChangeShowParam={handleChangeShowParam}
                     />
 
 
-                    <div className="table-one-cat">
-
-                        {
-                             Object.keys(leagueList)
-                                .map(sp => {
-                                    // @ts-ignore
-                                    return Object.keys(leagueList[sp])
-                                        .map(co => {
+                    {
+                        isLoading ?
+                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <img src={spinner} alt="Loading results..."/>
+                            </div>
+                            :
+                            <div className="table-one-cat">
+                                {
+                                    Object.keys(leagueList)
+                                        .map(sp => {
                                             // @ts-ignore
-                                            return leagueList[sp][co]
-                                                // eslint-disable-next-line array-callback-return
-                                                .map((league: any[]) => {
-                                                    if (params.country === 'all') {
-                                                        return <LeagueItem
-                                                            league={league}
-                                                            result={result}
-                                                            showParam={showParam}
-                                                            handleChangeShowModal={handleChangeShowModal}
-                                                            handleSetCurrentGame={handleSetCurrentGame}
-                                                            handleSetCurrentBet={handleSetCurrentBet}
-                                                        />
-                                                    } else if (params.country === co) {
-                                                        return <LeagueItem
-                                                            league={league}
-                                                            result={result}
-                                                            showParam={showParam}
-                                                            handleChangeShowModal={handleChangeShowModal}
-                                                            handleSetCurrentGame={handleSetCurrentGame}
-                                                            handleSetCurrentBet={handleSetCurrentBet}
-                                                        />
-                                                    }
+                                            return Object.keys(leagueList[sp])
+                                                .map(co => {
+                                                    // @ts-ignore
+                                                    return leagueList[sp][co]
+                                                        // eslint-disable-next-line array-callback-return
+                                                        .map((league: any[]) => {
+                                                            if (params.country === 'all') {
+                                                                return <LeagueItem
+                                                                    league={league}
+                                                                    result={result}
+                                                                    showParam={showParam}
+                                                                    handleChangeShowModal={handleChangeShowModal}
+                                                                    handleSetCurrentGame={handleSetCurrentGame}
+                                                                    handleSetCurrentBet={handleSetCurrentBet}
+                                                                />
+                                                            } else if (params.country === co) {
+                                                                return <LeagueItem
+                                                                    league={league}
+                                                                    result={result}
+                                                                    showParam={showParam}
+                                                                    handleChangeShowModal={handleChangeShowModal}
+                                                                    handleSetCurrentGame={handleSetCurrentGame}
+                                                                    handleSetCurrentBet={handleSetCurrentBet}
+                                                                />
+                                                            }
+                                                        })
                                                 })
                                         })
-                                })
-                        }
+                                }
 
-                    </div>
+                            </div>
+                    }
                 </div>
 
             </div>
