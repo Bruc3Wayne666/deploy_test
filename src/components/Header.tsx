@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Link} from 'react-router-dom';
-import {Slide} from 'react-slideshow-image';
+// import {Slide} from 'react-slideshow-image';
 import '../index.css'
 
 // const SimpleSlider: FC<any> = () => {
