@@ -11,8 +11,8 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const store = setupStore()
 root.render(
 	<Provider store={store}>
-		{/*<HashRouter basename={'/'}>*/}
-			<BrowserRouter basename='/'>
+		{/*<HashRouter basename={'/deploy_test'}>*/}
+			<BrowserRouter basename='/deploy_test'>
 				<App />
 			</BrowserRouter>
 		{/*</HashRouter>*/}
