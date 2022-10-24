@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/bk/static/css/main.3ed12ed6.css",
+    "main.js": "/bk/static/js/main.298be357.js",
+    "static/media/head-slider-1.png": "/bk/static/media/head-slider-1.7b75b132dcf562437082.png",
+    "static/media/stavki-cyber.png": "/bk/static/media/stavki-cyber.04b4b5ff7dfefd1fb72b.png",
+    "static/media/helvetica_regular.otf": "/bk/static/media/helvetica_regular.3129c8de867eabeb701e.otf",
+    "static/media/helvetica_bold.otf": "/bk/static/media/helvetica_bold.0291ee3b787868611527.otf",
+    "static/media/ava.png": "/bk/static/media/ava.d96cbcdc21c3772b63ef.png",
+    "index.html": "/bk/index.html",
+    "static/media/spinner.svg": "/bk/static/media/spinner.e61f62c433d94337cf424fe9673a2c65.svg",
+    "main.3ed12ed6.css.map": "/bk/static/css/main.3ed12ed6.css.map",
+    "main.298be357.js.map": "/bk/static/js/main.298be357.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3ed12ed6.css",
+    "static/js/main.298be357.js"
+  ]
+}
