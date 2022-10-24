@@ -103,8 +103,8 @@ export const ModalForm: FC<{
                     <button
                         onClick={() => {
                             setSumValue(0)
-                            setBidSuccess(false)
                             handleChangeShowModal(false)
+                            setBidSuccess(false)
                         }}
                         style={{
                             backgroundColor: 'grey',
@@ -169,7 +169,7 @@ export const ModalForm: FC<{
                     </div>
                     <div className="binf">
                         Возможный выигрыш
-                        <span className='win'>{bet.kf * sumValue} RUB</span>
+                        <span className='win'>{Math.round(bet.kf * sumValue * 100) / 100} RUB</span>
                     </div>
                 </div>
                 <div className="modal_start">

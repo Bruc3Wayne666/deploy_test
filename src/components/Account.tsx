@@ -39,7 +39,7 @@ const Profile: FC<any> = (props: any) => {
                     {
                         props.leagues
                             .map((league: any) => (
-                                <Link className="lkm-item" to="/">{league[1]}</Link>
+                                <Link className="lkm-item" to="/">{league[0]}</Link>
                             ))
                     }
                 </div>

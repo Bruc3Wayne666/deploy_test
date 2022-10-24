@@ -5,6 +5,8 @@ import {IGame} from "../models/IGame";
 import Dropdown from 'react-dropdown';
 import spinner from '../assets/spinner.svg'
 import axios from "axios";
+import {COUNTRIES} from "../assets/consts";
+import {Link} from "react-router-dom";
 
 
 const RightBar: FC<any> = () => {
@@ -75,40 +77,12 @@ const RightBar: FC<any> = () => {
             </div>
             <div id="right-col-menu">
                 <div className="one-rcm-menu">
-                    <div className="global-ico gi-football"/>
-                    <div className="rcm-title">Футбол</div>
+                    <div className="global-ico gi-football"></div>
+                    <Link to={'/soccer'} className="rcm-title">Футбол</Link>
                 </div>
                 <div className="one-rcm-menu">
-                    <div className="global-ico gi-hockey"/>
-                    <div className="rcm-title">Хоккей</div>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-basketball"/>
-                    <div className="rcm-title">Баскетбол</div>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-volleyball"/>
-                    <div className="rcm-title">Волейбол</div>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-tennis"/>
-                    <div className="rcm-title">Теннис</div>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-baseball"/>
-                    <div className="rcm-title">Бейсбол</div>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-american-f"/>
-                    <div className="rcm-title">Американский футбол</div>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-golf"/>
-                    <div className="rcm-title">Гольф</div>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-rus-biliard"/>
-                    <div className="rcm-title">Русский бильярд</div>
+                    <div className="global-ico gi-hockey"></div>
+                    <Link to={'/icehockey'} className="rcm-title">Хоккей</Link>
                 </div>
             </div>
         </div>
@@ -121,9 +95,22 @@ const LeagueItem: FC<any> = ({filter, result}) => {
     return (
         <>
             <div className="toc-title">
-                <div className="global-ico gi-football"/>
-                <div className="global-ico gi-rus"/>
-                <span>{league[1]}</span>
+                <div className="global-ico gi-star">
+
+                </div>
+                <div className="global-ico gi-rus">
+                    <img
+                        src={
+                            //@ts-ignore
+                            COUNTRIES[league[2]].svg_url
+                        }
+                        alt={league[2]}
+                    />
+                </div>
+                <span>{                        //@ts-ignore
+
+                    COUNTRIES[league[2]].ru_name
+                }. {league[1]}</span>
             </div>
             {
                 result && Object.keys(result.country)
@@ -161,7 +148,16 @@ const LeagueItem: FC<any> = ({filter, result}) => {
     )
 }
 
-const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, status}) => {
+const GameItem:
+    FC<{
+        ind: number,
+        game: IGame,
+        status: string
+    }> = ({
+              ind,
+              game,
+              status
+          }) => {
     const {name, score, beautiful_time_start} = game
     // const time = new Date(time_start)
 

@@ -1,4 +1,9 @@
 export const COUNTRIES = {
+    'all':
+        {
+            'ru_name': 'Все',
+            'svg_url': ''
+        },
     'ad':
         {
             'ru_name': 'Андорра',
@@ -329,6 +334,10 @@ export const COUNTRIES = {
             'ru_name': 'Эфиопия',
             'svg_url': 'https://spoyer.ru/api/icons/countries/et.svg'
         },
+    'eu': {
+        'ru_name': 'Европа',
+        'svg_url': 'https://spoyer.ru/api/icons/countries/eu.svg'
+    },
     'fi':
         {
             'ru_name': 'Финляндия',

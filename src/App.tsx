@@ -3,7 +3,7 @@ import './index.css'
 import Header from './components/Header';
 import ContentContainer from "./components/ContentContainer";
 import Account from "./components/Account";
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Results from "./components/Results";
 import BetsScreen from "./components/BetsScreen";
 import VIP from "./components/VIP";
@@ -44,6 +44,7 @@ const App: FC = () => {
                     session ?
                         <Routes>
                             <Route path={'/'} element={<Main/>}/>
+                            <Route path={'/:sport'} element={<Main/>}/>
                             <Route path={'profile'} element={<Account/>}/>
                             <Route path={'discounts'} element={<Discounts/>}/>
                             <Route path={'results'} element={<Results/>}/>
@@ -53,9 +54,10 @@ const App: FC = () => {
                         :
                         <Routes>
                             <Route path={'/'} element={<Main/>}/>
+                            <Route path={'/:sport'} element={<Main/>}/>
                             <Route path={'profile'} element={<Authorize/>}/>
                             <Route path={'results'} element={<Results/>}/>
-                            <Route path={'*'} element={<h1>404</h1>} />
+                            <Route path={'*'} element={<h1>404. Страница появится скоро</h1>} />
                         </Routes>
                 }
 
