@@ -11,10 +11,10 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const store = setupStore()
 root.render(
 	<Provider store={store}>
-		<HashRouter basename={'/'}>
-			<BrowserRouter>
+		{/*<HashRouter basename={'/'}>*/}
+			<BrowserRouter basename='/'>
 				<App />
 			</BrowserRouter>
-		</HashRouter>
+		{/*</HashRouter>*/}
 	</Provider>
 )
