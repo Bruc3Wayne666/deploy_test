@@ -4,15 +4,17 @@ import './index.css'
 import App from './App'
 import { setupStore } from './store/store'
 import { Provider } from 'react-redux'
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 // import { BrowserRouter } from 'react'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const store = setupStore()
 root.render(
 	<Provider store={store}>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
+		<HashRouter basename={'/'}>
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		</HashRouter>
 	</Provider>
 )

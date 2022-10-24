@@ -24,12 +24,18 @@ export const ModalForm: FC<{
     const [bidSuccess, setBidSuccess] = useState(false)
 
     const handleSubmit = () => {
-        ApiService.placeBid({
-            user_id: session,
-            id_kot: String(bet.id),
-            sum_bid: String(sumValue)
-        })
-            .then(res => setBidSuccess(true))
+        // @ts-ignore
+        if (user.result?.balance >= sumValue){
+            ApiService.placeBid({
+                user_id: session,
+                id_kot: String(bet.id),
+                sum_bid: String(sumValue)
+            })
+                .then(res => setBidSuccess(true))
+        } else {
+            setBidSuccess(false)
+            handleChangeShowModal(false)
+        }
     }
 
     return <Modal

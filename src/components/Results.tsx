@@ -116,27 +116,7 @@ const RightBar: FC<any> = () => {
 }
 
 const LeagueItem: FC<any> = ({filter, result}) => {
-
-    // {
-    //     result && Object.keys(result.country)
-    //         .map(co => {
-    //             // @ts-ignore
-    //             return Object.keys(result.country[co])
-    //                 .map(sport => {
-    //                     // @ts-ignore
-    //                     return Object.keys(result.country[co][sport])
-    //                         .map(status => {
-    //                             // @ts-ignore
-    //                             return Object.keys(result.country[co][sport][status])
-    //                                 .forEach((game, index) => {
-    //                                     console.log(league[0], result.country[co][sport][status][game].league.id)
-    //                                 })
-    //                         })
-    //                 })
-    //         })
-    // }
     const {league} = filter
-    // console.log(time)
 
     return (
         <>
@@ -171,37 +151,6 @@ const LeagueItem: FC<any> = ({filter, result}) => {
 
                                                         game={result.country[co][sport][status][game]}
                                                     />
-
-                                                // if (time === 'all'){
-                                                //     // @ts-ignore
-                                                //     return result.country[co][sport][status][game].league.id === String(league[0]) &&
-                                                //         <GameItem
-                                                //             ind={index}
-                                                //             // @ts-ignore
-                                                //             status={{
-                                                //                 'not started': 'НЕ НАЧАЛСЯ',
-                                                //                 'live': 'LIVE',
-                                                //                 'end': 'ЗАВЕРШЁН'
-                                                //             }[status]}
-                                                //
-                                                //             game={result.country[co][sport][status][game]}
-                                                //         />
-                                                // } else {
-                                                //     return (
-                                                //         result.country[co][sport][status][game].league.id === String(league[0])
-                                                //         ) &&
-                                                //         <GameItem
-                                                //             ind={index}
-                                                //             // @ts-ignore
-                                                //             status={{
-                                                //                 'not started': 'НЕ НАЧАЛСЯ',
-                                                //                 'live': 'LIVE',
-                                                //                 'end': 'ЗАВЕРШЁН'
-                                                //             }[status]}
-                                                //
-                                                //             game={result.country[co][sport][status][game]}
-                                                //         />
-                                                // }
                                             })
                                     })
                             })
@@ -222,6 +171,8 @@ const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, 
         'ЗАВЕРШЁН': 's-blue'
     }
 
+    const currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+
     return (
         <div className="toc-item-res">
             <div className="tocir-num">{++ind}</div>
@@ -229,7 +180,26 @@ const GameItem: FC<{ ind: number, game: IGame, status: string }> = ({ind, game, 
             <div className="tocir-results">{score}</div>
             <div className="torir-time">
                 <div className="global-ico gi-clock"/>
-                {/*{time.getHours()}*/}
+                {
+                    (Number(
+                        game
+                            .beautiful_time_start
+                            .split(' ')[0]
+                            .split('-')[2]
+                    ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :
+                        (Number(
+                            game
+                                .beautiful_time_start
+                                .split(' ')[0]
+                                .split('-')[2]
+                        ) - Number(currentDate.getDate())) === 1 ? 'Завтра в' :
+                            game
+                                .beautiful_time_start
+                                .split(' ')[0]
+                }
+
+                <br/>
+
                 {beautiful_time_start.split(' ')[1]}
             </div>
             <div className="torir-status">
@@ -288,7 +258,26 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                 <div className="frb-one"><span>Дата</span>
                     <div className="global-ico gi-arrow-bot"/>
                     <input
-                        onChange={e => console.log(e.target.value)}
+                        value={params.beautiful_time_start.date}
+                        onChange={e => {
+                            if (e.target.value === '') {
+                                handleChangeParams({
+                                    ...params,
+                                    beautiful_time_start: {
+                                        ...params.beautiful_time_start,
+                                        date: '-'
+                                    }
+                                })
+                            } else {
+                                handleChangeParams({
+                                    ...params,
+                                    beautiful_time_start: {
+                                        ...params.beautiful_time_start,
+                                        date: e.target.value
+                                    }
+                                })
+                            }
+                        }}
                         style={{
                             backgroundColor: 'transparent',
                             border: 'none',
@@ -296,13 +285,31 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                             outline: 'none'
                         }}
                         type='date'
-                        // value={'11-11-2011'}
                     />
                 </div>
                 <div className="frb-one"><span>Время</span>
                     <div className="global-ico gi-arrow-bot"/>
                     <input
-                        onChange={e => console.log(e.target.value)}
+                        value={params.beautiful_time_start.hours}
+                        onChange={e => {
+                            if (e.target.value === '') {
+                                handleChangeParams({
+                                    ...params,
+                                    beautiful_time_start: {
+                                        ...params.beautiful_time_start,
+                                        hours: '-'
+                                    }
+                                })
+                            } else {
+                                handleChangeParams({
+                                    ...params,
+                                    beautiful_time_start: {
+                                        ...params.beautiful_time_start,
+                                        hours: e.target.value
+                                    }
+                                })
+                            }
+                        }}
                         style={{
                             backgroundColor: 'transparent',
                             border: 'none',
@@ -310,8 +317,27 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                             outline: 'none'
                         }}
                         type='time'
-                        // value={'11-11-2011'}
                     />
+                    {
+                        params.beautiful_time_start.hours !== '-' &&
+                        <button
+                            style={{
+                                backgroundColor: 'red',
+                                border: '1 px solid black',
+                                borderRadius: 4,
+                                cursor: "pointer"
+                            }}
+                            onClick={() => handleChangeParams({
+                                ...params,
+                                beautiful_time_start: {
+                                    ...params.beautiful_time_start,
+                                    hours: '-'
+                                }
+                            })}
+                        >
+                            &times; Очистить
+                        </button>
+                    }
                 </div>
             </div>
             <div className="fr-ticks">
@@ -323,10 +349,8 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                     className='frt-circle'
                 >
                     <span className={params.sort_number && 'checked'}/>
-                    {/*<span className={params.sort_number && 'checked'}/>*/}
                     Сортировать по номеру
                 </div>
-                {/*<div className="frt-circle"><span/>Сортировать по времени</div>*/}
             </div>
             <div className="fr-search">
                 <span>Поиск</span>
@@ -349,7 +373,11 @@ const Results: FC<any> = () => {
             league_id: 'all',
             days: 10,
             one_day: 0,
-            sort_number: false
+            sort_number: false,
+            beautiful_time_start: {
+                date: '-',
+                hours: '-'
+            }
         })
 
         const handleChangeParams = (params: {
@@ -360,7 +388,11 @@ const Results: FC<any> = () => {
             league_id: string,
             days: number,
             one_day: number,
-            sort_number: boolean
+            sort_number: boolean,
+            beautiful_time_start: {
+                date: string,
+                hours: string
+            }
         }) => {
             setParams({...params})
         }
@@ -368,7 +400,11 @@ const Results: FC<any> = () => {
 
         useEffect(() => {
                 setIsLoading(true)
-                dispatch(getGames(params))
+                dispatch(getGames({
+                    ...params, beautiful_time_start: `${
+                        params.beautiful_time_start.date
+                    } ${params.beautiful_time_start.hours}`
+                }))
                 const fetchLeagueList = async () => {
                     const {data} = await axios.post('http://gpbetapi.ru/league_list', {
                         league_sport: params.sport_name,

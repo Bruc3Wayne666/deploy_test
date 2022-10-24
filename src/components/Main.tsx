@@ -7,6 +7,7 @@ import {ModalForm} from './ModalForm';
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import spinner from "../assets/spinner.svg";
+import {COUNTRIES} from '../assets/consts'
 
 
 const LeagueItem: FC<{
@@ -76,21 +77,44 @@ const GameItem: FC<{
           handleSetCurrentGame,
           handleSetCurrentBet
       }) => {
+
+    const currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+
     return (
         <div className="toc-item">
             <div className="toc-i-left-side">
                 <div className="global-ico gi-star"/>
                 <div className="toc-i-time">
-                    <div className="tocit-daypart">{game.beautiful_time_start.split(' ')[0]}</div>
+                    <div className="tocit-daypart">
+                        {
+                            (Number(
+                                game
+                                    .beautiful_time_start
+                                    .split(' ')[0]
+                                    .split('-')[2]
+                            ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :
+                            (Number(
+                                game
+                                    .beautiful_time_start
+                                    .split(' ')[0]
+                                    .split('-')[2]
+                            ) - Number(currentDate.getDate())) === 1 ? 'Завтра в' :
+                                game
+                                    .beautiful_time_start
+                                    .split(' ')[0]
+                        }
+                    </div>
                     <div className="tocit-time">{game.beautiful_time_start.split(' ')[1]}</div>
                 </div>
                 <div className="toc-i-teams">
                     <div>
-                        <div className="global-ico gi-zenit"/>
+                        {/*<div className="global-ico gi-zenit"/>*/}
+                        <img src={game.home_team_logo} height={14} alt=".."/>
                         {game.name.split(' VS ')[0]}
                     </div>
                     <div>
-                        <div className="global-ico gi-zenit"/>
+                        {/*<div className="global-ico gi-zenit"/>*/}
+                        <img src={game.away_team_logo} height={14} alt=".."/>
                         {game.name.split(' VS ')[1]}
                     </div>
                 </div>
@@ -223,22 +247,136 @@ const GameItem: FC<{
 
 
 const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
+    const [countries, setCountries] = useState({})
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            const {data} = await axios.get('http://gpbetapi.ru/country')
+            setCountries(data)
+        }
+        fetchCountries()
+    }, [])
+
+    if (params.sport_name === 'all') return (
+        <div id="filter-contry">
+            <div
+                onClick={() => handleChangeParams({...params, country: 'all'})}
+                className="one-contry-f"
+            >
+                Все
+            </div>
+            {
+                Object.keys(COUNTRIES)
+                    .map(co => {
+                        // @ts-ignore
+                        return (
+                            <div
+                                onClick={() => handleChangeParams({...params, country: co})}
+                                className="one-contry-f"
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-evenly',
+                                    alignItems: 'center',
+                                    flexDirection: 'column',
+                                    maxHeight: 60
+                                }}
+                            >
+                                <img src={
+                                    // @ts-ignore
+                                    COUNTRIES[co]['svg_url']
+                                }
+                                     height={20}
+                                     alt='cc'
+                                />
+                                {
+                                    // @ts-ignore
+                                    COUNTRIES[co].ru_name
+                                }
+                            </div>
+                        )
+                    })
+            }
+        </div>
+    )
+
     return (
         <div id="filter-contry">
             <div
                 onClick={() => handleChangeParams({...params, country: 'all'})}
-                className="one-contry-f">Все
+                className="one-contry-f"
+            >
+                Все
             </div>
-            <div
-                onClick={() => handleChangeParams({...params, country: 'ru'})}
-                className="one-contry-f">Россия
-            </div>
-            <div
-                onClick={() => handleChangeParams({...params, country: 'us'})}
-                className="one-contry-f">США
-            </div>
+            {
+                Object.keys(countries)
+                    .map(sport => {
+                        if (sport === params.sport_name){
+
+                            // @ts-ignore
+                            return Object.keys(countries[sport])
+                                .map(co => {
+                                    return (
+                                        <div
+                                            onClick={() => handleChangeParams({...params, country: co})}
+                                            className="one-contry-f"
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-evenly',
+                                                alignItems: 'center',
+                                                flexDirection: 'column',
+                                                maxHeight: 60
+                                            }}
+                                        >
+                                            <img src={
+                                                // @ts-ignore
+                                                COUNTRIES[co]['svg_url']
+                                            }
+                                                 height={20}
+                                                 alt='cc'
+                                            />
+                                            {
+                                                // @ts-ignore
+                                                COUNTRIES[co].ru_name
+                                            }
+                                        </div>
+                                    )
+                                })
+                        }
+                    })
+            }
         </div>
     )
+
+    // return (
+    //     <div id="filter-contry">
+    //         {/*{*/}
+    //         {/*    //@ts-ignore*/}
+    //         {/*    countries*/}
+    //         {/*    // @ts-ignore*/}
+    //         {/*    // countries && countries[params.sport_name]*/}
+    //         {/*    //     .map((co: any) => {*/}
+    //         {/*    //         return (*/}
+    //         {/*    //             <div*/}
+    //         {/*    //                 onClick={() => handleChangeParams({...params, country: co})}*/}
+    //         {/*    //                 className="one-contry-f"*/}
+    //         {/*    //             >*/}
+    //         {/*    //                 /!*<img*!/*/}
+    //         {/*    //                 /!*    src={*!/*/}
+    //         {/*    //                 /!*        //@ts-ignore*!/*/}
+    //         {/*    //                 /!*        COUNTRIES[co].svg_url*!/*/}
+    //         {/*    //                 /!*    }*!/*/}
+    //         {/*    //                 /!*    alt={'im'}*!/*/}
+    //         {/*    //                 /!*/>*!/*/}
+    //         {/*    //                 {*/}
+    //         {/*    //                     //@ts-ignore*/}
+    //         {/*    //                     COUNTRIES[co].ru_name*/}
+    //         {/*    //                 }*/}
+    //         {/*    //             </div>*/}
+    //         {/*    //         )*/}
+    //         {/*    //     })*/}
+    //         {/*}*/}
+    //     </div>
+    // )
 }
 
 const FilterCase: FC<any> = ({sport, handleChangeShowParam}) => {
@@ -289,7 +427,8 @@ const Main: FC = () => {
         league_id: 'all',
         days: 10,
         one_day: 0,
-        sort_number: false
+        sort_number: false,
+        beautiful_time_start: '- -'
     })
     const [currentGame, setCurrentGame] = useState<IGame | null>(null)
     const [currentBet, setCurrentBet] = useState({
@@ -308,6 +447,7 @@ const Main: FC = () => {
         days: number,
         one_day: number,
         sort_number: boolean
+        beautiful_time_start: string,
     }) => {
         setParams({...params})
     }

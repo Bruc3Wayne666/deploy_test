@@ -13,7 +13,7 @@ const Authorize: FC = () => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        if (type === 'login'){
+        if (type === 'login') {
             dispatch(login(form))
         } else if (type === 'register') {
             dispatch(register(form))
@@ -41,21 +41,39 @@ const Authorize: FC = () => {
                             placeholder={'Ваш пароль'}
                             type="password"
                         />
-                        <div style={{display:'flex', justifyContent: "center", alignItems: "center"}}>
-                            Запомнить меня
+                        <div
+                            style={{
+                                fontSize: 16,
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: "center"
+                            }}
+                        >
+                            <p>Запомнить&nbsp;меня</p>
                             <input
+                                style={{
+                                    margin: 'auto',
+                                    marginLeft: 6
+                                }}
                                 onChange={e => setForm({...form, remember: e.target.checked})}
                                 type={'checkbox'}
                             />
                         </div>
-                        <p>Ещё нету аккаунта? <span onClick={() => {
-                            setType('register')
-                            setForm({
-                                login: '',
-                                password: '',
-                                remember: false
-                            })
-                        }}>Зарегистрироваться!</span></p>
+                        <div
+                            style={{
+                                display: 'flex',
+                                marginTop: 12
+                            }}
+                        >
+                            <p>Ещё нету аккаунта? <span onClick={() => {
+                                setType('register')
+                                setForm({
+                                    login: '',
+                                    password: '',
+                                    remember: false
+                                })
+                            }}>Зарегистрироваться!</span></p>
+                        </div>
                         <button type={'submit'}>Войти</button>
                     </>
                     :
@@ -72,21 +90,39 @@ const Authorize: FC = () => {
                             placeholder={'Придумайте пароль'}
                             type="password"
                         />
-                        <div style={{display:'flex', justifyContent: "center", alignItems: "center"}}>
-                            Запомнить меня
+                        <div
+                            style={{
+                                fontSize: 16,
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: "center"
+                            }}
+                        >
+                            <p>Запомнить&nbsp;меня</p>
                             <input
+                                style={{
+                                    margin: 'auto',
+                                    marginLeft: 6
+                                }}
                                 onChange={e => setForm({...form, remember: e.target.checked})}
                                 type={'checkbox'}
                             />
                         </div>
-                        <p>Уже есть аккаунт? <span onClick={() => {
-                            setType('login')
-                            setForm({
-                                login: '',
-                                password: '',
-                                remember: false
-                            })
-                        }}>Войти!</span></p>
+                        <div
+                            style={{
+                                display: 'flex',
+                                marginTop: 12
+                            }}
+                        >
+                            <p>Уже есть аккаунт? <span onClick={() => {
+                                setType('login')
+                                setForm({
+                                    login: '',
+                                    password: '',
+                                    remember: false
+                                })
+                            }}>Войти!</span></p>
+                        </div>
                         <button type={'submit'}>Зарегистрироваться!</button>
                     </>
 

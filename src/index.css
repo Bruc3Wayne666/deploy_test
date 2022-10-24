@@ -518,6 +518,17 @@ header {
 #filter-contry {
     display: flex;
     margin-bottom: 10px;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+
+#filter-contry::-webkit-scrollbar {
+    display: none;
+}
+
+#filter-contry {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
 }
 
 .one-contry-f {
@@ -646,6 +657,12 @@ header {
 .toc-i-teams {
     width: 45%;
     margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.toc-i-teams img {
+    margin-right: 6px;
 }
 
 .toc-i-teams > div {
@@ -959,7 +976,7 @@ header {
     background: #CC9933;
 }
 
-.frt-circle .checked{
+.frt-circle .checked {
     background: #CC9933;
 }
 
@@ -1327,7 +1344,7 @@ header {
 }
 
 #lk-bal span {
-    color: #CC9933;/*font-family: helB;*/
+    color: #CC9933; /*font-family: helB;*/
     font-family: sans-serif;
 }
 
@@ -1353,7 +1370,7 @@ header {
     border-radius: 5px;
     background: #CC9933;
     text-transform: uppercase;
-    font-size: 12px;/*font-family: helB;*/
+    font-size: 12px; /*font-family: helB;*/
     font-family: sans-serif;
     display: flex;
     justify-content: center;
@@ -1366,7 +1383,7 @@ header {
     padding-top: 30px;
 }
 
-#lk-lk-menu-title {/*font-family: helB;*/
+#lk-lk-menu-title { /*font-family: helB;*/
     font-family: sans-serif;
     text-transform: uppercase;
     font-size: 12px;
@@ -1387,7 +1404,7 @@ header {
     border-radius: 5px;
     background: #087537;
     text-transform: uppercase;
-    font-size: 12px;/*font-family: helB;*/
+    font-size: 12px; /*font-family: helB;*/
     font-family: sans-serif;
     display: flex;
     justify-content: center;
@@ -1419,7 +1436,7 @@ header {
 
 .lkao-title {
     color: #CC9933;
-    font-size: 22px;/*font-family: helB;*/
+    font-size: 22px; /*font-family: helB;*/
     font-family: sans-serif;
     margin-bottom: 20px;
     line-height: 1.3;
@@ -1435,7 +1452,7 @@ header {
 }
 
 .lkaot-title {
-    color: #CC9933;/*font-family: helB;*/
+    color: #CC9933; /*font-family: helB;*/
     font-family: sans-serif;
     margin-bottom: 10px;
 }
@@ -1464,14 +1481,14 @@ header {
 }
 
 #lk-vip-card-number {
-    font-size: 24px;/*font-family: helB;*/
+    font-size: 24px; /*font-family: helB;*/
     font-family: sans-serif;
     color: #000;
     margin-bottom: 15px;
 }
 
 #lk-vip-card-status {
-    font-size: 15px;/*font-family: helB;*/
+    font-size: 15px; /*font-family: helB;*/
     font-family: sans-serif;
     color: #000;
 }
@@ -1498,7 +1515,7 @@ header {
 }
 
 .lkvcso-title {
-    color: #CC9933;/*font-family: helB;*/
+    color: #CC9933; /*font-family: helB;*/
     font-family: sans-serif;
     font-size: 18px;
     text-transform: uppercase;
@@ -1529,7 +1546,7 @@ header {
     font-size: 10px;
 }
 
-#lk-vip-r-text-title {/*font-family: helB;*/
+#lk-vip-r-text-title { /*font-family: helB;*/
     font-family: sans-serif;
 }
 
@@ -1590,20 +1607,20 @@ header {
 }
 
 #lkconts-title {
-    text-transform: uppercase;/*font-family: helB;*/
+    text-transform: uppercase; /*font-family: helB;*/
     font-family: sans-serif;
     font-size: 12px;
     text-align: center
 }
 
 .lkconts-one {
-    font-size: 10px;/*font-family: helB;*/
+    font-size: 10px; /*font-family: helB;*/
     font-family: sans-serif;
     margin-bottom: 15px;
 }
 
 .lkconts-one span {
-    color: #CC9933;/*font-family: helB;*/
+    color: #CC9933; /*font-family: helB;*/
     font-family: sans-serif;
 }
 
@@ -1627,26 +1644,33 @@ header {
 }
 
 .auth-form {
-    border: 4px solid red;
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 60%;
+    height: 240px;
     margin: auto;
-    height: 200px;
-    background-color: red;
-    padding: 12px;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 33%);
+    padding: 34px 12px;
     border-radius: 8px;
 }
 
 .auth-form input {
-    height: 60px;
-    font-size: 28px;
+    height: ;
+    font-size: 24px;
+    border: none;
     border-radius: 8px;
     margin-bottom: 12px;
     text-align: center;
     line-height: 28px;
     outline: none;
-    background-color: #087537;;
+    width: 70%;
+    background-color: #444;
+}
+
+.auth-form input::placeholder {
+    color: #888888;
 }
 
 .auth-form button {
@@ -1654,6 +1678,19 @@ header {
     background-color: green;
     outline: none;
     border-radius: 8px;
+    padding: 8px 14px;
+    margin-top: 16px;
+    transition: 1.2s;
+    width: 40%;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form button:hover {
+    background-color: lightgreen;
+    color: #222;
 }
 
 .auth-form p {
@@ -1726,11 +1763,11 @@ header {
     padding: 8px;
 }
 
-.modal_info .totals span{
+.modal_info .totals span {
     color: lightskyblue;
 }
 
-.modal_info .totals .kf{
+.modal_info .totals .kf {
     color: #888888;
     font-size: 16px;
     font-weight: bold;
@@ -1744,18 +1781,18 @@ header {
     margin-top: 12px;
 }
 
-.modal_info .teams .status{
+.modal_info .teams .status {
     margin-top: 10px;
     background-color: orange;
 }
 
-.modal_info .teams .count{
+.modal_info .teams .count {
     font-size: 14px;
     margin-top: 6px;
 }
 
 
-.modal_info .teams .team{
+.modal_info .teams .team {
     margin-right: 4px;
     margin-left: 4px;
 }
@@ -1801,7 +1838,7 @@ header {
     font-size: 22px;
 }
 
-.modal_bid .binf .win{
+.modal_bid .binf .win {
     color: lightgreen;
     font-size: 18px;
 }
