@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
@@ -7,83 +7,180 @@ import spinner from '../assets/spinner.svg'
 import axios from "axios";
 import {COUNTRIES} from "../assets/consts";
 import {Link} from "react-router-dom";
+// @ts-ignore
+import debounce from "lodash/debounce";
+import {ModalForm} from "./ModalForm";
+import {IProfileState} from "../store/reducers/profile/profileSlice";
+import {ApiService} from "../api";
 
 
-const RightBar: FC<any> = () => {
+const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
+    const [popEvent, setPopEvent] = useState<IGame | null>(null)
+    const [sportList, setSportList] = useState<any>({})
+    const [sport, setSport] = useState('icehockey')
+
+    useEffect(() => {
+        const fetchEvent = async () => {
+            const {data} = await axios.post('http://gpbetapi.ru/pop_game', {
+                sport_name: sport
+            })
+            setPopEvent(data)
+        }
+        fetchEvent()
+    }, [sport])
+
+    useEffect(() => {
+        const fetchSportList = async () => {
+            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+            setSportList(data)
+        }
+        fetchSportList()
+    }, [])
+
     return (
-        <div id="two-right">
-            <h3>[Доделать]</h3>
-            <div id="pop-sob">
-                <div id="pop-sob-title">Популярные события</div>
-                <div id="pop-sob-menu">
-                    <div className="one-ps-menu active">
-                        <div className="global-ico gi-football"/>
-                        <div className="psm-title">Футбол</div>
+        <div id="pop-sob">
+            <div id="pop-sob-title">Популярные события</div>
+            <div id="pop-sob-menu">
+                {
+                    Object.keys(sportList)
+                        .map(sportGame => {
+                            if (sportGame !== 'all') {
+                                return (
+                                    <div
+                                        onClick={() => setSport(sportGame)}
+                                        className={`one-ps-menu ${sport === sportGame && 'active'}`}>
+                                        <img src={require(`../assets/svg/${sportGame}.svg`)} height={14}
+                                             alt={sportGame}/>
+                                        <div className="psm-title">{sportList[sportGame].ru_name}</div>
+                                    </div>
+                                )
+                            }
+                        })
+                }
+
+            </div>
+
+            <div className="one-pop-sob">
+                <div className="pop-sob-title-in">
+                    {
+                        //@ts-ignore
+                        COUNTRIES[popEvent?.cc]?.ru_name
+                    }. {popEvent?.league.name}</div>
+                <div className="pop-sob-teams">
+                    <div>
+                        <div className="global-ico gi-zenit"/>
+                        {popEvent?.home_team}
                     </div>
-                    <div className="one-ps-menu">
-                        <div className="global-ico gi-hockey"/>
-                        <div className="psm-title">Хоккей</div>
-                    </div>
-                    <div className="one-ps-menu">
-                        <div className="global-ico gi-basketball"/>
-                        <div className="psm-title">Баскетбол</div>
-                    </div>
-                    <div className="one-ps-menu">
-                        <div className="global-ico gi-football"/>
-                        <div className="psm-title">Еще</div>
-                    </div>
-                    <div className="one-ps-menu">
-                        <div className="global-ico gi-hockey"/>
-                        <div className="psm-title">Еще</div>
-                    </div>
-                    <div className="one-ps-menu">
-                        <div className="global-ico gi-basketball"/>
-                        <div className="psm-title">Еще</div>
-                    </div>
-                </div>
-                <h3>[Доделать]</h3>
-                <div className="one-pop-sob">
-                    <div className="pop-sob-title-in">Россия. Молодежное первенство</div>
-                    <div className="pop-sob-teams">
-                        <div>
-                            <div className="global-ico gi-zenit"/>
-                            ФК Химки
-                        </div>
-                        <div className="pst-hl"/>
-                        <div>
-                            <div className="global-ico gi-zenit"/>
-                            Зенит Санкт-Петербург
-                        </div>
-                    </div>
-                    <div className="pop-sob-koef">
-                        <div className="psk-one">
-                            <div className="psko-title">Победа 1</div>
-                            <div className="psko-number">15.00</div>
-                        </div>
-                        <div className="psk-one">
-                            <div className="psko-title">Ничья</div>
-                            <div className="psko-number">15.00</div>
-                        </div>
-                        <div className="psk-one">
-                            <div className="psko-title">Победа 2</div>
-                            <div className="psko-number">15.00</div>
-                        </div>
+                    <div className="pst-hl"/>
+                    <div>
+                        <div className="global-ico gi-zenit"/>
+                        {popEvent?.away_team}
                     </div>
                 </div>
-                <h3>[Доделать]</h3>
-                <div className="all-pop-sob">еще 135 котировок
-                    <div className="global-ico gi-arrow-right"/>
+                <div className="pop-sob-koef">
+                    <div className="psk-one">
+                        <div className="psko-title">Победа 1</div>
+                        <div
+                            onClick={() => {
+                                handleSetCurrentGame(popEvent)
+                                handleChangeShowModal(true)
+                                handleSetCurrentBet({
+                                    name: 'НИЧЬЯ',
+                                    //@ts-ignore
+                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["kf"],
+                                    //@ts-ignore
+                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["id"]
+                                })
+                            }}
+                            className="psko-number">{
+                            popEvent?.quotes?.["Исход матча(основное время)"][0]["kf"]
+                        }</div>
+                    </div>
+                    <div className="psk-one">
+                        <div className="psko-title">Ничья</div>
+                        <div
+                            onClick={() => {
+                                handleSetCurrentGame(popEvent)
+                                handleChangeShowModal(true)
+                                handleSetCurrentBet({
+                                    name: 'НИЧЬЯ',
+                                    //@ts-ignore
+                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["kf"],
+                                    //@ts-ignore
+                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["id"]
+                                })
+                            }}
+                            className="psko-number">{
+                            popEvent?.quotes?.["Исход матча(основное время)"][1]["kf"]
+                        }</div>
+                    </div>
+                    <div className="psk-one">
+                        <div className="psko-title">Победа 2</div>
+                        <div
+                            onClick={() => {
+                                handleSetCurrentGame(popEvent)
+                                handleChangeShowModal(true)
+                                handleSetCurrentBet({
+                                    name: 'НИЧЬЯ',
+                                    //@ts-ignore
+                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["kf"],
+                                    //@ts-ignore
+                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["id"]
+                                })
+                            }}
+                            className="psko-number">{
+                            popEvent?.quotes?.["Исход матча(основное время)"][2]["kf"]
+                        }</div>
+                    </div>
                 </div>
             </div>
+            <div className="all-pop-sob">еще {
+                //@ts-ignore
+                popEvent?.kot_count} котировок
+                <div className="global-ico gi-arrow-right"/>
+            </div>
+        </div>
+    )
+}
+
+const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
+    const [sportList, setSportList] = useState<any>({})
+
+    useEffect(() => {
+        const fetchSportList = async () => {
+            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+            setSportList(data)
+        }
+        fetchSportList()
+    }, [])
+
+    return (
+        <div id="two-right">
+
+            <PopEvent
+                handleSetCurrentGame={handleSetCurrentGame}
+                handleChangeShowModal={handleChangeShowModal}
+                handleSetCurrentBet={handleSetCurrentBet}
+            />
+
             <div id="right-col-menu">
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-football"></div>
-                    <Link to={'/soccer'} className="rcm-title">Футбол</Link>
-                </div>
-                <div className="one-rcm-menu">
-                    <div className="global-ico gi-hockey"></div>
-                    <Link to={'/icehockey'} className="rcm-title">Хоккей</Link>
-                </div>
+                {
+                    Object.keys(sportList)
+                        .map(sportGame => {
+                            if (sportGame !== 'all') {
+                                return (
+                                    <div className="one-rcm-menu">
+                                        <div className="global-ico gi-football">
+                                            <img src={require(`../assets/svg/${sportGame}.svg`)} height={50}
+                                                 alt={'soccer'}/>
+                                        </div>
+                                        <Link to={`/${sportGame}`}
+                                              className="rcm-title">{sportList[sportGame].ru_name}</Link>
+                                    </div>
+                                )
+                            }
+                        })
+                }
             </div>
         </div>
     )
@@ -207,29 +304,18 @@ const GameItem:
     )
 }
 
-// const GameItemChild: FC<any> = () => {
-//     return (
-//         <div className="toc-item-res res-child">
-//             <div className="tocir-num">2</div>
-//             <div className="tocir-name">Торпедо Москва – Сочи</div>
-//             <div className="tocir-results">1:3 (0-2-1-1)</div>
-//             <div className="torir-time">
-//                 <div className="global-ico gi-clock"/>
-//                 Сегодня в 15:00
-//             </div>
-//             <div className="torir-status"><span className="s-blue">Завершен</span></div>
-//             <div className="torir-comment">1-й гол. 2-я на 35 мин</div>
-//         </div>
-//     )
-// }
 
-const Filter: FC<any> = ({handleChangeParams, params}) => {
-    const sp_opts = [
-        // {value: 'all', label: 'Все', className: 'frb-one-opt'},
-        {value: 'basketball', label: 'Баскетбол', className: 'frb-one-opt'},
-        {value: 'icehockey', label: 'Хоккей', className: 'frb-one-opt'},
-        {value: 'soccer', label: 'Футбол', className: 'frb-one-opt'},
-    ]
+const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search}) => {
+    const [sportList, setSportList] = useState<any>({})
+
+
+    useEffect(() => {
+        const fetchSportList = async () => {
+            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+            setSportList(data)
+        }
+        fetchSportList()
+    }, [])
 
     const events_opts = [
         {value: 'all', label: 'Все события', className: 'frb-one-opt'},
@@ -241,7 +327,16 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
     return (
         <div className="filter-results">
             <div className="fr-bttns">
-                <Dropdown options={sp_opts} placeholder={'Вид спорта'}
+                <Dropdown options={
+                    Object.keys(sportList)
+                        .map(sportGame => {
+                            return ({
+                                value: sportGame,
+                                label: sportList[sportGame].ru_name,
+                                className: 'frb-one-opt'
+                            })
+                        })
+                } placeholder={'Вид спорта'}
                           controlClassName={'frb-one'}
                           menuClassName={'frb-one-opts'}
                           onChange={e => handleChangeParams({...params, sport_name: e.value})}
@@ -349,8 +444,17 @@ const Filter: FC<any> = ({handleChangeParams, params}) => {
                 </div>
             </div>
             <div className="fr-search">
-                <span>Поиск</span>
-                <div className="global-ico gi-search"/>
+                <input
+                    placeholder={'Поиск'}
+                    style={{
+                        border: 'none',
+                        outline: 'none',
+                        backgroundColor: 'transparent',
+                    }}
+                    onChange={handleSearchChange}
+                    type="text"
+                    value={search}
+                />
             </div>
         </div>
     )
@@ -360,7 +464,21 @@ const Results: FC<any> = () => {
         const {result} = useAppSelector(state => state.gameReducer)
         const [leagueList, setLeagueList] = useState({})
         const dispatch = useAppDispatch()
+        const {session} = useAppSelector(state => state.authReducer)
+        const [profile, setUserInfo] = useState<IProfileState>({
+            error: false,
+            message: null,
+            result: null,
+        })
         const [isLoading, setIsLoading] = useState(false)
+        const [search, setSearch] = useState('')
+        const [showModal, setShowModal] = useState(false)
+        const [currentGame, setCurrentGame] = useState<IGame | null>(null)
+        const [currentBet, setCurrentBet] = useState({
+            name: '',
+            kf: 0,
+            id: 0
+        })
         const [params, setParams] = useState({
             sport_name: 'all',
             game_status: 'all',
@@ -373,7 +491,8 @@ const Results: FC<any> = () => {
             beautiful_time_start: {
                 date: '-',
                 hours: '-'
-            }
+            },
+            search: '-'
         })
 
         const handleChangeParams = (params: {
@@ -388,11 +507,50 @@ const Results: FC<any> = () => {
             beautiful_time_start: {
                 date: string,
                 hours: string
-            }
+            },
+            search: string
         }) => {
             setParams({...params})
         }
 
+        const handleSearchChange = (e: any) => {
+            setSearch(e.target.value)
+            setParams({...params, search: '-'})
+            handleSearch(e.target.value)
+        }
+
+        const handleSearch = useCallback(
+            debounce((value: string) => {
+                setParams({
+                    ...params,
+                    search: value === '' ? '-' : value
+                })
+            }, 1000),
+            []
+        )
+
+        const handleChangeShowModal = (value: boolean) => {
+            setShowModal(value)
+        }
+
+        const handleSetCurrentGame = (bid: IGame) => {
+            setCurrentGame({...bid})
+        }
+
+        const handleSetCurrentBet = ({name, kf, id}: { name: string, kf: number, id: number }) => {
+            setCurrentBet({name, kf, id})
+        }
+
+
+        useEffect(() => {
+            const fetchUserInfo = async (session: string) => {
+                const data = await ApiService.getProfile(session)
+                setUserInfo(data)
+            }
+            if (session) {
+                fetchUserInfo(session)
+            }
+        }, [])
 
         useEffect(() => {
                 setIsLoading(true)
@@ -410,13 +568,9 @@ const Results: FC<any> = () => {
                     setIsLoading(false)
                 }
                 fetchLeagueList()
-                console.log(params)
             }
             , [params])
 
-        // @ts-ignore
-        // @ts-ignore
-        // @ts-ignore
         return (
             <div id="content-wr">
                 <div id="two-left">
@@ -424,12 +578,25 @@ const Results: FC<any> = () => {
                         <div id="pt-text">Результаты</div>
                         <div id="pt-stripe"/>
                     </div>
-                    {/*<h3>[Сделать формой с сортировкой]</h3>*/}
                     <div id="table-main">
 
+                        {
+                            currentGame && <ModalForm
+                                handleChangeShowModal={handleChangeShowModal}
+                                showModal={showModal}
+                                currentGame={currentGame}
+                                bet={currentBet}
+                                user={profile}
+                                //@ts-ignore
+                                session={session}
+                            />
+                        }
+
                         <Filter
+                            handleSearchChange={handleSearchChange}
                             handleChangeParams={handleChangeParams}
                             params={params}
+                            search={search}
                         />
 
                         {
@@ -463,10 +630,11 @@ const Results: FC<any> = () => {
                         }
                     </div>
                 </div>
-
-
-                {/*Доделать*/}
-                <RightBar/>
+                <RightBar
+                    handleSetCurrentGame={handleSetCurrentGame}
+                    handleChangeShowModal={handleChangeShowModal}
+                    handleSetCurrentBet={handleSetCurrentBet}
+                />
             </div>
         );
     }

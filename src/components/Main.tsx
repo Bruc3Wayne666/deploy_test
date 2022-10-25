@@ -293,13 +293,6 @@ const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
                                         <div
                                             onClick={() => handleChangeParams({...params, country: co})}
                                             className={`one-contry-f ${params.country === co && 'active'}`}
-                                            // style={{
-                                            //     display: 'flex',
-                                            //     justifyContent: 'space-evenly',
-                                            //     alignItems: 'center',
-                                            //     flexDirection: 'column',
-                                            //     maxHeight: 60
-                                            // }}
                                         >
                                             {
                                                 // @ts-ignore
@@ -344,7 +337,6 @@ const FilterCase: FC<any> = ({sport, handleChangeShowParam}) => {
 
 const Main: FC = () => {
     const {pathname} = useLocation()
-    console.log(pathname)
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
         message: null,
@@ -363,7 +355,8 @@ const Main: FC = () => {
         days: 10,
         one_day: 0,
         sort_number: false,
-        beautiful_time_start: '- -'
+        beautiful_time_start: '- -',
+        search: '-'
     })
     const [currentGame, setCurrentGame] = useState<IGame | null>(null)
     const [currentBet, setCurrentBet] = useState({
@@ -373,6 +366,7 @@ const Main: FC = () => {
     })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     const [showModal, setShowModal] = useState(false)
+    const [sportList, setSportList] = useState<any>({})
 
     const handleChangeParams = (params: {
         sport_name: string,
@@ -383,6 +377,7 @@ const Main: FC = () => {
         one_day: number,
         sort_number: boolean
         beautiful_time_start: string,
+        search: string
     }) => {
         setParams({...params})
     }
@@ -427,6 +422,14 @@ const Main: FC = () => {
         }
     }, [])
 
+    useEffect(() => {
+        const fetchSportList = async () => {
+            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+            setSportList(data)
+        }
+        fetchSportList()
+    }, [])
+
     // useEffect(() => {
     //     params.sport_name = (pathname === '' ? 'all' : pathname)
     // }, [])
@@ -442,31 +445,28 @@ const Main: FC = () => {
                 </div>
 
                 <div id="rec-menu">
-                    <div
-                        onClick={() => handleChangeParams({
-                            ...params,
-                            sport_name: 'soccer',
-                            country: 'all'
-                        })}
-                        className="one-rec-menu">
-                        <div className="global-ico gi-football">
-                            <img src={require(`../assets/svg/${'soccer'}.svg`)?.default} height={50} alt={'soccer'}/>
-                        </div>
-                        <div className="orm-title">Футбол</div>
-                    </div>
-                    <div
-                        onClick={() => handleChangeParams({
-                            ...params,
-                            sport_name: 'icehockey',
-                            country: 'all'
-                        })}
-                        className="one-rec-menu">
-                        <div className="global-ico gi-hockey">
-                            <img src={require(`../assets/svg/${'icehockey'}.svg`)?.default} height={50}
-                                 alt={'icehockey'}/>
-                        </div>
-                        <div className="orm-title">Хоккей</div>
-                    </div>
+                    {
+                        Object.keys(sportList)
+                            .map((sportGame: string) => {
+                                if (sportGame !== 'all') {
+                                    return (
+                                        <div
+                                            onClick={() => handleChangeParams({
+                                                ...params,
+                                                sport_name: sportGame,
+                                                country: 'all'
+                                            })}
+                                            className="one-rec-menu">
+                                            <div className="global-ico gi-football">
+                                                <img src={require(`../assets/svg/${sportGame}.svg`)} height={50}
+                                                     alt={sportGame}/>
+                                            </div>
+                                            <div className="orm-title">{sportList[sportGame].ru_name}</div>
+                                        </div>
+                                    )
+                                }
+                            })
+                    }
                 </div>
 
 
@@ -541,97 +541,169 @@ const Main: FC = () => {
             </div>
 
             <div id="two-right">
-                <h2>[что-то]</h2>
-                <div id="pop-sob">
-                    <div id="pop-sob-title">Популярные события</div>
-                    <div id="pop-sob-menu">
-                        <div className="one-ps-menu active">
-                            <div className="global-ico gi-football"></div>
-                            <div className="psm-title">Футбол</div>
-                        </div>
-                        <div className="one-ps-menu">
-                            <div className="global-ico gi-hockey"></div>
-                            <div className="psm-title">Хоккей</div>
-                        </div>
-                        <div className="one-ps-menu">
-                            <div className="global-ico gi-basketball"></div>
-                            <div className="psm-title">Баскетбол</div>
-                        </div>
-                        <div className="one-ps-menu">
-                            <div className="global-ico gi-football"></div>
-                            <div className="psm-title">Еще</div>
-                        </div>
-                        <div className="one-ps-menu">
-                            <div className="global-ico gi-hockey"></div>
-                            <div className="psm-title">Еще</div>
-                        </div>
-                        <div className="one-ps-menu">
-                            <div className="global-ico gi-basketball"></div>
-                            <div className="psm-title">Еще</div>
-                        </div>
-                    </div>
-                    <div className="one-pop-sob">
-                        <div className="pop-sob-title-in">Россия. Молодежное первенство</div>
-                        <div className="pop-sob-teams">
-                            <div>
-                                <div className="global-ico gi-zenit"></div>
-                                ФК Химки
-                            </div>
-                            <div className="pst-hl"></div>
-                            <div>
-                                <div className="global-ico gi-zenit"></div>
-                                Зенит Санкт-Петербург
-                            </div>
-                        </div>
-                        <div className="pop-sob-koef">
-                            <div className="psk-one">
-                                <div className="psko-title">Победа 1</div>
-                                <div className="psko-number">15.00</div>
-                            </div>
-                            <div className="psk-one">
-                                <div className="psko-title">Ничья</div>
-                                <div className="psko-number">15.00</div>
-                            </div>
-                            <div className="psk-one">
-                                <div className="psko-title">Победа 2</div>
-                                <div className="psko-number">15.00</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="all-pop-sob">еще 135 котировок
-                        <div className="global-ico gi-arrow-right"></div>
-                    </div>
-                </div>
+
+                <PopEvent
+                    handleSetCurrentGame={handleSetCurrentGame}
+                    handleChangeShowModal={handleChangeShowModal}
+                    handleSetCurrentBet={handleSetCurrentBet}
+                />
 
                 <div id="right-col-menu">
-                    <div
-                        onClick={() => handleChangeParams({
-                            ...params,
-                            sport_name: 'soccer',
-                            country: 'all'
-                        })}
-                        className="one-rcm-menu">
-                        <div className="global-ico gi-football">
-                            <img src={require(`../assets/svg/${'soccer'}.svg`)?.default} height={30} alt={'soccer'}/>
-                        </div>
-                        <div className="rcm-title">Футбол</div>
-                    </div>
-                    <div
-                        onClick={() => handleChangeParams({
-                            ...params,
-                            sport_name: 'icehockey',
-                            country: 'all'
-                        })}
-                        className="one-rcm-menu">
-                        <div className="global-ico gi-hockey">
-                            <img src={require(`../assets/svg/${'icehockey'}.svg`)?.default} height={30} alt={'soccer'}/>
-                        </div>
-                        <div className="rcm-title">Хоккей</div>
-                    </div>
+                    {
+                        Object.keys(sportList)
+                            .map(sportGame => {
+                                if (sportGame !== 'all'){
+                                    return (
+                                        <div
+                                            onClick={() => handleChangeParams({
+                                                ...params,
+                                                sport_name: sportGame,
+                                                country: 'all'
+                                            })}
+                                            className="one-rcm-menu">
+                                            <div className="global-ico gi-football">
+                                                <img src={require(`../assets/svg/${sportGame}.svg`)} height={30} alt={sportGame}/>
+                                            </div>
+                                            <div className="rcm-title">{sportList[sportGame].ru_name}</div>
+                                        </div>
+                                    )
+                                }
+                            })
+                    }
                 </div>
             </div>
         </div>
     );
 };
+
+
+const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
+    const [popEvent, setPopEvent] = useState<IGame | null>(null)
+    const [sportList, setSportList] = useState<any>({})
+    const [sport, setSport] = useState('icehockey')
+
+    useEffect(() => {
+        const fetchEvent = async () => {
+            const {data} = await axios.post('http://gpbetapi.ru/pop_game', {
+                sport_name: sport
+            })
+            setPopEvent(data)
+        }
+        fetchEvent()
+    }, [sport])
+
+    useEffect(() => {
+        const fetchSportList = async () => {
+            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+            setSportList(data)
+        }
+        fetchSportList()
+    }, [])
+
+    return (
+        <div id="pop-sob">
+            <div id="pop-sob-title">Популярные события</div>
+            <div id="pop-sob-menu">
+                {
+                    Object.keys(sportList)
+                        .map(sportGame => {
+                            if (sportGame !== 'all') {
+                                return (
+                                    <div
+                                        onClick={() => setSport(sportGame)}
+                                        className={`one-ps-menu ${sport === sportGame && 'active'}`}>
+                                        <img src={require(`../assets/svg/${sportGame}.svg`)} height={14}
+                                             alt={sportGame}/>
+                                        <div className="psm-title">{sportList[sportGame].ru_name}</div>
+                                    </div>
+                                )
+                            }
+                        })
+                }
+
+            </div>
+
+            <div className="one-pop-sob">
+                <div className="pop-sob-title-in">
+                    {
+                        //@ts-ignore
+                        COUNTRIES[popEvent?.cc]?.ru_name
+                    }. {popEvent?.league.name}</div>
+                <div className="pop-sob-teams">
+                    <div>
+                        <div className="global-ico gi-zenit"/>
+                        {popEvent?.home_team}
+                    </div>
+                    <div className="pst-hl"/>
+                    <div>
+                        <div className="global-ico gi-zenit"/>
+                        {popEvent?.away_team}
+                    </div>
+                </div>
+                <div className="pop-sob-koef">
+                    <div className="psk-one">
+                        <div className="psko-title">Победа 1</div>
+                        <div
+                            onClick={() => {
+                                handleSetCurrentGame(popEvent)
+                                handleChangeShowModal(true)
+                                handleSetCurrentBet({
+                                    name: 'НИЧЬЯ',
+                                    //@ts-ignore
+                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["kf"],
+                                    //@ts-ignore
+                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["id"]
+                                })
+                            }}
+                            className="psko-number">{
+                            popEvent?.quotes?.["Исход матча(основное время)"][0]["kf"]
+                        }</div>
+                    </div>
+                    <div className="psk-one">
+                        <div className="psko-title">Ничья</div>
+                        <div
+                            onClick={() => {
+                                handleSetCurrentGame(popEvent)
+                                handleChangeShowModal(true)
+                                handleSetCurrentBet({
+                                    name: 'НИЧЬЯ',
+                                    //@ts-ignore
+                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["kf"],
+                                    //@ts-ignore
+                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["id"]
+                                })
+                            }}
+                            className="psko-number">{
+                            popEvent?.quotes?.["Исход матча(основное время)"][1]["kf"]
+                        }</div>
+                    </div>
+                    <div className="psk-one">
+                        <div className="psko-title">Победа 2</div>
+                        <div
+                            onClick={() => {
+                                handleSetCurrentGame(popEvent)
+                                handleChangeShowModal(true)
+                                handleSetCurrentBet({
+                                    name: 'НИЧЬЯ',
+                                    //@ts-ignore
+                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["kf"],
+                                    //@ts-ignore
+                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["id"]
+                                })
+                            }}
+                            className="psko-number">{
+                            popEvent?.quotes?.["Исход матча(основное время)"][2]["kf"]
+                        }</div>
+                    </div>
+                </div>
+            </div>
+            <div className="all-pop-sob">еще {
+                //@ts-ignore
+                popEvent?.kot_count} котировок
+                <div className="global-ico gi-arrow-right"/>
+            </div>
+        </div>
+    )
+}
 
 export default Main;
