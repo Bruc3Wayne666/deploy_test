@@ -54,6 +54,7 @@ export const ModalForm: FC<{
                 right: 0,
                 bottom: 0,
                 backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                zIndex: 99
             },
             content: {
                 minWidth: 400,

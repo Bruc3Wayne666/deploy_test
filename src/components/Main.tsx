@@ -457,8 +457,8 @@ const Main: FC = () => {
                                                 country: 'all'
                                             })}
                                             className="one-rec-menu">
-                                            <div className="global-ico gi-football">
-                                                <img src={require(`../assets/svg/${sportGame}.svg`)} height={50}
+                                            <div className="global-ico">
+                                                <img src={require(`../assets/images/${sportGame}.png`)} height={50}
                                                      alt={sportGame}/>
                                             </div>
                                             <div className="orm-title">{sportList[sportGame].ru_name}</div>
@@ -561,9 +561,10 @@ const Main: FC = () => {
                                                 country: 'all'
                                             })}
                                             className="one-rcm-menu">
-                                            <div className="global-ico gi-football">
-                                                <img src={require(`../assets/svg/${sportGame}.svg`)} height={30} alt={sportGame}/>
-                                            </div>
+                                            {/*<div className="global-ico gi-football">*/}
+                                                <img src={require(`../assets/images/${sportGame}.png`)} height={20}
+                                                     alt={sportGame} style={{marginRight: 12}}/>
+                                            {/*</div>*/}
                                             <div className="rcm-title">{sportList[sportGame].ru_name}</div>
                                         </div>
                                     )
@@ -612,7 +613,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                     <div
                                         onClick={() => setSport(sportGame)}
                                         className={`one-ps-menu ${sport === sportGame && 'active'}`}>
-                                        <img src={require(`../assets/svg/${sportGame}.svg`)} height={14}
+                                        <img src={require(`../assets/images/${sportGame}.png`)} height={12}
                                              alt={sportGame}/>
                                         <div className="psm-title">{sportList[sportGame].ru_name}</div>
                                     </div>
@@ -631,12 +632,14 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                     }. {popEvent?.league.name}</div>
                 <div className="pop-sob-teams">
                     <div>
-                        <div className="global-ico gi-zenit"/>
+                        <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10} style={{marginRight: 20}}/>
+                        &nbsp;
                         {popEvent?.home_team}
                     </div>
                     <div className="pst-hl"/>
                     <div>
-                        <div className="global-ico gi-zenit"/>
+                        <img src={popEvent?.away_team_logo} alt={popEvent?.away_team} height={10} style={{marginRight: 20}}/>
+                        &nbsp;
                         {popEvent?.away_team}
                     </div>
                 </div>
@@ -648,7 +651,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 handleSetCurrentGame(popEvent)
                                 handleChangeShowModal(true)
                                 handleSetCurrentBet({
-                                    name: 'НИЧЬЯ',
+                                    name: 'П1',
                                     //@ts-ignore
                                     kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["kf"],
                                     //@ts-ignore
@@ -684,7 +687,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 handleSetCurrentGame(popEvent)
                                 handleChangeShowModal(true)
                                 handleSetCurrentBet({
-                                    name: 'НИЧЬЯ',
+                                    name: 'П2',
                                     //@ts-ignore
                                     kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["kf"],
                                     //@ts-ignore

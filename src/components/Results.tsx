@@ -49,7 +49,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                     <div
                                         onClick={() => setSport(sportGame)}
                                         className={`one-ps-menu ${sport === sportGame && 'active'}`}>
-                                        <img src={require(`../assets/svg/${sportGame}.svg`)} height={14}
+                                        <img src={require(`../assets/images/${sportGame}.png`)} height={12}
                                              alt={sportGame}/>
                                         <div className="psm-title">{sportList[sportGame].ru_name}</div>
                                     </div>
@@ -68,12 +68,14 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                     }. {popEvent?.league.name}</div>
                 <div className="pop-sob-teams">
                     <div>
-                        <div className="global-ico gi-zenit"/>
+                        <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10} style={{marginRight: 20}}/>
+                        &nbsp;
                         {popEvent?.home_team}
                     </div>
                     <div className="pst-hl"/>
                     <div>
-                        <div className="global-ico gi-zenit"/>
+                        <img src={popEvent?.away_team_logo} alt={popEvent?.away_team} height={10} style={{marginRight: 20}}/>
+                        &nbsp;
                         {popEvent?.away_team}
                     </div>
                 </div>
@@ -85,7 +87,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 handleSetCurrentGame(popEvent)
                                 handleChangeShowModal(true)
                                 handleSetCurrentBet({
-                                    name: 'НИЧЬЯ',
+                                    name: 'П1',
                                     //@ts-ignore
                                     kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["kf"],
                                     //@ts-ignore
@@ -121,7 +123,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 handleSetCurrentGame(popEvent)
                                 handleChangeShowModal(true)
                                 handleSetCurrentBet({
-                                    name: 'НИЧЬЯ',
+                                            name: 'П2',
                                     //@ts-ignore
                                     kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["kf"],
                                     //@ts-ignore
@@ -170,10 +172,10 @@ const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                             if (sportGame !== 'all') {
                                 return (
                                     <div className="one-rcm-menu">
-                                        <div className="global-ico gi-football">
-                                            <img src={require(`../assets/svg/${sportGame}.svg`)} height={50}
-                                                 alt={'soccer'}/>
-                                        </div>
+                                        {/*<div className="global-ico gi-football">*/}
+                                        <img src={require(`../assets/images/${sportGame}.png`)} height={20}
+                                             alt={sportGame} style={{marginRight: 12}}/>
+                                        {/*</div>*/}
                                         <Link to={`/${sportGame}`}
                                               className="rcm-title">{sportList[sportGame].ru_name}</Link>
                                     </div>
@@ -305,18 +307,7 @@ const GameItem:
 }
 
 
-const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search}) => {
-    const [sportList, setSportList] = useState<any>({})
-
-
-    useEffect(() => {
-        const fetchSportList = async () => {
-            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-            setSportList(data)
-        }
-        fetchSportList()
-    }, [])
-
+const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search, sportList}) => {
     const events_opts = [
         {value: 'all', label: 'Все события', className: 'frb-one-opt'},
         {value: 'not started', label: 'НЕ НАЧАЛСЯ', className: 'frb-one-opt'},
@@ -336,12 +327,14 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
                                 className: 'frb-one-opt'
                             })
                         })
-                } placeholder={'Вид спорта'}
+                }
+                          placeholder={'Вид спорта'}
                           controlClassName={'frb-one'}
                           menuClassName={'frb-one-opts'}
                           onChange={e => handleChangeParams({...params, sport_name: e.value})}
                 />
-                <Dropdown options={events_opts} placeholder={'Все события'}
+                <Dropdown options={events_opts}
+                          placeholder={'Все события'}
                           controlClassName={'frb-one'}
                           menuClassName={'frb-one-opts'}
                           onChange={e => handleChangeParams({...params, game_status: e.value})}
@@ -461,6 +454,7 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
 }
 
 const Results: FC<any> = () => {
+        const [sportList, setSportList] = useState<any>({})
         const {result} = useAppSelector(state => state.gameReducer)
         const [leagueList, setLeagueList] = useState({})
         const dispatch = useAppDispatch()
@@ -515,18 +509,23 @@ const Results: FC<any> = () => {
 
         const handleSearchChange = (e: any) => {
             setSearch(e.target.value)
-            setParams({...params, search: '-'})
+            setParams({
+                ...params,
+                search: e.target.value
+            })
             handleSearch(e.target.value)
         }
 
         const handleSearch = useCallback(
             debounce((value: string) => {
+                console.log(params)
                 setParams({
                     ...params,
                     search: value === '' ? '-' : value
                 })
+                console.log(params)
             }, 1000),
-            []
+            [params]
         )
 
         const handleChangeShowModal = (value: boolean) => {
@@ -554,6 +553,10 @@ const Results: FC<any> = () => {
 
         useEffect(() => {
                 setIsLoading(true)
+                const fetchSportList = async () => {
+                    const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+                    setSportList(data)
+                }
                 dispatch(getGames({
                     ...params, beautiful_time_start: `${
                         params.beautiful_time_start.date
@@ -567,6 +570,7 @@ const Results: FC<any> = () => {
                     setLeagueList(data)
                     setIsLoading(false)
                 }
+                fetchSportList()
                 fetchLeagueList()
             }
             , [params])
@@ -597,6 +601,7 @@ const Results: FC<any> = () => {
                             handleChangeParams={handleChangeParams}
                             params={params}
                             search={search}
+                            sportList={sportList}
                         />
 
                         {

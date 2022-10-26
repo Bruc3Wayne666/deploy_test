@@ -107,145 +107,145 @@ body {
     aspect-ratio: 1 / 1;
 }
 
-/*.gi-coin {*/
-/*    background-image: url(images/gi-coin.png);*/
-/*}*/
+.gi-coin {
+    background-image: url(assets/images/gi-coin.png);
+}
 
-/*.gi-coin-w {*/
-/*    background-image: url(images/gi-coin-w.png);*/
-/*}*/
+.gi-coin-w {
+    background-image: url(assets/images/gi-coin-w.png);
+}
 
-/*.gi-lk {*/
-/*    background-image: url(images/gi-lk.png);*/
-/*}*/
+.gi-lk {
+    background-image: url(assets/images/gi-lk.png);
+}
 
-/*.gi-gift {*/
-/*    background-image: url(images/gi-gift.png);*/
-/*}*/
+.gi-gift {
+    background-image: url(assets/images/gi-gift.png);
+}
 
-/*.gi-phone {*/
-/*    background-image: url(images/gi-phone.png);*/
-/*}*/
+.gi-phone {
+    background-image: url(assets/images/gi-phone.png);
+}
 
-/*.gi-vip {*/
-/*    background-image: url(images/gi-vip.png);*/
-/*}*/
+.gi-vip {
+    background-image: url(assets/images/gi-vip.png);
+}
 
-/*.gi-basketball {*/
-/*    background-image: url(images/gi-basketball.png);*/
-/*}*/
+.gi-basketball {
+    background-image: url(assets/images/basketball.png);
+}
 
-/*.gi-football {*/
-/*    background-image: url(images/gi-football.png);*/
-/*}*/
+.gi-football {
+    background-image: url(assets/images/soccer.png);
+}
 
-/*.gi-hockey {*/
-/*    background-image: url(images/gi-hockey.png);*/
-/*}*/
+.gi-hockey {
+    background-image: url(assets/images/icehockey.png);
+}
 
-/*.gi-star {*/
-/*    background-image: url(images/gi-star.png);*/
-/*}*/
+.gi-star {
+    background-image: url(assets/images/gi-star.png);
+}
 
-/*.gi-rus {*/
-/*    background-image: url(images/gi-rus.png);*/
-/*}*/
+.gi-rus {
+    background-image: url(assets/images/gi-rus.png);
+}
 
-/*.gi-zenit {*/
-/*    background-image: url(images/gi-zenit.png);*/
-/*}*/
+.gi-zenit {
+    background-image: url(assets/images/gi-zenit.png);
+}
 
-/*.gi-arrow-right {*/
-/*    background-image: url(images/gi-arrow-right.png);*/
-/*}*/
+.gi-arrow-right {
+    background-image: url(assets/images/gi-arrow-right.png);
+}
 
-/*.gi-arrow-bot {*/
-/*    background-image: url(images/gi-arrow-bot.png);*/
-/*}*/
+.gi-arrow-bot {
+    background-image: url(assets/images/gi-arrow-bot.png);
+}
 
-/*.gi-arrow-bot-g {*/
-/*    background-image: url(images/gi-arrow-bot-g.png);*/
-/*}*/
+.gi-arrow-bot-g {
+    background-image: url(assets/images/gi-arrow-bot-g.png);
+}
 
-/*.gi-volleyball {*/
-/*    background-image: url(images/gi-volleyball.png);*/
-/*}*/
+.gi-volleyball {
+    background-image: url(assets/images/volleyball.png);
+}
 
-/*.gi-tennis {*/
-/*    background-image: url(images/gi-tennis.png);*/
-/*}*/
+.gi-tennis {
+    background-image: url(assets/images/tennis.png);
+}
 
-/*.gi-baseball {*/
-/*    background-image: url(images/gi-baseball.png);*/
-/*}*/
+.gi-baseball {
+    background-image: url(assets/images/baseball.png);
+}
 
-/*.gi-golf {*/
-/*    background-image: url(images/gi-golf.png);*/
-/*}*/
+.gi-golf {
+    background-image: url(assets/images/golf.png);
+}
 
-/*.gi-rus-biliard {*/
-/*    background-image: url(images/gi-rus-biliard.png);*/
-/*}*/
+.gi-rus-biliard {
+    background-image: url(assets/images/rus_biliard.png);
+}
 
-/*.gi-american-f {*/
-/*    background-image: url(images/gi-american-f.png);*/
-/*}*/
+.gi-american-f {
+    background-image: url(assets/images/american_football.png);
+}
 
-/*.gi-search {*/
-/*    background-image: url(images/gi-search.png);*/
-/*}*/
+.gi-search {
+    background-image: url(assets/images/gi-search.png);
+}
 
-/*.gi-clock {*/
-/*    background-image: url(images/gi-clock.png);*/
-/*}*/
+.gi-clock {
+    background-image: url(assets/images/gi-clock.png);
+}
 
-/*.gi-lk-profile {*/
-/*    background-image: url(images/gi-lk-profile.png);*/
-/*}*/
+.gi-lk-profile {
+    background-image: url(assets/images/gi-lk-profile.png);
+}
 
-/*.gi-lk-popvip {*/
-/*    background-image: url(images/gi-lk-popvip.png);*/
-/*}*/
+.gi-lk-popvip {
+    background-image: url(assets/images/gi-lk-popvip.png);
+}
 
-/*.gi-lk-history {*/
-/*    background-image: url(images/gi-lk-history.png);*/
-/*}*/
+.gi-lk-history {
+    background-image: url(assets/images/gi-lk-history.png);
+}
 
-/*.gi-lk-stat {*/
-/*    background-image: url(images/gi-lk-stat.png);*/
-/*}*/
+.gi-lk-stat {
+    background-image: url(assets/images/gi-lk-stat.png);
+}
 
-/*.gi-lk-mypary {*/
-/*    background-image: url(images/gi-lk-mypary.png);*/
-/*}*/
+.gi-lk-mypary {
+    background-image: url(assets/images/gi-lk-mypary.png);
+}
 
-/*.gi-lk-bonus {*/
-/*    background-image: url(images/gi-lk-bonus.png);*/
-/*}*/
+.gi-lk-bonus {
+    background-image: url(assets/images/gi-lk-bonus.png);
+}
 
-/*.gi-lk-tehpod {*/
-/*    background-image: url(images/gi-lk-tehpod.png);*/
-/*}*/
+.gi-lk-tehpod {
+    background-image: url(assets/images/gi-lk-tehpod.png);
+}
 
-/*.gi-shedule {*/
-/*    background-image: url(images/gi-shedule.png);*/
-/*}*/
+.gi-shedule {
+    background-image: url(assets/images/gi-shedule.png);
+}
 
-/*.gi-tick {*/
-/*    background-image: url(images/gi-tick.png);*/
-/*}*/
+.gi-tick {
+    background-image: url(assets/images/gi-tick.png);
+}
 
-/*.gi-telega {*/
-/*    background-image: url(images/gi-telega.png);*/
-/*}*/
+.gi-telega {
+    background-image: url(assets/images/gi-telega.png);
+}
 
-/*.gi-gmail {*/
-/*    background-image: url(images/gi-gmail.png);*/
-/*}*/
+.gi-gmail {
+    background-image: url(assets/images/gi-gmail.png);
+}
 
-/*.gi-mail {*/
-/*    background-image: url(images/gi-mail.png);*/
-/*}*/
+.gi-mail {
+    background-image: url(assets/images/gi-mail.png);
+}
 
 header {
     max-width: 1185px;
@@ -357,6 +357,7 @@ header {
     text-transform: uppercase;
     /*font-family: helB;*/
     font-family: sans-serif;
+    font-weight: bold;
     margin-left: 10px;
     border-left: 1px solid #CC9933;
     padding: 8px 0 10px 8px;
@@ -486,27 +487,40 @@ header {
     margin-bottom: 20px;
 }
 
+/*.one-rec-menu {*/
+/*    width: 9.5%;*/
+/*    border: 1px solid #E6E6E6;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    padding: 20px 20px;*/
+/*    background: #087537;*/
+/*    border-radius: 5px;*/
+/*    cursor: pointer;*/
+/*    margin-right: 8px;*/
+/*    font-weight: bold;*/
+/*    position: relative;*/
+/*}*/
+
 .one-rec-menu {
     width: 9.5%;
     border: 1px solid #E6E6E6;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 20px 20px;
+    justify-content: center;
+    padding: 10px 0 12px;
     background: #087537;
     border-radius: 5px;
     cursor: pointer;
-    margin-right: 8px;
     font-weight: bold;
-    position: relative;
 }
 
 .one-rec-menu img {
-    position: absolute;
     top: 7px;
-    width: 30px;
-    right: 26px;
+    width: 32px;
+    height: 24px;
 }
 
 .one-rec-menu .global-ico {
@@ -519,8 +533,11 @@ header {
     font-size: 10px;
     /*font-family: helB;*/
     font-family: sans-serif;
-    position: absolute;
     bottom: 8px;
+}
+
+.orm-title {
+
 }
 
 #table-main {
@@ -813,7 +830,7 @@ header {
 .pop-sob-teams > div.pst-hl {
     height: 1px;
     background: #087537;
-    width: calc(100% - 28px);
+    width: 100%;
     margin: 5px 0 5px 28px;
 }
 
@@ -866,13 +883,23 @@ header {
     border-radius: 10px;
 }
 
+/*.one-rcm-menu {*/
+/*    border-left: 1px solid #E6E6E6;*/
+/*    padding: 0 0 15px 15px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    font-size: 10px;*/
+/*    !*font-family: helB;*!*/
+/*    font-family: sans-serif;*/
+/*    cursor: pointer;*/
+/*}*/
+
 .one-rcm-menu {
     border-left: 1px solid #E6E6E6;
     padding: 0 0 15px 15px;
     display: flex;
     align-items: center;
     font-size: 10px;
-    /*font-family: helB;*/
     font-family: sans-serif;
     cursor: pointer;
 }
@@ -1900,4 +1927,21 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+
+
+
+
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+    width: 0;
+    border-radius: 13px;
+    background-clip: padding-box;
+    border: 10px solid transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 10px;
 }

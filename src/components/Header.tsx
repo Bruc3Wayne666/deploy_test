@@ -81,11 +81,10 @@ const Header: FC = () => {
                                     <div className="sll-text">Крипто-букмекерская<br/>контора</div>
                                 </div>
                                 <div className="slider-bot-text">
-                                    <div>
-                                                        <span
-                                                            style={{fontWeight: 'bold'}}>2 000 <div
-                                                            className="global-ico gi-coin"
-                                                        /></span> новым игрокам<br/>в приложении
+                                    <div style={{fontWeight: 'bold'}}>
+                                                        <span>2 000
+                                                            <div className="global-ico gi-coin"/></span> новым
+                                        игрокам<br/>в приложении
                                     </div>
                                     {/*<SimpleSlider />*/}
                                     <div id="dots-wr">
