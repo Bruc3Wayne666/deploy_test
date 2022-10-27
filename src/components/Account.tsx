@@ -62,7 +62,6 @@ const Profile: FC<any> = (props: any) => {
 }
 
 const Account: FC<any> = ({children}) => {
-    // const { error, message, result } = useAppSelector(state => state.profileReducer)
     const [{result}, setUserInfo] = useState<IProfileState>({
         error: false,
         message: null,
@@ -71,7 +70,6 @@ const Account: FC<any> = ({children}) => {
     const {session} = useAppSelector(state => state.authReducer)
     const [favoriteLeagues, setFavoriteLeagues] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    // const dispatch = useAppDispatch()
 
 
     useEffect(() => {
@@ -89,11 +87,6 @@ const Account: FC<any> = ({children}) => {
             fetchUserInfo(session)
         }
     }, [])
-    // useEffect(() => {
-    //     if (session) {
-    //         dispatch(getProfile({session}))
-    //     }
-    // }, [session])
 
     return (
         <div id="content-wr">

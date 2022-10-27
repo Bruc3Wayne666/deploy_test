@@ -3,6 +3,7 @@ import RightBar from "./RightBar";
 import LeftBar from "./LeftBar";
 import {useAppSelector} from "../hooks/redux";
 import axios from "axios";
+import Dropdown from "react-dropdown";
 
 
 interface IBetsProps {
@@ -12,7 +13,14 @@ interface IBetsProps {
 }
 
 
-const Bets: FC<IBetsProps> = ({handleChangeType,handleChangePeriod, bets}) => {
+const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}) => {
+    const period_opts = [
+        {value: 'all', label: 'Показать все', className: 'frb-one-opt'},
+        {value: 'hour', label: 'Показать за последний час', className: 'frb-one-opt'},
+        {value: 'today', label: 'Показать за сегодня', className: 'frb-one-opt'},
+        {value: 'week', label: 'Показать за последнюю неделю', className: 'frb-one-opt'},
+        {value: 'month', label: 'Показать за последний месяц', className: 'frb-one-opt'},
+    ]
     const res = {
         'undefined': {
             name: 'Не рассчитано',
@@ -33,52 +41,65 @@ const Bets: FC<IBetsProps> = ({handleChangeType,handleChangePeriod, bets}) => {
                 <div className="lkt-filter">
                     <div className="lktf-bttns">
                         <div onClick={() => handleChangeType('bets')}
-                             className="lktfb-one">Пари</div>
+                             className="lktfb-one">Пари
+                        </div>
                         <div onClick={() => handleChangeType('operations')}
-                             className="lktfb-one">Операции</div>
+                             className="lktfb-one">Операции
+                        </div>
                     </div>
                     <div className="lktf-shedule">
                         <div className="lktfs-bttn">
-                            <div className="global-ico gi-shedule"/>
-                            <span>Показать за неделю</span>
-                            <div className="global-ico gi-arrow-bot-g"/>
+                            {/*<div className="global-ico gi-shedule"/>*/}
+
+                            <Dropdown
+                                arrowClosed={true}
+                                options={period_opts}
+                                placeholder={'Все события'}
+                                // controlClassName={'frb-one'}
+                                // menuClassName={'frb-one-opts'}
+                                onChange={e => handleChangePeriod(e.value)}
+                            />
+
+                            {/*<div className="global-ico gi-arrow-bot-g"/>*/}
                         </div>
                     </div>
                 </div>
                 <div className="lkt-row lktr-title">
                     <div className="lktr-date">Дата</div>
                     <div className="lktr-time">Время</div>
-                    <div className="lktr-time">Название события</div>
+                    <div className="lktr-name">Название события</div>
                     <div className="lktr-type">Тип пари</div>
+                    <div className="lktr-pari-name">Название пари</div>
                     <div className="lktr-sum">Сумма</div>
                     <div className="lktr-result">Реультат</div>
                 </div>
 
                 {
                     bets.map((bid: any) => (
-                            <div className="lkt-row">
-                                <div className="lktr-date">{bid[6].split(' ')[0]}</div>
-                                <div className="lktr-time">{bid[6].split(' ')[1]}</div>
-                                <div className="lktr-name">{bid[0]}</div>
-                                <div className="lktr-type">{bid[1]}</div>
-                                <div className="lktr-sum">{bid[3]}
-                                    <div className="global-ico gi-coin"/>
-                                </div>
-                                <div
-                                    style={{
-                                        padding: 4,
-                                        //@ts-ignore
-                                        backgroundColor: res[bid[5]].style,
-                                        borderRadius: 6,
-                                        textAlign: 'center'
-                                }}
-                                    className="lktr-result">{
-                                    //@ts-ignore
-                                    res[bid[5]].name
-                                }
-                                </div>
+                        <div className="lkt-row">
+                            <div className="lktr-date">{bid[6].split(' ')[0]}</div>
+                            <div className="lktr-time">{bid[6].split(' ')[1]}</div>
+                            <div className="lktr-name">{bid[0]}</div>
+                            <div className="lktr-type">{bid[1]}</div>
+                            <div className="lktr-pari-name">{bid[2]}</div>
+                            <div className="lktr-sum">{bid[3]}
+                                <div className="global-ico gi-coin"/>
                             </div>
-                        ))
+                            <div
+                                style={{
+                                    padding: 4,
+                                    //@ts-ignore
+                                    backgroundColor: res[bid[5]].style,
+                                    borderRadius: 6,
+                                    textAlign: 'center'
+                                }}
+                                className="lktr-result">{
+                                //@ts-ignore
+                                res[bid[5]].name
+                            }
+                            </div>
+                        </div>
+                    ))
                 }
             </div>
         </div>
@@ -93,9 +114,11 @@ const Operations: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}
                 <div className="lkt-filter">
                     <div className="lktf-bttns">
                         <div onClick={() => handleChangeType('bets')}
-                            className="lktfb-one">Пари</div>
+                             className="lktfb-one">Пари
+                        </div>
                         <div onClick={() => handleChangeType('operations')}
-                            className="lktfb-one">Операции</div>
+                             className="lktfb-one">Операции
+                        </div>
                     </div>
                     <div className="lktf-shedule">
                         <div className="lktfs-bttn">
@@ -113,22 +136,6 @@ const Operations: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}
                     <div className="lktr-result">Остаток</div>
                 </div>
                 <h1>[soon]</h1>
-                {/*{*/}
-                {/*    result.bid_history*/}
-                {/*        .map((bid: any) => (*/}
-                {/*            <div className="lkt-row">*/}
-                {/*                <div className="lktr-date">{bid[6].split(' ')[0]}</div>*/}
-                {/*                <div className="lktr-time">{bid[6].split(' ')[1]}</div>*/}
-                {/*                <div className="lktr-type">Двойной исход</div>*/}
-                {/*                <div className="lktr-sum">10 000*/}
-                {/*                    <div className="global-ico gi-coin"/>*/}
-                {/*                </div>*/}
-                {/*                <div className="lktr-result">10 000*/}
-                {/*                    <div className="global-ico gi-coin"/>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        ))*/}
-                {/*}*/}
             </div>
         </div>
     )
@@ -144,8 +151,6 @@ const BetsScreen: FC<any> = (props: any) => {
         const fetchBets = async () => {
             const {data} = await axios.post('http://gpbetapi.ru/bid_history', {
                 period,
-                login: localStorage.getItem('login'),
-                password: localStorage.getItem('password'),
                 user_id: session
             })
             setBets(data)
