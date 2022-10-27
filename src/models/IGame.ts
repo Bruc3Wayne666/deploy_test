@@ -2,7 +2,7 @@ export interface IGame {
     game_id: number;
     league: {
         id: string;
-        name: string
+        name: string;
     };
     name: string;
     quotes?: {

@@ -8,6 +8,7 @@ import {IProfileState} from '../store/reducers/profile/profileSlice';
 import {ApiService} from "../api";
 import spinner from '../assets/spinner.svg'
 import axios from "axios";
+import {COUNTRIES} from "../assets/consts";
 
 
 const Profile: FC<any> = (props: any) => {
@@ -39,7 +40,18 @@ const Profile: FC<any> = (props: any) => {
                     {
                         props.leagues
                             .map((league: any) => (
-                                <Link className="lkm-item" to="/">{league[0]}</Link>
+                                <Link style={{display: 'flex', alignItems: 'center'}} className="lkm-item" to="/">
+                                    <img src={
+                                        //@ts-ignore
+                                        COUNTRIES[league[1]].svg_url}
+                                         alt={league[1]}
+                                         height={12}
+                                         style={{marginRight: 4}}
+                                    />
+                                    {
+                                    //@ts-ignore
+                                    COUNTRIES[league[1]].ru_name}.&nbsp;{league[0]
+                                }</Link>
                             ))
                     }
                 </div>

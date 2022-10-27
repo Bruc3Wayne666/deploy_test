@@ -261,7 +261,7 @@ const GameItem:
     // const time = new Date(time_start)
 
     const styles = {
-        'НЕ НАЧАЛСЯ': '',
+        'НЕ НАЧАЛСЯ': 's-orange',
         'LIVE': 's-red',
         'ЗАВЕРШЁН': 's-blue'
     }

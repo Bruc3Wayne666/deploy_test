@@ -1,9 +1,11 @@
-import React, {FC, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {IGame} from "../models/IGame";
 // @ts-ignore
 import Modal from 'react-modal';
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
+import axios from "axios";
+
 
 export const ModalForm: FC<{
     handleChangeShowModal: (val: boolean) => void, showModal: boolean, currentGame: IGame, bet: {
@@ -19,13 +21,31 @@ export const ModalForm: FC<{
           user,
           session
       }) => {
-    const {league, name} = currentGame
+    const {
+        league,
+        away_team,
+        home_team,
+        away_team_logo,
+        home_team_logo
+    } = currentGame
     const [sumValue, setSumValue] = useState(0)
     const [bidSuccess, setBidSuccess] = useState(false)
+    const [possible, setPossible] = useState(0)
+
+    useEffect(() => {
+        const fetchPossible = async () => {
+            const {data} = await axios.post('http://gpbetapi.ru/kf_kot', {
+                id_kot: String(bet.id),
+                sum_bid: sumValue
+            })
+            setPossible(data)
+        }
+        fetchPossible()
+    }, [sumValue])
 
     const handleSubmit = () => {
         // @ts-ignore
-        if (user.result?.balance >= sumValue){
+        if (user.result?.balance >= sumValue) {
             ApiService.placeBid({
                 user_id: session,
                 id_kot: String(bet.id),
@@ -76,6 +96,17 @@ export const ModalForm: FC<{
         }
         }
     >
+        <div
+            className='times'
+            onClick={() => {
+                setSumValue(0)
+                handleChangeShowModal(false)
+                setBidSuccess(false)
+            }}
+        >
+            &times;
+        </div>
+
         {bidSuccess ?
             <div
                 style={{
@@ -130,7 +161,51 @@ export const ModalForm: FC<{
                     <div className="teams">
                 <span>
                     {/*<img src={require('../assets/sp.png')} height={24} alt=""/>*/}
-                    <span className='team'>{name}</span>
+                    <div
+                        style={{
+                            // border: '1px solid white',
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <div style={{
+                            flex: 1,
+                            fontSize: 14,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
+                             className='team'>
+                            <img
+                                src={home_team_logo}
+                                alt={''}
+                                height={80}
+                                style={{marginBottom: 12}}
+                            />
+                            {home_team}
+                    </div>
+
+                        <div style={{flex: 1, fontSize: 56}} className="name">
+                            <span style={{fontSize: 56}} className='linear-wipe'>VS</span>
+                        </div>
+
+                        <div style={{
+                            flex: 1,
+                            fontSize: 14,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
+                             className='team'>
+                        <img
+                            src={away_team_logo}
+                            alt={''}
+                            width={80}
+                            style={{marginBottom: 12}}
+                        />
+                            {away_team}
+                    </div>
+                    </div>
                     {/*<img src={require('../assets/cs.png')} height={24} alt=""/>*/}
                 </span>
                         {/*<div className="status">LIVE</div>*/}
@@ -170,7 +245,7 @@ export const ModalForm: FC<{
                     </div>
                     <div className="binf">
                         Возможный выигрыш
-                        <span className='win'>{Math.round(bet.kf * sumValue * 100) / 100} RUB</span>
+                        <span className='win'>{possible} CWD</span>
                     </div>
                 </div>
                 <div className="modal_start">

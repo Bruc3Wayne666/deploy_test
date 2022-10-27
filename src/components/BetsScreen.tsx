@@ -13,6 +13,20 @@ interface IBetsProps {
 
 
 const Bets: FC<IBetsProps> = ({handleChangeType,handleChangePeriod, bets}) => {
+    const res = {
+        'undefined': {
+            name: 'Не рассчитано',
+            style: '#CD7F32'
+        },
+        'win': {
+            name: 'Выиграно',
+            style: '#50C878'
+        },
+        'lose': {
+            name: 'Проигрыш',
+            style: 'red'
+        }
+    }
     return (
         <div id="lk-mid">
             <div className="lk-table">
@@ -50,7 +64,19 @@ const Bets: FC<IBetsProps> = ({handleChangeType,handleChangePeriod, bets}) => {
                                 <div className="lktr-sum">{bid[3]}
                                     <div className="global-ico gi-coin"/>
                                 </div>
-                                <div className="lktr-result">{bid[5]}</div>
+                                <div
+                                    style={{
+                                        padding: 4,
+                                        //@ts-ignore
+                                        backgroundColor: res[bid[5]].style,
+                                        borderRadius: 6,
+                                        textAlign: 'center'
+                                }}
+                                    className="lktr-result">{
+                                    //@ts-ignore
+                                    res[bid[5]].name
+                                }
+                                </div>
                             </div>
                         ))
                 }

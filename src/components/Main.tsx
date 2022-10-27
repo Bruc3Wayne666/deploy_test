@@ -148,7 +148,6 @@ const GameItem:
                     showParam !== 'ТОТАЛ' ?
                         <>
                             <div className="tocirs-flcol tocirs-matchtime">
-                                <div className="tocirsmt-title">placeholder</div>
                                 <div className="tocirsmt-line">Основное время</div>
                             </div>
                             <div className="tocirs-flcol tocirs-koef">
