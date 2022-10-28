@@ -147,15 +147,15 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
 }
 
 const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
-    const [sportList, setSportList] = useState<any>({})
-
-    useEffect(() => {
-        const fetchSportList = async () => {
-            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-            setSportList(data)
-        }
-        fetchSportList()
-    }, [])
+    // const [sportList, setSportList] = useState<any>({})
+    //
+    // useEffect(() => {
+    //     const fetchSportList = async () => {
+    //         const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+    //         setSportList(data)
+    //     }
+    //     fetchSportList()
+    // }, [])
 
     return (
         <div id="two-right">
@@ -168,7 +168,7 @@ const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
 
             <div id="right-col-menu">
                 {
-                    Object.keys(sportList)
+                    Object.keys(SPORTS)
                         .map(sportGame => {
                             if (sportGame !== 'all') {
                                 return (
@@ -178,7 +178,9 @@ const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                              alt={sportGame} style={{marginRight: 12}}/>
                                         {/*</div>*/}
                                         <Link to={`/${sportGame}`}
-                                              className="rcm-title">{sportList[sportGame].ru_name}</Link>
+                                              className="rcm-title">{
+                                            //@ts-ignore
+                                            SPORTS[sportGame].ru_name}</Link>
                                     </div>
                                 )
                             }
