@@ -57,7 +57,7 @@ export class ApiService {
             search: string
         }
     ): Promise<GamePayloadType> {
-        const {data} = await instance.post('game_list', params)
+        const {data} = await instance.post('game_list', {...params, one_day: -1})
         return data
     }
 
