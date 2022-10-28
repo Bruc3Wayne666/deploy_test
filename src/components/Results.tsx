@@ -2,16 +2,17 @@ import React, {FC, useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
-import Dropdown from 'react-dropdown';
 import spinner from '../assets/spinner.svg'
 import axios from "axios";
-import {COUNTRIES} from "../assets/consts";
+import {COUNTRIES, SPORTS} from "../assets/consts";
 import {Link} from "react-router-dom";
 // @ts-ignore
 import debounce from "lodash/debounce";
 import {ModalForm} from "./ModalForm";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
+import {FilterDropDown} from "./CustomDropdown";
+import Dropdown from "react-dropdown";
 
 
 const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
@@ -315,9 +316,36 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
         {value: 'end', label: 'ЗАВЕРШЁН', className: 'frb-one-opt'},
     ]
 
+    // const [showSportDropdown, setShowSportDropdown] = useState(false)
+    // const [showEventDropdown, setShowEventDropdown] = useState(false)
+
     return (
         <div className="filter-results">
             <div className="fr-bttns">
+
+                {/*<FilterDropDown*/}
+                {/*    title={'Вид спорта'}*/}
+                {/*    showDropdown={showSportDropdown}*/}
+                {/*    setShowDropdown={() => setShowSportDropdown(!showSportDropdown)}*/}
+                {/*    items={*/}
+                {/*    Object.keys(sportList)*/}
+                {/*        .map(sportGame => ({*/}
+                {/*            value: sportGame,*/}
+                {/*            label: sportList[sportGame].ru_name,*/}
+                {/*            className: 'frb-one-opt'*/}
+                {/*        }))*/}
+                {/*    }*/}
+                {/*    changeParams={(val: string) => handleChangeParams({...params, sport_name: val})}*/}
+                {/*/>*/}
+
+                {/*<FilterDropDown*/}
+                {/*    title={'Все события'}*/}
+                {/*    showDropdown={showEventDropdown}*/}
+                {/*    setShowDropdown={() => setShowEventDropdown(!showEventDropdown)}*/}
+                {/*    items={events_opts}*/}
+                {/*    changeParams={(val: string) => handleChangeParams({...params, game_status: val})}*/}
+                {/*/>*/}
+
                 <Dropdown options={
                     Object.keys(sportList)
                         .map(sportGame => {
@@ -333,12 +361,16 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
                           menuClassName={'frb-one-opts'}
                           onChange={e => handleChangeParams({...params, sport_name: e.value})}
                 />
+
+
                 <Dropdown options={events_opts}
                           placeholder={'Все события'}
                           controlClassName={'frb-one'}
                           menuClassName={'frb-one-opts'}
                           onChange={e => handleChangeParams({...params, game_status: e.value})}
                 />
+
+
                 <div className="frb-one"><span>Дата</span>
                     <div className="global-ico gi-arrow-bot"/>
                     <input
@@ -553,10 +585,10 @@ const Results: FC<any> = () => {
 
         useEffect(() => {
                 setIsLoading(true)
-                const fetchSportList = async () => {
-                    const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-                    setSportList(data)
-                }
+                // const fetchSportList = async () => {
+                //     const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+                //     setSportList(data)
+                // }
                 dispatch(getGames({
                     ...params, beautiful_time_start: `${
                         params.beautiful_time_start.date
@@ -570,7 +602,7 @@ const Results: FC<any> = () => {
                     setLeagueList(data)
                     setIsLoading(false)
                 }
-                fetchSportList()
+                // fetchSportList()
                 fetchLeagueList()
             }
             , [params])
@@ -601,7 +633,7 @@ const Results: FC<any> = () => {
                             handleChangeParams={handleChangeParams}
                             params={params}
                             search={search}
-                            sportList={sportList}
+                            sportList={SPORTS}
                         />
 
                         {

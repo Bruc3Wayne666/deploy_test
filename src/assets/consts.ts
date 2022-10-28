@@ -1229,3 +1229,5 @@ export const COUNTRIES = {
             'svg_url': 'https://spoyer.ru/api/icons/countries/zw.svg'
         }
 }
+
+export const SPORTS = {'all': {'count': 19, 'ru_name': 'Все'}, 'basketball': {'count': 4, 'ru_name': 'Баскетбол'}, 'icehockey': {'count': 15, 'ru_name': 'Хоккей'}, 'soccer': {'count': 15, 'ru_name': 'Футбол'}}

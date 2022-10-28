@@ -214,7 +214,11 @@ export const ModalForm: FC<{
                     </div>
                     <div className="totals">
                 <span>
-                1Х2 {bet.name}
+                {
+                    (bet.name !== 'П1' && bet.name !== 'П2' && bet.name !== 'НИЧЬЯ') ? 'ТОТАЛ' : '1X2'
+                }
+                &nbsp;
+                 {bet.name}
                 </span>
                         <span className='kf'>
                     {bet.kf}

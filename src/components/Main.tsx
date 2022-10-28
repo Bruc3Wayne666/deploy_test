@@ -7,8 +7,9 @@ import {ModalForm} from './ModalForm';
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import spinner from "../assets/spinner.svg";
-import {COUNTRIES} from '../assets/consts'
+import {COUNTRIES, SPORTS} from '../assets/consts'
 import {useLocation} from "react-router-dom";
+import {TotalsDropdown} from "./CustomDropdown";
 
 
 const LeagueItem:
@@ -88,7 +89,6 @@ const GameItem:
         handleSetCurrentGame: (val: IGame) => void,
         handleSetCurrentBet: ({kf, name, id}: { kf: number, name: string, id: number }) => void
     }> = ({
-              ind,
               game,
               showParam,
               handleChangeShowModal,
@@ -97,6 +97,7 @@ const GameItem:
           }) => {
 
     const currentDate = new Date()
+    const [showTotals, setShowTotals] = useState(false)
 
     return (
         <div className="toc-item">
@@ -143,7 +144,9 @@ const GameItem:
                 </div>
             </div>
             <div className="toc-i-right-side">
-                <div className="tocirs-someinfo"><span>Матч дня</span></div>
+
+                {/*<div className="tocirs-someinfo"><span>Матч дня</span></div>*/}
+
                 {
                     showParam !== 'ТОТАЛ' ?
                         <>
@@ -225,40 +228,28 @@ const GameItem:
                                     }
                                 </div>
                             </div>
-                        </> :
-                        <>
-                            <div className="tocirs-flcol tocirs-matchtime">
-                                <div className="tocirsmt-title">placeholder</div>
-                            </div>
-                            <div className="totals">
-                                <div>
-                                    <h3>ТОТАЛЫ</h3>
-                                </div>
-                                <div style={{display: 'flex'}}>
-                                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                                        {
-                                            // @ts-ignore
-                                            game.quotes && game.quotes['ТОТАЛ']
-                                                .map((item: any, index: number) => {
-                                                    if (index % 2 === 0) return <div className='total'>
-                                                        {item.name}
-                                                    </div>
-                                                })
-                                        }
+                        </>
 
-                                    </div>
-                                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                                        {
-                                            // @ts-ignore
-                                            game.quotes && game.quotes['ТОТАЛ']
-                                                .map((item: any, index: number) => {
-                                                    if (index % 2 === 1) return <div className='total'>
-                                                        {item.name}
-                                                    </div>
-                                                })
+                        :
+
+                        <>
+                            <div className="totals">
+                                {
+                                    game.quotes &&
+                                    <TotalsDropdown
+                                        title={showTotals ? 'Скрыть' : 'Показать все тоталы'}
+                                        showDropdown={showTotals}
+                                        setShowDropdown={setShowTotals}
+                                        items={
+                                        //@ts-ignore
+                                        game.quotes['ТОТАЛ']
                                         }
-                                    </div>
-                                </div>
+                                        handleSetCurrentGame={handleSetCurrentGame}
+                                        handleSetCurrentBet={handleSetCurrentBet}
+                                        handleChangeShowModal={handleChangeShowModal}
+                                        game={game}
+                                    />
+                                }
                             </div>
                         </>
                 }
@@ -310,7 +301,8 @@ const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
 const FilterCase: FC<any> = ({sport, handleChangeShowParam}) => {
     const sports = {
         'soccer': 'Футбол',
-        'icehockey': 'Хоккей'
+        'icehockey': 'Хоккей',
+        'basketball': 'Баскетбол',
     }
     return (
         <div className="filter-name-cases">
@@ -365,7 +357,7 @@ const Main: FC = () => {
     })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     const [showModal, setShowModal] = useState(false)
-    const [sportList, setSportList] = useState<any>({})
+    // const [sportList, setSportList] = useState<any>({})
 
     const handleChangeParams = (params: {
         sport_name: string,
@@ -421,13 +413,13 @@ const Main: FC = () => {
         }
     }, [])
 
-    useEffect(() => {
-        const fetchSportList = async () => {
-            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-            setSportList(data)
-        }
-        fetchSportList()
-    }, [])
+    // useEffect(() => {
+    //     const fetchSportList = async () => {
+    //         const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+    //         setSportList(data)
+    //     }
+    //     fetchSportList()
+    // }, [])
 
     // useEffect(() => {
     //     params.sport_name = (pathname === '' ? 'all' : pathname)
@@ -445,7 +437,7 @@ const Main: FC = () => {
 
                 <div id="rec-menu">
                     {
-                        Object.keys(sportList)
+                        Object.keys(SPORTS)
                             .map((sportGame: string) => {
                                 if (sportGame !== 'all') {
                                     return (
@@ -460,7 +452,9 @@ const Main: FC = () => {
                                                 <img src={require(`../assets/images/${sportGame}.png`)} height={50}
                                                      alt={sportGame}/>
                                             </div>
-                                            <div className="orm-title">{sportList[sportGame].ru_name}</div>
+                                            <div className="orm-title">{
+                                                //@ts-ignore
+                                                SPORTS[sportGame].ru_name}</div>
                                         </div>
                                     )
                                 }
@@ -549,9 +543,11 @@ const Main: FC = () => {
 
                 <div id="right-col-menu">
                     {
-                        Object.keys(sportList)
+                        //@ts-ignore
+                        Object.keys(SPORTS)
                             .map(sportGame => {
-                                if (sportGame !== 'all'){
+                                if (sportGame !== 'all') {
+                                    // @ts-ignore
                                     return (
                                         <div
                                             onClick={() => handleChangeParams({
@@ -561,10 +557,12 @@ const Main: FC = () => {
                                             })}
                                             className="one-rcm-menu">
                                             {/*<div className="global-ico gi-football">*/}
-                                                <img src={require(`../assets/images/${sportGame}.png`)} height={20}
-                                                     alt={sportGame} style={{marginRight: 12}}/>
+                                            <img src={require(`../assets/images/${sportGame}.png`)} height={20}
+                                                 alt={sportGame} style={{marginRight: 12}}/>
                                             {/*</div>*/}
-                                            <div className="rcm-title">{sportList[sportGame].ru_name}</div>
+                                            <div className="rcm-title">{
+                                                //@ts-ignore
+                                                SPORTS[sportGame].ru_name}</div>
                                         </div>
                                     )
                                 }
@@ -631,13 +629,15 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                     }. {popEvent?.league.name}</div>
                 <div className="pop-sob-teams">
                     <div>
-                        <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10} style={{marginRight: 20}}/>
+                        <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10}
+                             style={{marginRight: 20}}/>
                         &nbsp;
                         {popEvent?.home_team}
                     </div>
                     <div className="pst-hl"/>
                     <div>
-                        <img src={popEvent?.away_team_logo} alt={popEvent?.away_team} height={10} style={{marginRight: 20}}/>
+                        <img src={popEvent?.away_team_logo} alt={popEvent?.away_team} height={10}
+                             style={{marginRight: 20}}/>
                         &nbsp;
                         {popEvent?.away_team}
                     </div>

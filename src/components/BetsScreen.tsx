@@ -3,17 +3,18 @@ import RightBar from "./RightBar";
 import LeftBar from "./LeftBar";
 import {useAppSelector} from "../hooks/redux";
 import axios from "axios";
-import Dropdown from "react-dropdown";
+import {BidsFilterDropDown} from "./CustomDropdown";
 
 
 interface IBetsProps {
     handleChangeType: (value: string) => void;
     handleChangePeriod: (value: string) => void;
     bets: any;
+    period: string;
 }
 
 
-const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}) => {
+const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets, period}) => {
     const period_opts = [
         {value: 'all', label: 'Показать все', className: 'frb-one-opt'},
         {value: 'hour', label: 'Показать за последний час', className: 'frb-one-opt'},
@@ -35,6 +36,7 @@ const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}) => {
             style: 'red'
         }
     }
+    const [showDropdown, setShowDropdown] = useState(false)
     return (
         <div id="lk-mid">
             <div className="lk-table">
@@ -48,16 +50,25 @@ const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}) => {
                         </div>
                     </div>
                     <div className="lktf-shedule">
-                        <div className="lktfs-bttn">
-                            {/*<div className="global-ico gi-shedule"/>*/}
+                        <div className="lktfs-bttn" style={{display: 'flex', justifyContent: 'center'}}>
+                            <div className="global-ico gi-shedule"/>
 
-                            <Dropdown
-                                arrowClosed={true}
-                                options={period_opts}
-                                placeholder={'Все события'}
-                                // controlClassName={'frb-one'}
-                                // menuClassName={'frb-one-opts'}
-                                onChange={e => handleChangePeriod(e.value)}
+                            {/*<Dropdown*/}
+                            {/*    arrowClosed={true}*/}
+                            {/*    options={period_opts}*/}
+                            {/*    placeholder={'Все события'}*/}
+                            {/*    // controlClassName={'frb-one'}*/}
+                            {/*    // menuClassName={'frb-one-opts'}*/}
+                            {/*    onChange={e => handleChangePeriod(e.value)}*/}
+                            {/*/>*/}
+
+                            <BidsFilterDropDown
+                                title={'Все события'}
+                                showDropdown={showDropdown}
+                                setShowDropdown={setShowDropdown}
+                                items={period_opts}
+                                handleChangePeriod={handleChangePeriod}
+                                period={period}
                             />
 
                             {/*<div className="global-ico gi-arrow-bot-g"/>*/}
@@ -71,6 +82,7 @@ const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}) => {
                     <div className="lktr-type">Тип пари</div>
                     <div className="lktr-pari-name">Название пари</div>
                     <div className="lktr-sum">Сумма</div>
+                    <div className="lktr-kf">Коэффициент</div>
                     <div className="lktr-result">Реультат</div>
                 </div>
 
@@ -79,12 +91,26 @@ const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets}) => {
                         <div className="lkt-row">
                             <div className="lktr-date">{bid[6].split(' ')[0]}</div>
                             <div className="lktr-time">{bid[6].split(' ')[1]}</div>
-                            <div className="lktr-name">{bid[0]}</div>
-                            <div className="lktr-type">{bid[1]}</div>
+                            <div className="lktr-name">
+                                {
+                                    bid[0].split(' VS ')[0]
+                                }
+                                <br/>
+                                {
+                                    bid[0].split(' VS ')[1]
+                                }
+                            </div>
+                            <div className="lktr-type">
+                                {
+                                    bid[1] === 'Исход матча(основное время)'
+                                    ? 'Исход' : 'Тотал'
+                                }
+                            </div>
                             <div className="lktr-pari-name">{bid[2]}</div>
                             <div className="lktr-sum">{bid[3]}
                                 <div className="global-ico gi-coin"/>
                             </div>
+                            <div className="lktr-kf">{bid[4]}</div>
                             <div
                                 style={{
                                     padding: 4,
@@ -173,11 +199,13 @@ const BetsScreen: FC<any> = (props: any) => {
                 handleChangeType={handleChangeType}
                 handleChangePeriod={handleChangePeriod}
                 bets={bets}
+                period={period}
             />}
             {type === 'operations' && <Operations
                 handleChangeType={handleChangeType}
                 handleChangePeriod={handleChangePeriod}
                 bets={bets}
+                period={period}
             />}
             <RightBar/>
         </div>
