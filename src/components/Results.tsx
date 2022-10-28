@@ -64,9 +64,10 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
             <div className="one-pop-sob">
                 <div className="pop-sob-title-in">
                     {
+                        popEvent &&
                         //@ts-ignore
                         COUNTRIES[popEvent?.cc]?.ru_name
-                    }. {popEvent?.league.name}</div>
+                    }. {popEvent?.league?.name}</div>
                 <div className="pop-sob-teams">
                     <div>
                         <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10} style={{marginRight: 20}}/>

@@ -32,17 +32,66 @@ interface IBidsFilterDropdownProps {
 
 export const TotalsDropdown: FC<ITotalsDropdownProps> = ({title, showDropdown, setShowDropdown, items, game, handleChangeShowModal, handleSetCurrentGame, handleSetCurrentBet}) => {
     return (
-        <div className='dropdown-wrapper'>
+        <div className='dropdown-wrapper' style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <button onClick={() => setShowDropdown(!showDropdown)} className="trigger-button">
                 {title}
             </button>
 
 
-            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div style={{display: 'flex', flexDirection: 'row', width: 400}}>
 
                 <ul className={showDropdown ? "active" : ""}>
                     {items.map(({name, kf, id}, index) => {
-                            return (
+                            return index % 2 === 0 && (
+                                <li>
+                                    <div
+                                        onClick={() => {
+                                            handleSetCurrentGame(game)
+                                            handleChangeShowModal(true)
+                                            handleSetCurrentBet({name, kf, id})
+                                        }}
+                                        style={{
+                                            cursor: 'pointer',
+                                            marginTop: 8,
+                                            paddingLeft: 42,
+                                            display: 'flex',
+                                            justifyContent: 'center'
+                                        }}
+                                    >
+                            <span
+                                className='total'
+                                style={{
+                                    cursor: 'pointer',
+                                    flex: 1
+                                }}
+                            >
+                                {name}
+                            </span>
+                                        &nbsp;
+                                        <span
+                                            style={{
+                                                cursor: 'pointer',
+                                                flex: 1,
+                                                backgroundColor: 'yellowgreen',
+                                                padding: 3,
+                                                borderRadius: 3,
+                                                marginBottom: 4,
+                                                margin: 3,
+                                                color: '#222'
+                                            }}
+                                        >
+                                {kf}
+                            </span>
+                                    </div>
+                                </li>
+                            )
+                        }
+                    )}
+                </ul>
+
+                <ul className={showDropdown ? "active" : ""}>
+                    {items.map(({name, kf, id}, index) => {
+                            return index % 2 === 1 && (
                                 <li>
                                     <div
                                         onClick={() => {

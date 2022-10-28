@@ -2131,6 +2131,6 @@ ul {
 }
 
 ul.active {
-    height: 280px;
+    height: 240px;
     overflow: auto;
 }

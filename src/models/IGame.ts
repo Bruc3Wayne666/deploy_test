@@ -1,4 +1,5 @@
 export interface IGame {
+    day_game: boolean;
     game_id: number;
     league: {
         id: string;

@@ -145,7 +145,9 @@ const GameItem:
             </div>
             <div className="toc-i-right-side">
 
-                {/*<div className="tocirs-someinfo"><span>Матч дня</span></div>*/}
+                {
+                    game.day_game && <div className="tocirs-someinfo"><span>Матч дня</span></div>
+                }
 
                 {
                     showParam !== 'ТОТАЛ' ?
@@ -436,6 +438,17 @@ const Main: FC = () => {
                 </div>
 
                 <div id="rec-menu">
+                    <div
+                        onClick={() => handleChangeParams({
+                            ...params,
+                            sport_name: 'all',
+                            country: 'all'
+                        })}
+                        className="one-rec-menu">
+                        <div className="orm-title">{
+                            //@ts-ignore
+                            SPORTS['all'].ru_name}</div>
+                    </div>
                     {
                         Object.keys(SPORTS)
                             .map((sportGame: string) => {
@@ -626,7 +639,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                     {
                         //@ts-ignore
                         COUNTRIES[popEvent?.cc]?.ru_name
-                    }. {popEvent?.league.name}</div>
+                    }. {popEvent?.league?.name}</div>
                 <div className="pop-sob-teams">
                     <div>
                         <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10}
