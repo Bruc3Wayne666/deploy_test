@@ -30,14 +30,30 @@ const App: FC = () => {
         }
     }, [])
 
-    if (Number(session) === -1) return <>
+    if (Number(session) === -1) return <div
+        style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            height: '100vh'
+        }}
+    >
         {/*<Navigate to={'/profile'}/>*/}
     <h1>Что-то пошло не так</h1>
         <p>Возможно данного пользователя не существует.</p>
         <p>Либо это может быть связано с неполадками на сервере.</p>
         <p>Попробуйте очистить localstorage, а затем перезагрузить страницу и войти заново, нажав по ссылке.</p>
-        <a onClick={() => {window.location.href="/profile"}}>Попробовтаь снова</a>
-    </>
+        <a
+            style={{
+                fontSize: 34,
+                color: 'lightblue',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                marginTop: 20
+            }}
+            onClick={() => {window.location.href="/profile"}}>Попробовтаь снова</a>
+    </div>
 
 
     return (
