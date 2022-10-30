@@ -176,14 +176,14 @@ const GameItem:
                                     className="tocirsmt-line"
                                 >
                                     {
-                                        game.quotes && game.quotes['Исход матча(основное время)'][0]["kf"]
+                                        (game.quotes && game.quotes['Исход матча(основное время)'][0]) && game.quotes["Исход матча(основное время)"][0]['kf']
                                     }
                                 </div>
                             </div>
                             <div className="tocirs-flcol tocirs-koef">
                                 <div className="tocirsmt-title">
                                     {
-                                        game.quotes && game.quotes['Исход матча(основное время)'][1]["name"]
+                                        (game.quotes && game.quotes['Исход матча(основное время)'][1]) && game.quotes['Исход матча(основное время)'][1]["name"]
                                     }
                                 </div>
                                 <div
@@ -201,7 +201,7 @@ const GameItem:
                                     className="tocirsmt-line"
                                 >
                                     {
-                                        game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"]
+                                        (game.quotes && game.quotes['Исход матча(основное время)'][1]) && game.quotes["Исход матча(основное время)"][1]["kf"]
                                     }
                                 </div>
                             </div>
@@ -226,7 +226,7 @@ const GameItem:
                                     className="tocirsmt-line"
                                 >
                                     {
-                                        game.quotes && game.quotes['Исход матча(основное время)'][2]["kf"]
+                                        (game.quotes && game.quotes['Исход матча(основное время)'][2]) && game.quotes['Исход матча(основное время)'][2]["kf"]
                                     }
                                 </div>
                             </div>
@@ -243,8 +243,8 @@ const GameItem:
                                         showDropdown={showTotals}
                                         setShowDropdown={setShowTotals}
                                         items={
-                                        //@ts-ignore
-                                        game.quotes['ТОТАЛ']
+                                            //@ts-ignore
+                                            game.quotes['ТОТАЛ']
                                         }
                                         handleSetCurrentGame={handleSetCurrentGame}
                                         handleSetCurrentBet={handleSetCurrentBet}
