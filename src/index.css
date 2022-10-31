@@ -2199,7 +2199,6 @@ ul.active {
 
     .one-rec-menu {
         width: 25%;
-
     }
 
     #table-main {
@@ -2283,5 +2282,7 @@ ul.active {
         font-size: 8px;
     }
 
-
+    .auth-form {
+        width: 100%;
+    }
 }
