@@ -63,7 +63,7 @@ const App: FC = () => {
                 {
                     session ?
                         <Routes>
-                            <Route path={'/'} element={<Main/>}/>
+                            <Route path={'/deploy_test'} element={<Main/>}/>
                             <Route path={'/:sport'} element={<Main/>}/>
                             <Route path={'profile'} element={<Account/>}/>
                             <Route path={'discounts'} element={<Discounts/>}/>
@@ -73,7 +73,7 @@ const App: FC = () => {
                         </Routes>
                         :
                         <Routes>
-                            <Route path={'/'} element={<Main/>}/>
+                            <Route path={'/deploy_test'} element={<Main/>}/>
                             <Route path={'/:sport'} element={<Main/>}/>
                             <Route path={'profile'} element={<Authorize/>}/>
                             <Route path={'results'} element={<Results/>}/>

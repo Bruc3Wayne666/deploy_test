@@ -1,6 +1,7 @@
 {
   "name": "bk_client",
   "version": "0.1.0",
+  "homepage": "https://Bruc3Wayne666.github.io/deploy_test",
   "private": false,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
