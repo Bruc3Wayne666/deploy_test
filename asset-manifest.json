@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/deploy_test/static/css/main.af0b958c.css",
-    "main.js": "/deploy_test/static/js/main.aaa6503f.js",
+    "main.css": "/deploy_test/static/css/main.8e655ff5.css",
+    "main.js": "/deploy_test/static/js/main.ec7e8e56.js",
     "static/media/head-slider-1.png": "/deploy_test/static/media/head-slider-1.7b75b132dcf562437082.png",
+    "static/media/accia-2.png": "/deploy_test/static/media/accia-2.2ebd179ad81a96ba7c01.png",
+    "static/media/accia-1.png": "/deploy_test/static/media/accia-1.8fb8157b9e94feff3d7a.png",
     "static/media/stavki-cyber.png": "/deploy_test/static/media/stavki-cyber.04b4b5ff7dfefd1fb72b.png",
     "static/media/helvetica_regular.otf": "/deploy_test/static/media/helvetica_regular.3129c8de867eabeb701e.otf",
+    "static/media/card.png": "/deploy_test/static/media/card.8a64f854ed36fcdc0da4.png",
     "static/media/helvetica_bold.otf": "/deploy_test/static/media/helvetica_bold.0291ee3b787868611527.otf",
     "static/media/ava.png": "/deploy_test/static/media/ava.d96cbcdc21c3772b63ef.png",
-    "static/media/soccer.svg": "/deploy_test/static/media/soccer.a2ae8c0c8e10b700b2739bbee372cc67.svg",
-    "static/media/icehockey.svg": "/deploy_test/static/media/icehockey.c93ca7f098e306498287efed7419fd68.svg",
     "index.html": "/deploy_test/index.html",
     "static/media/spinner.svg": "/deploy_test/static/media/spinner.e61f62c433d94337cf424fe9673a2c65.svg",
-    "main.af0b958c.css.map": "/deploy_test/static/css/main.af0b958c.css.map",
-    "main.aaa6503f.js.map": "/deploy_test/static/js/main.aaa6503f.js.map"
+    "main.8e655ff5.css.map": "/deploy_test/static/css/main.8e655ff5.css.map",
+    "main.ec7e8e56.js.map": "/deploy_test/static/js/main.ec7e8e56.js.map"
   },
   "entrypoints": [
-    "static/css/main.af0b958c.css",
-    "static/js/main.aaa6503f.js"
+    "static/css/main.8e655ff5.css",
+    "static/js/main.ec7e8e56.js"
   ]
 }
