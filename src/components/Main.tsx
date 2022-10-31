@@ -671,6 +671,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 })
                             }}
                             className="psko-number">{
+                            popEvent?.quotes?.['Исход матча(основное время)'][0] &&
                             popEvent?.quotes?.["Исход матча(основное время)"][0]["kf"]
                         }</div>
                     </div>
@@ -689,6 +690,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 })
                             }}
                             className="psko-number">{
+                            popEvent?.quotes?.['Исход матча(основное время)'][1] &&
                             popEvent?.quotes?.["Исход матча(основное время)"][1]["kf"]
                         }</div>
                     </div>
@@ -707,6 +709,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 })
                             }}
                             className="psko-number">{
+                            popEvent?.quotes?.['Исход матча(основное время)'][2] &&
                             popEvent?.quotes?.["Исход матча(основное время)"][2]["kf"]
                         }</div>
                     </div>

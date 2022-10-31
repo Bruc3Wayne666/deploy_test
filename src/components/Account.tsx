@@ -38,7 +38,7 @@ const Profile: FC<any> = (props: any) => {
                 <div id="lk-lk-menu">
                     <div id="lk-lk-menu-title">Любимые лиги</div>
                     {
-                        props.leagues
+                        props.leagues && props.leagues
                             .map((league: any) => (
                                 <Link style={{display: 'flex', alignItems: 'center'}} className="lkm-item" to="/">
                                     <img src={

@@ -2134,3 +2134,154 @@ ul.active {
     height: 240px;
     overflow: auto;
 }
+
+@media (max-width: 1080px) {
+    /*body {*/
+    /*    max-width: 1080px;*/
+    /*}*/
+    #top-header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+    }
+    #mid-header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #mh-slider {
+        display: none;
+    }
+    /*    flex-direction: column;*/
+    /*    width: 100%;*/
+    /*}*/
+
+    #mh-slider-menu {
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .mhslm-one {
+        margin-bottom: 8px;
+    }
+
+    #th-menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #th-lk {
+        width: 100%;
+    }
+
+    #content-wr {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #two-left {
+        width: 100%;
+    }
+
+    #two-right {
+        width: 100%;
+    }
+
+    #rec-menu {
+        width: 100%;
+        /*border: 3px solid white;*/
+    }
+
+    .one-rec-menu {
+        width: 25%;
+
+    }
+
+    #table-main {
+        width: 100%;
+    }
+
+    .toc-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .toc-i-left-side {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 33%;
+    }
+
+    .toc-i-right-side {
+        width: 67%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tocirs-someinfo {
+        width: 100%;
+    }
+
+    .totals {
+        width: 100%;
+    }
+
+    /*#two-left {*/
+    /*    max-height: 200px;*/
+    /*}*/
+
+    .table-one-cat {
+        height: 800px;
+        overflow-y: scroll;
+    }
+
+    .filter-results {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        /*flex-wrap: wrap;*/
+    }
+
+    .fr-bttns {
+        width: 100%;
+        margin-bottom: 36px;
+    }
+
+    .fr-search {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    #lk-left {
+        width: 100%;
+    }
+
+    #lk-mid {
+        width: 100%;
+    }
+
+    #lk-right {
+        width: 100%;
+    }
+
+    #lk-mid.lk-vip {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lk-vip-col {
+        width: 100%;
+    }
+
+    .lktr-title {
+        font-size: 8px;
+    }
+
+
+}

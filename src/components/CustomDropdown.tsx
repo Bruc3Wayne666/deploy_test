@@ -41,7 +41,7 @@ export const TotalsDropdown: FC<ITotalsDropdownProps> = ({title, showDropdown, s
             <div style={{display: 'flex', flexDirection: 'row', width: 400}}>
 
                 <ul className={showDropdown ? "active" : ""}>
-                    {items.map(({name, kf, id}, index) => {
+                    {items && items.map(({name, kf, id}, index) => {
                             return index % 2 === 0 && (
                                 <li>
                                     <div
@@ -90,7 +90,7 @@ export const TotalsDropdown: FC<ITotalsDropdownProps> = ({title, showDropdown, s
                 </ul>
 
                 <ul className={showDropdown ? "active" : ""}>
-                    {items.map(({name, kf, id}, index) => {
+                    {items && items.map(({name, kf, id}, index) => {
                             return index % 2 === 1 && (
                                 <li>
                                     <div
@@ -182,7 +182,7 @@ export const FilterDropDown: FC<IFilterDropdownProps> = ({title, showDropdown, s
                 >
 
 
-                    {items.map(({value, label}, index) => {
+                    {items && items.map(({value, label}, index) => {
                             return (
                                 <li>
                                     <div
@@ -262,7 +262,7 @@ export const BidsFilterDropDown: FC<IBidsFilterDropdownProps> = ({title, showDro
                         flexDirection: 'column',
                         justifyContent: 'space-evenly',
                 }}>
-                    {items.map(item => {
+                    {items && items.map(item => {
                             return (
                                 <li style={{cursor: 'pointer', fontSize: 10}} onClick={() => handleChangePeriod(item.value)}>
                                     {item.label}

@@ -66,6 +66,9 @@ export const ModalForm: FC<{
             setBidSuccess(false)
             handleChangeShowModal(false)
         }}
+
+        className='modal'
+
         style={{
             overlay: {
                 position: 'fixed',
@@ -74,15 +77,15 @@ export const ModalForm: FC<{
                 right: 0,
                 bottom: 0,
                 backgroundColor: 'rgba(0, 0, 0, 0.45)',
-                zIndex: 99
+                zIndex: 99,
+                display: 'flex',
+                justifyContent: 'center'
             },
             content: {
                 minWidth: 400,
                 height: 420,
                 position: 'absolute',
                 top: 100,
-                left: '30%',
-                right: '30%',
                 background: 'black',
                 overflow: 'auto',
                 WebkitOverflowScrolling: 'touch',
