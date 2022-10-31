@@ -11,7 +11,7 @@ const store = setupStore()
 root.render(
 	<Provider store={store}>
 			{/*<BrowserRouter basename='/deploy_test'>*/}
-			<BrowserRouter basename='/deploy_test'>
+			<BrowserRouter>
 				<App />
 			</BrowserRouter>
 	</Provider>
