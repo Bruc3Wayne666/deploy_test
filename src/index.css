@@ -2259,7 +2259,7 @@ ul.active {
 
     #rec-menu {
         width: 100%;
-        /*border: 3px solid white;*/
+        overflow-x: scroll;
     }
 
     .one-rec-menu {
