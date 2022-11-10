@@ -12,6 +12,9 @@ import Authorize from "./components/Authorize";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
 import {login} from "./store/reducers/auth/authActions";
 import Main from "./components/Main";
+import TabBar from "./components/TabBar";
+import Live from "./components/Live";
+import HeaderMobile from "./components/HeaderMobile";
 
 const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
@@ -58,6 +61,7 @@ const App: FC = () => {
 
     return (
         <div className='App'>
+            <HeaderMobile />
             <Header/>
             <ContentContainer>
                 {
@@ -70,6 +74,8 @@ const App: FC = () => {
                             <Route path={'results'} element={<Results/>}/>
                             <Route path={'bets'} element={<BetsScreen/>}/>
                             <Route path={'vip'} element={<VIP/>}/>
+                            <Route path={'live'} element={<Live/>}/>
+                            <Route path={'*'} element={<h1>404. Страница появится скоро</h1>} />
                         </Routes>
                         :
                         <Routes>
@@ -77,11 +83,13 @@ const App: FC = () => {
                             <Route path={'/:sport'} element={<Main/>}/>
                             <Route path={'profile'} element={<Authorize/>}/>
                             <Route path={'results'} element={<Results/>}/>
+                            <Route path={'live'} element={<Live/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>} />
                         </Routes>
                 }
 
             </ContentContainer>
+            <TabBar/>
         </div>
     )
 }
