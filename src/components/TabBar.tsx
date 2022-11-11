@@ -14,7 +14,7 @@ const TabBar: FC<any> = () => {
                     Спорт
                 </div>
             </Link>
-            <Link to={'/results'}>
+            <Link to={'/cyber'}>
                 <div className={`tabbar-item ${pathname === '/results' && 'active'}`}>
                     <img src={require('../assets/svg/cyber_tabbar.svg').default} alt="cybersport"/>
                     Киберспорт

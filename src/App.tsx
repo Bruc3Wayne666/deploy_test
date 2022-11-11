@@ -16,6 +16,7 @@ import TabBar from "./components/TabBar";
 import Live from "./components/Live";
 import HeaderMobile from "./components/HeaderMobile";
 import Purchase from "./components/Purchase";
+import CyberSport from "./components/Cybers";
 
 const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
@@ -80,6 +81,7 @@ const App: FC = () => {
                             <Route path={'vip'} element={<VIP/>}/>
                             <Route path={'live'} element={<Live/>}/>
                             <Route path={'purchase'} element={<Purchase/>}/>
+                            <Route path={'cyber'} element={<CyberSport/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>} />
                         </Routes>
                         :
@@ -90,6 +92,7 @@ const App: FC = () => {
                             <Route path={'results'} element={<Results/>}/>
                             <Route path={'live'} element={<Live/>}/>
                             <Route path={'purchase'} element={<Authorize/>}/>
+                            <Route path={'cyber'} element={<CyberSport/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>} />
                         </Routes>
                 }

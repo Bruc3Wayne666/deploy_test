@@ -1,6 +1,10 @@
-import React, {FC, useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import React, {FC, useState} from 'react';
+import {useAppDispatch} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
+
+// @ts-ignore
+import { useAlert } from 'react-alert';
+
 
 const Authorize: FC = () => {
     const dispatch = useAppDispatch()
@@ -11,6 +15,7 @@ const Authorize: FC = () => {
         remember: false
     })
     const [email, setEmail] = useState('')
+    const alert = useAlert()
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
@@ -19,6 +24,7 @@ const Authorize: FC = () => {
         } else if (type === 'register') {
             dispatch(register(email))
             setType('login')
+            alert.show('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
         }
     }
 

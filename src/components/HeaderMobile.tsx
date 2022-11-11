@@ -67,7 +67,7 @@ const HeaderMobile: FC = () => {
                         borderBottom: 'solid 1px darkgrey'
                     }}>Спорт</div>
                 </Link>
-                <Link to='/'>
+                <Link to='/live'>
                     <div style={{
                         cursor: 'pointer',
                         backgroundColor: '#CC9933',
@@ -78,7 +78,7 @@ const HeaderMobile: FC = () => {
                         borderBottom: 'solid 1px darkgrey'
                     }}>Live</div>
                 </Link>
-                <Link to='/results'>
+                <Link to='/cyber'>
                     <div style={{
                         cursor: 'pointer',
                         backgroundColor: '#CC9933',
@@ -100,7 +100,7 @@ const HeaderMobile: FC = () => {
                         borderBottom: 'solid 1px darkgrey'
                     }}>Акции</div>
                 </Link>
-                <Link to='/'>
+                <Link to='/results'>
                     <div style={{
                         cursor: 'pointer',
                         backgroundColor: '#CC9933',

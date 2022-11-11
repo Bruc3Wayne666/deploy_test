@@ -53,10 +53,10 @@ const Header: FC = () => {
             <div id="top-header">
                 <div id="th-menu">
                     <Link to="/">Спорт</Link>
-                    <Link id="thm-live" to="/">Live <span/></Link>
-                    <Link to="/results">Киберспорт</Link>
+                    <Link id="thm-live" to="/live">Live <span/></Link>
+                    <Link to="/cyber">Киберспорт</Link>
                     <Link to="/discounts">Акции</Link>
-                    <Link to="/">Статистика</Link>
+                    <Link to="/results">Статистика</Link>
                 </div>
                 <div id="th-lk">
                     <Link to="/profile">

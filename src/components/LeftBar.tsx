@@ -20,7 +20,7 @@ const LeftBar: FC<any> = () => {
                 <Link to="/bets" className={`lklm-item ${pathname === '/bets' && 'active'}`}>
                     <div className="global-ico gi-lk-history"/>
                     <span>История ставок</span></Link>
-                <Link to="/" className="lklm-item">
+                <Link to="/results" className="lklm-item">
                     <div className="global-ico gi-lk-stat"/>
                     <span>Статистика</span></Link>
                 <Link to="/bets" className={`lklm-item ${pathname === '/bets' && 'active'}`}>

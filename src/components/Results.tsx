@@ -558,7 +558,6 @@ const Results: FC<any> = () => {
                     ...params,
                     search: value === '' ? '-' : value
                 })
-                console.log(params)
             }, 1000),
             [params]
         )
@@ -588,10 +587,6 @@ const Results: FC<any> = () => {
 
         useEffect(() => {
                 setIsLoading(true)
-                // const fetchSportList = async () => {
-                //     const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-                //     setSportList(data)
-                // }
                 dispatch(getGames({
                     ...params, beautiful_time_start: `${
                         params.beautiful_time_start.date
@@ -605,7 +600,6 @@ const Results: FC<any> = () => {
                     setLeagueList(data)
                     setIsLoading(false)
                 }
-                // fetchSportList()
                 fetchLeagueList()
             }
             , [params])
