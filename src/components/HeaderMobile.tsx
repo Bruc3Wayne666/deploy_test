@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react';
 import {Link} from "react-router-dom";
+import {useAppSelector} from "../hooks/redux";
 
 
 const Btn: FC = () => {
@@ -20,6 +21,7 @@ const Btn: FC = () => {
 
 const HeaderMobile: FC = () => {
     const [show, setShow] = useState(false)
+    const {session} = useAppSelector(state => state.authReducer)
 
     if (!show) return (
         <div id="mobile-header">
@@ -45,7 +47,7 @@ const HeaderMobile: FC = () => {
                     </button>
                 </div>
                 <div>
-                    <Link to={'/profile'}>АВТОРИЗАЦИЯ</Link>
+                    <Link to={'/profile'}>{session ? '' : 'АВТОРИЗАЦИЯ'}</Link>
                 </div>
             </div>
         </div>

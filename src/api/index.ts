@@ -23,12 +23,10 @@ export class ApiService {
     }
 
     static async register(
-        login: string,
-        password: string
+        email: string
     ): Promise<AuthPayloadType> {
         const {data} = await instance.post('new_user', {
-            login,
-            password
+            login: email
         })
         return data
     }

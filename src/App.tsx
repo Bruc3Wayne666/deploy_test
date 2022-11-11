@@ -15,6 +15,7 @@ import Main from "./components/Main";
 import TabBar from "./components/TabBar";
 import Live from "./components/Live";
 import HeaderMobile from "./components/HeaderMobile";
+import Purchase from "./components/Purchase";
 
 const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
@@ -55,7 +56,10 @@ const App: FC = () => {
                 cursor: 'pointer',
                 marginTop: 20
             }}
-            onClick={() => {window.location.href="/profile"}}>Попробовать снова</a>
+            onClick={() => {
+                localStorage.clear()
+                window.location.href="/profile"
+            }}>Попробовать снова</a>
     </div>
 
 
@@ -75,6 +79,7 @@ const App: FC = () => {
                             <Route path={'bets'} element={<BetsScreen/>}/>
                             <Route path={'vip'} element={<VIP/>}/>
                             <Route path={'live'} element={<Live/>}/>
+                            <Route path={'purchase'} element={<Purchase/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>} />
                         </Routes>
                         :
@@ -84,6 +89,7 @@ const App: FC = () => {
                             <Route path={'profile'} element={<Authorize/>}/>
                             <Route path={'results'} element={<Results/>}/>
                             <Route path={'live'} element={<Live/>}/>
+                            <Route path={'purchase'} element={<Authorize/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>} />
                         </Routes>
                 }

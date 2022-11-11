@@ -380,7 +380,11 @@ const Main: FC = () => {
     }
 
     const handleChangeShowModal = (value: boolean) => {
-        setShowModal(value)
+        if (session){
+            setShowModal(value)
+        } else {
+            window.location.href = '/profile'
+        }
     }
 
     const handleSetCurrentGame = (bid: IGame) => {
@@ -414,18 +418,6 @@ const Main: FC = () => {
             fetchUserInfo(session)
         }
     }, [])
-
-    // useEffect(() => {
-    //     const fetchSportList = async () => {
-    //         const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-    //         setSportList(data)
-    //     }
-    //     fetchSportList()
-    // }, [])
-
-    // useEffect(() => {
-    //     params.sport_name = (pathname === '' ? 'all' : pathname)
-    // }, [])
 
     // @ts-ignore
     return (

@@ -10,13 +10,15 @@ const Authorize: FC = () => {
         password: '',
         remember: false
     })
+    const [email, setEmail] = useState('')
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
         if (type === 'login') {
             dispatch(login(form))
         } else if (type === 'register') {
-            dispatch(register(form))
+            dispatch(register(email))
+            setType('login')
         }
     }
 
@@ -76,38 +78,19 @@ const Authorize: FC = () => {
                         </div>
                         <button type={'submit'}>Войти</button>
                     </>
+
                     :
+
                     <>
+                        <p style={{fontSize: 22, marginBottom: 14}}>
+                            Мы отправим пароль на ваш email
+                        </p>
                         <input
-                            value={form.login}
-                            onChange={e => setForm({...form, login: e.target.value})}
-                            placeholder={'Придумайте логин'}
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            placeholder={'Введите свой email'}
                             type="text"
                         />
-                        <input
-                            value={form.password}
-                            onChange={e => setForm({...form, password: e.target.value})}
-                            placeholder={'Придумайте пароль'}
-                            type="password"
-                        />
-                        <div
-                            style={{
-                                fontSize: 16,
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: "center"
-                            }}
-                        >
-                            <p>Запомнить&nbsp;меня</p>
-                            <input
-                                style={{
-                                    margin: 'auto',
-                                    marginLeft: 6
-                                }}
-                                onChange={e => setForm({...form, remember: e.target.checked})}
-                                type={'checkbox'}
-                            />
-                        </div>
                         <div
                             style={{
                                 display: 'flex',
@@ -121,9 +104,10 @@ const Authorize: FC = () => {
                                     password: '',
                                     remember: false
                                 })
+                                setEmail('')
                             }}>Войти!</span></p>
                         </div>
-                        <button type={'submit'}>Зарегистрироваться!</button>
+                        <button style={{width: 240}} type={'submit'}>Зарегистрироваться!</button>
                     </>
 
             }

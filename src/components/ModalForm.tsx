@@ -55,6 +55,7 @@ export const ModalForm: FC<{
         } else {
             setBidSuccess(false)
             handleChangeShowModal(false)
+            window.location.href = '/purchase'
         }
     }
 
