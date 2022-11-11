@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import '../index.css'
 import {Link} from "react-router-dom";
-import RightBar from "./RightBar";
+import {RightBar, RightBarMobile} from "./RightBar";
 import LeftBar from "./LeftBar";
 import {useAppSelector} from "../hooks/redux";
 import {IProfileState} from '../store/reducers/profile/profileSlice';
@@ -61,7 +61,7 @@ const Profile: FC<any> = (props: any) => {
     )
 }
 
-const Account: FC<any> = ({children}) => {
+const Account: FC<any> = () => {
     const [{result}, setUserInfo] = useState<IProfileState>({
         error: false,
         message: null,
@@ -90,6 +90,8 @@ const Account: FC<any> = ({children}) => {
 
     return (
         <div id="content-wr">
+            <RightBarMobile/>
+
             <LeftBar/>
             {
                 isLoading ?
@@ -102,7 +104,6 @@ const Account: FC<any> = ({children}) => {
                         leagues={favoriteLeagues}
                     />
             }
-            <RightBar/>
         </div>
     );
 };

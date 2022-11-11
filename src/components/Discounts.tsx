@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import LeftBar from "./LeftBar";
-import RightBar from "./RightBar";
+import {RightBar} from "./RightBar";
 
 export const Discounts: FC = () => {
     return (

@@ -36,11 +36,13 @@ const HeaderMobile: FC = () => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'space-around'
+                                justifyContent: 'space-around',
+                                paddingRight: 4,
+                                paddingLeft: 4
                             }}
                         >
                             <Btn/>
-                            <span>
+                            <span style={{fontWeight: 'bold', fontStyle: 'italic'}}>
                                 GPBET
                             </span>
                         </div>

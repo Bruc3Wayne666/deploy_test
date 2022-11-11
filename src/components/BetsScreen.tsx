@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import RightBar from "./RightBar";
+import {RightBar, RightBarMobile} from "./RightBar";
 import LeftBar from "./LeftBar";
 import {useAppSelector} from "../hooks/redux";
 import axios from "axios";
@@ -185,7 +185,8 @@ const BetsScreen: FC<any> = (props: any) => {
 
     return (
         <div id="content-wr">
-            <LeftBar active={type}/>
+            {/*<LeftBar active={type}/>*/}
+            <RightBarMobile/>
             {type === 'bets' && <Bets
                 handleChangeType={handleChangeType}
                 handleChangePeriod={handleChangePeriod}
@@ -198,7 +199,6 @@ const BetsScreen: FC<any> = (props: any) => {
                 bets={bets}
                 period={period}
             />}
-            {/*<RightBar/>*/}
         </div>
     );
 };

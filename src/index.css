@@ -2198,6 +2198,19 @@ ul.active {
     top: 0;
 }
 
+.frb-one-f {
+    width: 60px;
+    border: 1px solid #E6E6E6;
+    background: #087537;
+    padding: 6px 8px;
+    border-radius: 5px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (min-width: 1441px) {
     .tabbar {
         display: none;
@@ -2411,6 +2424,18 @@ ul.active {
         width: 100%;
     }
 
+    #lk-right {
+        display: none;
+    }
+
+    #lk-right.m {
+        display: block;
+    }
+
+    #lk-mid {
+        margin-top: 60px;
+    }
+
     #lk-mid.lk-vip {
         display: flex;
         flex-direction: column;
@@ -2441,7 +2466,7 @@ ul.active {
     }
 
     #pop-sob {
-        margin-top: 60px;
+        margin-top: 22px;
         -webkit-box-shadow: -2px -15px 15px 4px rgba(34, 60, 80, 0.72);
         -moz-box-shadow: -2px -15px 15px 4px rgba(34, 60, 80, 0.72);
         box-shadow: -2px -15px 15px 4px rgba(34, 60, 80, 0.72);

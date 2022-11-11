@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
-import LeftBar from "./LeftBar";
-import RightBar from "./RightBar";
+import {RightBar} from "./RightBar";
 
 const Vip:FC = () => {
     return (
