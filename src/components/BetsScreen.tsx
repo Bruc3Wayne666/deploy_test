@@ -53,15 +53,6 @@ const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets, perio
                         <div className="lktfs-bttn" style={{display: 'flex', justifyContent: 'center'}}>
                             <div className="global-ico gi-shedule"/>
 
-                            {/*<Dropdown*/}
-                            {/*    arrowClosed={true}*/}
-                            {/*    options={period_opts}*/}
-                            {/*    placeholder={'Все события'}*/}
-                            {/*    // controlClassName={'frb-one'}*/}
-                            {/*    // menuClassName={'frb-one-opts'}*/}
-                            {/*    onChange={e => handleChangePeriod(e.value)}*/}
-                            {/*/>*/}
-
                             <BidsFilterDropDown
                                 title={'Все события'}
                                 showDropdown={showDropdown}
@@ -207,7 +198,7 @@ const BetsScreen: FC<any> = (props: any) => {
                 bets={bets}
                 period={period}
             />}
-            <RightBar/>
+            {/*<RightBar/>*/}
         </div>
     );
 };
