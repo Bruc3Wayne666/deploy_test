@@ -1,7 +1,30 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
+import {IProfileState} from "../store/reducers/profile/profileSlice";
+import {ApiService} from "../api";
+import axios from "axios";
+import {useAppSelector} from "../hooks/redux";
+import {login} from "../store/reducers/auth/authActions";
 
 export const RightBar: FC = () => {
+    const [{result}, setUserInfo] = useState<IProfileState>({
+        error: false,
+        message: null,
+        result: null,
+    })
+    const {session} = useAppSelector(state => state.authReducer)
+
+
+    useEffect(() => {
+        const fetchUserInfo = async (session: string) => {
+            const data = await ApiService.getProfile(session)
+            setUserInfo(data)
+        }
+        if (session) {
+            fetchUserInfo(session)
+        }
+    }, [])
+
     return (
         <div id="lk-right">
             <div className="lkr-widget">
@@ -12,17 +35,11 @@ export const RightBar: FC = () => {
                         <div className="lkrwir-bttn"/>
                     </div>
                 </div>
-                <div className="lkrw-inforow">
-                    <div className="lkrwir-text"><span>Push-уведомления</span></div>
-                    <div className="lkrwir-tick-bttn">
-                        <div className="lkrwir-bttn"/>
-                    </div>
-                </div>
             </div>
             <div className="lkr-widget">
                 <div className="lkrw-title">Контакты</div>
                 <div className="lkrw-inforow">
-                    <div className="lkrwir-text"><span>Email:</span> user_mail@mail.ru</div>
+                    <div className="lkrwir-text"><span>Email:</span> gpbethelp@gmail.com</div>
                 </div>
             </div>
             <div className="lkr-widget">
@@ -32,7 +49,7 @@ export const RightBar: FC = () => {
                     <div className="global-ico gi-tick"/>
                 </div>
                 <div className="lkrw-inforow">
-                    <div className="lkrwir-text"><span>Email:</span> user_mail@mail.ru</div>
+                    <div className="lkrwir-text"><span>Email:</span> {result?.login}</div>
                     <div className="global-ico gi-tick"/>
                 </div>
             </div>
@@ -47,6 +64,24 @@ export const RightBar: FC = () => {
 
 
 export const RightBarMobile: FC = () => {
+    const [{result}, setUserInfo] = useState<IProfileState>({
+        error: false,
+        message: null,
+        result: null,
+    })
+    const {session} = useAppSelector(state => state.authReducer)
+
+
+    useEffect(() => {
+        const fetchUserInfo = async (session: string) => {
+            const data = await ApiService.getProfile(session)
+            setUserInfo(data)
+        }
+        if (session) {
+            fetchUserInfo(session)
+        }
+    }, [])
+
     return (
         <div id="lk-right" className="m">
             <div className="lkr-widget">
@@ -57,17 +92,11 @@ export const RightBarMobile: FC = () => {
                         <div className="lkrwir-bttn"/>
                     </div>
                 </div>
-                <div className="lkrw-inforow">
-                    <div className="lkrwir-text"><span>Push-уведомления</span></div>
-                    <div className="lkrwir-tick-bttn">
-                        <div className="lkrwir-bttn"/>
-                    </div>
-                </div>
             </div>
             <div className="lkr-widget">
                 <div className="lkrw-title">Контакты</div>
                 <div className="lkrw-inforow">
-                    <div className="lkrwir-text"><span>Email:</span> user_mail@mail.ru</div>
+                    <div className="lkrwir-text"><span>Email:</span> gpbethelp@gmail.com</div>
                 </div>
             </div>
             <div className="lkr-widget">
@@ -77,7 +106,7 @@ export const RightBarMobile: FC = () => {
                     <div className="global-ico gi-tick"/>
                 </div>
                 <div className="lkrw-inforow">
-                    <div className="lkrwir-text"><span>Email:</span> user_mail@mail.ru</div>
+                    <div className="lkrwir-text"><span>Email:</span> {result?.login}</div>
                     <div className="global-ico gi-tick"/>
                 </div>
             </div>

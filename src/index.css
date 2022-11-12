@@ -1120,6 +1120,7 @@ header {
 
 .torir-status span.s-orange {
     background: #CD7F32;
+    white-space: nowrap;
 }
 
 .torir-comment {
@@ -2211,6 +2212,14 @@ ul.active {
     align-items: center;
 }
 
+#lk-right.m {
+    display: none;
+}
+
+#lk-left.m {
+    display: none;
+}
+
 @media (min-width: 1441px) {
     .tabbar {
         display: none;
@@ -2329,6 +2338,12 @@ ul.active {
         /*border: 1px solid white;*/
     }
 
+    .torir-status {
+        /*font-size: 10px;*/
+        /*border: 1px solid white;*/
+        /*width: 50px;*/
+    }
+
     .toc-i-teams {
         /*flex: 1;*/
         margin-top: 18px;
@@ -2407,6 +2422,10 @@ ul.active {
         margin-bottom: 36px;
     }
 
+    .fr-ticks {
+        display: none;
+    }
+
     .fr-search {
         width: 100%;
         margin-top: 12px;
@@ -2435,6 +2454,100 @@ ul.active {
 
     #lk-right.m {
         display: block;
+    }
+
+    #lk-left {
+        display: none;
+    }
+
+    #lk-left.m {
+        display: block;
+        /*border: 1px solid white;*/
+        /*justify-content: center;*/
+        /*!*display: flex;*!*/
+        /*!*flex-direction: column-reverse;*!*/
+    }
+
+    /*#lk-left.m #lk-left-menu {*/
+    /*    !*width: 100%;*!*/
+    /*    border: 1px solid white;*/
+    /*    width: 100%;*/
+    /*    display: flex;*/
+    /*    flex-direction: column;*/
+    /*    align-items: start;*/
+    /*}*/
+    #lk-left.m #lk-left-menu .lklm-item {
+        /*border: 1px solid white;*/
+        font-size: 20px;
+        /*background-color: #cc9933;*/
+        border-radius: 4px;
+        margin-bottom: 2px;
+    }
+
+    #lk-left.m .global-ico {
+        height: 24px;
+    }
+
+    #lk-lk-ava-name {
+        width: 90%;
+    }
+
+    #lk-lk-ava-name #lk-ava {
+        height: 100px;
+    }
+
+    #lk-lk-ava-name #lk-name {
+        font-size: 14px;
+        font-weight: 900;
+    }
+
+    #lk-lk-bal-stat {
+        margin-top: 12px;
+        display: flex;
+        /*border: 1px solid white;*/
+        width: 90%;
+        justify-content: space-evenly;
+    }
+
+    #lk-lk-foot {
+        margin-bottom: 22px;
+    }
+
+    #lk-lk-menu-title{
+        font-size: 16px;
+    }
+
+    .lkm-item {
+        font-size: 14px;
+    }
+
+    .lkm-item img{
+        height: 20px;
+    }
+
+    #lk-bal {
+        font-size: 22px;
+        font-weight: 600;
+    }
+    /*#lk-left.m #lk-left-menu .lklm-item::last-child {*/
+    /*    background-color: #cc3300;*/
+    /*}*/
+
+    .lk-table {
+        margin-bottom: 30px;
+    }
+
+    .lkrw-inforow {
+        display: flex;
+        align-items: center;
+    }
+
+    .lkrwir-text {
+        font-size: 14px;
+    }
+
+    .lkrwir-tick-bttn {
+        width: 40px;
     }
 
     #lk-mid {
@@ -2545,4 +2658,9 @@ ul.active {
         justify-content: center;
         align-items: center;
     }
+
+    /*.toc-item-res {*/
+    /*    !*border: 1px solid white;*!*/
+    /*    !*padding-right: 18px;*!*/
+    /*}*/
 }

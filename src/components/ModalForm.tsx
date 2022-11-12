@@ -83,7 +83,9 @@ export const ModalForm: FC<{
                 justifyContent: 'center'
             },
             content: {
-                minWidth: 400,
+                // minWidth: 400,
+                // maxWidth: 600,
+                width: window.innerWidth <= 1440 ? 400 : 600,
                 height: 420,
                 position: 'absolute',
                 top: 100,

@@ -195,7 +195,7 @@ const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
 const LeagueItem: FC<any> = ({filter, result}) => {
     const {league} = filter
 
-    return (
+    return (league[3] + league[4] + league[5]) !== 0 ? (
         <>
             <div className="toc-title">
                 <div className="global-ico gi-star">
@@ -248,7 +248,7 @@ const LeagueItem: FC<any> = ({filter, result}) => {
 
             }
         </>
-    )
+    ) : <></>
 }
 
 const GameItem:

@@ -28,7 +28,7 @@ const LeagueItem:
               handleSetCurrentGame,
               handleSetCurrentBet
           }) => {
-    return (
+    return league[3] !== 0 ? (
         <>
             <div className="toc-title">
                 <div className="global-ico gi-star">
@@ -77,7 +77,7 @@ const LeagueItem:
                     })
             }
         </>
-    )
+    ) : <></>
 }
 
 const GameItem:

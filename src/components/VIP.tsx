@@ -1,9 +1,11 @@
 import React, {FC} from 'react';
 import {RightBar} from "./RightBar";
+import {LeftBar} from "./LeftBar";
 
 const Vip:FC = () => {
     return (
         <div id="content-wr">
+            <LeftBar/>
             <div id="lk-mid" className="lk-vip">
                 <div className="lk-vip-col">
                     <div id="lk-vip-card">

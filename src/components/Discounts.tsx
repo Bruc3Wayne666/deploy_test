@@ -1,10 +1,12 @@
 import React, {FC} from "react";
-import LeftBar from "./LeftBar";
+import {LeftBar, LeftBarMobile} from "./LeftBar";
 import {RightBar} from "./RightBar";
 
 export const Discounts: FC = () => {
     return (
         <div id="content-wr">
+            {/*<LeftBarMobile/>*/}
+
             <LeftBar/>
             <div id="lk-mid">
                 <div className="lk-accii-one" id="accia-1">
@@ -31,6 +33,7 @@ export const Discounts: FC = () => {
                     </div>
                 </div>
             </div>
+
             <RightBar/>
         </div>
     )

@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import '../index.css'
 import {Link} from "react-router-dom";
 import {RightBar, RightBarMobile} from "./RightBar";
-import LeftBar from "./LeftBar";
+import {LeftBar, LeftBarMobile} from "./LeftBar";
 import {useAppSelector} from "../hooks/redux";
 import {IProfileState} from '../store/reducers/profile/profileSlice';
 import {ApiService} from "../api";
@@ -93,6 +93,8 @@ const Account: FC<any> = () => {
             <RightBarMobile/>
 
             <LeftBar/>
+
+            <LeftBarMobile/>
             {
                 isLoading ?
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -104,6 +106,8 @@ const Account: FC<any> = () => {
                         leagues={favoriteLeagues}
                     />
             }
+
+            <RightBar/>
         </div>
     );
 };

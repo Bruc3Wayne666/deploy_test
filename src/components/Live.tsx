@@ -2,9 +2,7 @@ import React, {FC, useCallback, useEffect, useState} from 'react';
 import {IGame} from "../models/IGame";
 import axios from "axios";
 import {COUNTRIES, SPORTS} from "../assets/consts";
-import {Link} from "react-router-dom";
 import Dropdown from "react-dropdown";
-import {ModalForm} from "./ModalForm";
 import spinner from "../assets/spinner.svg";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
@@ -18,7 +16,7 @@ import {getGames} from "../store/reducers/games/gameActions";
 const LeagueItem: FC<any> = ({filter, result}) => {
     const {league} = filter
 
-    return (
+    return league[4] !== 0 ? (
         <>
             <div className="toc-title">
                 <div className="global-ico gi-star">
@@ -64,7 +62,7 @@ const LeagueItem: FC<any> = ({filter, result}) => {
 
             }
         </>
-    )
+    ) : <></>
 }
 
 const GameItem:
