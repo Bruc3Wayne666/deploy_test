@@ -87,7 +87,7 @@ export const RightBarMobile: FC = () => {
             <div className="lkr-widget">
                 <div className="lkrw-title">Рассылки и уведомления</div>
                 <div className="lkrw-inforow active">
-                    <div className="lkrwir-text"><span>Email:</span> user_mail@mail.ru</div>
+                    <div className="lkrwir-text"><span>Email:</span> {result?.login}</div>
                     <div className="lkrwir-tick-bttn">
                         <div className="lkrwir-bttn"/>
                     </div>
