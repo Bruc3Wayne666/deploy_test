@@ -2410,6 +2410,11 @@ ul.active {
     .fr-search {
         width: 100%;
         margin-top: 12px;
+        height: 40px;
+    }
+
+    .fr-search input {
+        width: 100%;
     }
 
     #lk-left {
