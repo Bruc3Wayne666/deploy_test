@@ -359,6 +359,7 @@ const Main: FC = () => {
     })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     const [showModal, setShowModal] = useState(false)
+    const [flag, setFlag] = useState(false)
     // const [sportList, setSportList] = useState<any>({})
 
     const handleChangeParams = (params: {
@@ -403,6 +404,7 @@ const Main: FC = () => {
                 league_sport: params.sport_name,
                 league_cc: 'all'
             })
+
             setLeagueList(data)
             setIsLoading(false)
         }
@@ -419,8 +421,27 @@ const Main: FC = () => {
         }
     }, [])
 
+    // Object.keys(leagueList)
+    //     .map(sport => {
+    //         // @ts-ignore
+    //         return Object.keys(leagueList[sport])
+    //             .map(co => {
+    //                 // @ts-ignore
+    //                 return Object.keys(leagueList[sport][co])
+    //                     // @ts-ignore
+    //                     .map((i: number) => {
+    //                         // @ts-ignore
+    //                         if (leagueList[sport][co][i][3] !== 0) {
+    //                             setFlag(true)
+    //                         }
+    //                         // setCounter(prevState => prevState + leagueList[sport][co][i][3])
+    //                         // return console.log(counter)
+    //                     })
+    //             })
+    //     })
+
     // @ts-ignore
-    return (
+    return (1 === 1) ? (
         <div id="content-wr">
             <div id="two-left">
 
@@ -576,7 +597,7 @@ const Main: FC = () => {
                 </div>
             </div>
         </div>
-    )
+    ) : <>Матчей нет</>
 };
 
 

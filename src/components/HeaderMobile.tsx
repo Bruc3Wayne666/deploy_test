@@ -1,6 +1,8 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../hooks/redux";
+import {IProfileState} from "../store/reducers/profile/profileSlice";
+import {ApiService} from "../api";
 
 
 const Btn: FC = () => {
@@ -22,6 +24,22 @@ const Btn: FC = () => {
 const HeaderMobile: FC = () => {
     const [show, setShow] = useState(false)
     const {session} = useAppSelector(state => state.authReducer)
+    const [{result}, setUserInfo] = useState<IProfileState>({
+        error: false,
+        message: null,
+        result: null,
+    })
+
+
+    useEffect(() => {
+        const fetchUserInfo = async (session: string) => {
+            const data = await ApiService.getProfile(session)
+            setUserInfo(data)
+        }
+        if (session) {
+            fetchUserInfo(session)
+        }
+    }, [])
 
     if (!show) return (
         <div id="mobile-header">
@@ -49,7 +67,7 @@ const HeaderMobile: FC = () => {
                     </button>
                 </div>
                 <div>
-                    <Link to={'/profile'}>{session ? '' : 'АВТОРИЗАЦИЯ'}</Link>
+                    <Link to={'/profile'}>{session ? result?.login : 'АВТОРИЗАЦИЯ'}</Link>
                 </div>
             </div>
         </div>
