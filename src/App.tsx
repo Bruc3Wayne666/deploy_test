@@ -90,6 +90,7 @@ const App: FC = () => {
                             <Route path={'/:sport'} element={<Main/>}/>
                             <Route path={'profile'} element={<Authorize/>}/>
                             <Route path={'results'} element={<Results/>}/>
+                            <Route path={'bets'} element={<Authorize/>}/>
                             <Route path={'live'} element={<Live/>}/>
                             <Route path={'purchase'} element={<Authorize/>}/>
                             <Route path={'cyber'} element={<CyberSport/>}/>
