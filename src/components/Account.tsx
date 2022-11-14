@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import '../index.css'
 import {Link} from "react-router-dom";
 import {RightBar, RightBarMobile} from "./RightBar";
@@ -71,22 +71,23 @@ const Account: FC<any> = () => {
     const [favoriteLeagues, setFavoriteLeagues] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
+    const fetchUserInfo = useCallback(async (session: string) => {
+        const data = await ApiService.getProfile(session)
+        const leagues = await axios.post('http://gpbetapi.ru/favourite_league', {
+            user_id: session
+        })
+        setUserInfo(data)
+        setFavoriteLeagues(leagues.data)
+    }, [session])
+
 
     useEffect(() => {
         setIsLoading(true)
-        const fetchUserInfo = async (session: string) => {
-            const data = await ApiService.getProfile(session)
-            const leagues = await axios.post('http://gpbetapi.ru/favourite_league', {
-                user_id: session
-            })
-            setUserInfo(data)
-            setFavoriteLeagues(leagues.data)
-            setIsLoading(false)
-        }
         if (session) {
             fetchUserInfo(session)
+                .then(() => setIsLoading(false))
         }
-    }, [])
+    }, [session])
 
     return (
         <div id="content-wr">

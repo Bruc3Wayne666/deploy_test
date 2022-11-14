@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../hooks/redux";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
@@ -30,16 +30,17 @@ const HeaderMobile: FC = () => {
         result: null,
     })
 
+    const fetchUserInfo = useCallback((async (session: string) => {
+        return await ApiService.getProfile(session)
+    }), [session])
+
 
     useEffect(() => {
-        const fetchUserInfo = async (session: string) => {
-            const data = await ApiService.getProfile(session)
-            setUserInfo(data)
-        }
         if (session) {
             fetchUserInfo(session)
+                .then(res => setUserInfo(res))
         }
-    }, [])
+    }, [session])
 
     if (!show) return (
         <div id="mobile-header">
