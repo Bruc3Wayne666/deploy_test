@@ -2674,7 +2674,8 @@ ul.active {
 
     .purchase {
         position: relative;
-        margin-top: 52px;
+        margin-top: 62px;
+        padding: 0 12px;
         /*padding-right: 8px;*/
         /*padding-left: 8px;*/
     }
@@ -2741,8 +2742,9 @@ ul.active {
         top: 52px;
         z-index: 9;
         padding: 23px 12px;
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
+        border-radius: 16px;
+        /*border-bottom-left-radius: 16px;*/
+        /*border-bottom-right-radius: 16px;*/
         border: 1px solid #cc9933;
         margin-bottom: 12px;
     }
