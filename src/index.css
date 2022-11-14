@@ -2196,7 +2196,7 @@ ul.active {
     box-shadow: 0 8px 6px -6px black;
     /*padding: 0;*/
     height: 54px;
-    padding-right: 12px;
+    padding-right: 0;
     padding-left: 12px;
     /*padding-bottom: 1px;*/
     position: fixed;

@@ -5,24 +5,7 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 
 
-// const Btn: FC = () => {
-//     return (
-//         <div style={{display: 'flex', flexDirection: 'column', marginRight: 14}}>
-//             <div style={{
-//                 width: 24, height: 5, backgroundColor: 'white', margin: 2
-//             }}></div>
-//             <div style={{
-//                 width: 24, height: 5, backgroundColor: 'white', margin: 2
-//             }}></div>
-//             <div style={{
-//                 width: 24, height: 5, backgroundColor: 'white', margin: 2
-//             }}></div>
-//         </div>
-//     )
-// }
-
 const HeaderMobile: FC = () => {
-    // const [show, setShow] = useState(false)
     const {session} = useAppSelector(state => state.authReducer)
     const [{result}, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -44,21 +27,30 @@ const HeaderMobile: FC = () => {
 
     return (
         <div id="mobile-header">
-
-                <div
-                    style={{height: '100%'}}
-                >
-                    <Link to={'/'}>
+            <div
+                style={{height: '100%'}}
+            >
+                <Link to={'/'}>
                     <img
                         height={'100%'}
                         src={require('../assets/logo.png')}
                         alt='GPBet'
                     />
-                    </Link>
-                </div>
-            <div>
+                </Link>
+            </div>
+            <div style={{
+                height: '100%',
+                backgroundColor: '#087537',
+                display: 'flex',
+                alignItems: 'center',
+                paddingRight: 6,
+                paddingLeft: 6,
+                width: '50%',
+                justifyContent: 'center'
+            }}>
+
                 <Link to={'/profile'}>
-                    <span style={{color: '#222', fontWeight: 600}}>
+                    <span style={{color: 'white', fontWeight: 300}}>
                         {session ? result?.login : 'АВТОРИЗАЦИЯ'}
                     </span>
                 </Link>
