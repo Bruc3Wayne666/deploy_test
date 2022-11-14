@@ -2189,11 +2189,16 @@ ul.active {
 }
 
 #mobile-header {
-    background-color: black;
+    background-color: #C78F30;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     box-shadow: 0 8px 6px -6px black;
-    padding: 0;
-    height: 52px;
+    /*padding: 0;*/
+    height: 54px;
     padding-right: 12px;
+    padding-left: 12px;
+    /*padding-bottom: 1px;*/
     position: fixed;
     z-index: 9999;
     width: 100%;
@@ -2664,4 +2669,111 @@ ul.active {
     /*    !*border: 1px solid white;*!*/
     /*    !*padding-right: 18px;*!*/
     /*}*/
+
+
+
+    .purchase {
+        position: relative;
+        margin-top: 52px;
+        /*padding-right: 8px;*/
+        /*padding-left: 8px;*/
+    }
+
+    .transfer-items {
+        width: 100%;
+        /*margin-top: 220px;*/
+        position: absolute;
+        /*border: 1px skyblue solid;*/
+        /*height: 120vh;*/
+        overflow-y: scroll;
+        padding-bottom: 100px;
+    }
+
+    .transfer-item {
+        width: 100%;
+        background-color: black;
+        border: 2px solid #cc9933;
+        border-radius: 24px;
+        padding: 12px 24px;
+        margin-bottom: 12px;
+    }
+
+    .transfer-item h3 b {
+        color: lightgreen;
+    }
+
+    .transfer-item h4 {
+        color: lightgrey;
+        margin-top: 24px;
+        margin-bottom: 24px;
+    }
+
+    .transfer-item a h3{
+        font-size: 22px;
+        color: lightskyblue;
+        font-weight: 600;
+        margin-bottom: 26px;
+    }
+
+    .transfer-item h3 {
+        font-size: 18px;
+        margin-bottom: 14px;
+    }
+
+    .transfer-address span{
+        font-size: 17px;
+        font-weight: 900;
+        color: lightgreen;
+    }
+
+    .pur-info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        /*position: fixed;*/
+        background-color: black;
+        top: 52px;
+        z-index: 9;
+        padding: 23px 12px;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        border: 1px solid #cc9933;
+        margin-bottom: 12px;
+    }
+
+    .pur-info .exchanger-list {
+        margin-top: 14px;
+        font-size: 18px;
+    }
+
+    .pur-info h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .pur-info .header {
+        font-size: 28px;
+    }
+
+    .transfer-option {
+        font-size: 26px;
+        margin-top: 100px;
+    }
+
+    .transfer-option span{
+        text-decoration: underline;
+    }
+
+    .create {
+        margin-left: auto;
+        margin-right: auto;
+        outline: none;
+        background-color: #cc9933;
+        padding: 12px 23px;
+        border-radius: 14px;
+        margin-top: 12px;
+    }
 }
+
+
+

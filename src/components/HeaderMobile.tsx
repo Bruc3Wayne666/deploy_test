@@ -5,24 +5,24 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 
 
-const Btn: FC = () => {
-    return (
-        <div style={{display: 'flex', flexDirection: 'column', marginRight: 14}}>
-            <div style={{
-                width: 24, height: 5, backgroundColor: 'white', margin: 2
-            }}></div>
-            <div style={{
-                width: 24, height: 5, backgroundColor: 'white', margin: 2
-            }}></div>
-            <div style={{
-                width: 24, height: 5, backgroundColor: 'white', margin: 2
-            }}></div>
-        </div>
-    )
-}
+// const Btn: FC = () => {
+//     return (
+//         <div style={{display: 'flex', flexDirection: 'column', marginRight: 14}}>
+//             <div style={{
+//                 width: 24, height: 5, backgroundColor: 'white', margin: 2
+//             }}></div>
+//             <div style={{
+//                 width: 24, height: 5, backgroundColor: 'white', margin: 2
+//             }}></div>
+//             <div style={{
+//                 width: 24, height: 5, backgroundColor: 'white', margin: 2
+//             }}></div>
+//         </div>
+//     )
+// }
 
 const HeaderMobile: FC = () => {
-    const [show, setShow] = useState(false)
+    // const [show, setShow] = useState(false)
     const {session} = useAppSelector(state => state.authReducer)
     const [{result}, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -42,108 +42,29 @@ const HeaderMobile: FC = () => {
         }
     }, [session])
 
-    if (!show) return (
+    return (
         <div id="mobile-header">
-            <div
-                style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 52}}
-            >
-                <div style={{width: '24%'}}>
-                    <button
-                        onClick={() => setShow(true)}
-                        style={{backgroundColor: '#cc9933', border: 'none', display: 'flex', justifyContent: 'space-between', height: 52, alignItems: 'center'}}>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-around',
-                                paddingRight: 4,
-                                paddingLeft: 4
-                            }}
-                        >
-                            <Btn/>
-                            <span style={{fontWeight: 'bold', fontStyle: 'italic'}}>
-                                GPBET
-                            </span>
-                        </div>
-                    </button>
+
+                <div
+                    style={{height: '100%'}}
+                >
+                    <Link to={'/'}>
+                    <img
+                        height={'100%'}
+                        src={require('../assets/logo.png')}
+                        alt='GPBet'
+                    />
+                    </Link>
                 </div>
-                <div>
-                    <Link to={'/profile'}>{session ? result?.login : 'АВТОРИЗАЦИЯ'}</Link>
-                </div>
+            <div>
+                <Link to={'/profile'}>
+                    <span style={{color: '#222', fontWeight: 600}}>
+                        {session ? result?.login : 'АВТОРИЗАЦИЯ'}
+                    </span>
+                </Link>
             </div>
         </div>
     )
-
-    return (
-        <header>
-            <div>
-                <Link to='/'>
-                    <div style={{
-                        cursor: 'pointer',
-                        backgroundColor: '#CC9933',
-                        height: 42,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderBottom: 'solid 1px darkgrey'
-                    }}>Спорт</div>
-                </Link>
-                <Link to='/live'>
-                    <div style={{
-                        cursor: 'pointer',
-                        backgroundColor: '#CC9933',
-                        height: 42,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderBottom: 'solid 1px darkgrey'
-                    }}>Live</div>
-                </Link>
-                <Link to='/cyber'>
-                    <div style={{
-                        cursor: 'pointer',
-                        backgroundColor: '#CC9933',
-                        height: 42,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderBottom: 'solid 1px darkgrey'
-                    }}>Киберспорт</div>
-                </Link>
-                <Link to='/discounts'>
-                    <div style={{
-                        cursor: 'pointer',
-                        backgroundColor: '#CC9933',
-                        height: 42,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderBottom: 'solid 1px darkgrey'
-                    }}>Акции</div>
-                </Link>
-                <Link to='/results'>
-                    <div style={{
-                        cursor: 'pointer',
-                        backgroundColor: '#CC9933',
-                        height: 42,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderBottom: 'solid 1px darkgrey'
-                    }}>Статистика</div>
-                </Link>
-                <div onClick={() => setShow(false)} style={{
-                    cursor: 'pointer',
-                    backgroundColor: 'transparent',
-                    height: 42,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderBottom: 'solid 1px darkgrey'
-                }}>Скрыть</div>
-            </div>
-        </header>
-    );
 };
 
 export default HeaderMobile;
