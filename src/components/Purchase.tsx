@@ -45,7 +45,7 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
             <a href={loook_link}><h3>🔍 Отслеживать пополнение</h3></a>
             {
                 status === 'waiting'
-                    ? <h3>⏳ Адрес актуален: <b>{Math.floor(remainder_time / 60)}</b> минут</h3>
+                    ? <h3>⏳ Адрес актуален: <b style={{color: 'red'}}>{Math.floor(remainder_time / 60)}</b> минут</h3>
                     : status === 'finish'
                         ? <h3>💵 Пополнено на <b>{amount}</b></h3>
                         : <h3>❌ Адрес не актуален</h3>
