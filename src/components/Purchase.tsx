@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
 import axios from "axios";
 import {useAppSelector} from "../hooks/redux";
 
@@ -41,6 +41,8 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
         iden
     } = transfer
 
+    const address = useRef(null)
+
     return (
         <div className='transfer-item'>
             <h4>📂Идентификатор пополнения #{iden}</h4>
@@ -54,10 +56,11 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
             }
             <h3>🏷 Адрес для оплаты:    </h3>
             <h3
+                ref={address}
                 className='transfer-address'
                 onClick={() => {
                     navigator.clipboard.writeText(wallet)
-                    alert('Адрес скопирован в буфер обмена')
+                        .then(() => alert('Адрес скопирован в буфер обмена'))
                 }}
             >
                 <span>{wallet}</span>

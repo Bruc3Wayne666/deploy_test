@@ -12,7 +12,7 @@ const Authorize: FC = () => {
     const [form, setForm] = useState({
         login: '',
         password: '',
-        remember: false
+        remember: true
     })
     const [email, setEmail] = useState('')
     const alert = useAlert()
@@ -59,6 +59,7 @@ const Authorize: FC = () => {
                         >
                             <p>Запомнить&nbsp;меня</p>
                             <input
+                                checked={form.remember}
                                 style={{
                                     margin: 'auto',
                                     marginLeft: 6
