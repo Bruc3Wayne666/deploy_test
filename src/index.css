@@ -2691,7 +2691,9 @@ ul.active {
 
     .transfer-item {
         width: 100%;
-        background-color: black;
+        color: black;
+        /*background-color: black;*/
+        background-color: white;
         border: 2px solid #cc9933;
         border-radius: 24px;
         padding: 12px 24px;
@@ -2703,14 +2705,16 @@ ul.active {
     }
 
     .transfer-item h4 {
-        color: lightgrey;
+        /*color: lightgrey;*/
+        color: black;
         margin-top: 24px;
         margin-bottom: 24px;
     }
 
     .transfer-item a h3{
         font-size: 22px;
-        color: lightskyblue;
+        /*color: lightskyblue;*/
+        color: #222;
         font-weight: 600;
         margin-bottom: 26px;
     }
@@ -2718,12 +2722,14 @@ ul.active {
     .transfer-item h3 {
         font-size: 18px;
         margin-bottom: 14px;
+        color: black;
     }
 
     .transfer-address span{
         font-size: 17px;
         font-weight: 900;
-        color: lightgreen;
+        /*color: lightgreen;*/
+        color: #444;
     }
 
     .pur-info {
@@ -2731,7 +2737,7 @@ ul.active {
         flex-direction: column;
         width: 100%;
         /*position: fixed;*/
-        background-color: black;
+        background-color: white;
         top: 52px;
         z-index: 9;
         padding: 23px 12px;
@@ -2744,24 +2750,29 @@ ul.active {
     .pur-info .exchanger-list {
         margin-top: 14px;
         font-size: 18px;
+        color: #111;
     }
 
     .pur-info h3 {
         font-size: 14px;
         margin-bottom: 8px;
+        color: #111;
     }
 
     .pur-info .header {
         font-size: 28px;
+        color: #111;
     }
 
     .transfer-option {
         font-size: 26px;
-        margin-top: 100px;
+        /*margin-top: 100px;*/
+        margin-top: 30px;
     }
 
     .transfer-option span{
         text-decoration: underline;
+        color: #222;
     }
 
     .create {

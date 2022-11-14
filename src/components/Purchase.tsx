@@ -70,9 +70,9 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
 const Info: FC<{session: string | null}> = ({session}) => {
     return (
         <div className='pur-info'>
-            <h1 className='header'>📬 Способ пополнения: <br/> 💲 <b>USDT TRC20</b></h1>
+            <h1 className='header'>📬 Способ пополнения: <br/> 💲 <b style={{color: '#111'}}>USDT TRC20</b></h1>
             <a href='https://www.bestchange.ru/qiwi-to-tether-trc20.html'>
-                <h3 className='exchanger-list'>📊 <b>Список обменников</b></h3>
+                <h3 className='exchanger-list'>📊 <b style={{color: '#111'}}>Список обменников</b></h3>
             </a>
             <h3>🕒 Оплата будет засчитана после 1 подтверждения сетью</h3>
             <h3>🧾 Для каждого пополнения создавайте новый счёт</h3>
