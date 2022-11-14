@@ -14,7 +14,7 @@ export const LeftBar: FC<any> = () => {
                 <Link to="/profile" className={`lklm-item ${pathname === '/profile' && 'active'}`}>
                     <div className="global-ico gi-lk-profile"/>
                     <span>Мой профиль</span></Link>
-                <Link to="/" className="lklm-item">
+                <Link to="/purchase" className="lklm-item">
                     <div className="global-ico gi-lk-popvip"/>
                     <span>Пополнения и выплаты</span></Link>
                 <Link to="/bets" className={`lklm-item ${pathname === '/bets' && 'active'}`}>
@@ -57,7 +57,7 @@ export const LeftBarMobile: FC<any> = () => {
                 <Link to="/profile" className={`lklm-item ${pathname === '/profile' && 'active'}`}>
                     <div className="global-ico gi-lk-profile"/>
                     <span>Мой профиль</span></Link>
-                <Link to="/" className="lklm-item">
+                <Link to="/purchase" className="lklm-item">
                     <div className="global-ico gi-lk-popvip"/>
                     <span>Пополнения и выплаты</span></Link>
                 <Link to="/bets" className={`lklm-item ${pathname === '/bets' && 'active'}`}>

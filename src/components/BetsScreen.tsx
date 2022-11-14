@@ -187,9 +187,9 @@ const BetsScreen: FC<any> = (props: any) => {
         <div id="content-wr">
             <LeftBar active={type}/>
 
-            <RightBarMobile/>
+            {/*<RightBarMobile/>*/}
 
-            <LeftBarMobile active={type}/>
+            {/*<LeftBarMobile active={type}/>*/}
 
 
             {type === 'bets' && <Bets

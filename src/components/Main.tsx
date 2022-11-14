@@ -146,7 +146,9 @@ const GameItem:
             <div className="toc-i-right-side">
 
                 {
-                    game.day_game && <div className="tocirs-someinfo"><span>Матч дня</span></div>
+                    game.day_game
+                        ? <div className="tocirs-someinfo"><span>Матч дня</span></div>
+                        : <div className="tocirs-someinfo" style={{visibility: 'hidden'}}><span>Матч дня</span></div>
                 }
 
                 {
