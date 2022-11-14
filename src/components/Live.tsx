@@ -11,6 +11,7 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import debounce from "lodash/debounce";
 import {ApiService} from "../api";
 import {getGames} from "../store/reducers/games/gameActions";
+import {log} from "util";
 
 
 const LeagueItem: FC<any> = ({filter, result}) => {
@@ -226,28 +227,32 @@ const Live = () => {
 
     const handleSearch = useCallback(
         debounce((value: string) => {
-            console.log(params)
             setParams({
                 ...params,
                 search: value === '' ? '-' : value
             })
         }, 1000),
-        [params]
+        [search]
     )
 
-    const handleChangeShowModal = (value: boolean) => {
-        setShowModal(value)
-    }
+    const fetchUserInfo = useCallback(async (session: string) => {
+        return await ApiService.getProfile(session)
+    }, [session])
+
+    const fetchLeagueList = useCallback(async () => {
+        const {data} = await axios.post('http://gpbetapi.ru/league_list', {
+            league_sport: params.sport_name,
+            league_cc: 'all'
+        })
+        return data
+    }, [params])
 
     useEffect(() => {
-        const fetchUserInfo = async (session: string) => {
-            const data = await ApiService.getProfile(session)
-            setUserInfo(data)
-        }
         if (session) {
             fetchUserInfo(session)
+                .then(res => setUserInfo(res))
         }
-    }, [])
+    }, [session])
 
     useEffect(() => {
             setIsLoading(true)
@@ -256,15 +261,12 @@ const Live = () => {
                     params.beautiful_time_start.date
                 } ${params.beautiful_time_start.hours}`
             }))
-            const fetchLeagueList = async () => {
-                const {data} = await axios.post('http://gpbetapi.ru/league_list', {
-                    league_sport: params.sport_name,
-                    league_cc: 'all'
-                })
-                setLeagueList(data)
-                setIsLoading(false)
-            }
+
             fetchLeagueList()
+                .then(res => {
+                    setLeagueList(res)
+                    setIsLoading(false)
+                })
         }
         , [params])
 

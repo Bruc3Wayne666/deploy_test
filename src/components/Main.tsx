@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import axios from "axios";
@@ -396,49 +396,38 @@ const Main: FC = () => {
         setCurrentBet({name, kf, id})
     }
 
+
+    const fetchLeagueList = useCallback(async () => {
+        const {data} = await axios.post('http://gpbetapi.ru/league_list', {
+            league_sport: params.sport_name,
+            league_cc: 'all'
+        })
+        return data
+    }, [params])
+
+
+    const fetchUserInfo = useCallback(async (session: string) => {
+        return await ApiService.getProfile(session)
+    }, [session])
+
+
     useEffect(() => {
         setIsLoading(true)
         dispatch(getGames({...params, game_status: 'not started'}))
-        const fetchLeagueList = async () => {
-            const {data} = await axios.post('http://gpbetapi.ru/league_list', {
-                league_sport: params.sport_name,
-                league_cc: 'all'
-            })
-
-            setLeagueList(data)
-            setIsLoading(false)
-        }
         fetchLeagueList()
+            .then(res => {
+                setLeagueList(res)
+                setIsLoading(false)
+            })
     }, [params])
 
     useEffect(() => {
-        const fetchUserInfo = async (session: string) => {
-            const data = await ApiService.getProfile(session)
-            setUserInfo(data)
-        }
         if (session) {
             fetchUserInfo(session)
+                .then(res => setUserInfo(res))
         }
-    }, [])
+    }, [session])
 
-    // Object.keys(leagueList)
-    //     .map(sport => {
-    //         // @ts-ignore
-    //         return Object.keys(leagueList[sport])
-    //             .map(co => {
-    //                 // @ts-ignore
-    //                 return Object.keys(leagueList[sport][co])
-    //                     // @ts-ignore
-    //                     .map((i: number) => {
-    //                         // @ts-ignore
-    //                         if (leagueList[sport][co][i][3] !== 0) {
-    //                             setFlag(true)
-    //                         }
-    //                         // setCounter(prevState => prevState + leagueList[sport][co][i][3])
-    //                         // return console.log(counter)
-    //                     })
-    //             })
-    //     })
 
     // @ts-ignore
     return (1 === 1) ? (
@@ -606,21 +595,24 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     const [sportList, setSportList] = useState<any>({})
     const [sport, setSport] = useState('icehockey')
 
+    const fetchEvent = useCallback(async () => {
+        const {data} = await axios.post('http://gpbetapi.ru/pop_game', {
+            sport_name: sport
+        })
+        return data
+    }, [sport])
+
+    const fetchSportList = useCallback( async () => {
+        const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+        setSportList(data)
+    }, [])
+
     useEffect(() => {
-        const fetchEvent = async () => {
-            const {data} = await axios.post('http://gpbetapi.ru/pop_game', {
-                sport_name: sport
-            })
-            setPopEvent(data)
-        }
         fetchEvent()
+            .then(res => setPopEvent(res))
     }, [sport])
 
     useEffect(() => {
-        const fetchSportList = async () => {
-            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-            setSportList(data)
-        }
         fetchSportList()
     }, [])
 

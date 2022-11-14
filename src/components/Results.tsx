@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useMemo, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
@@ -20,21 +20,25 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     const [sportList, setSportList] = useState<any>({})
     const [sport, setSport] = useState('icehockey')
 
+
+    const fetchEvent = useCallback(async () => {
+        const {data} = await axios.post('http://gpbetapi.ru/pop_game', {
+            sport_name: sport
+        })
+        return data
+    }, [sport])
+
+    const fetchSportList = useCallback( async () => {
+        const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+        setSportList(data)
+    }, [])
+
     useEffect(() => {
-        const fetchEvent = async () => {
-            const {data} = await axios.post('http://gpbetapi.ru/pop_game', {
-                sport_name: sport
-            })
-            setPopEvent(data)
-        }
         fetchEvent()
+            .then(res => setPopEvent(res))
     }, [sport])
 
     useEffect(() => {
-        const fetchSportList = async () => {
-            const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-            setSportList(data)
-        }
         fetchSportList()
     }, [])
 
@@ -70,13 +74,15 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                     }. {popEvent?.league?.name}</div>
                 <div className="pop-sob-teams">
                     <div>
-                        <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10} style={{marginRight: 20}}/>
+                        <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10}
+                             style={{marginRight: 20}}/>
                         &nbsp;
                         {popEvent?.home_team}
                     </div>
                     <div className="pst-hl"/>
                     <div>
-                        <img src={popEvent?.away_team_logo} alt={popEvent?.away_team} height={10} style={{marginRight: 20}}/>
+                        <img src={popEvent?.away_team_logo} alt={popEvent?.away_team} height={10}
+                             style={{marginRight: 20}}/>
                         &nbsp;
                         {popEvent?.away_team}
                     </div>
@@ -125,7 +131,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 handleSetCurrentGame(popEvent)
                                 handleChangeShowModal(true)
                                 handleSetCurrentBet({
-                                            name: 'П2',
+                                    name: 'П2',
                                     //@ts-ignore
                                     kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["kf"],
                                     //@ts-ignore
@@ -559,7 +565,7 @@ const Results: FC<any> = () => {
                     search: value === '' ? '-' : value
                 })
             }, 1000),
-            [params]
+            [search]
         )
 
         const handleChangeShowModal = (value: boolean) => {
@@ -575,34 +581,39 @@ const Results: FC<any> = () => {
         }
 
 
-        useEffect(() => {
-            const fetchUserInfo = async (session: string) => {
-                const data = await ApiService.getProfile(session)
-                setUserInfo(data)
-            }
-            if (session) {
-                fetchUserInfo(session)
-            }
-        }, [])
+        const fetchUserInfo = useCallback(async (session: string) => {
+            return await ApiService.getProfile(session)
+        }, [session])
+
+        const fetchLeagueList = useCallback(async () => {
+            const {data} = await axios.post('http://gpbetapi.ru/league_list', {
+                league_sport: params.sport_name,
+                league_cc: 'all'
+            })
+            return data
+        }, [params])
+
 
         useEffect(() => {
-                setIsLoading(true)
-                dispatch(getGames({
-                    ...params, beautiful_time_start: `${
-                        params.beautiful_time_start.date
-                    } ${params.beautiful_time_start.hours}`
-                }))
-                const fetchLeagueList = async () => {
-                    const {data} = await axios.post('http://gpbetapi.ru/league_list', {
-                        league_sport: params.sport_name,
-                        league_cc: 'all'
-                    })
-                    setLeagueList(data)
-                    setIsLoading(false)
-                }
-                fetchLeagueList()
+            if (session) {
+                fetchUserInfo(session)
+                    .then(res => setUserInfo(res))
             }
-            , [params])
+        }, [session])
+
+        useEffect(() => {
+            setIsLoading(true)
+            dispatch(getGames({
+                ...params, beautiful_time_start: `${
+                    params.beautiful_time_start.date
+                } ${params.beautiful_time_start.hours}`
+            }))
+            fetchLeagueList()
+                .then(res => {
+                    setLeagueList(res)
+                    setIsLoading(false)
+                })
+        }, [params])
 
         return (
             <div id="content-wr">
