@@ -40,7 +40,8 @@ const HeaderMobile: FC = () => {
             </div>
             <div style={{
                 height: '100%',
-                backgroundColor: '#087537',
+                backgroundColor: '#C78F30',
+                // backgroundColor: '#087537',
                 display: 'flex',
                 alignItems: 'center',
                 paddingRight: 6,
