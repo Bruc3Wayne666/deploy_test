@@ -19,6 +19,7 @@ interface TransferItemType {
     remainder_time: number
     status: string
     wallet: string
+    iden: number
 }
 
 interface TransferListType {
@@ -36,19 +37,20 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
         remainder_time,
         loook_link,
         status,
-        wallet
+        wallet,
+        iden
     } = transfer
 
     return (
         <div className='transfer-item'>
-            <h4>📂Идентификатор пополнения # (жду)</h4>
+            <h4>📂Идентификатор пополнения #{iden}</h4>
             <a href={loook_link}><h3>🔍 Отслеживать пополнение</h3></a>
             {
                 status === 'waiting'
                     ? <h3>⏳ Адрес актуален: <b style={{color: 'red'}}>{Math.floor(remainder_time / 60)}</b> минут</h3>
                     : status === 'finish'
                         ? <h3>💵 Пополнено на <b>{amount}</b></h3>
-                        : <h3>❌ Адрес не актуален</h3>
+                        : <h3>❌ Адрес не актуален (просрочен)</h3>
             }
             <h3>🏷 Адрес для оплаты:    </h3>
             <h3
