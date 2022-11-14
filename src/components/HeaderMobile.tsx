@@ -28,7 +28,7 @@ const HeaderMobile: FC = () => {
     return (
         <div id="mobile-header">
             <div
-                style={{height: '100%'}}
+                style={{width: '50%', height: '100%', borderRight: '1px solid #222'}}
             >
                 <Link to={'/'}>
                     <img
