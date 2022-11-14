@@ -83,7 +83,7 @@ const Info: FC<{session: string | null}> = ({session}) => {
                 className='create'
                 onClick={() => session && createTransfer(session)}
             >
-                Пополнить
+                Создать кошелёк
             </button>
         </div>
     )
