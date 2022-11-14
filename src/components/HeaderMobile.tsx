@@ -47,7 +47,8 @@ const HeaderMobile: FC = () => {
                 paddingRight: 6,
                 paddingLeft: 6,
                 width: '50%',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                borderLeft: '1px solid #222'
             }}>
 
                 <Link to={'/profile'}>
