@@ -2866,20 +2866,20 @@ ul.active {
 }
 
 .pur-info {
-    display: none;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*width: 100%;*/
-    /*!*position: fixed;*!*/
-    /*background-color: white;*/
-    /*top: 52px;*/
-    /*z-index: 9;*/
-    /*padding: 23px 12px;*/
-    /*border-radius: 16px;*/
-    /*!*border-bottom-left-radius: 16px;*!*/
-    /*!*border-bottom-right-radius: 16px;*!*/
-    /*border: 1px solid #cc9933;*/
-    /*margin-bottom: 12px;*/
+    /*display: none;*/
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /*position: fixed;*/
+    background-color: white;
+    top: 52px;
+    z-index: 9;
+    padding: 23px 12px;
+    border-radius: 16px;
+    /*border-bottom-left-radius: 16px;*/
+    /*border-bottom-right-radius: 16px;*/
+    border: 1px solid #cc9933;
+    margin-bottom: 12px;
 }
 
 .pur-info .exchanger-list {
