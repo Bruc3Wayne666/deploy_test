@@ -2910,14 +2910,14 @@ ul.active {
     color: #222;
 }
 
-/*.create {*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*    outline: none;*/
-/*    background-color: #cc9933;*/
-/*    padding: 12px 23px;*/
-/*    border-radius: 14px;*/
-/*    margin-top: 12px;*/
-/*}*/
+.create {
+    margin-left: auto;
+    margin-right: auto;
+    outline: none;
+    background-color: #cc9933;
+    padding: 12px 23px;
+    border-radius: 14px;
+    margin-top: 12px;
+}
 
 
