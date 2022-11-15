@@ -2806,11 +2806,11 @@ ul.active {
 }
 
 
-.purchase {
-    /*border: 1px solid white;*/
-    height: 50vh;
-    overflow-y: scroll;
-}
+/*.purchase {*/
+/*    !*border: 1px solid white;*!*/
+/*    height: 50vh;*/
+/*    overflow-y: scroll;*/
+/*}*/
 
 /*.transfer-items {*/
 /*    width: 100%;*/
