@@ -4,6 +4,7 @@ import {login, register} from '../store/reducers/auth/authActions';
 
 // @ts-ignore
 import { useAlert } from 'react-alert';
+import axios from "axios";
 
 
 const Button: FC<{value: string}> = ({value}) => {
@@ -18,6 +19,7 @@ const Button: FC<{value: string}> = ({value}) => {
 const Authorize: FC = () => {
     const dispatch = useAppDispatch()
     const [type, setType] = useState('login')
+    const [forgot, setForgot] = useState(false)
     const [form, setForm] = useState({
         login: '',
         password: '',
@@ -28,6 +30,20 @@ const Authorize: FC = () => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
+
+        if (forgot) {
+            return axios.post('http://gpbetapi.ru/reset_password', {
+                login: email
+            })
+                .then(() => {
+                    alert('Мы выслали пароль на ваш email')
+                    setForgot(false)
+                })
+                .catch(() => {
+                    alert('Что-то пошло не так')
+                })
+        }
+
         if (type === 'login') {
             dispatch(login(form))
         } else if (type === 'register') {
@@ -36,6 +52,51 @@ const Authorize: FC = () => {
             alert.show('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
         }
     }
+
+    if (forgot) return (
+        <form
+            className={'auth-form'}
+            onSubmit={handleSubmit}
+        >
+            <>
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: 30
+                    }}
+                >
+                    <img
+                        src={require('../assets/green_price.png')}
+                        height={90}
+                        width={90}
+                        alt="GPBet"
+                    />
+                    <h1 style={{fontStyle: 'italic', fontWeight: '900'}}>GPBet</h1>
+                </div>
+                <div style={{marginBottom: 12}}>
+                    <p style={{fontSize: 14}}>Введите email для восстановления пароля</p>
+                </div>
+                <input
+                    value={form.login}
+                    onChange={e => setForm({...form, login: e.target.value})}
+                    placeholder={'Ваш логин'}
+                    type="text"
+                />
+                <div
+                    style={{
+                        display: 'flex',
+                        // marginTop: 12
+                    }}
+                >
+                </div>
+                {/*<button type={'submit'}>Войти</button>*/}
+                <Button value={'Отправить пароль'}/>
+
+                <p onClick={() => setForgot(false)}>Вернуться обратно</p>
+            </>
+        </form>
+    )
 
     return (
         <form
@@ -59,7 +120,7 @@ const Authorize: FC = () => {
                                 width={90}
                                 alt="GPBet"
                             />
-                            <h1 style={{fontStyle: 'italic', fontWeight: 'bold'}}>GPBet</h1>
+                            <h1 style={{fontStyle: 'italic', fontWeight: '900'}}>GPBet</h1>
                         </div>
                         <input
                             value={form.login}
@@ -103,6 +164,7 @@ const Authorize: FC = () => {
                         <Button value={'Войти'}/>
 
                         <p
+                            onClick={() => setForgot(true)}
                             style={{
                                 fontSize: 18,
                                 color: '#cc9933',
@@ -175,5 +237,6 @@ const Authorize: FC = () => {
         </form>
     );
 };
+
 
 export default Authorize;
