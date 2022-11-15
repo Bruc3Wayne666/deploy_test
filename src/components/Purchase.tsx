@@ -63,7 +63,6 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
 
 
 const Info = React.memo(({createTransfer}: {createTransfer: () => void}) => {
-    console.log('12')
     return (
         <div className='pur-info'>
             <h1 className='header'>📬 Способ пополнения: <br/> 💲 <b style={{color: '#111'}}>USDT TRC20</b></h1>
