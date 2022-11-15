@@ -125,6 +125,21 @@ const Authorize: FC = () => {
                     :
 
                     <>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                marginBottom: 30
+                            }}
+                        >
+                            <img
+                                src={require('../assets/green_price.png')}
+                                height={90}
+                                width={90}
+                                alt="GPBet"
+                            />
+                            <h1 style={{fontStyle: 'italic', fontWeight: 'bold'}}>GPBet</h1>
+                        </div>
                         <p style={{fontSize: 22, marginBottom: 14}}>
                             Мы отправим пароль на ваш email
                         </p>
@@ -140,18 +155,20 @@ const Authorize: FC = () => {
                                 marginTop: 12
                             }}
                         >
-                            <p>Уже есть аккаунт? <span onClick={() => {
-                                setType('login')
-                                setForm({
-                                    login: '',
-                                    password: '',
-                                    remember: false
-                                })
-                                setEmail('')
-                            }}>Войти!</span></p>
+
                         </div>
                         {/*<button style={{width: 240}} type={'submit'}>Зарегистрироваться!</button>*/}
                         <Button value={'Зарегистрироваться!'}/>
+
+                        <p style={{marginBottom: 200}}>Уже есть аккаунт? <span onClick={() => {
+                            setType('login')
+                            setForm({
+                                login: '',
+                                password: '',
+                                remember: false
+                            })
+                            setEmail('')
+                        }}>Войти!</span></p>
                     </>
 
             }
