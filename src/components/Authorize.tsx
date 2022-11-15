@@ -6,6 +6,15 @@ import {login, register} from '../store/reducers/auth/authActions';
 import { useAlert } from 'react-alert';
 
 
+const Button: FC<{value: string}> = ({value}) => {
+
+    return (
+        <button type={'submit'}>
+            {value}
+        </button>
+    )
+}
+
 const Authorize: FC = () => {
     const dispatch = useAppDispatch()
     const [type, setType] = useState('login')
@@ -37,6 +46,21 @@ const Authorize: FC = () => {
                 type === 'login'
                     ?
                     <>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                marginBottom: 30
+                            }}
+                        >
+                            <img
+                                src={require('../assets/green_price.png')}
+                                height={90}
+                                width={90}
+                                alt="GPBet"
+                            />
+                            <h1 style={{fontStyle: 'italic', fontWeight: 'bold'}}>GPBet</h1>
+                        </div>
                         <input
                             value={form.login}
                             onChange={e => setForm({...form, login: e.target.value})}
@@ -71,19 +95,31 @@ const Authorize: FC = () => {
                         <div
                             style={{
                                 display: 'flex',
-                                marginTop: 12
+                                // marginTop: 12
                             }}
                         >
-                            <p>Ещё нету аккаунта? <span onClick={() => {
-                                setType('register')
-                                setForm({
-                                    login: '',
-                                    password: '',
-                                    remember: false
-                                })
-                            }}>Зарегистрироваться!</span></p>
                         </div>
-                        <button type={'submit'}>Войти</button>
+                        {/*<button type={'submit'}>Войти</button>*/}
+                        <Button value={'Войти'}/>
+
+                        <p
+                            style={{
+                                fontSize: 18,
+                                color: '#cc9933',
+                                marginBottom: 130
+                            }}
+                        >
+                            Забыли пароль?
+                        </p>
+
+                        <p>Ещё нету аккаунта? <span onClick={() => {
+                            setType('register')
+                            setForm({
+                                login: '',
+                                password: '',
+                                remember: false
+                            })
+                        }}>Зарегистрироваться!</span></p>
                     </>
 
                     :
@@ -114,7 +150,8 @@ const Authorize: FC = () => {
                                 setEmail('')
                             }}>Войти!</span></p>
                         </div>
-                        <button style={{width: 240}} type={'submit'}>Зарегистрироваться!</button>
+                        {/*<button style={{width: 240}} type={'submit'}>Зарегистрироваться!</button>*/}
+                        <Button value={'Зарегистрироваться!'}/>
                     </>
 
             }

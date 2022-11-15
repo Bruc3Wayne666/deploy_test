@@ -1,17 +1,7 @@
-import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import axios from "axios";
 import {useAppSelector} from "../hooks/redux";
 
-
-const getTransferList = async (session: string) => {
-    const {data} = await axios.post('http://gpbetapi.ru/transfer_list', {user_id: session})
-    return data
-}
-
-const createTransfer = async (session: string) => {
-    const {data} = await axios.post('http://gpbetapi.ru/create_transfer', {user_id: session})
-    return data
-}
 
 interface TransferItemType {
     amount?: number
@@ -54,7 +44,7 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
                         ? <h3>💵 Пополнено на <b>{amount}</b></h3>
                         : <h3>❌ Адрес не актуален (просрочен)</h3>
             }
-            <h3>🏷 Адрес для оплаты:    </h3>
+            <h3>🏷 Адрес для оплаты: </h3>
             <h3
                 ref={address}
                 className='transfer-address'
@@ -72,7 +62,8 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
 }
 
 
-const Info: FC<{session: string | null}> = ({session}) => {
+const Info = React.memo(({createTransfer}: {createTransfer: () => void}) => {
+    console.log('12')
     return (
         <div className='pur-info'>
             <h1 className='header'>📬 Способ пополнения: <br/> 💲 <b style={{color: '#111'}}>USDT TRC20</b></h1>
@@ -84,29 +75,46 @@ const Info: FC<{session: string | null}> = ({session}) => {
             <h3>🆘 Не бойтесь, поддержка сайта вас не оставит</h3>
             <button
                 className='create'
-                onClick={() => session && createTransfer(session)}
+                onClick={createTransfer}
             >
                 Создать кошелёк
             </button>
         </div>
     )
-}
+})
+
 
 const Purchase: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const [transferList, setTransferList] = useState<TransferListType>()
 
+    const createTransfer = useCallback(async () => {
+        const {data} = await axios.post<TransferItemType | string>('http://gpbetapi.ru/create_transfer', {user_id: session})
+        if (data === '1') alert('Кошелёк уже создан')
+    }, [session])
+
+    const getTransferList = useCallback(async () => {
+        if (!session) return null
+        const {data} = await axios.post('http://gpbetapi.ru/transfer_list', {user_id: session})
+        return data
+    }, [session])
+
     useEffect(() => {
-        if (session) {
-            getTransferList(session)
+        getTransferList()
+            .then(res => setTransferList(res))
+        const interval = setInterval(() => {
+            getTransferList()
                 .then(res => setTransferList(res))
-        }
+        }, 20000)
+
+
+        return () => clearInterval(interval)
     }, [session])
 
 
     return (
         <div className='purchase'>
-            <Info session={session}/>
+            <Info createTransfer={createTransfer}/>
             {
                 transferList?.result.reverse()
                     .map(transfer => <TransferItem transfer={transfer}/>)

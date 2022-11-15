@@ -2583,7 +2583,19 @@ ul.active {
 
     .auth-form {
         width: 100%;
+        /*border: 1px solid white;*/
     }
+
+    .auth-form button {
+        border-radius: 44px;
+        width: 70%;
+        margin-bottom: 32px;
+    }
+
+    /*.auth-form p {*/
+    /*    font-size: 22px;*/
+    /*    color: #cc9933;*/
+    /*}*/
 
     button {
         border: none;
@@ -2648,8 +2660,13 @@ ul.active {
     }
 
     .auth-form {
-        margin-top: 200px;
+        margin-top: 60px;
         height: 100%;
+    }
+
+    .auth-form input {
+        height: 48px;
+        width: 70%;
     }
 
     .frb-one-f {

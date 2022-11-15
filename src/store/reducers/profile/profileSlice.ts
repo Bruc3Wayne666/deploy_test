@@ -7,8 +7,8 @@ export interface IProfileState {
     // login: null | string,
     result: {
         balance: string,
-        id: string,
-        login: string
+        login: string,
+        rassilka: number
     } | null
 }
 
@@ -24,8 +24,8 @@ export interface ProfilePayloadType {
     message: null | string,
     result: {
         balance: string,
-        id: string,
-        login: string
+        login: string,
+        rassilka: number
     } | null,
 }
 

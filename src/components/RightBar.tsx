@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
@@ -15,21 +15,33 @@ export const RightBar: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
 
 
+    const fetchUserInfo = async (session: string) => {
+        return await ApiService.getProfile(session)
+    }
+
     useEffect(() => {
-        const fetchUserInfo = async (session: string) => {
-            const data = await ApiService.getProfile(session)
-            setUserInfo(data)
-        }
         if (session) {
             fetchUserInfo(session)
+                .then(res => setUserInfo(res))
         }
-    }, [])
+    }, [session])
+
+    const setMailing = useCallback(async () => {
+        await axios.post('http://gpbetapi.ru/change_ras', {user_id: session})
+        if (session){
+            fetchUserInfo(session)
+                .then(res => setUserInfo(res))
+        }
+    }, [result?.rassilka, session])
 
     return (
         <div id="lk-right">
             <div className="lkr-widget">
                 <div className="lkrw-title">Рассылки и уведомления</div>
-                <div className="lkrw-inforow active">
+                <div
+                    className={`lkrw-inforow ${result?.rassilka === 1 && 'active'}`}
+                    onClick={setMailing}
+                >
                     <div className="lkrwir-text"><span>Email:</span> {result?.login}</div>
                     <div className="lkrwir-tick-bttn">
                         <div className="lkrwir-bttn"/>
@@ -71,22 +83,33 @@ export const RightBarMobile: FC = () => {
     })
     const {session} = useAppSelector(state => state.authReducer)
 
+    const fetchUserInfo = async (session: string) => {
+        return await ApiService.getProfile(session)
+    }
 
     useEffect(() => {
-        const fetchUserInfo = async (session: string) => {
-            const data = await ApiService.getProfile(session)
-            setUserInfo(data)
-        }
         if (session) {
             fetchUserInfo(session)
+                .then(res => setUserInfo(res))
         }
-    }, [])
+    }, [session])
+
+    const setMailing = useCallback(async () => {
+        await axios.post('http://gpbetapi.ru/change_ras', {user_id: session})
+        if (session){
+            fetchUserInfo(session)
+                .then(res => setUserInfo(res))
+        }
+    }, [result?.rassilka, session])
 
     return (
         <div id="lk-right" className="m">
             <div className="lkr-widget">
                 <div className="lkrw-title">Рассылки и уведомления</div>
-                <div className="lkrw-inforow active">
+                <div
+                    className={`lkrw-inforow ${result?.rassilka === 1 && 'active'}`}
+                    onClick={setMailing}
+                >
                     <div className="lkrwir-text"><span>Email:</span> {result?.login}</div>
                     <div className="lkrwir-tick-bttn">
                         <div className="lkrwir-bttn"/>
