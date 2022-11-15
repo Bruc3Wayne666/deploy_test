@@ -2806,11 +2806,12 @@ ul.active {
 }
 
 
-/*.purchase {*/
+.purchase {
+    padding: 0 234px;
 /*    !*border: 1px solid white;*!*/
 /*    height: 50vh;*/
 /*    overflow-y: scroll;*/
-/*}*/
+}
 
 /*.transfer-items {*/
 /*    width: 100%;*/
@@ -2863,6 +2864,7 @@ ul.active {
     font-weight: 900;
     /*color: lightgreen;*/
     color: #444;
+    cursor: pointer;
 }
 
 .pur-info {
@@ -2918,6 +2920,8 @@ ul.active {
     padding: 12px 23px;
     border-radius: 14px;
     margin-top: 12px;
+    cursor: pointer;
+    border: none;
 }
 
 
