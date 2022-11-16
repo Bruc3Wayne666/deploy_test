@@ -43,24 +43,17 @@ const App: FC = () => {
             flexDirection: 'column',
             height: '100vh'
         }}
+        className='error'
     >
-        {/*<Navigate to={'/profile'}/>*/}
     <h1>Что-то пошло не так</h1>
         <p>Возможно данного пользователя не существует или введены некорректные данные.</p>
         <p>Либо это может быть связано с неполадками на сервере.</p>
-        <p>Попробуйте очистить localstorage, а затем перезагрузить страницу и войти заново, нажав по ссылке.</p>
-        <a
-            style={{
-                fontSize: 34,
-                color: 'lightblue',
-                textDecoration: 'underline',
-                cursor: 'pointer',
-                marginTop: 20
-            }}
+        <p className='advice'>Попробуйте очистить localstorage, а затем перезагрузить страницу и войти заново, нажав по ссылке.</p>
+        <button
             onClick={() => {
                 localStorage.clear()
                 window.location.href="/profile"
-            }}>Попробовать снова</a>
+            }}>Попробовать снова</button>
     </div>
 
 

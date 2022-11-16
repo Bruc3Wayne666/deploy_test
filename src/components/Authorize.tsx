@@ -3,11 +3,12 @@ import {useAppDispatch} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
 
 // @ts-ignore
-import { useAlert } from 'react-alert';
+import {useAlert} from 'react-alert';
 import axios from "axios";
+import {isSymbolObject} from "util/types";
 
 
-const Button: FC<{value: string}> = ({value}) => {
+const Button: FC<{ value: string }> = ({value}) => {
 
     return (
         <button type={'submit'}>
@@ -26,23 +27,26 @@ const Authorize: FC = () => {
         remember: true
     })
     const [email, setEmail] = useState('')
+    const [recovery, setRecovery] = useState('')
     const alert = useAlert()
+
+    const handleReset = (e: any) => {
+        e.preventDefault()
+        axios.post('http://gpbetapi.ru/reset_password', {
+            login: recovery
+        })
+            .then(() => {
+                setForgot(false)
+                setRecovery('')
+                alert.show('Мы выслали пароль на ваш email')
+            })
+            .catch(() => {
+                alert.show('Что-то пошло не так')
+            })
+    }
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-
-        if (forgot) {
-            return axios.post('http://gpbetapi.ru/reset_password', {
-                login: email
-            })
-                .then(() => {
-                    alert('Мы выслали пароль на ваш email')
-                    setForgot(false)
-                })
-                .catch(() => {
-                    alert('Что-то пошло не так')
-                })
-        }
 
         if (type === 'login') {
             dispatch(login(form))
@@ -56,7 +60,7 @@ const Authorize: FC = () => {
     if (forgot) return (
         <form
             className={'auth-form'}
-            onSubmit={handleSubmit}
+            onSubmit={handleReset}
         >
             <>
                 <div
@@ -78,8 +82,8 @@ const Authorize: FC = () => {
                     <p style={{fontSize: 14}}>Введите email для восстановления пароля</p>
                 </div>
                 <input
-                    value={form.login}
-                    onChange={e => setForm({...form, login: e.target.value})}
+                    value={recovery}
+                    onChange={e => setRecovery(e.target.value)}
                     placeholder={'Ваш логин'}
                     type="text"
                 />
