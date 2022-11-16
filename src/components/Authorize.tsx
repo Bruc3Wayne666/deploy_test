@@ -155,7 +155,10 @@ const Authorize: FC = () => {
                 {/*<button type={'submit'}>Войти</button>*/}
                 <Button value={'Отправить пароль'}/>
 
-                <p onClick={() => setForgot(false)}>Вернуться обратно</p>
+                <p
+                    style={{cursor: 'pointer'}}
+                    onClick={() => setForgot(false)}
+                >Вернуться обратно</p>
             </>
         </form>
     )
@@ -228,9 +231,10 @@ const Authorize: FC = () => {
                         <p
                             onClick={() => setForgot(true)}
                             style={{
+                                cursor: 'pointer',
                                 fontSize: 18,
                                 color: '#cc9933',
-                                marginBottom: 130
+                                marginBottom: window.innerWidth > 1440 ? 20 : 100
                             }}
                         >
                             Забыли пароль?

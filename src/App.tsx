@@ -64,8 +64,9 @@ const App: FC = () => {
                 по ссылке.</p>
             <button
                 onClick={() => {
-                    localStorage.clear()
-                    window.location.href = "/profile"
+                    dispatch(logout())
+                    // localStorage.clear()
+                    // window.location.href = "/profile"
                 }}>Попробовать снова
             </button>
         </div>
