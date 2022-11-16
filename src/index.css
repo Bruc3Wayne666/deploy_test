@@ -2816,6 +2816,38 @@ ul.active {
         font-size: 18px;
     }
 
+    .tocir-num {
+        font-size: 12px;
+    }
+
+    .tocir-name {
+        font-size: 11px;
+    }
+
+    .tocir-results {
+        font-size: 12px;
+    }
+
+    .torir-time {
+        width: 19%;
+        margin: 0;
+    }
+
+    .toc-title {
+        margin-top: -3px;
+    }
+
+    .toc-item {
+        /*margin-top: 13px;*/
+        margin-bottom: 0;
+    }
+
+    .toc-item-res {
+        justify-content: space-evenly;
+        /*margin-bottom: 4px;*/
+        /*padding-right: 12px;*/
+    }
+
     .auth-form {
         margin-top: 60px;
         height: 100%;
@@ -2839,10 +2871,28 @@ ul.active {
         align-items: center;
     }
 
+    /*.fr-search input{*/
+    /*    max-height: 160px;*/
+    /*    !*border: 1px solid white;*!*/
+    /*}*/
+
     /*.toc-item-res {*/
     /*    !*border: 1px solid white;*!*/
     /*    !*padding-right: 18px;*!*/
     /*}*/
+
+    .right-col-menu {
+        /*padding-right: 20px;*/
+        /*padding: 0;*/
+    }
+
+    .one-rcm-menu {
+        border: none;
+        padding-left: 0;
+        font-size: 22px;
+        color: #866688;
+        /*border: 1px solid red;*/
+    }
 
 
 
