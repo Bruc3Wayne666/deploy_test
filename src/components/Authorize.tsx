@@ -5,7 +5,6 @@ import {login, register} from '../store/reducers/auth/authActions';
 // @ts-ignore
 import {useAlert} from 'react-alert';
 import axios from "axios";
-import {isSymbolObject} from "util/types";
 
 
 const Button: FC<{ value: string }> = ({value}) => {

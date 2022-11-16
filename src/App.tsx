@@ -18,9 +18,16 @@ import HeaderMobile from "./components/HeaderMobile";
 import Purchase from "./components/Purchase";
 import CyberSport from "./components/Cybers";
 
+// @ts-ignore
+import {useAlert} from 'react-alert';
+import {retry} from "@reduxjs/toolkit/query";
+
+
+
 const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const dispatch = useAppDispatch()
+    const alert = useAlert()
 
 
     useEffect(() => {
@@ -35,27 +42,43 @@ const App: FC = () => {
         }
     }, [])
 
-    if (Number(session) === -1) return <div
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            height: '100vh'
-        }}
-        className='error'
-    >
-    <h1>Что-то пошло не так</h1>
-        <p>Возможно данного пользователя не существует или введены некорректные данные.</p>
-        <p>Либо это может быть связано с неполадками на сервере.</p>
-        <p className='advice'>Попробуйте очистить localstorage, а затем перезагрузить страницу и войти заново, нажав по ссылке.</p>
-        <button
-            onClick={() => {
-                localStorage.clear()
-                window.location.href="/profile"
-            }}>Попробовать снова</button>
-    </div>
+    if (Number(session) === -1) {
+        alert.show('Неправльный пароль, либо пользователя не существует.')
+        localStorage.clear()
 
+        return (
+            <div className='App'>
+                <ContentContainer>
+                    <HeaderMobile />
+                    <Header/>
+                    <Authorize/>
+                    <TabBar/>
+                </ContentContainer>
+            </div>
+        )
+
+        // <Authorize />
+        // return <div
+        //     style={{
+        //         display: 'flex',
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //         flexDirection: 'column',
+        //         height: '100vh'
+        //     }}
+        //     className='error'
+        // >
+        //     <h1>Что-то пошло не так</h1>
+        //     <p>Возможно данного пользователя не существует или введены некорректные данные.</p>
+        //     <p>Либо это может быть связано с неполадками на сервере.</p>
+        //     <p className='advice'>Попробуйте очистить localstorage, а затем перезагрузить страницу и войти заново, нажав по ссылке.</p>
+        //     <button
+        //         onClick={() => {
+        //             localStorage.clear()
+        //             window.location.href="/profile"
+        //         }}>Попробовать снова</button>
+        // </div>
+    }
 
     return (
         <div className='App'>

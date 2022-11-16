@@ -2188,6 +2188,40 @@ ul.active {
     filter: invert(100%);
 }
 
+.error {
+    /*border: 1px skyblue solid;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 120px;
+}
+
+.error h1 {
+    font-weight: 600;
+    font-size: 46px;
+    margin-bottom: 56px;
+}
+
+.error p {
+    font-size: 22px;
+    margin-bottom: 22px;
+}
+
+.error button {
+    margin-top: 42px;
+    font-size: 24px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: #cc9933;
+    border: none;
+    cursor: pointer;
+}
+
+.error .advice {
+    font-size: 24px;
+    font-weight: 600;
+}
+
 #mobile-header {
     background-color: #C78F30;
     display: flex;
@@ -2951,38 +2985,4 @@ ul.active {
     margin-top: 12px;
     cursor: pointer;
     border: none;
-}
-
-.error {
-    /*border: 1px skyblue solid;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 120px;
-}
-
-.error h1 {
-    font-weight: 600;
-    font-size: 46px;
-    margin-bottom: 56px;
-}
-
-.error p {
-    font-size: 22px;
-    margin-bottom: 22px;
-}
-
-.error button {
-    margin-top: 42px;
-    font-size: 24px;
-    padding: 8px 16px;
-    border-radius: 8px;
-    background-color: #cc9933;
-    border: none;
-    cursor: pointer;
-}
-
-.error .advice {
-    font-size: 24px;
-    font-weight: 600;
 }
