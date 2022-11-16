@@ -2255,6 +2255,124 @@ ul.active {
     align-items: center;
 }
 
+.purchase {
+    padding: 0 234px;
+    /*    !*border: 1px solid white;*!*/
+    /*    height: 50vh;*/
+    /*    overflow-y: scroll;*/
+}
+
+/*.transfer-items {*/
+/*    width: 100%;*/
+/*    !*margin-top: 220px;*!*/
+/*    position: absolute;*/
+/*    !*border: 1px skyblue solid;*!*/
+/*    !*height: 120vh;*!*/
+/*    overflow-y: scroll;*/
+/*    padding-bottom: 100px;*/
+/*}*/
+
+.transfer-item {
+    width: 100%;
+    color: black;
+    /*background-color: black;*/
+    background-color: white;
+    border: 2px solid #cc9933;
+    border-radius: 24px;
+    padding: 12px 24px;
+    margin-bottom: 12px;
+}
+
+.transfer-item h3 b {
+    color: lightgreen;
+}
+
+.transfer-item h4 {
+    /*color: lightgrey;*/
+    color: black;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.transfer-item a h3{
+    font-size: 21px;
+    /*color: lightskyblue;*/
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 26px;
+}
+
+.transfer-item h3 {
+    font-size: 18px;
+    margin-bottom: 14px;
+    color: black;
+}
+
+.transfer-address span{
+    font-size: 16px;
+    font-weight: 900;
+    /*color: lightgreen;*/
+    color: #444;
+    cursor: pointer;
+}
+
+.pur-info {
+    /*display: none;*/
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /*position: fixed;*/
+    background-color: white;
+    top: 52px;
+    z-index: 9;
+    padding: 23px 12px;
+    border-radius: 16px;
+    /*border-bottom-left-radius: 16px;*/
+    /*border-bottom-right-radius: 16px;*/
+    border: 1px solid #cc9933;
+    margin-bottom: 12px;
+}
+
+.pur-info .exchanger-list {
+    margin-top: 14px;
+    font-size: 18px;
+    color: #111;
+}
+
+.pur-info h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #111;
+}
+
+.pur-info .header {
+    font-size: 28px;
+    color: #111;
+}
+
+.transfer-option {
+    font-size: 26px;
+    /*margin-top: 100px;*/
+    margin-top: 30px;
+}
+
+.transfer-option span{
+    text-decoration: underline;
+    color: #222;
+}
+
+.create {
+    margin-left: auto;
+    margin-right: auto;
+    outline: none;
+    background-color: #cc9933;
+    padding: 12px 23px;
+    border-radius: 14px;
+    margin-top: 12px;
+    cursor: pointer;
+    border: none;
+}
+
 #lk-right.m {
     display: none;
 }
@@ -2871,123 +2989,4 @@ ul.active {
         font-size: 20px;
         font-weight: 600;
     }
-}
-
-
-.purchase {
-    padding: 0 234px;
-/*    !*border: 1px solid white;*!*/
-/*    height: 50vh;*/
-/*    overflow-y: scroll;*/
-}
-
-/*.transfer-items {*/
-/*    width: 100%;*/
-/*    !*margin-top: 220px;*!*/
-/*    position: absolute;*/
-/*    !*border: 1px skyblue solid;*!*/
-/*    !*height: 120vh;*!*/
-/*    overflow-y: scroll;*/
-/*    padding-bottom: 100px;*/
-/*}*/
-
-.transfer-item {
-    width: 100%;
-    color: black;
-    /*background-color: black;*/
-    background-color: white;
-    border: 2px solid #cc9933;
-    border-radius: 24px;
-    padding: 12px 24px;
-    margin-bottom: 12px;
-}
-
-.transfer-item h3 b {
-    color: lightgreen;
-}
-
-.transfer-item h4 {
-    /*color: lightgrey;*/
-    color: black;
-    margin-top: 24px;
-    margin-bottom: 24px;
-}
-
-.transfer-item a h3{
-    font-size: 21px;
-    /*color: lightskyblue;*/
-    color: #222;
-    font-weight: 600;
-    margin-bottom: 26px;
-}
-
-.transfer-item h3 {
-    font-size: 18px;
-    margin-bottom: 14px;
-    color: black;
-}
-
-.transfer-address span{
-    font-size: 16px;
-    font-weight: 900;
-    /*color: lightgreen;*/
-    color: #444;
-    cursor: pointer;
-}
-
-.pur-info {
-    /*display: none;*/
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    /*position: fixed;*/
-    background-color: white;
-    top: 52px;
-    z-index: 9;
-    padding: 23px 12px;
-    border-radius: 16px;
-    /*border-bottom-left-radius: 16px;*/
-    /*border-bottom-right-radius: 16px;*/
-    border: 1px solid #cc9933;
-    margin-bottom: 12px;
-}
-
-.pur-info .exchanger-list {
-    margin-top: 14px;
-    font-size: 18px;
-    color: #111;
-}
-
-.pur-info h3 {
-    font-size: 14px;
-    margin-bottom: 8px;
-    color: #111;
-}
-
-.pur-info .header {
-    font-size: 28px;
-    color: #111;
-}
-
-.transfer-option {
-    font-size: 26px;
-    /*margin-top: 100px;*/
-    margin-top: 30px;
-}
-
-.transfer-option span{
-    text-decoration: underline;
-    color: #222;
-}
-
-.create {
-    margin-left: auto;
-    margin-right: auto;
-    outline: none;
-    background-color: #cc9933;
-    padding: 12px 23px;
-    border-radius: 14px;
-    margin-top: 12px;
-    cursor: pointer;
-    border: none;
 }

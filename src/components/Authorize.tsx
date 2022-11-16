@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
 
 // @ts-ignore
-import {useAlert} from 'react-alert';
+// import {useAlert} from 'react-alert';
 import axios from "axios";
 
 
@@ -18,7 +18,6 @@ const Button: FC<{ value: string }> = ({value}) => {
 
 const Authorize: FC = () => {
     const dispatch = useAppDispatch()
-    const {session} = useAppSelector(state => state.authReducer)
     const [type, setType] = useState('login')
     const [forgot, setForgot] = useState(false)
     const [form, setForm] = useState({
@@ -28,7 +27,7 @@ const Authorize: FC = () => {
     })
     const [email, setEmail] = useState('')
     const [recovery, setRecovery] = useState('')
-    const alert = useAlert()
+    // const alert = useAlert()
 
     const handleReset = (e: any) => {
         e.preventDefault()
@@ -38,10 +37,12 @@ const Authorize: FC = () => {
             .then(() => {
                 setForgot(false)
                 setRecovery('')
-                alert.show('Мы выслали пароль на ваш email')
+                // alert.show('Мы выслали пароль на ваш email')
+                alert('Мы выслали пароль на ваш email')
             })
             .catch(() => {
-                alert.show('Что-то пошло не так')
+                // alert.show('Что-то пошло не так')
+                alert('Что-то пошло не так')
             })
     }
 
@@ -53,7 +54,8 @@ const Authorize: FC = () => {
         } else if (type === 'register') {
             dispatch(register(email))
             setType('login')
-            alert.show('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
+            // alert.show('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
+            alert('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
         }
     }
 

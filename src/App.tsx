@@ -19,14 +19,14 @@ import Purchase from "./components/Purchase";
 import CyberSport from "./components/Cybers";
 
 // @ts-ignore
-import {useAlert} from 'react-alert';
+// import {useAlert} from 'react-alert';
 import {logout} from "./store/reducers/auth/authSlice";
 
 
 const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const dispatch = useAppDispatch()
-    const alert = useAlert()
+    // const alert = useAlert()
 
 
     useEffect(() => {
@@ -42,7 +42,8 @@ const App: FC = () => {
     }, [])
 
     if (Number(session) === -1) {
-        alert.show('Неправильный логин или пароль.')
+        // alert.show('Неправильный логин или пароль.')
+        alert('Неправильный логин или пароль.')
         dispatch(logout())
     }
 

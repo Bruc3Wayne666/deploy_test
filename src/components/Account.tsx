@@ -36,23 +36,33 @@ const Profile: FC<any> = (props: any) => {
             </div>
             <div id="lk-lk-foot">
                 <div id="lk-lk-menu">
-                    <div id="lk-lk-menu-title">Любимые лиги</div>
                     {
-                        props.leagues && props.leagues
-                            .map((league: any) => (
-                                <Link style={{display: 'flex', alignItems: 'center'}} className="lkm-item" to="/">
-                                    <img src={
-                                        //@ts-ignore
-                                        COUNTRIES[league[1]].svg_url}
-                                         alt={league[1]}
-                                         height={12}
-                                         style={{marginRight: 4}}
-                                    />
-                                    {
-                                    //@ts-ignore
-                                    COUNTRIES[league[1]].ru_name}.&nbsp;{league[0]
-                                }</Link>
-                            ))
+                        props.leagues.length === 0 ?
+                            <div id="lk-lk-menu-title">
+                                <p style={{marginBottom: 6}}>Нету любимых лиг.</p>
+                                <p>Сделайте ставку.</p>
+                            </div>
+                            :
+                            <>
+                                <div id="lk-lk-menu-title">Любимые лиги</div>
+                                {
+                                    props.leagues && props.leagues
+                                        .map((league: any) => (
+                                            <Link style={{display: 'flex', alignItems: 'center'}} className="lkm-item" to="/">
+                                                <img src={
+                                                    //@ts-ignore
+                                                    COUNTRIES[league[1]].svg_url}
+                                                     alt={league[1]}
+                                                     height={12}
+                                                     style={{marginRight: 4}}
+                                                />
+                                                {
+                                                    //@ts-ignore
+                                                    COUNTRIES[league[1]].ru_name}.&nbsp;{league[0]
+                                            }</Link>
+                                        ))
+                                }
+                            </>
                     }
                 </div>
                 <div id="lk-lk-bttn-fast"><Link to={'/'}>Быстрая ставка</Link></div>
