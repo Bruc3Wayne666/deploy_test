@@ -2842,6 +2842,26 @@ ul.active {
         margin-bottom: 0;
     }
 
+    #pop-sob-menu {
+        height: 60px;
+    }
+
+    .one-ps-menu {
+        height: 60px;
+        font-size: 14px;
+        /*width: 20%;*/
+    }
+
+    .one-ps-menu img {
+        height: 20px;
+        margin-right: 4px;
+    }
+
+    .one-ps-menu.active {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
     .toc-item-res {
         justify-content: space-evenly;
         /*margin-bottom: 4px;*/
