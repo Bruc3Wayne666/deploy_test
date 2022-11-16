@@ -1,5 +1,5 @@
-import React, {FC, useState} from 'react';
-import {useAppDispatch} from "../hooks/redux";
+import React, {FC, useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
 
 // @ts-ignore
@@ -18,6 +18,7 @@ const Button: FC<{ value: string }> = ({value}) => {
 
 const Authorize: FC = () => {
     const dispatch = useAppDispatch()
+    const {session} = useAppSelector(state => state.authReducer)
     const [type, setType] = useState('login')
     const [forgot, setForgot] = useState(false)
     const [form, setForm] = useState({
@@ -55,6 +56,64 @@ const Authorize: FC = () => {
             alert.show('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
         }
     }
+
+    // useEffect(() => {
+    //     if (Number(session) === -1) {
+    //         localStorage.clear()
+    //         alert.show('Неправильный логин или пароль.')
+    //     }
+    // }, [])
+
+    // {/*if (Number(session) === -1) {*/}
+    //     return (
+    //         <>
+    //             <div
+    //                 style={{
+    // {/*                    display: "flex",*/}
+    // {/*                    alignItems: "center",*/}
+    // {/*                    marginBottom: 30*/}
+    // {/*                }}*/}
+    // {/*            >*/}
+    // {/*                <img*/}
+    // {/*                    src={require('../assets/green_price.png')}*/}
+    // {/*                    height={90}*/}
+    // {/*                    width={90}*/}
+    // {/*                    alt="GPBet"*/}
+    // //                 />
+    // //                 <h1 style={{fontStyle: 'italic', fontWeight: 'bold'}}>GPBet</h1>
+    // //             </div>
+    // //             <p style={{fontSize: 22, marginBottom: 14}}>
+    // //                 Мы отправим пароль на ваш email
+    // //             </p>
+    // //             <input
+    // //                 value={email}
+    // //                 onChange={e => setEmail(e.target.value)}
+    // //                 placeholder={'Введите свой email'}
+    // {/*                type="text"*/}
+    // //             />
+    // //             <div
+    // //                 style={{
+    // //                     display: 'flex',
+    // //                     marginTop: 12
+    // //                 }}
+    // //             >
+    // //
+    // {/*            </div>*/}
+    // {/*            /!*<button style={{width: 240}} type={'submit'}>Зарегистрироваться!</button>*!/*/}
+    // //             <Button value={'Зарегистрироваться!'}/>
+    // //
+    // //             <p style={{marginBottom: 200}}>Уже есть аккаунт? <span onClick={() => {
+    // //                 setType('login')
+    // //                 setForm({
+    // //                     login: '',
+    // //                     password: '',
+    // //                     remember: false
+    // //                 })
+    // //                 setEmail('')
+    // //             }}>Войти!</span></p>
+    // //         </>
+    // //     )
+    // // }
 
     if (forgot) return (
         <form
@@ -235,7 +294,6 @@ const Authorize: FC = () => {
                             setEmail('')
                         }}>Войти!</span></p>
                     </>
-
             }
         </form>
     );

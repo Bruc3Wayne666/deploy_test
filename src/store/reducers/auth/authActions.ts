@@ -9,11 +9,13 @@ export const login = createAsyncThunk(
     ) => {
         try {
             const data = await ApiService.login(login, password)
+
             if (data && remember) {
                 localStorage.setItem('login', login)
                 localStorage.setItem('password', password)
                 localStorage.setItem('isAuth', String(true))
             }
+
             return data
         } catch (e) {
             return rejectWithValue(e)

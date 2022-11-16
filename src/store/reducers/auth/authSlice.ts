@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { login, register } from './authActions'
+import { login } from './authActions'
 
 interface IAuthState {
 	session: string | null
