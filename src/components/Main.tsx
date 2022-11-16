@@ -593,7 +593,7 @@ const Main: FC = () => {
 
 
 const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
-    const [popEvent, setPopEvent] = useState<IGame | null>(null)
+    const [popEvent, setPopEvent] = useState<IGame | null | string>(null)
     const [sportList, setSportList] = useState<any>({})
     const [sport, setSport] = useState('icehockey')
 
@@ -642,85 +642,108 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
             </div>
 
             <div className="one-pop-sob">
-                <div className="pop-sob-title-in">
-                    {
-                        //@ts-ignore
-                        COUNTRIES[popEvent?.cc]?.ru_name
-                    }. {popEvent?.league?.name}</div>
-                <div className="pop-sob-teams">
-                    <div>
-                        <img src={popEvent?.home_team_logo} alt={popEvent?.home_team} height={10}
-                             style={{marginRight: 20}}/>
-                        &nbsp;
-                        {popEvent?.home_team}
-                    </div>
-                    <div className="pst-hl"/>
-                    <div>
-                        <img src={popEvent?.away_team_logo} alt={popEvent?.away_team} height={10}
-                             style={{marginRight: 20}}/>
-                        &nbsp;
-                        {popEvent?.away_team}
-                    </div>
-                </div>
-                <div className="pop-sob-koef">
-                    <div className="psk-one">
-                        <div className="psko-title">Победа 1</div>
+                {
+                    popEvent !== 'No game in this sport' ?
+                        <>
+                            <div className="pop-sob-title-in">
+                                {
+                                    popEvent &&
+                                    //@ts-ignore
+                                    COUNTRIES[popEvent?.cc]?.ru_name
+                                    //@ts-ignore
+                                }. {popEvent?.league?.name}</div>
+                            <div className="pop-sob-teams">
+                                <div>
+                                    <img src={
+                                        //@ts-ignore
+                                        popEvent?.home_team_logo} alt={popEvent?.home_team} height={10}
+                                         style={{marginRight: 20}}/>
+                                    &nbsp;
+                                    {   //@ts-ignore
+                                        popEvent?.home_team}
+                                </div>
+                                <div className="pst-hl"/>
+                                <div>
+                                    <img src={//@ts-ignore
+                                        popEvent?.away_team_logo} alt={popEvent?.away_team} height={10}
+                                         style={{marginRight: 20}}/>
+                                    &nbsp;
+                                    {
+                                        //@ts-ignore
+                                        popEvent?.away_team}
+                                </div>
+                            </div>
+                            <div className="pop-sob-koef">
+                                <div className="psk-one">
+                                    <div className="psko-title">Победа 1</div>
+                                    <div
+                                        onClick={() => {
+                                            handleSetCurrentGame(popEvent)
+                                            handleChangeShowModal(true)
+                                            handleSetCurrentBet({
+                                                name: 'П1',
+                                                //@ts-ignore
+                                                kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["kf"],
+                                                //@ts-ignore
+                                                id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["id"]
+                                            })
+                                        }}
+                                        className="psko-number">{
+                                        //@ts-ignore
+                                        popEvent?.quotes?.["Исход матча(основное время)"][0]["kf"]
+                                    }</div>
+                                </div>
+                                <div className="psk-one">
+                                    <div className="psko-title">Ничья</div>
+                                    <div
+                                        onClick={() => {
+                                            handleSetCurrentGame(popEvent)
+                                            handleChangeShowModal(true)
+                                            handleSetCurrentBet({
+                                                name: 'НИЧЬЯ',
+                                                //@ts-ignore
+                                                kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["kf"],
+                                                //@ts-ignore
+                                                id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["id"]
+                                            })
+                                        }}
+                                        className="psko-number">{
+                                        //@ts-ignore
+                                        popEvent?.quotes?.["Исход матча(основное время)"][1]["kf"]
+                                    }</div>
+                                </div>
+                                <div className="psk-one">
+                                    <div className="psko-title">Победа 2</div>
+                                    <div
+                                        onClick={() => {
+                                            handleSetCurrentGame(popEvent)
+                                            handleChangeShowModal(true)
+                                            handleSetCurrentBet({
+                                                name: 'П2',
+                                                //@ts-ignore
+                                                kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["kf"],
+                                                //@ts-ignore
+                                                id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["id"]
+                                            })
+                                        }}
+                                        className="psko-number">{
+                                        //@ts-ignore
+                                        popEvent?.quotes?.["Исход матча(основное время)"][2]["kf"]
+                                    }</div>
+                                </div>
+                            </div>
+                        </> :
                         <div
-                            onClick={() => {
-                                handleSetCurrentGame(popEvent)
-                                handleChangeShowModal(true)
-                                handleSetCurrentBet({
-                                    name: 'П1',
-                                    //@ts-ignore
-                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["kf"],
-                                    //@ts-ignore
-                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][0]["id"]
-                                })
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                color: 'lightgray'
                             }}
-                            className="psko-number">{
-                            popEvent?.quotes?.['Исход матча(основное время)'][0] &&
-                            popEvent?.quotes?.["Исход матча(основное время)"][0]["kf"]
-                        }</div>
-                    </div>
-                    <div className="psk-one">
-                        <div className="psko-title">Ничья</div>
-                        <div
-                            onClick={() => {
-                                handleSetCurrentGame(popEvent)
-                                handleChangeShowModal(true)
-                                handleSetCurrentBet({
-                                    name: 'НИЧЬЯ',
-                                    //@ts-ignore
-                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["kf"],
-                                    //@ts-ignore
-                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][1]["id"]
-                                })
-                            }}
-                            className="psko-number">{
-                            popEvent?.quotes?.['Исход матча(основное время)'][1] &&
-                            popEvent?.quotes?.["Исход матча(основное время)"][1]["kf"]
-                        }</div>
-                    </div>
-                    <div className="psk-one">
-                        <div className="psko-title">Победа 2</div>
-                        <div
-                            onClick={() => {
-                                handleSetCurrentGame(popEvent)
-                                handleChangeShowModal(true)
-                                handleSetCurrentBet({
-                                    name: 'П2',
-                                    //@ts-ignore
-                                    kf: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["kf"],
-                                    //@ts-ignore
-                                    id: popEvent.quotes && popEvent.quotes['Исход матча(основное время)'][2]["id"]
-                                })
-                            }}
-                            className="psko-number">{
-                            popEvent?.quotes?.['Исход матча(основное время)'][2] &&
-                            popEvent?.quotes?.["Исход матча(основное время)"][2]["kf"]
-                        }</div>
-                    </div>
-                </div>
+                        >
+                            <h3>Нету матча в текущем виде спорта</h3>
+                        </div>
+                }
             </div>
             <div className="all-pop-sob">еще {
                 //@ts-ignore
