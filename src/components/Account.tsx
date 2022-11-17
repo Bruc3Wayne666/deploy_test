@@ -65,7 +65,9 @@ const Profile: FC<any> = (props: any) => {
                             </>
                     }
                 </div>
-                <div id="lk-lk-bttn-fast"><Link to={'/'}>Быстрая ставка</Link></div>
+                <Link to={'/'}>
+                <div id="lk-lk-bttn-fast">Быстрая ставка</div>
+                </Link>
             </div>
         </div>
     )

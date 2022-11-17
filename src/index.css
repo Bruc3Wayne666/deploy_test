@@ -2011,12 +2011,17 @@ header {
     align-items: center;
 }
 
+#lk-lk-bttn-fast {
+    cursor: pointer;
+}
+
 .modal_start button {
     width: 60%;
     background-color: green;
     color: white;
     border-radius: 8px;
     border: none;
+    cursor: pointer;
     transition: .4s;
     position: absolute;
     height: 46px;
