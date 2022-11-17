@@ -2016,6 +2016,7 @@ header {
     background-color: green;
     color: white;
     border-radius: 8px;
+    border: none;
     transition: .4s;
     position: absolute;
     height: 46px;
