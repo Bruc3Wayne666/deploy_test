@@ -361,8 +361,6 @@ const Main: FC = () => {
     })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     const [showModal, setShowModal] = useState(false)
-    const [flag, setFlag] = useState(false)
-    // const [sportList, setSportList] = useState<any>({})
 
     const handleChangeParams = (params: {
         sport_name: string,

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, useCallback, useEffect, useState} from "react";
 import {IGame} from "../models/IGame";
 // @ts-ignore
 import Modal from 'react-modal';
@@ -31,6 +31,22 @@ export const ModalForm: FC<{
     const [sumValue, setSumValue] = useState(0)
     const [bidSuccess, setBidSuccess] = useState(false)
     const [possible, setPossible] = useState(0)
+    const [profile, setUserInfo] = useState<IProfileState>({
+        error: false,
+        message: null,
+        result: null,
+    })
+
+    const fetchUserInfo = useCallback(async (session: string) => {
+        return await ApiService.getProfile(session)
+    }, [session])
+
+    useEffect(() => {
+        if (session) {
+            fetchUserInfo(session)
+                .then(res => setUserInfo(res))
+        }
+    }, [session])
 
     useEffect(() => {
         const fetchPossible = async () => {
@@ -55,7 +71,8 @@ export const ModalForm: FC<{
         } else {
             setBidSuccess(false)
             handleChangeShowModal(false)
-            window.location.href = '/purchase'
+            alert('Недостаточно средств')
+            // window.location.href = '/purchase'
         }
     }
 
@@ -160,6 +177,13 @@ export const ModalForm: FC<{
             :
             <>
                 <div className="modal_info">
+                    <div style={{
+                        position: 'absolute',
+                        top: 3,
+                        fontSize: 12
+                    }}>
+                        Ваш баланс: {user.result?.balance}
+                    </div>
                     <div className="league">
                         {/*<img src={require('../assets/pngegg.png')} height={16} alt=""/>*/}
                         {league.name}
@@ -245,7 +269,11 @@ export const ModalForm: FC<{
                         }}
                         style={{cursor: 'pointer'}}>-</span>
                             <input type='text' value={sumValue} placeholder={'Введите сумму'} onChange={e => {
-                                if (Number(e.target.value)) setSumValue(Number(e.target.value))
+                                if (Number(e.target.value)){
+                                    setSumValue(Number(e.target.value))
+                                } else if (e.target.value === '') {
+                                    setSumValue(0)
+                                }
                             }
                             }/>
                             <span
