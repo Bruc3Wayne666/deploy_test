@@ -1,6 +1,8 @@
 import React, {FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import axios from "axios";
 import {useAppSelector} from "../hooks/redux";
+import {IProfileState} from "../store/reducers/profile/profileSlice";
+import {ApiService} from "../api";
 
 
 interface TransferItemType {
@@ -18,10 +20,11 @@ interface TransferListType {
 }
 
 interface TransferItemProps {
-    transfer: TransferItemType
+    transfer: TransferItemType,
+    sendAddress: (address: string) => void
 }
 
-const TransferItem: FC<TransferItemProps> = ({transfer}) => {
+const TransferItem: FC<TransferItemProps> = ({transfer, sendAddress}) => {
     const {
         amount,
         remainder_time,
@@ -31,7 +34,7 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
         iden
     } = transfer
 
-    const address = useRef(null)
+    // const address = useRef(null)
 
     return (
         <div className='transfer-item'>
@@ -46,7 +49,7 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
             }
             <h3>🏷 Адрес для оплаты: </h3>
             <h3
-                ref={address}
+                // ref={address}
                 className='transfer-address'
                 onClick={() => {
                     navigator.clipboard.writeText(wallet)
@@ -56,7 +59,13 @@ const TransferItem: FC<TransferItemProps> = ({transfer}) => {
                 <span>{wallet}</span>
             </h3>
 
-            <h3 className='transfer-option'>📩 <span>Выслать адрес на почту</span></h3>
+            <h3
+                onClick={() => sendAddress(wallet)}
+                style={{
+                    cursor: 'pointer'
+                }}
+                className='transfer-option'
+            >📩 <span>Выслать адрес на почту</span></h3>
         </div>
     )
 }
@@ -87,6 +96,31 @@ const Purchase: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const [transferList, setTransferList] = useState<TransferListType>()
 
+    const [profile, setUserInfo] = useState<IProfileState>({
+        error: false,
+        message: null,
+        result: null,
+    })
+
+    const sendAddress = (address: string) => {
+        axios.post('http://gpbetapi.ru/send_adress', {
+            user_id: profile.result?.login,
+            adress: address
+        })
+            .then(() => alert('Адрес выслан на ваш email'))
+    }
+
+    const fetchUserInfo = useCallback(async (session: string) => {
+        return await ApiService.getProfile(session)
+    }, [session])
+
+    useEffect(() => {
+        if (session) {
+            fetchUserInfo(session)
+                .then(res => setUserInfo(res))
+        }
+    }, [session])
+
     const createTransfer = useCallback(async () => {
         const {data} = await axios.post<TransferItemType | string>('http://gpbetapi.ru/create_transfer', {user_id: session})
         if (data === '1') alert('Кошелёк уже создан')
@@ -116,7 +150,7 @@ const Purchase: FC = () => {
             <Info createTransfer={createTransfer}/>
             {
                 transferList?.result.reverse()
-                    .map(transfer => <TransferItem transfer={transfer}/>)
+                    .map(transfer => <TransferItem sendAddress={sendAddress} transfer={transfer}/>)
             }
         </div>
     );
