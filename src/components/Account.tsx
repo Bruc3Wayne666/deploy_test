@@ -85,7 +85,7 @@ const Account: FC<any> = () => {
 
     const fetchUserInfo = useCallback(async (session: string) => {
         const data = await ApiService.getProfile(session)
-        const leagues = await axios.post('http://gpbetapi.ru/favourite_league', {
+        const leagues = await axios.post(`${process.env.REACT_APP_BASE_URL}/favourite_league`, {
             user_id: session
         })
         setUserInfo(data)

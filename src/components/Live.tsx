@@ -169,7 +169,7 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
 }
 
 const Live = () => {
-    const [sportList, setSportList] = useState<any>({})
+    // const [sportList, setSportList] = useState<any>({})
     const {result} = useAppSelector(state => state.gameReducer)
     const [leagueList, setLeagueList] = useState({})
     const dispatch = useAppDispatch()
@@ -181,7 +181,7 @@ const Live = () => {
     })
     const [isLoading, setIsLoading] = useState(false)
     const [search, setSearch] = useState('')
-    const [showModal, setShowModal] = useState(false)
+    // const [showModal, setShowModal] = useState(false)
     const [params, setParams] = useState({
         sport_name: 'all',
         game_status: 'live',
@@ -240,7 +240,7 @@ const Live = () => {
     }, [session])
 
     const fetchLeagueList = useCallback(async () => {
-        const {data} = await axios.post('http://gpbetapi.ru/league_list', {
+        const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
             league_sport: params.sport_name,
             league_cc: 'all'
         })

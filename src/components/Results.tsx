@@ -22,14 +22,14 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
 
 
     const fetchEvent = useCallback(async () => {
-        const {data} = await axios.post('http://gpbetapi.ru/pop_game', {
+        const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/pop_game`, {
             sport_name: sport
         })
         return data
     }, [sport])
 
     const fetchSportList = useCallback( async () => {
-        const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+        const {data} = await axios.get(`${process.env.BASE_URL}/sport_list`)
         setSportList(data)
     }, [])
 
@@ -611,7 +611,7 @@ const Results: FC<any> = () => {
         }, [session])
 
         const fetchLeagueList = useCallback(async () => {
-            const {data} = await axios.post('http://gpbetapi.ru/league_list', {
+            const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
                 league_sport: params.sport_name,
                 league_cc: 'all'
             })

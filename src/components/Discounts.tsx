@@ -1,11 +1,10 @@
 import React, {FC} from "react";
-import {LeftBar, LeftBarMobile} from "./LeftBar";
+import {LeftBar} from "./LeftBar";
 import {RightBar} from "./RightBar";
 
 export const Discounts: FC = () => {
     return (
         <div id="content-wr">
-            {/*<LeftBarMobile/>*/}
 
             <LeftBar/>
             <div id="lk-mid">

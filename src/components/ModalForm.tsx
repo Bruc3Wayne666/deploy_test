@@ -50,7 +50,7 @@ export const ModalForm: FC<{
 
     useEffect(() => {
         const fetchPossible = async () => {
-            const {data} = await axios.post('http://gpbetapi.ru/kf_kot', {
+            const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/kf_kot`, {
                 id_kot: String(bet.id),
                 sum_bid: sumValue
             })

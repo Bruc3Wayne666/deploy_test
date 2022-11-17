@@ -103,7 +103,7 @@ const Purchase: FC = () => {
     })
 
     const sendAddress = (address: string) => {
-        axios.post('http://gpbetapi.ru/send_adress', {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/send_adress`, {
             login: profile.result?.login,
             adress: address
         })
@@ -122,13 +122,13 @@ const Purchase: FC = () => {
     }, [session])
 
     const createTransfer = useCallback(async () => {
-        const {data} = await axios.post<TransferItemType | string>('http://gpbetapi.ru/create_transfer', {user_id: session})
+        const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
         if (data === '1') alert('Кошелёк уже создан')
     }, [session])
 
     const getTransferList = useCallback(async () => {
         if (!session) return null
-        const {data} = await axios.post('http://gpbetapi.ru/transfer_list', {user_id: session})
+        const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/transfer_list`, {user_id: session})
         return data
     }, [session])
 

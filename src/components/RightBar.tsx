@@ -27,7 +27,7 @@ export const RightBar: FC = () => {
     }, [session])
 
     const setMailing = useCallback(async () => {
-        await axios.post('http://gpbetapi.ru/change_ras', {user_id: session})
+        await axios.post(`${process.env.REACT_APP_BASE_URL}/change_ras`, {user_id: session})
         if (session){
             fetchUserInfo(session)
                 .then(res => setUserInfo(res))
@@ -95,7 +95,7 @@ export const RightBarMobile: FC = () => {
     }, [session])
 
     const setMailing = useCallback(async () => {
-        await axios.post('http://gpbetapi.ru/change_ras', {user_id: session})
+        await axios.post(`${process.env.REACT_APP_BASE_URL}/change_ras`, {user_id: session})
         if (session){
             fetchUserInfo(session)
                 .then(res => setUserInfo(res))

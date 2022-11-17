@@ -31,7 +31,7 @@ const Authorize: FC = () => {
 
     const handleReset = (e: any) => {
         e.preventDefault()
-        axios.post('http://gpbetapi.ru/reset_password', {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/reset_password`, {
             login: recovery
         })
             .then(() => {
@@ -58,64 +58,6 @@ const Authorize: FC = () => {
             alert('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
         }
     }
-
-    // useEffect(() => {
-    //     if (Number(session) === -1) {
-    //         localStorage.clear()
-    //         alert.show('Неправильный логин или пароль.')
-    //     }
-    // }, [])
-
-    // {/*if (Number(session) === -1) {*/}
-    //     return (
-    //         <>
-    //             <div
-    //                 style={{
-    // {/*                    display: "flex",*/}
-    // {/*                    alignItems: "center",*/}
-    // {/*                    marginBottom: 30*/}
-    // {/*                }}*/}
-    // {/*            >*/}
-    // {/*                <img*/}
-    // {/*                    src={require('../assets/green_price.png')}*/}
-    // {/*                    height={90}*/}
-    // {/*                    width={90}*/}
-    // {/*                    alt="GPBet"*/}
-    // //                 />
-    // //                 <h1 style={{fontStyle: 'italic', fontWeight: 'bold'}}>GPBet</h1>
-    // //             </div>
-    // //             <p style={{fontSize: 22, marginBottom: 14}}>
-    // //                 Мы отправим пароль на ваш email
-    // //             </p>
-    // //             <input
-    // //                 value={email}
-    // //                 onChange={e => setEmail(e.target.value)}
-    // //                 placeholder={'Введите свой email'}
-    // {/*                type="text"*/}
-    // //             />
-    // //             <div
-    // //                 style={{
-    // //                     display: 'flex',
-    // //                     marginTop: 12
-    // //                 }}
-    // //             >
-    // //
-    // {/*            </div>*/}
-    // {/*            /!*<button style={{width: 240}} type={'submit'}>Зарегистрироваться!</button>*!/*/}
-    // //             <Button value={'Зарегистрироваться!'}/>
-    // //
-    // //             <p style={{marginBottom: 200}}>Уже есть аккаунт? <span onClick={() => {
-    // //                 setType('login')
-    // //                 setForm({
-    // //                     login: '',
-    // //                     password: '',
-    // //                     remember: false
-    // //                 })
-    // //                 setEmail('')
-    // //             }}>Войти!</span></p>
-    // //         </>
-    // //     )
-    // // }
 
     if (forgot) return (
         <form
