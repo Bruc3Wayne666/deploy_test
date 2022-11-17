@@ -104,7 +104,7 @@ const Purchase: FC = () => {
 
     const sendAddress = (address: string) => {
         axios.post('http://gpbetapi.ru/send_adress', {
-            user_id: profile.result?.login,
+            login: profile.result?.login,
             adress: address
         })
             .then(() => alert('Адрес выслан на ваш email'))
