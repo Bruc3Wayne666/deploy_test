@@ -21,6 +21,7 @@ import CyberSport from "./components/Cybers";
 // @ts-ignore
 // import {useAlert} from 'react-alert';
 import {logout} from "./store/reducers/auth/authSlice";
+import Help from "./components/Help";
 
 
 const App: FC = () => {
@@ -91,6 +92,7 @@ const App: FC = () => {
                             <Route path={'live'} element={<Live/>}/>
                             <Route path={'purchase'} element={<Purchase/>}/>
                             <Route path={'cyber'} element={<CyberSport/>}/>
+                            <Route path={'help'} element={<Help/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>}/>
                         </Routes>
                         :
