@@ -72,6 +72,7 @@ export const ModalForm: FC<{
             setBidSuccess(false)
             handleChangeShowModal(false)
             alert('Недостаточно средств')
+            setSumValue(0)
             // window.location.href = '/purchase'
         }
     }
