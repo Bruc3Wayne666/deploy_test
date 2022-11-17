@@ -2,6 +2,7 @@
   "name": "bk_client",
   "version": "0.1.0",
   "private": false,
+  "proxy": "http://gpbetapi.ru",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.16.5",
