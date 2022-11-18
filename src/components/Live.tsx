@@ -270,7 +270,7 @@ const Live = () => {
         }
         , [params])
 
-    if (result === null) return <h1>В данный момент нету идущих событий в этом виде спорта</h1>
+    if (result === null) return <div style={{height: '100%', display: 'flex', alignItems: 'center'}}>В данный момент нету идущих событий в этом виде спорта</div>
 
     return (
         <div id="content-wr">
