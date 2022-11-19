@@ -284,7 +284,7 @@ export const ModalForm: FC<{
                     </div>
                     <div className="binf">
                         Возможный выигрыш
-                        <span className='win'>{sumValue * bet.kf} CWD</span>
+                        <span className='win'>{Math.floor(sumValue * bet.kf)} CWD</span>
                     </div>
                 </div>
                 <div className="modal_start">
