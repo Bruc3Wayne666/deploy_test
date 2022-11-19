@@ -3,6 +3,7 @@ import axios from "axios";
 import {useAppSelector} from "../hooks/redux";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
+import results from "./Results";
 
 
 interface TransferItemType {
@@ -123,7 +124,14 @@ const Purchase: FC = () => {
 
     const createTransfer = useCallback(async () => {
         const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
-        if (data === '1') alert('Кошелёк уже создан')
+
+
+        if (data === '1') {
+            alert('Кошелёк уже создан')
+        } else {
+            // @ts-ignore
+            setTransferList(prevState => ({...prevState, result: [...prevState?.result, data]}))
+        }
     }, [session])
 
     const getTransferList = useCallback(async () => {
