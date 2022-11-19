@@ -29,7 +29,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     }, [sport])
 
     const fetchSportList = useCallback( async () => {
-        const {data} = await axios.get(`${process.env.BASE_URL}/sport_list`)
+        const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/sport_list`)
         setSportList(data)
     }, [])
 
@@ -50,12 +50,16 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                     Object.keys(sportList)
                         .map(sportGame => {
                             if (sportGame !== 'all') {
+                                console.log(sportGame)
+                                console.log(12)
                                 return (
                                     <div
                                         onClick={() => setSport(sportGame)}
                                         className={`one-ps-menu ${sport === sportGame && 'active'}`}>
-                                        <img src={require(`../assets/images/${sportGame}.png`)} height={12}
-                                             alt={sportGame}/>
+                                        <img
+                                            src={require(`../assets/images/${sportGame}.png`)}
+                                            height={12}
+                                            alt={sportGame}/>
                                         <div className="psm-title">{sportList[sportGame].ru_name}</div>
                                     </div>
                                 )
