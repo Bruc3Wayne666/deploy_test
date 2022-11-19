@@ -8,7 +8,7 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import spinner from "../assets/spinner.svg";
 import {COUNTRIES, SPORTS} from '../assets/consts'
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {TotalsDropdown} from "./CustomDropdown";
 
 
@@ -342,6 +342,7 @@ const Main: FC = () => {
     const [leagueList, setLeagueList] = useState({})
     const dispatch = useAppDispatch()
     const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate()
     const [params, setParams] = useState({
         sport_name: pathname === '/' ? 'all' : pathname.slice(1),
         quotes: 'all',
@@ -429,8 +430,44 @@ const Main: FC = () => {
     }, [session])
 
 
-    // @ts-ignore
-    return (1 === 1) ? (
+    if (result === 0 || result === null) {
+        return (
+            <div
+                style={{
+                    // height: window.innerWidth <= 1440 ? '80vh' : '',
+                    marginTop: window.innerWidth > 1440 ? 160 : '60%',
+                    // border: '1px solid white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 16,
+                    flexDirection: 'column'
+                }}>
+                <p
+                    style={{
+                        fontSize: 18
+                    }}
+                >
+                    В данный момент нету идущих событий
+                </p>
+                <button
+                    onClick={() => navigate(-1)}
+                    style={{
+                        marginTop: 12,
+                        backgroundColor: '#cc9933',
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: 'none'
+                    }}
+                >
+                    Вернутся назад
+                </button>
+            </div>
+        )
+    }
+
+
+    return (
         <div id="content-wr">
             <div id="two-left">
 
@@ -548,6 +585,7 @@ const Main: FC = () => {
 
             </div>
 
+
             <div id="two-right">
 
                 <PopEvent
@@ -586,7 +624,7 @@ const Main: FC = () => {
                 </div>
             </div>
         </div>
-    ) : <>Матчей нет</>
+    )
 };
 
 
@@ -615,6 +653,24 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     useEffect(() => {
         fetchSportList()
     }, [])
+
+
+    if (Object.keys(sportList).length === 0 || sportList === null) return (
+        <div id="pop-sob">
+            <div id="pop-sob-title">Популярные события</div>
+            <div style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <div className="one-ps-menu">
+                    Нету популярных событий
+                </div>
+            </div>
+        </div>
+    )
+
 
     return (
         <div id="pop-sob">

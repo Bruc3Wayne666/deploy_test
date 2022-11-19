@@ -12,6 +12,7 @@ import debounce from "lodash/debounce";
 import {ApiService} from "../api";
 import {getGames} from "../store/reducers/games/gameActions";
 import {log} from "util";
+import {useNavigate} from "react-router-dom";
 
 
 const LeagueItem: FC<any> = ({filter, result}) => {
@@ -174,6 +175,7 @@ const Live = () => {
     const [leagueList, setLeagueList] = useState({})
     const dispatch = useAppDispatch()
     const {session} = useAppSelector(state => state.authReducer)
+    const navigate = useNavigate()
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
         message: null,
@@ -270,7 +272,41 @@ const Live = () => {
         }
         , [params])
 
-    if (result === null) return <div style={{height: '100%', display: 'flex', alignItems: 'center'}}>В данный момент нету идущих событий в этом виде спорта</div>
+    if (result === 0 || result === null) {
+        return (
+            <div
+                style={{
+                    // height: window.innerWidth <= 1440 ? '80vh' : '',
+                    marginTop: window.innerWidth > 1440 ? 160 : '60%',
+                    // border: '1px solid white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 16,
+                    flexDirection: 'column'
+            }}>
+                <p
+                    style={{
+                        fontSize: 18
+                    }}
+                >
+                    В данный момент нету идущих событий
+                    </p>
+                <button
+                    onClick={() => navigate(-1)}
+                    style={{
+                        marginTop: 12,
+                        backgroundColor: '#cc9933',
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: 'none'
+                    }}
+                >
+                    Вернутся назад
+                </button>
+            </div>
+        )
+    }
 
     return (
         <div id="content-wr">

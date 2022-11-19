@@ -4,7 +4,7 @@ const CyberSport:FC = () => {
     return (
         <div
             style={{
-                marginTop: 300,
+                marginTop: window.innerWidth > 1440 ? 100 : 300,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

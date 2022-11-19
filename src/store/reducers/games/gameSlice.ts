@@ -24,7 +24,7 @@ interface IGameState {
                 }
             }
         }
-    } | null
+    } | null | 0
 }
 
 const initialState: IGameState = {
