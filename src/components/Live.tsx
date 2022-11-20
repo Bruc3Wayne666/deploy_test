@@ -263,6 +263,7 @@ const Live = () => {
                     params.beautiful_time_start.date
                 } ${params.beautiful_time_start.hours}`
             }))
+                .then(() => alert(result))
 
             fetchLeagueList()
                 .then(res => {
@@ -272,7 +273,7 @@ const Live = () => {
         }
         , [params])
 
-    if (result === 0 || result === null) {
+    if (result === 0 || result == null) {
         return (
             <div
                 style={{

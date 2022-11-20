@@ -46,7 +46,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     }, [])
 
 
-    if (Object.keys(sportList).length === 0 || sportList === null) return (
+    if (Object.keys(sportList).length === 0 || sportList == null) return (
         <div id="pop-sob">
             <div id="pop-sob-title">Популярные события</div>
             <div style={{
