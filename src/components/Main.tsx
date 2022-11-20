@@ -653,8 +653,8 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     useEffect(() => {
         fetchSportList()
             .then(() => {
-                if (Object.keys(sportList).length === 1) {
-                    setSport(sportList[0])
+                if (Object.keys(sportList).length === 2) {
+                    setSport(sportList[1])
                 }
             })
     }, [])
