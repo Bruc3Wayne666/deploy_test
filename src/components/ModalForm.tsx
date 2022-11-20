@@ -284,7 +284,7 @@ export const ModalForm: FC<{
                     </div>
                     <div className="binf">
                         Возможный выигрыш
-                        <span className='win'>{parseFloat('sumValue * bet.kf').toFixed(2)} CWD</span>
+                        <span className='win'>{(sumValue * bet.kf).toFixed(2)} CWD</span>
                     </div>
                 </div>
                 <div className="modal_start">
