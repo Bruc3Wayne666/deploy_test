@@ -178,13 +178,18 @@ const Authorize: FC = () => {
                                 cursor: 'pointer',
                                 fontSize: 18,
                                 color: '#cc9933',
-                                marginBottom: window.innerWidth > 1440 ? 20 : 100
+                                marginBottom:
+                                    (window.innerWidth > 1440)
+                                        ? 20
+                                        : (window.innerWidth > 640)
+                                            ? 100
+                                            : 20
                             }}
                         >
                             Забыли пароль?
                         </p>
 
-                        <p>Ещё нету аккаунта? <span onClick={() => {
+                        <p className='suggest-reg'>Ещё нету аккаунта? <span onClick={() => {
                             setType('register')
                             setForm({
                                 login: '',

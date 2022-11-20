@@ -2397,6 +2397,7 @@ ul.active {
     }
 }
 
+
 @media (max-width: 1440px) {
     /*body {*/
     /*    max-width: 1080px;*/
@@ -2748,6 +2749,15 @@ ul.active {
 
     .auth-form {
         width: 100%;
+        /*padding-bottom: 200px;*/
+        /*border: 1px solid white;*/
+    }
+
+    .auth-form p {
+        /*border: 1px solid white;*/
+    }
+
+    .suggest-reg {
         /*border: 1px solid white;*/
     }
 
@@ -3058,3 +3068,4 @@ ul.active {
         font-weight: 600;
     }
 }
+
