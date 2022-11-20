@@ -18,7 +18,7 @@ import Dropdown from "react-dropdown";
 const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
     const [popEvent, setPopEvent] = useState<IGame | null | string>(null)
     const [sportList, setSportList] = useState<any>({})
-    const [sport, setSport] = useState('icehockey')
+    const [sport, setSport] = useState('')
 
 
     const fetchEvent = useCallback(async () => {
@@ -30,7 +30,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
 
     const fetchSportList = useCallback(async () => {
         const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/sport_list`)
-        if (Object.keys(data).length === 2) {
+        if (Object.keys(data).length >= 2) {
             setSport(Object.keys(data)[1])
         }
         setSportList(data)
