@@ -290,6 +290,7 @@ const Live = () => {
                         fontSize: 18
                     }}
                 >
+                    {result}
                     В данный момент нету идущих событий
                     </p>
                 <button
