@@ -2575,9 +2575,10 @@ ul.active {
     /*    max-height: 200px;*/
     /*}*/
     .table-one-cat {
-        max-height: 800px;
-        overflow-y: scroll;
+        /*max-height: 800px;*/
+        /*overflow-y: scroll;*/
         width: 100%;
+        padding-bottom: 140px;
     }
 
     .filter-results {
