@@ -1,14 +1,13 @@
 export const COUNTRIES = {
+    'wcfut' :{
+        'ru_name': 'Чемпионат мира',
+        'svg_url': 'https://upload.wikimedia.org/wikipedia/ru/e/e3/2022_FIFA_World_Cup.svg'
+    },
     'all':
         {
             'ru_name': 'Все',
             'svg_url': ''
         },
-    'wcfut': {
-        'ru_name': 'Чемпионат мира',
-        // 'svg_url': 'https://origin.bk6bba-resources.com/ContentCommon/Featured/WC22.svg'
-        'svg_url': 'https://upload.wikimedia.org/wikipedia/ru/e/e3/2022_FIFA_World_Cup.svg'
-    },
     'ad':
         {
             'ru_name': 'Андорра',

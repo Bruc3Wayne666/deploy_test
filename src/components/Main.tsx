@@ -34,7 +34,7 @@ const LeagueItem:
                 <div className="global-ico gi-star">
 
                 </div>
-                <div className="global-ico gi-rus">
+                <div className="global-ico">
                     <img
                         src={
                             //@ts-ignore
