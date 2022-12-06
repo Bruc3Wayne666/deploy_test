@@ -182,7 +182,8 @@ const Authorize: FC = () => {
                             style={{
                                 cursor: 'pointer',
                                 marginTop: -6,
-                                borderRadius: 8
+                                borderRadius: 8,
+                                backgroundColor: 'forestgreen'
                         }}
                             onClick={() => {
                                 setType('register')

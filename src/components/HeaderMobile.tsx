@@ -31,7 +31,7 @@ const HeaderMobile: FC = () => {
                 style={{
                     width: '50%',
                     height: '100%',
-                    borderRight: '1px solid #222',
+                    // borderRight: '1px solid #222',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
@@ -55,7 +55,7 @@ const HeaderMobile: FC = () => {
                 paddingLeft: 6,
                 width: '50%',
                 justifyContent: 'center',
-                borderLeft: '1px solid #222'
+                // borderLeft: '1px solid #222'
             }}>
 
                 <Link to={'/profile'}>
