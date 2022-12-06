@@ -60,6 +60,7 @@ export const ModalForm: FC<{
     // }, [sumValue])
 
     const handleSubmit = () => {
+        if (sumValue === 0) return alert('Нужно ввести сумму')
         // @ts-ignore
         if (user.result?.balance >= sumValue) {
             ApiService.placeBid({
