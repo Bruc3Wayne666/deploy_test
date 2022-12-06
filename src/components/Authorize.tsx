@@ -11,7 +11,7 @@ const Button: FC<{ value: string }> = ({value}) => {
 
     return (
         <button
-            style={{cursor: 'pointer', backgroundColor: 'red'}}
+            style={{cursor: 'pointer', backgroundColor: 'red', borderRadius: 8}}
             type={'submit'}>
             {value}
         </button>
@@ -83,6 +83,7 @@ const Authorize: FC = () => {
                         height={90}
                         // width={90}
                         alt="GPBet"
+                        style={{borderRadius: 8}}
                     />
                 </div>
                 <div style={{marginBottom: 12}}>
@@ -133,6 +134,7 @@ const Authorize: FC = () => {
                                 height={90}
                                 // width={90}
                                 alt="GPBet"
+                                style={{borderRadius: 8}}
                             />
                         </div>
                         <input
@@ -180,6 +182,7 @@ const Authorize: FC = () => {
                             style={{
                                 cursor: 'pointer',
                                 marginTop: -6,
+                                borderRadius: 8
                         }}
                             onClick={() => {
                                 setType('register')
@@ -231,12 +234,12 @@ const Authorize: FC = () => {
                             }}
                         >
                             <img
-                                src={require('../assets/green_price.png')}
+                                src={require('../assets/auth_logo.jpeg')}
                                 height={90}
-                                width={90}
+                                // width={90}
                                 alt="GPBet"
+                                style={{borderRadius: 8}}
                             />
-                            <h1 style={{fontStyle: 'italic', fontWeight: 'bold'}}>GPBet</h1>
                         </div>
                         <p style={{fontSize: 22, marginBottom: 14}}>
                             Мы отправим пароль на ваш email
