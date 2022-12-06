@@ -61,7 +61,7 @@ const Vip:FC = () => {
                 <div className="lk-vip-col">
                     <div id="lk-vip-r-text">
                         <div id="lk-vip-r-text-title" style={{fontWeight: 'bold'}}>Правила получения <span>VIP-статуса:</span></div>
-                        <ul style={{marginBottom: window.innerWidth > 1440 ? 170 : 120}}>
+                        <ul style={{overflow: 'visible', marginBottom: window.innerWidth > 1440 ? 170 : 120}}>
                             <li>Берутся в учет ставки всех типов, не считая отменённых</li>
                             <li>Процент кэшбека и статус обновляются каждый месяц</li>
                             <li>Регистрация ставок происходит в момент расчета ставки</li>
