@@ -10,7 +10,9 @@ import axios from "axios";
 const Button: FC<{ value: string }> = ({value}) => {
 
     return (
-        <button type={'submit'}>
+        <button
+            style={{cursor: 'pointer', backgroundColor: 'red'}}
+            type={'submit'}>
             {value}
         </button>
     )
@@ -59,6 +61,10 @@ const Authorize: FC = () => {
         }
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     if (forgot) return (
         <form
             className={'auth-form'}
@@ -73,12 +79,11 @@ const Authorize: FC = () => {
                     }}
                 >
                     <img
-                        src={require('../assets/green_price.png')}
+                        src={require('../assets/auth_logo.jpeg')}
                         height={90}
-                        width={90}
+                        // width={90}
                         alt="GPBet"
                     />
-                    <h1 style={{fontStyle: 'italic', fontWeight: '900'}}>GPBet</h1>
                 </div>
                 <div style={{marginBottom: 12}}>
                     <p style={{fontSize: 14}}>Введите email для восстановления пароля</p>
@@ -124,12 +129,11 @@ const Authorize: FC = () => {
                             }}
                         >
                             <img
-                                src={require('../assets/green_price.png')}
+                                src={require('../assets/auth_logo.jpeg')}
                                 height={90}
-                                width={90}
+                                // width={90}
                                 alt="GPBet"
                             />
-                            <h1 style={{fontStyle: 'italic', fontWeight: '900'}}>GPBet</h1>
                         </div>
                         <input
                             value={form.login}
@@ -151,16 +155,16 @@ const Authorize: FC = () => {
                                 alignItems: "center"
                             }}
                         >
-                            <p>Запомнить&nbsp;меня</p>
-                            <input
-                                checked={form.remember}
-                                style={{
-                                    margin: 'auto',
-                                    marginLeft: 6
-                                }}
-                                onChange={e => setForm({...form, remember: e.target.checked})}
-                                type={'checkbox'}
-                            />
+                            {/*<p>Запомнить&nbsp;меня</p>*/}
+                            {/*<input*/}
+                            {/*    checked={form.remember}*/}
+                            {/*    style={{*/}
+                            {/*        margin: 'auto',*/}
+                            {/*        marginLeft: 6*/}
+                            {/*    }}*/}
+                            {/*    onChange={e => setForm({...form, remember: e.target.checked})}*/}
+                            {/*    type={'checkbox'}*/}
+                            {/*/>*/}
                         </div>
                         <div
                             style={{
@@ -171,6 +175,23 @@ const Authorize: FC = () => {
                         </div>
                         {/*<button type={'submit'}>Войти</button>*/}
                         <Button value={'Войти'}/>
+
+                        <button
+                            style={{
+                                cursor: 'pointer',
+                                marginTop: -6,
+                        }}
+                            onClick={() => {
+                                setType('register')
+                                setForm({
+                                    login: '',
+                                    password: '',
+                                    remember: false
+                                })
+                            }}
+                        >
+                            Зарегистрироваться
+                        </button>
 
                         <p
                             onClick={() => setForgot(true)}
@@ -189,14 +210,14 @@ const Authorize: FC = () => {
                             Забыли пароль?
                         </p>
 
-                        <p className='suggest-reg'>Ещё нету аккаунта? <span onClick={() => {
-                            setType('register')
-                            setForm({
-                                login: '',
-                                password: '',
-                                remember: false
-                            })
-                        }}>Зарегистрироваться!</span></p>
+                        {/*<p className='suggest-reg'>Ещё нету аккаунта? <span onClick={() => {*/}
+                        {/*    setType('register')*/}
+                        {/*    setForm({*/}
+                        {/*        login: '',*/}
+                        {/*        password: '',*/}
+                        {/*        remember: false*/}
+                        {/*    })*/}
+                        {/*}}>Зарегистрироваться!</span></p>*/}
                     </>
 
                     :

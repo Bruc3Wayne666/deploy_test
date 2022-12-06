@@ -28,11 +28,18 @@ const HeaderMobile: FC = () => {
     return (
         <div id="mobile-header">
             <div
-                style={{width: '50%', height: '100%', borderRight: '1px solid #222'}}
+                style={{
+                    width: '50%',
+                    height: '100%',
+                    borderRight: '1px solid #222',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
             >
                 <Link to={'/'}>
                     <img
-                        height={'100%'}
+                        // height={'100%'}
                         src={require('../assets/logo.png')}
                         alt='GPBet'
                     />

@@ -1408,7 +1408,7 @@ header {
 }
 
 .lkrw-inforow .global-ico {
-    width: 11px;
+    width: 22px;
     margin-right: 10px;
     display: none;
 }
@@ -1582,6 +1582,7 @@ header {
     font-family: sans-serif;
     margin-bottom: 20px;
     line-height: 1.3;
+    font-weight: bold;
 }
 
 .lkao-undertitle {
@@ -1597,10 +1598,12 @@ header {
     color: #CC9933; /*font-family: helB;*/
     font-family: sans-serif;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .lkaot-undertitle {
     line-height: 1.2;
+    font-weight: bold;
 }
 
 
@@ -1699,11 +1702,13 @@ header {
 #lk-vip-r-text ul {
     padding-left: 15px;
     margin: 15px 0;
+    font-size: 14px;
     list-style: none;
 }
 
 #lk-vip-r-text ul li {
     margin: 0 0 10px;
+    list-style: none;
 }
 
 #lk-vip-r-text ul li::before {
@@ -2145,7 +2150,7 @@ ul {
     list-style: none;
     margin: 0;
     font-size: 18px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 0px;
     transition: height 0.3s ease;
     padding: 0;
@@ -2280,9 +2285,9 @@ ul.active {
 
 .transfer-item {
     width: 100%;
-    color: black;
+    color: white;
     /*background-color: black;*/
-    background-color: white;
+    background-color: transparent;
     border: 2px solid #cc9933;
     border-radius: 24px;
     padding: 12px 24px;
@@ -2290,12 +2295,12 @@ ul.active {
 }
 
 .transfer-item h3 b {
-    color: lightgreen;
+    color: white;
 }
 
 .transfer-item h4 {
     /*color: lightgrey;*/
-    color: black;
+    color: white;
     margin-top: 24px;
     margin-bottom: 24px;
 }
@@ -2303,7 +2308,7 @@ ul.active {
 .transfer-item a h3{
     font-size: 21px;
     /*color: lightskyblue;*/
-    color: #222;
+    color: lightyellow;
     font-weight: 600;
     margin-bottom: 26px;
 }
@@ -2311,14 +2316,14 @@ ul.active {
 .transfer-item h3 {
     font-size: 18px;
     margin-bottom: 14px;
-    color: black;
+    color: white;
 }
 
 .transfer-address span{
     font-size: 16px;
     font-weight: 900;
     /*color: lightgreen;*/
-    color: #444;
+    color: lightblue;
     cursor: pointer;
 }
 
@@ -2328,7 +2333,7 @@ ul.active {
     flex-direction: column;
     width: 100%;
     /*position: fixed;*/
-    background-color: white;
+    background-color: transparent;
     top: 52px;
     z-index: 9;
     padding: 23px 12px;
@@ -2342,18 +2347,18 @@ ul.active {
 .pur-info .exchanger-list {
     margin-top: 14px;
     font-size: 18px;
-    color: #111;
+    color: white;
 }
 
 .pur-info h3 {
     font-size: 14px;
     margin-bottom: 8px;
-    color: #111;
+    color: white;
 }
 
 .pur-info .header {
     font-size: 28px;
-    color: #111;
+    color: white;
 }
 
 .transfer-option {
@@ -2364,7 +2369,7 @@ ul.active {
 
 .transfer-option span{
     text-decoration: underline;
-    color: #222;
+    color: lightblue;
 }
 
 .create {
@@ -2944,9 +2949,9 @@ ul.active {
 
     .transfer-item {
         width: 100%;
-        color: black;
+        color: white;
         /*background-color: black;*/
-        background-color: white;
+        background-color: transparent;
         border: 2px solid #cc9933;
         border-radius: 24px;
         padding: 12px 24px;
@@ -2954,12 +2959,12 @@ ul.active {
     }
 
     .transfer-item h3 b {
-        color: lightgreen;
+        color: white;
     }
 
     .transfer-item h4 {
         /*color: lightgrey;*/
-        color: black;
+        color: white;
         margin-top: 24px;
         margin-bottom: 24px;
     }
@@ -2967,7 +2972,7 @@ ul.active {
     .transfer-item a h3{
         font-size: 21px;
         /*color: lightskyblue;*/
-        color: #222;
+        color: lightyellow;
         font-weight: 600;
         margin-bottom: 26px;
     }
@@ -2975,14 +2980,14 @@ ul.active {
     .transfer-item h3 {
         font-size: 18px;
         margin-bottom: 14px;
-        color: black;
+        color: white;
     }
 
     .transfer-address span{
         font-size: 16px;
         font-weight: 900;
         /*color: lightgreen;*/
-        color: #444;
+        color: lightblue;
     }
 
     .pur-info {
@@ -2990,7 +2995,7 @@ ul.active {
         flex-direction: column;
         width: 100%;
         /*position: fixed;*/
-        background-color: white;
+        background-color: transparent;
         top: 52px;
         z-index: 9;
         padding: 23px 12px;
@@ -3004,18 +3009,18 @@ ul.active {
     .pur-info .exchanger-list {
         margin-top: 14px;
         font-size: 18px;
-        color: #111;
+        color: white;
     }
 
     .pur-info h3 {
         font-size: 14px;
         margin-bottom: 8px;
-        color: #111;
+        color: white;
     }
 
     .pur-info .header {
         font-size: 28px;
-        color: #111;
+        color: white;
     }
 
     .transfer-option {
@@ -3026,7 +3031,7 @@ ul.active {
 
     .transfer-option span{
         text-decoration: underline;
-        color: #222;
+        color: lightblue;
     }
 
     .create {

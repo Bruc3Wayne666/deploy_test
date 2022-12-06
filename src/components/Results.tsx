@@ -43,6 +43,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
 
     useEffect(() => {
         fetchSportList()
+        window.scrollTo(0, 0)
     }, [])
 
 

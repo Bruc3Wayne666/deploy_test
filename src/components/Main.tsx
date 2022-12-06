@@ -288,10 +288,25 @@ const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
                                             onClick={() => handleChangeParams({...params, country: co})}
                                             className={`one-contry-f ${params.country === co && 'active'}`}
                                         >
-                                            {
-                                                // @ts-ignore
-                                                COUNTRIES[co].ru_name
-                                            }
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    flexDirection: "column",
+                                                    justifyContent: "space-between"
+                                                }}
+                                            >
+                                                <img
+                                                    // @ts-ignore
+                                                    src={COUNTRIES[co].svg_url}
+                                                    height={16}
+                                                    alt=''
+                                                    style={{marginBottom: 6}}
+                                                />
+                                                {  // @ts-ignore
+                                                    COUNTRIES[co].ru_name
+                                                }
+                                            </div>
                                         </div>
                                     )
                                 })
@@ -427,6 +442,7 @@ const Main: FC = () => {
             fetchUserInfo(session)
                 .then(res => setUserInfo(res))
         }
+        window.scrollTo(0, 0)
     }, [session])
 
 
@@ -457,7 +473,8 @@ const Main: FC = () => {
                         backgroundColor: '#cc9933',
                         padding: '8px 12px',
                         borderRadius: 8,
-                        border: 'none'
+                        border: 'none',
+                        cursor: 'pointer'
                     }}
                 >
                     Вернутся назад

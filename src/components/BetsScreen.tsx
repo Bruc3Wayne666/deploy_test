@@ -172,6 +172,7 @@ const BetsScreen: FC<any> = (props: any) => {
             setBets(data)
         }
         fetchBets()
+        window.scrollTo(0, 0)
     }, [period])
 
     const handleChangeType = (value: string) => {

@@ -1,8 +1,12 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import {LeftBar} from "./LeftBar";
 import {RightBar} from "./RightBar";
 
 export const Discounts: FC = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     return (
         <div id="content-wr">
 

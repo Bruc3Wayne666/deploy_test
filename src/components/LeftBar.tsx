@@ -37,9 +37,18 @@ export const LeftBar: FC<any> = () => {
                         dispatch(clear())
                         dispatch(logout())
                     }}
-                    className="lklm-item lklmi-exit">
+                    className="lklm-item lklmi-exit"
+                >
                     <div className="global-ico"/>
-                    <span>Выйти</span>
+                    <span
+                        style={{
+                            backgroundColor: '#444',
+                            padding: '8px 16px',
+                            borderRadius: 8
+                        }}
+                    >
+                        Выйти
+                    </span>
                 </div>
             </div>
         </div>
@@ -82,7 +91,15 @@ export const LeftBarMobile: FC<any> = () => {
                     }}
                     className="lklm-item lklmi-exit">
                     <div className="global-ico"/>
-                    <span>Выйти</span>
+                    <span
+                        style={{
+                            backgroundColor: '#444',
+                            padding: '8px 16px',
+                            borderRadius: 8
+                        }}
+                    >
+                        Выйти
+                    </span>
                 </div>
             </div>
         </div>

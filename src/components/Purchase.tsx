@@ -39,16 +39,52 @@ const TransferItem: FC<TransferItemProps> = ({transfer, sendAddress}) => {
 
     return (
         <div className='transfer-item'>
-            <h4>📂Идентификатор пополнения #{iden}</h4>
-            <a href={loook_link}><h3>🔍 Отслеживать пополнение</h3></a>
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <h4>Идентификатор пополнения #{iden}</h4>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    src={require('../assets/images/purchase/tracker.svg').default}
+                    alt=""
+                    height={26}
+                    style={{marginRight: 14}}
+                />
+                <a style={{marginTop: 20}} href={loook_link}><h3>Отслеживать пополнение</h3></a>
+            </div>
+
             {
                 status === 'waiting'
-                    ? <h3>⏳ Адрес актуален: <b style={{color: 'red'}}>{Math.floor(remainder_time / 60)}</b> минут</h3>
+                    ? <h3>Адрес актуален: <b style={{color: 'yellow'}}>{Math.floor(remainder_time / 60)}</b> минут</h3>
                     : status === 'finish'
-                        ? <h3>💵 Пополнено на <b>{amount}</b></h3>
-                        : <h3>❌ Адрес не актуален (просрочен)</h3>
+                        ? <h3>Пополнено на <b>{amount}</b></h3>
+                        :
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <img
+                                src={require('../assets/images/purchase/times.svg').default}
+                                alt=""
+                                height={26}
+                                style={{marginRight: 14}}
+                            />
+                            <h3 style={{marginTop: 18}}>Адрес не актуален (просрочен)</h3>
+                        </div>
             }
-            <h3>🏷 Адрес для оплаты: </h3>
+            <h3>Адрес для оплаты: </h3>
             <h3
                 // ref={address}
                 className='transfer-address'
@@ -60,28 +96,139 @@ const TransferItem: FC<TransferItemProps> = ({transfer, sendAddress}) => {
                 <span>{wallet}</span>
             </h3>
 
-            <h3
-                onClick={() => sendAddress(wallet)}
+            <div
                 style={{
-                    cursor: 'pointer'
+                    display: 'flex',
+                    alignItems: 'center',
                 }}
-                className='transfer-option'
-            >📩 <span>Выслать адрес на почту</span></h3>
+            >
+                <img
+                    src={require('../assets/images/purchase/mail.svg').default}
+                    alt=""
+                    height={26}
+                    style={{marginRight: 14}}
+                />
+                <h3
+                    onClick={() => sendAddress(wallet)}
+                    style={{
+                        cursor: 'pointer',
+                        marginTop: 10
+                    }}
+                    className='transfer-option'
+                >
+                    <span>Выслать адрес на почту</span>
+                </h3>
+            </div>
+
         </div>
     )
 }
 
 
-const Info = React.memo(({createTransfer}: {createTransfer: () => void}) => {
+const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
     return (
         <div className='pur-info'>
-            <h1 className='header'>📬 Способ пополнения: <br/> 💲 <b style={{color: '#111'}}>USDT TRC20</b></h1>
-            <a href='https://www.bestchange.ru/qiwi-to-tether-trc20.html'>
-                <h3 className='exchanger-list'>📊 <b style={{color: '#111'}}>Список обменников</b></h3>
-            </a>
-            <h3>🕒 Оплата будет засчитана после 1 подтверждения сетью</h3>
-            <h3>🧾 Для каждого пополнения создавайте новый счёт</h3>
-            <h3>🆘 Не бойтесь, поддержка сайта вас не оставит</h3>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                {/*<img*/}
+                {/*    src={require('../assets/images/purchase/cash.svg').default}*/}
+                {/*    alt=""*/}
+                {/*    height={26}*/}
+                {/*    style={{marginRight: 14}}*/}
+                {/*/>*/}
+                <h1 className='header'>Способ пополнения:</h1>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                    // border: '1px solid white',
+                    // marginTop: -8
+                }}
+            >
+                {/*<img*/}
+                {/*    src={require('../assets/images/purchase/dollar.svg').default}*/}
+                {/*    alt=""*/}
+                {/*    height={26}*/}
+                {/*    style={{marginRight: 14}}*/}
+                {/*/>*/}
+                <h1 className='header' style={{marginTop: -18}}>
+                    <br/><b style={{color: 'yellowgreen'}}>USDT TRC20</b>
+                </h1>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    src={require('../assets/images/purchase/exchanger.svg').default}
+                    alt=""
+                    height={26}
+                    style={{marginRight: 14}}
+                />
+
+                <a href='https://www.bestchange.ru/qiwi-to-tether-trc20.html'>
+                    <h3 className='exchanger-list'><b style={{color: 'lightgreen'}}>Список обменников</b></h3>
+                </a>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    src={require('../assets/images/purchase/clock.svg').default}
+                    alt=""
+                    height={26}
+                    style={{marginRight: 14}}
+                />
+                <h3 style={{marginTop: 8}}>Оплата будет засчитана после 1 подтверждения сетью</h3>
+            </div>
+
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    src={require('../assets/images/purchase/account.svg').default}
+                    alt=""
+                    height={26}
+                    style={{marginRight: 14}}
+                />
+                <h3 style={{marginTop: 6}}>Для каждого пополнения создавайте новый счёт</h3>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    src={require('../assets/images/purchase/support.svg').default}
+                    alt=""
+                    height={26}
+                    style={{marginRight: 14}}
+                />
+                <h3 style={{marginTop: 8}}>Не бойтесь, поддержка сайта вас не оставит</h3>
+            </div>
+
             <button
                 className='create'
                 onClick={createTransfer}
@@ -147,6 +294,7 @@ const Purchase: FC = () => {
             getTransferList()
                 .then(res => setTransferList(res))
         }, 20000)
+        window.scrollTo(0, 0)
 
 
         return () => clearInterval(interval)

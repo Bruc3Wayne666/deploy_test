@@ -181,6 +181,7 @@ const Live = () => {
         message: null,
         result: null,
     })
+    const [isActive, setIsActive] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [search, setSearch] = useState('')
     // const [showModal, setShowModal] = useState(false)
@@ -220,6 +221,7 @@ const Live = () => {
 
     const handleSearchChange = (e: any) => {
         setSearch(e.target.value)
+        setIsActive(e.target.value.length === 0)
         setParams({
             ...params,
             search: e.target.value
@@ -254,6 +256,7 @@ const Live = () => {
             fetchUserInfo(session)
                 .then(res => setUserInfo(res))
         }
+        window.scrollTo(0, 0)
     }, [session])
 
     useEffect(() => {
@@ -272,7 +275,7 @@ const Live = () => {
         }
         , [params])
 
-    if (result === 0 || result == null) {
+    if ((result === 0 || result == null) && isActive) {
         return (
             <div
                 style={{
@@ -299,7 +302,8 @@ const Live = () => {
                         backgroundColor: '#cc9933',
                         padding: '8px 12px',
                         borderRadius: 8,
-                        border: 'none'
+                        border: 'none',
+                        cursor: 'pointer'
                     }}
                 >
                     Вернутся назад

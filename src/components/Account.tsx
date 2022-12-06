@@ -99,6 +99,7 @@ const Account: FC<any> = () => {
             fetchUserInfo(session)
                 .then(() => setIsLoading(false))
         }
+        window.scrollTo(0, 0)
     }, [session])
 
     return (
