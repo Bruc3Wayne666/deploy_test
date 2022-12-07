@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {useAppDispatch} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
 
 // @ts-ignore

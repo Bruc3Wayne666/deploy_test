@@ -20,12 +20,17 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {
 		logout(state) {
-			localStorage.removeItem('login')
-			localStorage.removeItem('password')
+			// localStorage.removeItem('login')
+			// localStorage.removeItem('password')
 			localStorage.removeItem('isAuth')
+			localStorage.removeItem('session')
 			state.error = ''
 			state.session = ''
 		},
+		setSession(state, action: PayloadAction<string>) {
+			state.error = ''
+			state.session = action.payload
+		}
 	},
 	extraReducers: {
 		// [login.pending.type]: state => {
@@ -49,5 +54,5 @@ export const authSlice = createSlice({
 	},
 })
 
-export const {logout} = authSlice.actions
+export const {logout, setSession} = authSlice.actions
 export default authSlice.reducer

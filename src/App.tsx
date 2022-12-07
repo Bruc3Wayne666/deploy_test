@@ -20,7 +20,7 @@ import CyberSport from "./components/Cybers";
 
 // @ts-ignore
 // import {useAlert} from 'react-alert';
-import {logout} from "./store/reducers/auth/authSlice";
+import {logout, setSession} from "./store/reducers/auth/authSlice";
 import Help from "./components/Help";
 
 
@@ -32,13 +32,15 @@ const App: FC = () => {
 
     useEffect(() => {
         if (localStorage.getItem('isAuth') === 'true') {
-            dispatch(login({
-                // @ts-ignore
-                login: localStorage.getItem('login'),
-                // @ts-ignore
-                password: localStorage.getItem('password'),
-                remember: true
-            }))
+            // dispatch(login({
+            //     // @ts-ignore
+            //     login: localStorage.getItem('login'),
+            //     // @ts-ignore
+            //     password: localStorage.getItem('password'),
+            //     remember: true
+            // }))
+            //@ts-ignore
+            dispatch(setSession(localStorage.getItem('session')))
         }
     }, [])
 

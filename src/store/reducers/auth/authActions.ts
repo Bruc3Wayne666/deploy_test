@@ -11,9 +11,10 @@ export const login = createAsyncThunk(
             const data = await ApiService.login(login, password)
 
             if (data && remember) {
-                localStorage.setItem('login', login)
-                localStorage.setItem('password', password)
+                // localStorage.setItem('login', login)
+                // localStorage.setItem('password', password)
                 localStorage.setItem('isAuth', String(true))
+                localStorage.setItem('session', data.user_id)
             }
 
             return data
