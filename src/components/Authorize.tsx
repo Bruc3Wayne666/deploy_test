@@ -143,12 +143,14 @@ const Authorize: FC = () => {
                             placeholder={'Ваш логин'}
                             type="text"
                         />
+
                         <input
                             value={form.password}
                             onChange={e => setForm({...form, password: e.target.value})}
                             placeholder={'Ваш пароль'}
                             type="password"
                         />
+
                         <div
                             style={{
                                 fontSize: 16,
@@ -184,7 +186,7 @@ const Authorize: FC = () => {
                                 marginTop: -6,
                                 borderRadius: 8,
                                 backgroundColor: 'forestgreen'
-                        }}
+                            }}
                             onClick={() => {
                                 setType('register')
                                 setForm({

@@ -282,6 +282,11 @@ const Purchase: FC = () => {
     const createTransfer = useCallback(async () => {
         const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
 
+        if (data === 'session is not active') {
+            dispatch(logout())
+            alert('Сессия истекла. Авторизуйтесь заново')
+            return window.location.href = '/profile'
+        }
 
         if (data === '1') {
             alert('Кошелёк уже создан')
