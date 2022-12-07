@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import {useAppDispatch} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
 
@@ -29,6 +29,11 @@ const Authorize: FC = () => {
     })
     const [email, setEmail] = useState('')
     const [recovery, setRecovery] = useState('')
+    const [passVisible, setPassVissible] = useState('password')
+    const passKeys = {
+        'text': 'eye_crossed',
+        'password': 'eye'
+    }
     // const alert = useAlert()
 
     const handleReset = (e: any) => {
@@ -113,6 +118,7 @@ const Authorize: FC = () => {
         </form>
     )
 
+    // @ts-ignore
     return (
         <form
             onSubmit={handleSubmit}
@@ -137,19 +143,58 @@ const Authorize: FC = () => {
                                 style={{borderRadius: 8}}
                             />
                         </div>
-                        <input
-                            value={form.login}
-                            onChange={e => setForm({...form, login: e.target.value})}
-                            placeholder={'Ваш логин'}
-                            type="text"
-                        />
 
-                        <input
-                            value={form.password}
-                            onChange={e => setForm({...form, password: e.target.value})}
-                            placeholder={'Ваш пароль'}
-                            type="password"
-                        />
+                        <div
+                            style={{
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <input
+                                value={form.login}
+                                onChange={e => setForm({...form, login: e.target.value})}
+                                placeholder={'Ваш логин'}
+                                type="text"
+                            />
+                        </div>
+
+                        <div
+                            style={{
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <img
+                                src={
+                                passVisible === 'password' ?
+                                require(`../assets/svg/eye.svg`).default :
+                                require(`../assets/svg/eye_crossed.svg`).default
+                            }
+                                height={28}
+                                onClick={() => {
+                                    if (passVisible === 'password') setPassVissible('text')
+                                    else setPassVissible('password')
+                                }}
+                                style={{
+                                    position: 'absolute',
+                                    marginBottom: 10,
+                                    marginLeft: window.innerWidth > 1440 ? -400 : -200
+                                    // left: 8,
+                                    // top: 8,
+                                    // zIndex: 9999
+                                }}
+                            />
+                            <input
+                                value={form.password}
+                                onChange={e => setForm({...form, password: e.target.value})}
+                                placeholder={'Ваш пароль'}
+                                type={passVisible}
+                            />
+                        </div>
+
 
                         <div
                             style={{
