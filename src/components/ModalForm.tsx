@@ -5,6 +5,8 @@ import Modal from 'react-modal';
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import axios from "axios";
+import {logout} from "../store/reducers/auth/authSlice";
+import {useAppDispatch} from "../hooks/redux";
 
 
 export const ModalForm: FC<{
@@ -37,6 +39,8 @@ export const ModalForm: FC<{
         result: null,
     })
 
+    const dispatch = useAppDispatch()
+
     const fetchUserInfo = useCallback(async (session: string) => {
         return await ApiService.getProfile(session)
     }, [session])
@@ -44,7 +48,15 @@ export const ModalForm: FC<{
     useEffect(() => {
         if (session) {
             fetchUserInfo(session)
-                .then(res => setUserInfo(res))
+                .then(res => {
+                    // @ts-ignore
+                    if (res === 'session is not active') {
+                        dispatch(logout())
+                        alert('Сессия истекла. Авторизуйтесь заново')
+                        return window.location.href = '/profile'
+                    }
+                    setUserInfo(res)
+                })
         }
     }, [session])
 

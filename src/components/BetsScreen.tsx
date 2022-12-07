@@ -1,9 +1,10 @@
 import React, {FC, useEffect, useState} from 'react';
 import {RightBar} from "./RightBar";
 import {LeftBar} from "./LeftBar";
-import {useAppSelector} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import axios from "axios";
 import {BidsFilterDropDown} from "./CustomDropdown";
+import {logout} from "../store/reducers/auth/authSlice";
 
 
 interface IBetsProps {
@@ -162,6 +163,7 @@ const BetsScreen: FC<any> = (props: any) => {
     const [bets, setBets] = useState([])
     const [period, setPeriod] = useState('all')
     const [type, setType] = useState('bets')
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         const fetchBets = async () => {
@@ -169,6 +171,11 @@ const BetsScreen: FC<any> = (props: any) => {
                 period,
                 user_id: session
             })
+            if (data === 'session is not active') {
+                dispatch(logout())
+                alert('Сессия истекла. Авторизуйтесь заново')
+                return window.location.href = '/profile'
+            }
             setBets(data)
         }
         fetchBets()

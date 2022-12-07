@@ -1,9 +1,10 @@
 import React, {FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import axios from "axios";
-import {useAppSelector} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import results from "./Results";
+import {logout} from "../store/reducers/auth/authSlice";
 
 
 interface TransferItemType {
@@ -243,6 +244,7 @@ const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
 const Purchase: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const [transferList, setTransferList] = useState<TransferListType>()
+    const dispatch = useAppDispatch()
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -265,7 +267,15 @@ const Purchase: FC = () => {
     useEffect(() => {
         if (session) {
             fetchUserInfo(session)
-                .then(res => setUserInfo(res))
+                .then(res => {
+                    // @ts-ignore
+                    if (res === 'session is not active') {
+                        dispatch(logout())
+                        alert('Сессия истекла. Авторизуйтесь заново')
+                        return window.location.href = '/profile'
+                    }
+                    setUserInfo(res)
+                })
         }
     }, [session])
 
@@ -289,7 +299,14 @@ const Purchase: FC = () => {
 
     useEffect(() => {
         getTransferList()
-            .then(res => setTransferList(res))
+            .then(res => {
+                if (res === 'session is not active') {
+                    dispatch(logout())
+                    alert('Сессия истекла. Авторизуйтесь заново')
+                    return window.location.href = '/profile'
+                }
+                setTransferList(res)
+            })
         const interval = setInterval(() => {
             getTransferList()
                 .then(res => setTransferList(res))

@@ -3,12 +3,13 @@ import '../index.css'
 import {Link} from "react-router-dom";
 import {RightBar, RightBarMobile} from "./RightBar";
 import {LeftBar, LeftBarMobile} from "./LeftBar";
-import {useAppSelector} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {IProfileState} from '../store/reducers/profile/profileSlice';
 import {ApiService} from "../api";
 import spinner from '../assets/spinner.svg'
 import axios from "axios";
 import {COUNTRIES} from "../assets/consts";
+import {logout} from "../store/reducers/auth/authSlice";
 
 
 const Profile: FC<any> = (props: any) => {
@@ -74,6 +75,7 @@ const Profile: FC<any> = (props: any) => {
 }
 
 const Account: FC<any> = () => {
+    const dispatch = useAppDispatch()
     const [{result}, setUserInfo] = useState<IProfileState>({
         error: false,
         message: null,
@@ -88,6 +90,12 @@ const Account: FC<any> = () => {
         const leagues = await axios.post(`${process.env.REACT_APP_BASE_URL}/favourite_league`, {
             user_id: session
         })
+
+        // @ts-ignore
+        if (data === 'session is not active') {
+            dispatch(logout())
+            return alert('Сессия истекла. Авторизуйтесь заново')
+        }
         setUserInfo(data)
         setFavoriteLeagues(leagues.data)
     }, [session])
