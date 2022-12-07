@@ -181,7 +181,7 @@ const Authorize: FC = () => {
                                 style={{
                                     position: 'absolute',
                                     marginBottom: 10,
-                                    marginLeft: window.innerWidth > 1440 ? -400 : -200
+                                    marginLeft: window.innerWidth > 1440 ? 400 : 200
                                     // left: 8,
                                     // top: 8,
                                     // zIndex: 9999
