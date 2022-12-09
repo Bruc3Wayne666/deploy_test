@@ -93,8 +93,8 @@ const Account: FC<any> = () => {
 
         // @ts-ignore
         if (data === 'session is not active') {
-            dispatch(logout())
-            return alert('Сессия истекла. Авторизуйтесь заново')
+            return dispatch(logout())
+            // return alert('Сессия истекла. Авторизуйтесь заново')
         }
         setUserInfo(data)
         setFavoriteLeagues(leagues.data)
