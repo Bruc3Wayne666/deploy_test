@@ -4,9 +4,7 @@ import { GamePayloadType } from '../store/reducers/games/gameSlice';
 import {ProfilePayloadType} from "../store/reducers/profile/profileSlice";
 
 const instance = axios.create({
-	baseURL: process.env.REACT_APP_BASE_URL,
-	// baseURL: 'http://gpbetapi.ru',
-
+	baseURL: process.env.REACT_APP_BASE_URL
 })
 
 export class ApiService {

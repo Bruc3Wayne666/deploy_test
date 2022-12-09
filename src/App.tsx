@@ -32,6 +32,9 @@ const App: FC = () => {
 
     useEffect(() => {
         if (localStorage.getItem('isAuth') === 'true') {
+            if (localStorage.getItem('password') || localStorage.getItem('login')) {
+                dispatch(logout())
+            }
             // dispatch(login({
             //     // @ts-ignore
             //     login: localStorage.getItem('login'),
@@ -40,7 +43,7 @@ const App: FC = () => {
             //     remember: true
             // }))
             //@ts-ignore
-            dispatch(setSession(localStorage.getItem('session')))
+            else dispatch(setSession(localStorage.getItem('session')))
         }
     }, [])
 

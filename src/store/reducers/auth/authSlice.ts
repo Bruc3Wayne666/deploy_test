@@ -24,6 +24,7 @@ export const authSlice = createSlice({
 			// localStorage.removeItem('password')
 			localStorage.removeItem('isAuth')
 			localStorage.removeItem('session')
+			localStorage.clear()
 			state.error = ''
 			state.session = ''
 		},
