@@ -953,7 +953,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 
 .frb-one-opts {
@@ -2395,6 +2395,7 @@ ul.active {
 @media (min-width: 1200px) and (orientation: landscape)  {
     .tabbar {
         display: none;
+        /*visibility: hidden;*/
     }
 
     #mobile-header {

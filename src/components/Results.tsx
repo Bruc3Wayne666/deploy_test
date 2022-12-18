@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import {IGame} from "../models/IGame";
@@ -375,6 +375,8 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
         {value: 'live', label: 'LIVE', className: 'frb-one-opt'},
         {value: 'end', label: 'ЗАВЕРШЁН', className: 'frb-one-opt'},
     ]
+    const dateRef = useRef<HTMLInputElement>(null)
+    const timeRef = useRef<HTMLInputElement>(null)
 
     // const [showSportDropdown, setShowSportDropdown] = useState(false)
     // const [showEventDropdown, setShowEventDropdown] = useState(false)
@@ -431,9 +433,16 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
                 />
 
 
-                <div className="frb-one"><span>Дата</span>
+                <div className="frb-one"
+                     onClick={
+                         // @ts-ignore
+                         () => dateRef.current.showPicker()
+                     }
+                >
+                    <span>Дата</span>
                     <div className="global-ico gi-arrow-bot"/>
                     <input
+                        ref={dateRef}
                         value={params.beautiful_time_start.date}
                         onChange={e => {
                             if (e.target.value === '') {
@@ -463,9 +472,16 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
                         type='date'
                     />
                 </div>
-                <div className="frb-one"><span>Время</span>
+                <div className="frb-one"
+                     onClick={
+                         // @ts-ignore
+                         () => timeRef.current.showPicker()
+                     }
+                >
+                    <span>Время</span>
                     <div className="global-ico gi-arrow-bot"/>
                     <input
+                        ref={timeRef}
                         value={params.beautiful_time_start.hours}
                         onChange={e => {
                             if (e.target.value === '') {
