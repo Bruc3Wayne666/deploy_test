@@ -15,6 +15,7 @@ import {logout} from "../store/reducers/auth/authSlice";
 const Profile: FC<any> = (props: any) => {
     const status = {
         'beginer': '#999',
+        'start': 'red',
         'medium': '#CC9933',
         'master': 'linear-gradient(137deg, rgba(244,80,23,0.9), rgba(11,14,89,0.9))'
     }
