@@ -447,7 +447,7 @@ const Main: FC = () => {
     }, [session])
 
 
-    if (result === 1 || result === null) {
+    if (result === 0 || result === null) {
         return (
             <div
                 style={{

@@ -296,42 +296,42 @@ const Live = () => {
         }
         , [params])
 
-    // if ((result === 1 || result === null) && !isActive) {
-    //     return (
-    //         <div
-    //             style={{
-    //                 // height: window.innerWidth <= 1440 ? '80vh' : '',
-    //                 marginTop: window.innerWidth > 1440 ? 160 : '60%',
-    //                 // border: '1px solid white',
-    //                 display: 'flex',
-    //                 alignItems: 'center',
-    //                 justifyContent: 'center',
-    //                 padding: 16,
-    //                 flexDirection: 'column'
-    //             }}>
-    //             <p
-    //                 style={{
-    //                     fontSize: 18
-    //                 }}
-    //             >
-    //                 В данный момент нету идущих событий
-    //             </p>
-    //             <button
-    //                 onClick={() => navigate(-1)}
-    //                 style={{
-    //                     marginTop: 12,
-    //                     backgroundColor: '#cc9933',
-    //                     padding: '8px 12px',
-    //                     borderRadius: 8,
-    //                     border: 'none',
-    //                     cursor: 'pointer'
-    //                 }}
-    //             >
-    //                 Вернутся назад
-    //             </button>
-    //         </div>
-    //     )
-    // }
+    if ((result === 0 || result === null) && !isActive) {
+        return (
+            <div
+                style={{
+                    // height: window.innerWidth <= 1440 ? '80vh' : '',
+                    marginTop: window.innerWidth > 1440 ? 160 : '60%',
+                    // border: '1px solid white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 16,
+                    flexDirection: 'column'
+                }}>
+                <p
+                    style={{
+                        fontSize: 18
+                    }}
+                >
+                    В данный момент нету идущих событий
+                </p>
+                <button
+                    onClick={() => navigate(-1)}
+                    style={{
+                        marginTop: 12,
+                        backgroundColor: '#cc9933',
+                        padding: '8px 12px',
+                        borderRadius: 8,
+                        border: 'none',
+                        cursor: 'pointer'
+                    }}
+                >
+                    Вернутся назад
+                </button>
+            </div>
+        )
+    }
 
     return (
         <div id="content-wr">
@@ -375,40 +375,40 @@ const Live = () => {
                                     </div>
                                 </div>
                                 :
-                                (result === 1 && isEqual(params, stock)) ?
-                                    <div
-                                        style={{
-                                            // height: window.innerWidth <= 1440 ? '80vh' : '',
-                                            marginTop: window.innerWidth > 1440 ? 20 : '20%',
-                                            // border: '1px solid white',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            padding: 16,
-                                            flexDirection: 'column'
-                                        }}>
-                                        <p
-                                            style={{
-                                                fontSize: 18
-                                            }}
-                                        >
-                                            В данный момент нету идущих событий
-                                        </p>
-                                        <button
-                                            onClick={() => navigate(-1)}
-                                            style={{
-                                                marginTop: 12,
-                                                backgroundColor: '#cc9933',
-                                                padding: '8px 12px',
-                                                borderRadius: 8,
-                                                border: 'none',
-                                                cursor: 'pointer'
-                                            }}
-                                        >
-                                            Вернутся назад
-                                        </button>
-                                    </div>
-                                    :
+                                // (result === 1 && isEqual(params, stock)) ?
+                                //     <div
+                                //         style={{
+                                //             // height: window.innerWidth <= 1440 ? '80vh' : '',
+                                //             marginTop: window.innerWidth > 1440 ? 20 : '20%',
+                                //             // border: '1px solid white',
+                                //             display: 'flex',
+                                //             alignItems: 'center',
+                                //             justifyContent: 'center',
+                                //             padding: 16,
+                                //             flexDirection: 'column'
+                                //         }}>
+                                //         <p
+                                //             style={{
+                                //                 fontSize: 18
+                                //             }}
+                                //         >
+                                //             В данный момент нету идущих событий
+                                //         </p>
+                                //         <button
+                                //             onClick={() => navigate(-1)}
+                                //             style={{
+                                //                 marginTop: 12,
+                                //                 backgroundColor: '#cc9933',
+                                //                 padding: '8px 12px',
+                                //                 borderRadius: 8,
+                                //                 border: 'none',
+                                //                 cursor: 'pointer'
+                                //             }}
+                                //         >
+                                //             Вернутся назад
+                                //         </button>
+                                //     </div>
+                                //     :
                                     <div className="table-one-cat">
                                         {
                                             Object.keys(leagueList)
