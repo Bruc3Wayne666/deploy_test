@@ -9,6 +9,8 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 
 // @ts-ignore
 import debounce from "lodash/debounce";
+// @ts-ignore
+import isEqual from "lodash/isEqual";
 import {ApiService} from "../api";
 import {getGames} from "../store/reducers/games/gameActions";
 import {log} from "util";
@@ -24,7 +26,7 @@ const LeagueItem: FC<any> = ({filter, result}) => {
                 <div className="global-ico gi-star">
 
                 </div>
-                <div className="global-ico gi-rus">
+                <div className="global-ico">
                     <img
                         src={
                             //@ts-ignore
@@ -86,24 +88,27 @@ const GameItem:
             <div className="tocir-results">{score}</div>
             <div className="torir-time">
                 <div className="global-ico gi-clock"/>
-                {
-                    (Number(
-                        game
-                            .beautiful_time_start
-                            .split(' ')[0]
-                            .split('-')[2]
-                    ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :
-                        (Number(
-                            game
-                                .beautiful_time_start
-                                .split(' ')[0]
-                                .split('-')[2]
-                        ) - Number(currentDate.getDate())) === 1 ? 'Завтра в' :
-                            game
-                                .beautiful_time_start
-                                .split(' ')[0]
-                }
+                {/*{*/}
+                {/*    (Number(*/}
+                {/*        game*/}
+                {/*            .beautiful_time_start*/}
+                {/*            .split(' ')[0]*/}
+                {/*            .split('-')[2]*/}
+                {/*    ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :*/}
+                {/*        (Number(*/}
+                {/*            game*/}
+                {/*                .beautiful_time_start*/}
+                {/*                .split(' ')[0]*/}
+                {/*                .split('-')[2]*/}
+                {/*        ) - Number(currentDate.getDate())) === 1 ? 'Завтра в' :*/}
+                {/*            game*/}
+                {/*                .beautiful_time_start*/}
+                {/*                .split(' ')[0]*/}
+                {/*}*/}
 
+                Начался в
+
+                {/*<br style={{marginBottom: 8}}/>*/}
                 <br/>
 
                 {beautiful_time_start.split(' ')[1]}
@@ -200,6 +205,21 @@ const Live = () => {
         },
         search: '-'
     })
+    const stock = {
+        sport_name: 'all',
+        game_status: 'live',
+        quotes: 'all',
+        country: 'all',
+        league_id: 'all',
+        days: 10,
+        one_day: 0,
+        sort_number: false,
+        beautiful_time_start: {
+            date: '-',
+            hours: '-'
+        },
+        search: '-'
+    }
 
     const handleChangeParams = (params: {
         sport_name: string,
@@ -246,7 +266,8 @@ const Live = () => {
     const fetchLeagueList = useCallback(async () => {
         const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
             league_sport: params.sport_name,
-            league_cc: 'all'
+            league_cc: 'all',
+            status: 'live'
         })
         return data
     }, [params])
@@ -275,42 +296,42 @@ const Live = () => {
         }
         , [params])
 
-    if ((result === 0 || result == null) && isActive) {
-        return (
-            <div
-                style={{
-                    // height: window.innerWidth <= 1440 ? '80vh' : '',
-                    marginTop: window.innerWidth > 1440 ? 160 : '60%',
-                    // border: '1px solid white',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 16,
-                    flexDirection: 'column'
-            }}>
-                <p
-                    style={{
-                        fontSize: 18
-                    }}
-                >
-                    В данный момент нету идущих событий
-                    </p>
-                <button
-                    onClick={() => navigate(-1)}
-                    style={{
-                        marginTop: 12,
-                        backgroundColor: '#cc9933',
-                        padding: '8px 12px',
-                        borderRadius: 8,
-                        border: 'none',
-                        cursor: 'pointer'
-                    }}
-                >
-                    Вернутся назад
-                </button>
-            </div>
-        )
-    }
+    // if ((result === 1 || result === null) && !isActive) {
+    //     return (
+    //         <div
+    //             style={{
+    //                 // height: window.innerWidth <= 1440 ? '80vh' : '',
+    //                 marginTop: window.innerWidth > 1440 ? 160 : '60%',
+    //                 // border: '1px solid white',
+    //                 display: 'flex',
+    //                 alignItems: 'center',
+    //                 justifyContent: 'center',
+    //                 padding: 16,
+    //                 flexDirection: 'column'
+    //             }}>
+    //             <p
+    //                 style={{
+    //                     fontSize: 18
+    //                 }}
+    //             >
+    //                 В данный момент нету идущих событий
+    //             </p>
+    //             <button
+    //                 onClick={() => navigate(-1)}
+    //                 style={{
+    //                     marginTop: 12,
+    //                     backgroundColor: '#cc9933',
+    //                     padding: '8px 12px',
+    //                     borderRadius: 8,
+    //                     border: 'none',
+    //                     cursor: 'pointer'
+    //                 }}
+    //             >
+    //                 Вернутся назад
+    //             </button>
+    //         </div>
+    //     )
+    // }
 
     return (
         <div id="content-wr">
@@ -335,28 +356,81 @@ const Live = () => {
                                 <img src={spinner} alt="Loading results..."/>
                             </div>
                             :
-                            <div className="table-one-cat">
-                                {
-                                    Object.keys(leagueList)
-                                        .map(sp => {
-                                            // @ts-ignore
-                                            return Object.keys(leagueList[sp])
-                                                .map(co => {
+                            (result === 1 && !isEqual(params, stock)) ?
+                                <div className="table-one-cat">
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        flexDirection: 'column'
+                                    }}>
+                                        <img
+                                            width={200}
+                                            height={200}
+                                            src={require('../assets/svg/unfounded.svg').default}
+                                            alt="-_-"
+                                        />
+                                        <h3 style={{color: '#888', marginTop: 20}}>Не найдено матчей по вашим
+                                            критериям</h3>
+                                    </div>
+                                </div>
+                                :
+                                (result === 1 && isEqual(params, stock)) ?
+                                    <div
+                                        style={{
+                                            // height: window.innerWidth <= 1440 ? '80vh' : '',
+                                            marginTop: window.innerWidth > 1440 ? 20 : '20%',
+                                            // border: '1px solid white',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            padding: 16,
+                                            flexDirection: 'column'
+                                        }}>
+                                        <p
+                                            style={{
+                                                fontSize: 18
+                                            }}
+                                        >
+                                            В данный момент нету идущих событий
+                                        </p>
+                                        <button
+                                            onClick={() => navigate(-1)}
+                                            style={{
+                                                marginTop: 12,
+                                                backgroundColor: '#cc9933',
+                                                padding: '8px 12px',
+                                                borderRadius: 8,
+                                                border: 'none',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            Вернутся назад
+                                        </button>
+                                    </div>
+                                    :
+                                    <div className="table-one-cat">
+                                        {
+                                            Object.keys(leagueList)
+                                                .map(sp => {
                                                     // @ts-ignore
-                                                    return leagueList[sp][co]
-                                                        .map((league: any[]) => {
-                                                            return <LeagueItem
-                                                                filter={{
-                                                                    league,
-                                                                    status: params.game_status
-                                                                }}
-                                                                result={result}
-                                                            />
+                                                    return Object.keys(leagueList[sp])
+                                                        .map(co => {
+                                                            // @ts-ignore
+                                                            return leagueList[sp][co]
+                                                                .map((league: any[]) => {
+                                                                    return <LeagueItem
+                                                                        filter={{
+                                                                            league,
+                                                                            status: params.game_status
+                                                                        }}
+                                                                        result={result}
+                                                                    />
+                                                                })
                                                         })
                                                 })
-                                        })
-                                }
-                            </div>
+                                        }
+                                    </div>
                     }
                 </div>
             </div>

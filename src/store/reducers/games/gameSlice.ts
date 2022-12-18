@@ -24,7 +24,7 @@ interface IGameState {
                 }
             }
         }
-    } | null | 0
+    } | null | 0 | number
 }
 
 const initialState: IGameState = {
@@ -51,7 +51,7 @@ export interface GamePayloadType {
             //     "not started": IGame[]
             // }
         // }
-        } | null
+        } | null | 0 | number
 }
 
 export const gameSlice = createSlice({

@@ -954,6 +954,7 @@ header {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    height: 60px;
 }
 
 .frb-one-opts {
@@ -2254,7 +2255,7 @@ ul.active {
 }
 
 .frb-one-f {
-    width: 60px;
+    width: 80px;
     border: 1px solid #E6E6E6;
     background: #087537;
     padding: 6px 8px;
@@ -2264,6 +2265,7 @@ ul.active {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .purchase {

@@ -258,7 +258,7 @@ const LeagueItem: FC<any> = ({filter, result}) => {
                 <div className="global-ico gi-star">
 
                 </div>
-                <div className="global-ico gi-rus">
+                <div className="global-ico">
                     <img
                         src={
                             //@ts-ignore
@@ -656,7 +656,8 @@ const Results: FC<any> = () => {
         const fetchLeagueList = useCallback(async () => {
             const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
                 league_sport: params.sport_name,
-                league_cc: 'all'
+                league_cc: 'all',
+                status: params.game_status
             })
             return data
         }, [params])
@@ -685,6 +686,7 @@ const Results: FC<any> = () => {
 
 
         if (result === 0 || result === null) {
+            window.scrollTo(0, 0)
             return (
                 <div
                     style={{
@@ -756,28 +758,46 @@ const Results: FC<any> = () => {
                                     <img src={spinner} alt="Loading results..."/>
                                 </div>
                                 :
-                                <div className="table-one-cat">
-                                    {
-                                        Object.keys(leagueList)
-                                            .map(sp => {
-                                                // @ts-ignore
-                                                return Object.keys(leagueList[sp])
-                                                    .map(co => {
-                                                        // @ts-ignore
-                                                        return leagueList[sp][co]
-                                                            .map((league: any[]) => {
-                                                                return <LeagueItem
-                                                                    filter={{
-                                                                        league,
-                                                                        status: params.game_status
-                                                                    }}
-                                                                    result={result}
-                                                                />
-                                                            })
-                                                    })
-                                            })
-                                    }
-                                </div>
+                                result === 1 ?
+                                    <div className="table-one-cat">
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            flexDirection: 'column'
+                                        }}>
+                                            <img
+                                                width={200}
+                                                height={200}
+                                                src={require('../assets/svg/unfounded.svg').default}
+                                                alt="-_-"
+                                            />
+                                            <h3 style={{color: '#888', marginTop: 20}}>Не найдено матчей по вашим критериям</h3>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div className="table-one-cat">
+                                        {
+                                            Object.keys(leagueList)
+                                                .map(sp => {
+                                                    // @ts-ignore
+                                                    return Object.keys(leagueList[sp])
+                                                        .map(co => {
+                                                            // @ts-ignore
+                                                            return leagueList[sp][co]
+                                                                .map((league: any[]) => {
+                                                                    return <LeagueItem
+                                                                        filter={{
+                                                                            league,
+                                                                            status: params.game_status
+                                                                        }}
+                                                                        result={result}
+                                                                    />
+                                                                })
+                                                        })
+                                                })
+                                        }
+                                    </div>
                         }
                     </div>
                 </div>

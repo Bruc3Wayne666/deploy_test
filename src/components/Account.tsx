@@ -13,6 +13,12 @@ import {logout} from "../store/reducers/auth/authSlice";
 
 
 const Profile: FC<any> = (props: any) => {
+    const status = {
+        'beginer': '#999',
+        'medium': '#CC9933',
+        'master': 'linear-gradient(137deg, rgba(244,80,23,0.9), rgba(11,14,89,0.9))'
+    }
+    const rank = props.result?.rank
     return (
         <div id="lk-mid">
             <div id="lk-lk-info">
@@ -31,7 +37,12 @@ const Profile: FC<any> = (props: any) => {
                     </div>
                     <div id="lk-stat">
                         <div id="lk-stat-title">Статус профиля</div>
-                        <div id="lk-stat-name">Premium</div>
+                        <div id="lk-stat-name" style={{
+                            // @ts-ignore
+                            background: status[rank]
+                        }}>
+                            {rank}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,7 +60,8 @@ const Profile: FC<any> = (props: any) => {
                                 {
                                     props.leagues && props.leagues
                                         .map((league: any) => (
-                                            <Link style={{display: 'flex', alignItems: 'center'}} className="lkm-item" to="/">
+                                            <Link style={{display: 'flex', alignItems: 'center'}} className="lkm-item"
+                                                  to="/">
                                                 <img src={
                                                     //@ts-ignore
                                                     COUNTRIES[league[1]].svg_url}
@@ -67,7 +79,7 @@ const Profile: FC<any> = (props: any) => {
                     }
                 </div>
                 <Link to={'/'}>
-                <div id="lk-lk-bttn-fast">Быстрая ставка</div>
+                    <div id="lk-lk-bttn-fast">Быстрая ставка</div>
                 </Link>
             </div>
         </div>

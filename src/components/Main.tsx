@@ -416,7 +416,8 @@ const Main: FC = () => {
     const fetchLeagueList = useCallback(async () => {
         const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
             league_sport: params.sport_name,
-            league_cc: 'all'
+            league_cc: 'all',
+            status: 'not started'
         })
         return data
     }, [params])
@@ -446,7 +447,7 @@ const Main: FC = () => {
     }, [session])
 
 
-    if (result === 0 || result === null) {
+    if (result === 1 || result === null) {
         return (
             <div
                 style={{
@@ -461,10 +462,11 @@ const Main: FC = () => {
                 }}>
                 <p
                     style={{
-                        fontSize: 18
+                        fontSize: 18,
+                        textAlign: 'center',
                     }}
                 >
-                    В данный момент нету идущих событий
+                    В данный момент нету предстоящих событий
                 </p>
                 <button
                     onClick={() => navigate(-1)}

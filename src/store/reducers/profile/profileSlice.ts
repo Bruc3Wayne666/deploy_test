@@ -8,15 +8,15 @@ export interface IProfileState {
     result: {
         balance: string,
         login: string,
-        rassilka: number
+        rassilka: number,
+        rank: string
     } | null
 }
 
 const initialState: IProfileState = {
     error: false,
     message: null,
-    result: null,
-    // login: null
+    result: null
 }
 
 export interface ProfilePayloadType {
@@ -25,7 +25,8 @@ export interface ProfilePayloadType {
     result: {
         balance: string,
         login: string,
-        rassilka: number
+        rassilka: number,
+        rank: string
     } | null,
 }
 
