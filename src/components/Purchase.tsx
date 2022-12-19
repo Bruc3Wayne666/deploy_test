@@ -365,7 +365,7 @@ const Purchase: FC = () => {
             alert('Кошелёк уже создан')
         } else {
             // @ts-ignore
-            setTransferList(prevState => ({...prevState, result: [...prevState?.result, data]}))
+            setTransferList(prevState => ({...prevState, result: [data, ...prevState?.result]}))
         }
     }, [session])
 
