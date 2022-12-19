@@ -248,7 +248,7 @@ const PurchaseMethod: FC = () => {
     const [method, setMethod] = useState(false)
 
     return (
-        <div style={{marginBottom: window.innerWidth > 1440 ? 30 : 0}} className="purchaseSwitcher">
+        <div className="purchaseSwitcher">
             <div className="methods">
                 {/*<div*/}
                 {/*    onClick={() => setPurchase('usd')}*/}
