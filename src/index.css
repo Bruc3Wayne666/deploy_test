@@ -2392,6 +2392,7 @@ ul.active {
 
 .purchaseSwitcher .methods {
     display: flex;
+    align-items: center;
 }
 
 #lk-right.m {
