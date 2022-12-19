@@ -265,14 +265,14 @@ export const ModalForm: FC<{
                  {bet.name}
                 </span>
                         <span className='kf'>
-                    {bet.kf}
+                    {possible === 0 ? bet.kf : possible}
                 </span>
                     </div>
                 </div>
                 <div className="modal_bid">
                     <div className="binf">
                         Итоговый коэффициент
-                        <span>{bet.kf}</span>
+                        <span>{possible === 0 ? bet.kf : possible}</span>
                     </div>
                     <div className="binf">
                         Сумма ставки
@@ -297,7 +297,7 @@ export const ModalForm: FC<{
                     </div>
                     <div className="binf">
                         Возможный выигрыш
-                        <span className='win'>{possible.toFixed(2)} CWD</span>
+                        <span className='win'>{(sumValue * possible).toFixed(2)} CWD</span>
                     </div>
                 </div>
                 <div className="modal_start">
