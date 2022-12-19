@@ -69,7 +69,11 @@ export const ModalForm: FC<{
             setPossible(data)
         }
         fetchPossible()
-    }, [sumValue])
+    }, [sumValue, currentGame])
+
+    useEffect(() => {
+        setPossible(0)
+    }, [])
 
     const handleSubmit = () => {
         if (sumValue === 0) return alert('Нужно ввести сумму')
@@ -80,11 +84,15 @@ export const ModalForm: FC<{
                 id_kot: String(bet.id),
                 sum_bid: String(sumValue)
             })
-                .then(res => setBidSuccess(true))
+                .then(res => {
+                    setBidSuccess(true)
+                    setPossible(0)
+                })
         } else {
             setBidSuccess(false)
             handleChangeShowModal(false)
             alert('Недостаточно средств')
+            setPossible(0)
             setSumValue(0)
             // window.location.href = '/purchase'
         }
@@ -96,6 +104,7 @@ export const ModalForm: FC<{
         onRequestClose={() => {
             setSumValue(0)
             setBidSuccess(false)
+            setPossible(0)
             handleChangeShowModal(false)
         }}
 
@@ -139,6 +148,7 @@ export const ModalForm: FC<{
                 setSumValue(0)
                 handleChangeShowModal(false)
                 setBidSuccess(false)
+                setPossible(0)
             }}
         >
             &times;
@@ -172,6 +182,7 @@ export const ModalForm: FC<{
                     <button
                         onClick={() => {
                             setSumValue(0)
+                            setPossible(0)
                             handleChangeShowModal(false)
                             setBidSuccess(false)
                         }}
@@ -265,14 +276,15 @@ export const ModalForm: FC<{
                  {bet.name}
                 </span>
                         <span className='kf'>
-                    {possible === 0 ? bet.kf : possible}
+                    {/*{possible === 0 ? bet.kf : possible}*/}
+                    {possible}
                 </span>
                     </div>
                 </div>
                 <div className="modal_bid">
                     <div className="binf">
                         Итоговый коэффициент
-                        <span>{possible === 0 ? bet.kf : possible}</span>
+                        <span>{possible}</span>
                     </div>
                     <div className="binf">
                         Сумма ставки
