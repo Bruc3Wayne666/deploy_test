@@ -5,6 +5,8 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import results from "./Results";
 import {logout} from "../store/reducers/auth/authSlice";
+import Switch from "react-switch";
+
 
 
 interface TransferItemType {
@@ -242,27 +244,41 @@ const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
 
 
 const PurchaseMethod: FC = () => {
-    const [purchase, setPurchase] = useState('usd')
+    // const [purchase, setPurchase] = useState('usd')
+    const [method, setMethod] = useState(false)
 
     return (
-        <div className="purchaseSwitcher">
+        <div style={{marginBottom: window.innerWidth > 1440 ? 30 : 0}} className="purchaseSwitcher">
             <div className="methods">
-                <div
-                    onClick={() => setPurchase('usd')}
-                    className={`method usd ${purchase === 'usd' && 'active'}`}
-                >
-                    USD
-                </div>
-                <div
-                    onClick={() => setPurchase('cwd')}
-                    className={`method cwd ${purchase === 'cwd' && 'active'}`}
-                >
-                    CWD
-                </div>
+                {/*<div*/}
+                {/*    onClick={() => setPurchase('usd')}*/}
+                {/*    className={`method usd ${purchase === 'usd' && 'active'}`}*/}
+                {/*>*/}
+                {/*    USD*/}
+                {/*</div>*/}
+                {/*<div*/}
+                {/*    onClick={() => setPurchase('cwd')}*/}
+                {/*    className={`method cwd ${purchase === 'cwd' && 'active'}`}*/}
+                {/*>*/}
+                {/*    CWD*/}
+                {/*</div>*/}
+
+                <Switch
+                    width={100}
+                    onColor={'#00aa00'}
+                    offColor={'#000033'}
+                    checkedIcon={<div style={{fontSize: 20, height: '100%', paddingLeft: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#222'}}>USD</div>}
+                    uncheckedIcon={<div style={{fontSize: 20, height: '100%', paddingRight: 32, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>CWD</div>}
+                    checkedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/usd.svg').default} alt={''}/></div>}
+                    uncheckedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
+                    onChange={() => setMethod(prevState => !prevState)}
+                    checked={method}
+                />
             </div>
         </div>
     )
 }
+
 
 const Purchase: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
