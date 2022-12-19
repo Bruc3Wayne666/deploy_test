@@ -250,6 +250,7 @@ const PurchaseMethod: FC = () => {
     return (
         <div className="purchaseSwitcher">
             <div className="methods">
+                <h2 style={{fontWeight: 600}}>Валюта:&nbsp;</h2>
                 {/*<div*/}
                 {/*    onClick={() => setPurchase('usd')}*/}
                 {/*    className={`method usd ${purchase === 'usd' && 'active'}`}*/}

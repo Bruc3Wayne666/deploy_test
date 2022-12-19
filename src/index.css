@@ -2390,6 +2390,10 @@ ul.active {
     margin-bottom: 30px;
 }
 
+.purchaseSwitcher .methods {
+    display: flex;
+}
+
 #lk-right.m {
     display: none;
 }
