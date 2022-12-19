@@ -241,6 +241,29 @@ const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
 })
 
 
+const PurchaseMethod: FC = () => {
+    const [purchase, setPurchase] = useState('usd')
+
+    return (
+        <div className="purchaseSwitcher">
+            <div className="methods">
+                <div
+                    onClick={() => setPurchase('usd')}
+                    className={`method usd ${purchase === 'usd' && 'active'}`}
+                >
+                    USD
+                </div>
+                <div
+                    onClick={() => setPurchase('cwd')}
+                    className={`method cwd ${purchase === 'cwd' && 'active'}`}
+                >
+                    CWD
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const Purchase: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const [transferList, setTransferList] = useState<TransferListType>()
@@ -325,6 +348,7 @@ const Purchase: FC = () => {
 
     return (
         <div className='purchase'>
+            <PurchaseMethod/>
             <Info createTransfer={createTransfer}/>
             {
                 transferList?.result.reverse()

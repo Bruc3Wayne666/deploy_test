@@ -32,7 +32,7 @@ export const ModalForm: FC<{
     } = currentGame
     const [sumValue, setSumValue] = useState(0)
     const [bidSuccess, setBidSuccess] = useState(false)
-    // const [possible, setPossible] = useState(0)
+    const [possible, setPossible] = useState(0)
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
         message: null,
@@ -60,16 +60,16 @@ export const ModalForm: FC<{
         }
     }, [session])
 
-    // useEffect(() => {
-    //     const fetchPossible = async () => {
-    //         const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/kf_kot`, {
-    //             id_kot: String(bet.id),
-    //             sum_bid: sumValue
-    //         })
-    //         setPossible(data)
-    //     }
-    //     fetchPossible()
-    // }, [sumValue])
+    useEffect(() => {
+        const fetchPossible = async () => {
+            const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/kf_kot`, {
+                id_kot: String(bet.id),
+                sum_bid: sumValue
+            })
+            setPossible(data)
+        }
+        fetchPossible()
+    }, [sumValue])
 
     const handleSubmit = () => {
         if (sumValue === 0) return alert('Нужно ввести сумму')
@@ -297,7 +297,7 @@ export const ModalForm: FC<{
                     </div>
                     <div className="binf">
                         Возможный выигрыш
-                        <span className='win'>{(sumValue * bet.kf).toFixed(2)} CWD</span>
+                        <span className='win'>{possible.toFixed(2)} CWD</span>
                     </div>
                 </div>
                 <div className="modal_start">

@@ -2307,7 +2307,7 @@ ul.active {
     margin-bottom: 24px;
 }
 
-.transfer-item a h3{
+.transfer-item a h3 {
     font-size: 21px;
     /*color: lightskyblue;*/
     color: lightyellow;
@@ -2321,7 +2321,7 @@ ul.active {
     color: white;
 }
 
-.transfer-address span{
+.transfer-address span {
     font-size: 16px;
     font-weight: 900;
     /*color: lightgreen;*/
@@ -2369,7 +2369,7 @@ ul.active {
     margin-top: 30px;
 }
 
-.transfer-option span{
+.transfer-option span {
     text-decoration: underline;
     color: lightblue;
 }
@@ -2394,7 +2394,7 @@ ul.active {
     display: none;
 }
 
-@media (min-width: 1200px) and (orientation: landscape)  {
+@media (min-width: 1200px) and (orientation: landscape) {
     .tabbar {
         display: none;
         /*visibility: hidden;*/
@@ -2549,7 +2549,6 @@ ul.active {
     /*.toc-i-left-side::after {*/
     /*    display: none;*/
     /*}*/
-
     .tocirs-someinfo {
         width: 100%;
         /*border: 2px solid yellow;*/
@@ -2693,7 +2692,7 @@ ul.active {
         margin-bottom: 22px;
     }
 
-    #lk-lk-menu-title{
+    #lk-lk-menu-title {
         font-size: 16px;
     }
 
@@ -2701,7 +2700,7 @@ ul.active {
         font-size: 14px;
     }
 
-    .lkm-item img{
+    .lkm-item img {
         height: 20px;
     }
 
@@ -2709,10 +2708,10 @@ ul.active {
         font-size: 28px;
         font-weight: 600;
     }
+
     /*#lk-left.m #lk-left-menu .lklm-item::last-child {*/
     /*    background-color: #cc3300;*/
     /*}*/
-
     .lk-table {
         margin-bottom: 30px;
     }
@@ -2779,7 +2778,6 @@ ul.active {
     /*    font-size: 22px;*/
     /*    color: #cc9933;*/
     /*}*/
-
     button {
         border: none;
     }
@@ -2931,7 +2929,6 @@ ul.active {
     }
 
 
-
     .purchase {
         position: relative;
         margin-top: 62px;
@@ -2972,7 +2969,7 @@ ul.active {
         margin-bottom: 24px;
     }
 
-    .transfer-item a h3{
+    .transfer-item a h3 {
         font-size: 21px;
         /*color: lightskyblue;*/
         color: lightyellow;
@@ -2986,7 +2983,7 @@ ul.active {
         color: white;
     }
 
-    .transfer-address span{
+    .transfer-address span {
         font-size: 16px;
         font-weight: 900;
         /*color: lightgreen;*/
@@ -3032,7 +3029,7 @@ ul.active {
         margin-top: 30px;
     }
 
-    .transfer-option span{
+    .transfer-option span {
         text-decoration: underline;
         color: lightblue;
     }
@@ -3074,6 +3071,59 @@ ul.active {
     .error .advice {
         font-size: 20px;
         font-weight: 600;
+    }
+
+    .purchaseSwitcher {
+        height: 46px;
+        /*border: 1px solid white;*/
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .methods {
+        /*background-color: black;*/
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .method {
+        /*width: 50%;*/
+        padding: 6px 16px;
+        color: #222;
+    }
+
+    .method.usd {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        background-color: green;
+    }
+
+    .method.cwd {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        background-color: #0a00aa;
+    }
+
+    .method.cwd.active {
+        z-index: 3;
+        color: white;
+        background-color: #1F51FF;
+        /*-webkit-box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
+        /*-moz-box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
+        /*box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
+    }
+
+    .method.usd.active {
+        z-index: 3;
+        color: white;
+        background-color: lightgreen;
+        /*-webkit-box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
+        /*-moz-box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
+        /*box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
     }
 }
 
