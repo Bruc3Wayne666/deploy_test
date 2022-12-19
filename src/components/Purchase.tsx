@@ -383,11 +383,11 @@ const Purchase: FC = () => {
                     alert('Сессия истекла. Авторизуйтесь заново')
                     return window.location.href = '/profile'
                 }
-                setTransferList(res)
+                setTransferList({...res, result: res.result.reverse()})
             })
         const interval = setInterval(() => {
             getTransferList()
-                .then(res => setTransferList(res))
+                .then(res => setTransferList({...res, result: res.result.reverse()}))
         }, 20000)
         window.scrollTo(0, 0)
 
@@ -407,7 +407,7 @@ const Purchase: FC = () => {
                 method={method}
             />
             {
-                transferList?.result.reverse()
+                transferList?.result
                     .map(transfer => <TransferItem sendAddress={sendAddress} transfer={transfer}/>)
             }
         </div>
