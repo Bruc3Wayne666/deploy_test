@@ -8,7 +8,6 @@ import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
 
 
-
 interface TransferItemType {
     amount?: number
     loook_link: string
@@ -128,7 +127,7 @@ const TransferItem: FC<TransferItemProps> = ({transfer, sendAddress}) => {
 }
 
 
-const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
+const Info = React.memo(({createTransfer, method}: { createTransfer: () => void, method: string }) => {
     return (
         <div className='pur-info'>
 
@@ -164,7 +163,7 @@ const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
                 {/*    style={{marginRight: 14}}*/}
                 {/*/>*/}
                 <h1 className='header' style={{marginTop: -18}}>
-                    <br/><b style={{color: 'yellowgreen'}}>USDT TRC20</b>
+                    <br/><b style={{color: 'yellowgreen'}}>{method === 'usd' ? 'USDT TRC20' : 'CWD'}</b>
                 </h1>
             </div>
 
@@ -181,7 +180,13 @@ const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
                     style={{marginRight: 14}}
                 />
 
-                <a href='https://www.bestchange.ru/qiwi-to-tether-trc20.html'>
+                <a
+                    href={
+                        method === 'usd'
+                            ? 'https://www.bestchange.ru/qiwi-to-tether-trc20.html'
+                            : 'https://cwd.global/finance-dashboard'
+                    }
+                >
                     <h3 className='exchanger-list'><b style={{color: 'lightgreen'}}>Список обменников</b></h3>
                 </a>
             </div>
@@ -243,9 +248,8 @@ const Info = React.memo(({createTransfer}: { createTransfer: () => void }) => {
 })
 
 
-const PurchaseMethod: FC = () => {
+const PurchaseMethod: FC<any> = ({handleChangeMethod, method}: {handleChangeMethod: (val: string) => any, method: string}) => {
     // const [purchase, setPurchase] = useState('usd')
-    const [method, setMethod] = useState(false)
 
     return (
         <div className="purchaseSwitcher">
@@ -265,17 +269,38 @@ const PurchaseMethod: FC = () => {
                 {/*</div>*/}
 
                 <Switch
+                    onChange={() => handleChangeMethod(method)}
                     width={104}
-                    onColor={'#00aa00'}
-                    offColor={'#000033'}
+                    offColor={'#00aa00'}
+                    onColor={'#000033'}
                     height={30}
                     handleDiameter={38}
-                    checkedIcon={<div style={{fontSize: 20, height: '100%', paddingLeft: 32, display: 'flex', alignItems: 'center', paddingTop: 2, fontWeight: 600, justifyContent: 'center', color: '#222'}}>USD</div>}
-                    uncheckedIcon={<div style={{fontSize: 20, height: '100%', paddingRight: 32, display: 'flex', alignItems: 'center', paddingTop: 2, fontWeight: 600,justifyContent: 'center'}}>CWD</div>}
-                    checkedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/usd.svg').default} alt={''}/></div>}
-                    uncheckedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
-                    onChange={() => setMethod(prevState => !prevState)}
-                    checked={method}
+                    uncheckedIcon={<div style={{
+                        fontSize: 20,
+                        height: '100%',
+                        paddingRight: 32,
+                        display: 'flex',
+                        alignItems: 'center',
+                        paddingTop: 2,
+                        fontWeight: 600,
+                        justifyContent: 'center',
+                        color: '#222'
+                    }}>USD</div>}
+                    checkedIcon={<div style={{
+                        fontSize: 20,
+                        height: '100%',
+                        paddingLeft: 32,
+                        display: 'flex',
+                        alignItems: 'center',
+                        paddingTop: 2,
+                        fontWeight: 600,
+                        justifyContent: 'center'
+                    }}>CWD</div>}
+                    uncheckedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/usd.svg').default}
+                                                                          alt={''}/></div>}
+                    checkedHandleIcon={<div style={{height: '100%'}}><img
+                        src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
+                    checked={method !== 'usd'}
                 />
             </div>
         </div>
@@ -286,6 +311,7 @@ const PurchaseMethod: FC = () => {
 const Purchase: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const [transferList, setTransferList] = useState<TransferListType>()
+    const [method, setMethod] = useState('usd')
     const dispatch = useAppDispatch()
 
     const [profile, setUserInfo] = useState<IProfileState>({
@@ -293,6 +319,11 @@ const Purchase: FC = () => {
         message: null,
         result: null,
     })
+
+    const handleChangeMethod = (val: string) => {
+        if (val === 'cwd') return setMethod('usd')
+        return setMethod('cwd')
+    }
 
     const sendAddress = (address: string) => {
         axios.post(`${process.env.REACT_APP_BASE_URL}/send_adress`, {
@@ -367,8 +398,14 @@ const Purchase: FC = () => {
 
     return (
         <div className='purchase'>
-            <PurchaseMethod/>
-            <Info createTransfer={createTransfer}/>
+            <PurchaseMethod
+                method={method}
+                handleChangeMethod={handleChangeMethod}
+            />
+            <Info
+                createTransfer={createTransfer}
+                method={method}
+            />
             {
                 transferList?.result.reverse()
                     .map(transfer => <TransferItem sendAddress={sendAddress} transfer={transfer}/>)
