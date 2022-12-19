@@ -265,11 +265,13 @@ const PurchaseMethod: FC = () => {
                 {/*</div>*/}
 
                 <Switch
-                    width={100}
+                    width={104}
                     onColor={'#00aa00'}
                     offColor={'#000033'}
-                    checkedIcon={<div style={{fontSize: 20, height: '100%', paddingLeft: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#222'}}>USD</div>}
-                    uncheckedIcon={<div style={{fontSize: 20, height: '100%', paddingRight: 32, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>CWD</div>}
+                    height={30}
+                    handleDiameter={38}
+                    checkedIcon={<div style={{fontSize: 20, height: '100%', paddingLeft: 32, display: 'flex', alignItems: 'center', paddingTop: 2, fontWeight: 600, justifyContent: 'center', color: '#222'}}>USD</div>}
+                    uncheckedIcon={<div style={{fontSize: 20, height: '100%', paddingRight: 32, display: 'flex', alignItems: 'center', paddingTop: 2, fontWeight: 600,justifyContent: 'center'}}>CWD</div>}
                     checkedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/usd.svg').default} alt={''}/></div>}
                     uncheckedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
                     onChange={() => setMethod(prevState => !prevState)}
