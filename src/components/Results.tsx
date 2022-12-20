@@ -218,12 +218,12 @@ const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     return (
         <div id="two-right">
 
-            <PopEvent
-                handleSetCurrentGame={handleSetCurrentGame}
-                handleChangeShowModal={handleChangeShowModal}
-                handleSetCurrentBet={handleSetCurrentBet}
-            />
-
+            {/*<PopEvent*/}
+            {/*    handleSetCurrentGame={handleSetCurrentGame}*/}
+            {/*    handleChangeShowModal={handleChangeShowModal}*/}
+            {/*    handleSetCurrentBet={handleSetCurrentBet}*/}
+            {/*/>*/}
+            <br/>
             <div id="right-col-menu">
                 {
                     Object.keys(SPORTS)
@@ -772,7 +772,8 @@ const Results: FC<any> = () => {
                                                 src={require('../assets/svg/unfounded.svg').default}
                                                 alt="-_-"
                                             />
-                                            <h3 style={{color: '#888', marginTop: 20}}>Не найдено матчей по вашим критериям</h3>
+                                            <h3 style={{color: '#888', marginTop: 20}}>Не найдено матчей по вашим
+                                                критериям</h3>
                                         </div>
                                     </div>
                                     :
