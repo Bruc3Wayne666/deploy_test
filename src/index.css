@@ -1083,6 +1083,8 @@ header {
 .tocir-results {
     width: 10%;
     text-align: right;
+    display: flex;
+    justify-content: center;
     color: #CC9933;
     margin-right: 2%;
 }
@@ -2859,6 +2861,11 @@ ul.active {
 
     .tocir-results {
         font-size: 12px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        /*flex-direction: row;*/
+        /*flex: 1;*/
     }
 
     .torir-time {
