@@ -955,9 +955,17 @@ header {
     align-items: center;
     cursor: pointer;
     height: 60px;
+    width: 80px;
+    position: relative;
+    /*z-index: 9999;*/
+    /*overflow-y: hidden;*/
 }
 
 .frb-one-opts {
+    position: absolute;
+    /*top: 100%;*/
+    z-index: 99999;
+    /*overflow-y: hidden;*/
     cursor: pointer;
     font-size: 9px;
     background-color: black;
@@ -968,7 +976,10 @@ header {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     text-align: center;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+    justify-content: center;
 }
 
 .frb-one-opt:hover {
@@ -2610,6 +2621,13 @@ ul.active {
     .fr-bttns {
         width: 100%;
         margin-bottom: 36px;
+        /*position: relative;*/
+    }
+
+    .fr-bttns .is-open {
+        /*position: absolute;*/
+        /*bottom: 400px;*/
+        /*overflow-y: hidden;*/
     }
 
     .fr-ticks {
