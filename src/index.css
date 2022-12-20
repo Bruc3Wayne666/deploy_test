@@ -2321,6 +2321,10 @@ ul.active {
     margin-bottom: 40px;
 }
 
+.transfer-item input:focus {
+    border: 1px solid #cc9933;
+}
+
 .transfer-item h3 b {
     color: white;
 }
@@ -3170,6 +3174,10 @@ ul.active {
         /*-webkit-box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
         /*-moz-box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
         /*box-shadow: 0px 0px 6px 3px rgba(45, 255, 196, 1);*/
+    }
+
+    .transfer-item input {
+        width: 100%;
     }
 }
 

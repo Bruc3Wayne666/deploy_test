@@ -223,7 +223,8 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
                         padding: '12px 12px',
                         borderRadius: 8,
                         border: 'none',
-                        outline: 'none'
+                        outline: 'none',
+                        marginBottom: 10
                 }}
                 >
                     Я пополнил
