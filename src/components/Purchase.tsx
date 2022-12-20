@@ -276,6 +276,8 @@ const Info = React.memo(({createTransfer, method}: { createTransfer: () => void,
                 </h1>
             </div>
 
+            <br/>
+
             <div
                 style={{
                     display: 'flex',
@@ -300,6 +302,8 @@ const Info = React.memo(({createTransfer, method}: { createTransfer: () => void,
                 </a>
             </div>
 
+            <br/>
+
             <div
                 style={{
                     display: 'flex',
@@ -315,6 +319,7 @@ const Info = React.memo(({createTransfer, method}: { createTransfer: () => void,
                 <h3 style={{marginTop: 8}}>Оплата будет засчитана после 1 подтверждения сетью</h3>
             </div>
 
+            <br/>
 
             <div
                 style={{
@@ -331,6 +336,8 @@ const Info = React.memo(({createTransfer, method}: { createTransfer: () => void,
                 <h3 style={{marginTop: 6}}>Для каждого пополнения создавайте новый счёт</h3>
             </div>
 
+            <br/>
+
             <div
                 style={{
                     display: 'flex',
@@ -345,6 +352,8 @@ const Info = React.memo(({createTransfer, method}: { createTransfer: () => void,
                 />
                 <h3 style={{marginTop: 8}}>Не бойтесь, поддержка сайта вас не оставит</h3>
             </div>
+
+            <br/>
 
             <button
                 className='create'

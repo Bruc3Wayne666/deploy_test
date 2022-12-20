@@ -637,6 +637,7 @@ header {
     color: #E6E6E6;
     border-radius: 5px;
     margin-bottom: 5px;
+    margin-top: -7px;
 }
 
 .toc-title .global-ico {
@@ -661,6 +662,7 @@ header {
 
 .table-one-cat .toc-item:last-child {
     border: none;
+    /*margin-bottom: 0;*/
 }
 
 .toc-i-left-side {
@@ -2376,7 +2378,7 @@ ul.active {
 }
 
 .pur-info .exchanger-list {
-    margin-top: 14px;
+    margin-top: 13px;
     font-size: 18px;
     color: white;
 }
