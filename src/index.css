@@ -2754,6 +2754,18 @@ ul.active {
         height: 20px;
     }
 
+    .all-pop-sob {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 14px;
+    }
+
+    .all-pop-sob .global-ico {
+        width: 10px;
+        margin-left: 8px;
+    }
+
     #lk-bal {
         font-size: 28px;
         font-weight: 600;

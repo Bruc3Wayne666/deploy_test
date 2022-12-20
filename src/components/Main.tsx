@@ -821,7 +821,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                         </div>
                 }
             </div>
-            <div className="all-pop-sob">еще {
+            <div className="all-pop-sob">ещё {
                 //@ts-ignore
                 popEvent?.kot_count} котировок
                 <div className="global-ico gi-arrow-right"/>
