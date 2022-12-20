@@ -102,28 +102,34 @@ const Header: FC = () => {
                     <div className="mhslm-one">
                         <div className="mhslmo-wr">
                             <div className="global-ico gi-phone"/>
-                            <div className="mhslmo-text">
-                                <h3>Новым игрокам в приложении</h3>
-                                <h4>2 000 <div className="global-ico gi-coin-w"/></h4>
-                            </div>
+                            <Link to={'profile'}>
+                                <div className="mhslmo-text">
+                                    <h3>Новым игрокам в приложении</h3>
+                                    <h4>2 000 <div className="global-ico gi-coin-w"/></h4>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                     <div className="mhslm-one">
                         <div className="mhslmo-wr">
                             <div className="global-ico gi-gift"/>
-                            <div className="mhslmo-text">
-                                <h3>Бонус всем новым клиентам</h3>
-                                <h4>до 15 000 <div className="global-ico gi-coin-w"/></h4>
-                            </div>
+                            <Link to={'profile'}>
+                                <div className="mhslmo-text">
+                                    <h3>Бонус всем новым клиентам</h3>
+                                    <h4>до 15 000 <div className="global-ico gi-coin-w"/></h4>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                     <div className="mhslm-one">
                         <div className="mhslmo-wr">
                             <div className="global-ico gi-vip"/>
-                            <div className="mhslmo-text">
-                                <h3>VIP-кешбек</h3>
-                                <h4>до 5% каждый месяц</h4>
-                            </div>
+                            <Link to={'vip'}>
+                                <div className="mhslmo-text">
+                                    <h3>VIP-кешбек</h3>
+                                    <h4>до 5% каждый месяц</h4>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
