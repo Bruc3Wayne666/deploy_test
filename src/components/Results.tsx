@@ -204,50 +204,49 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     )
 }
 
-const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
-    // const [sportList, setSportList] = useState<any>({})
-    //
-    // useEffect(() => {
-    //     const fetchSportList = async () => {
-    //         const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-    //         setSportList(data)
-    //     }
-    //     fetchSportList()
-    // }, [])
-
-    return (
-        <div id="two-right">
-
-            {/*<PopEvent*/}
-            {/*    handleSetCurrentGame={handleSetCurrentGame}*/}
-            {/*    handleChangeShowModal={handleChangeShowModal}*/}
-            {/*    handleSetCurrentBet={handleSetCurrentBet}*/}
-            {/*/>*/}
-            <br/>
-            <div id="right-col-menu">
-                {
-                    Object.keys(SPORTS)
-                        .map(sportGame => {
-                            if (sportGame !== 'all') {
-                                return (
-                                    <div className="one-rcm-menu">
-                                        {/*<div className="global-ico gi-football">*/}
-                                        <img src={require(`../assets/images/${sportGame}.png`)} height={20}
-                                             alt={sportGame} style={{marginRight: 12}}/>
-                                        {/*</div>*/}
-                                        <Link to={`/${sportGame}`}
-                                              className="rcm-title">{
-                                            //@ts-ignore
-                                            SPORTS[sportGame].ru_name}</Link>
-                                    </div>
-                                )
-                            }
-                        })
-                }
-            </div>
-        </div>
-    )
-}
+// const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
+//     // const [sportList, setSportList] = useState<any>({})
+//     //
+//     // useEffect(() => {
+//     //     const fetchSportList = async () => {
+//     //         const {data} = await axios.get('http://gpbetapi.ru/sport_list')
+//     //         setSportList(data)
+//     //     }
+//     //     fetchSportList()
+//     // }, [])
+//
+//     return (
+//         <div id="two-right">
+//
+//             <PopEvent
+//                 handleSetCurrentGame={handleSetCurrentGame}
+//                 handleChangeShowModal={handleChangeShowModal}
+//                 handleSetCurrentBet={handleSetCurrentBet}
+//             />
+//             <div id="right-col-menu">
+//                 {
+//                     Object.keys(SPORTS)
+//                         .map(sportGame => {
+//                             if (sportGame !== 'all') {
+//                                 return (
+//                                     <div className="one-rcm-menu">
+//                                         {/*<div className="global-ico gi-football">*/}
+//                                         <img src={require(`../assets/images/${sportGame}.png`)} height={20}
+//                                              alt={sportGame} style={{marginRight: 12}}/>
+//                                         {/*</div>*/}
+//                                         <Link to={`/${sportGame}`}
+//                                               className="rcm-title">{
+//                                             //@ts-ignore
+//                                             SPORTS[sportGame].ru_name}</Link>
+//                                     </div>
+//                                 )
+//                             }
+//                         })
+//                 }
+//             </div>
+//         </div>
+//     )
+// }
 
 const LeagueItem: FC<any> = ({filter, result}) => {
     const {league} = filter
@@ -566,22 +565,22 @@ const Results: FC<any> = () => {
         const {result} = useAppSelector(state => state.gameReducer)
         const [leagueList, setLeagueList] = useState({})
         const dispatch = useAppDispatch()
-        const {session} = useAppSelector(state => state.authReducer)
-        const [profile, setUserInfo] = useState<IProfileState>({
-            error: false,
-            message: null,
-            result: null,
-        })
+        // const {session} = useAppSelector(state => state.authReducer)
+        // const [profile, setUserInfo] = useState<IProfileState>({
+        //     error: false,
+        //     message: null,
+        //     result: null,
+        // })
         const [isLoading, setIsLoading] = useState(false)
         const [search, setSearch] = useState('')
-        const [showModal, setShowModal] = useState(false)
-        const [currentGame, setCurrentGame] = useState<IGame | null>(null)
+        // const [showModal, setShowModal] = useState(false)
+        // const [currentGame, setCurrentGame] = useState<IGame | null>(null)
         const navigate = useNavigate()
-        const [currentBet, setCurrentBet] = useState({
-            name: '',
-            kf: 0,
-            id: 0
-        })
+        // const [currentBet, setCurrentBet] = useState({
+        //     name: '',
+        //     kf: 0,
+        //     id: 0
+        // })
         const [params, setParams] = useState({
             sport_name: 'all',
             game_status: 'all',
@@ -636,22 +635,22 @@ const Results: FC<any> = () => {
             [search]
         )
 
-        const handleChangeShowModal = (value: boolean) => {
-            setShowModal(value)
-        }
+        // const handleChangeShowModal = (value: boolean) => {
+        //     setShowModal(value)
+        // }
+        //
+        // const handleSetCurrentGame = (bid: IGame) => {
+        //     setCurrentGame({...bid})
+        // }
+        //
+        // const handleSetCurrentBet = ({name, kf, id}: { name: string, kf: number, id: number }) => {
+        //     setCurrentBet({name, kf, id})
+        // }
 
-        const handleSetCurrentGame = (bid: IGame) => {
-            setCurrentGame({...bid})
-        }
 
-        const handleSetCurrentBet = ({name, kf, id}: { name: string, kf: number, id: number }) => {
-            setCurrentBet({name, kf, id})
-        }
-
-
-        const fetchUserInfo = useCallback(async (session: string) => {
-            return await ApiService.getProfile(session)
-        }, [session])
+        // const fetchUserInfo = useCallback(async (session: string) => {
+        //     return await ApiService.getProfile(session)
+        // }, [session])
 
         const fetchLeagueList = useCallback(async () => {
             const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
@@ -663,12 +662,12 @@ const Results: FC<any> = () => {
         }, [params])
 
 
-        useEffect(() => {
-            if (session) {
-                fetchUserInfo(session)
-                    .then(res => setUserInfo(res))
-            }
-        }, [session])
+        // useEffect(() => {
+        //     if (session) {
+        //         fetchUserInfo(session)
+        //             .then(res => setUserInfo(res))
+        //     }
+        // }, [session])
 
         useEffect(() => {
             setIsLoading(true)
@@ -732,17 +731,17 @@ const Results: FC<any> = () => {
                     </div>
                     <div id="table-main">
 
-                        {
-                            currentGame && <ModalForm
-                                handleChangeShowModal={handleChangeShowModal}
-                                showModal={showModal}
-                                currentGame={currentGame}
-                                bet={currentBet}
-                                user={profile}
-                                //@ts-ignore
-                                session={session}
-                            />
-                        }
+                        {/*{*/}
+                        {/*    currentGame && <ModalForm*/}
+                        {/*        handleChangeShowModal={handleChangeShowModal}*/}
+                        {/*        showModal={showModal}*/}
+                        {/*        currentGame={currentGame}*/}
+                        {/*        bet={currentBet}*/}
+                        {/*        user={profile}*/}
+                        {/*        //@ts-ignore*/}
+                        {/*        session={session}*/}
+                        {/*    />*/}
+                        {/*}*/}
 
                         <Filter
                             handleSearchChange={handleSearchChange}
@@ -802,11 +801,11 @@ const Results: FC<any> = () => {
                         }
                     </div>
                 </div>
-                <RightBar
-                    handleSetCurrentGame={handleSetCurrentGame}
-                    handleChangeShowModal={handleChangeShowModal}
-                    handleSetCurrentBet={handleSetCurrentBet}
-                />
+                {/*<RightBar*/}
+                {/*    handleSetCurrentGame={handleSetCurrentGame}*/}
+                {/*    handleChangeShowModal={handleChangeShowModal}*/}
+                {/*    handleSetCurrentBet={handleSetCurrentBet}*/}
+                {/*/>*/}
             </div>
         );
     }
