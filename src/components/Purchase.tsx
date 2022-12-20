@@ -24,10 +24,11 @@ interface TransferListType {
 
 interface TransferItemProps {
     transfer: TransferItemType,
-    sendAddress: (address: string) => void
+    sendAddress?: (address: string) => void,
+    handlePress?: () => void,
 }
 
-const TransferItem: FC<TransferItemProps> = ({transfer, sendAddress}) => {
+const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
     const {
         amount,
         remainder_time,
@@ -111,7 +112,7 @@ const TransferItem: FC<TransferItemProps> = ({transfer, sendAddress}) => {
                     style={{marginRight: 14}}
                 />
                 <h3
-                    onClick={() => sendAddress(wallet)}
+                    onClick={() => sendAddress && sendAddress(wallet)}
                     style={{
                         cursor: 'pointer',
                         marginTop: 10
@@ -120,6 +121,113 @@ const TransferItem: FC<TransferItemProps> = ({transfer, sendAddress}) => {
                 >
                     <span>Выслать адрес на почту</span>
                 </h3>
+            </div>
+
+        </div>
+    )
+}
+
+const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
+    const {
+        amount,
+        remainder_time,
+        loook_link,
+        status,
+        wallet,
+        iden
+    } = transfer
+    const [account, setAccount] = useState('')
+
+    // const address = useRef(null)
+
+    return (
+        <div className='transfer-item'>
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <h4>Идентификатор пополнения #{iden}</h4>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    src={require('../assets/images/purchase/exchange.svg').default}
+                    alt=""
+                    height={26}
+                    style={{marginRight: 14}}
+                />
+                <a style={{marginTop: 20}} href={loook_link}><h3>Сайт пополнения</h3></a>
+            </div>
+
+            {/*{*/}
+            {/*    status === 'waiting'*/}
+            {/*        ? <h3>Адрес актуален: <b style={{color: 'yellow'}}>{Math.floor(remainder_time / 60)}</b> минут</h3>*/}
+            {/*        : status === 'finish'*/}
+            {/*            ? <h3>Пополнено на <b>{amount}</b></h3>*/}
+            {/*            :*/}
+            {/*            <div*/}
+            {/*                style={{*/}
+            {/*                    display: 'flex',*/}
+            {/*                    alignItems: 'center',*/}
+            {/*                }}*/}
+            {/*            >*/}
+            {/*                <img*/}
+            {/*                    src={require('../assets/images/purchase/times.svg').default}*/}
+            {/*                    alt=""*/}
+            {/*                    height={26}*/}
+            {/*                    style={{marginRight: 14}}*/}
+            {/*                />*/}
+            {/*                <h3 style={{marginTop: 18}}>Адрес не актуален (просрочен)</h3>*/}
+            {/*            </div>*/}
+            {/*}*/}
+            <h3>Переведите средства на аккаунт:</h3>
+            <h3
+                className='transfer-address'
+                onClick={() => {
+                    navigator.clipboard.writeText(wallet)
+                        .then(() => alert('Аккаунт скопирован в буфер обмена'))
+                }}
+            >
+                <span style={{fontSize: 24}}>BEBRA</span>
+            </h3>
+
+            <br/>
+            <p>Введите аккаунт с которого пополняли</p>
+            <input
+                onChange={e => setAccount(e.target.value)}
+                placeholder={account === '' ? 'Введите аккаунт' : 'none'}
+                type="text"
+                value={account}
+            />
+
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
+            >
+                <button
+                    onClick={() => {
+                        if (account === '') return alert('Введите аккаунт')
+                        return alert('Какое-то действие')
+                    }}
+                    style={{
+                        backgroundColor: '#cc9933',
+                        padding: '12px 12px',
+                        borderRadius: 8,
+                        border: 'none',
+                        outline: 'none'
+                }}
+                >
+                    Я пополнил
+                </button>
             </div>
 
         </div>
@@ -241,14 +349,17 @@ const Info = React.memo(({createTransfer, method}: { createTransfer: () => void,
                 className='create'
                 onClick={createTransfer}
             >
-                Создать кошелёк
+                {method === 'usd' ? 'Создать кошелёк USDT' : 'Пополнить в CWD'}
             </button>
         </div>
     )
 })
 
 
-const PurchaseMethod: FC<any> = ({handleChangeMethod, method}: {handleChangeMethod: (val: string) => any, method: string}) => {
+const PurchaseMethod: FC<any> = ({
+                                     handleChangeMethod,
+                                     method
+                                 }: { handleChangeMethod: (val: string) => any, method: string }) => {
     // const [purchase, setPurchase] = useState('usd')
 
     return (
@@ -296,8 +407,9 @@ const PurchaseMethod: FC<any> = ({handleChangeMethod, method}: {handleChangeMeth
                         fontWeight: 600,
                         justifyContent: 'center'
                     }}>CWD</div>}
-                    uncheckedHandleIcon={<div style={{height: '100%'}}><img src={require('../assets/svg/usd.svg').default}
-                                                                          alt={''}/></div>}
+                    uncheckedHandleIcon={<div style={{height: '100%'}}><img
+                        src={require('../assets/svg/usd.svg').default}
+                        alt={''}/></div>}
                     checkedHandleIcon={<div style={{height: '100%'}}><img
                         src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
                     checked={method !== 'usd'}
@@ -310,7 +422,8 @@ const PurchaseMethod: FC<any> = ({handleChangeMethod, method}: {handleChangeMeth
 
 const Purchase: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
-    const [transferList, setTransferList] = useState<TransferListType>()
+    const [transferListUSDT, setTransferListUSDT] = useState<TransferListType>()
+    const [transferListCWD, setTransferListCWD] = useState<TransferListType>()
     const [method, setMethod] = useState('usd')
     const dispatch = useAppDispatch()
 
@@ -365,7 +478,7 @@ const Purchase: FC = () => {
             alert('Кошелёк уже создан')
         } else {
             // @ts-ignore
-            setTransferList(prevState => ({...prevState, result: [data, ...prevState?.result]}))
+            setTransferListUSDT(prevState => ({...prevState, result: [data, ...prevState?.result]}))
         }
     }, [session])
 
@@ -383,11 +496,11 @@ const Purchase: FC = () => {
                     alert('Сессия истекла. Авторизуйтесь заново')
                     return window.location.href = '/profile'
                 }
-                setTransferList({...res, result: res.result.reverse()})
+                setTransferListUSDT({...res, result: res.result.reverse()})
             })
         const interval = setInterval(() => {
             getTransferList()
-                .then(res => setTransferList({...res, result: res.result.reverse()}))
+                .then(res => setTransferListUSDT({...res, result: res.result.reverse()}))
         }, 20000)
         window.scrollTo(0, 0)
 
@@ -407,8 +520,12 @@ const Purchase: FC = () => {
                 method={method}
             />
             {
-                transferList?.result
-                    .map(transfer => <TransferItem sendAddress={sendAddress} transfer={transfer}/>)
+                method === 'usd'
+                    ? transferListUSDT?.result
+                        .map(transfer => <TransferItemUSDT sendAddress={sendAddress} transfer={transfer}/>)
+                    // : transferListCWD?.result
+                    : transferListUSDT?.result
+                        .map(transfer => <TransferItemCWD transfer={transfer}/>)
             }
         </div>
     );

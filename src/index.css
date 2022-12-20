@@ -2309,6 +2309,18 @@ ul.active {
     margin-bottom: 12px;
 }
 
+.transfer-item input {
+    border: none;
+    outline: none;
+    background-color: #222;
+    font-size: 22px;
+    height: 40px;
+    border-radius: 8px;
+    width: 70%;
+    margin-top: 8px;
+    margin-bottom: 40px;
+}
+
 .transfer-item h3 b {
     color: white;
 }
