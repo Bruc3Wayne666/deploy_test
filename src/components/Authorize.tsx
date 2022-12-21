@@ -61,8 +61,7 @@ const Authorize: FC = () => {
         } else if (type === 'register') {
             dispatch(register(email))
             setType('login')
-            // alert.show('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
-            alert('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
+            setEmail('')
         }
     }
 
