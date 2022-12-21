@@ -359,7 +359,7 @@ const Info = React.memo(
                                 .then(() => alert('Аккаунт скопирован в буфер обмена'))
                         }}
                     >
-                        <span style={{fontSize: 24}}>timurabs1</span>
+                        <span style={{fontSize: 24}}>green-price</span>
                     </h3>
 
                     <br/>
