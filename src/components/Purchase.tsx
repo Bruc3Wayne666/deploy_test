@@ -3,37 +3,26 @@ import axios from "axios";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
-import results from "./Results";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
-import account from "./Account";
 
 
-interface TransferItemTypeUSDT {
-    amount?: number
-    loook_link: string
-    remainder_time: number
+interface TransferItemType {
+    amount: number
+    loook_link?: string
+    remainder_time?: number
     status: string
-    wallet: string
-    iden: number
-}
-
-interface TransferItemTypeCWD {
-    amount?: number
-    loook_link: string
-    remainder_time: number
-    status: string
-    wallet: string
+    wallet?: string
     iden: number
 }
 
 interface TransferListType {
     count: number
-    result: TransferItemTypeUSDT[]
+    result: TransferItemType[]
 }
 
 interface TransferItemProps {
-    transfer: TransferItemTypeUSDT,
+    transfer: TransferItemType,
     sendAddress?: (address: string) => void,
     handlePress?: () => void,
 }
@@ -47,8 +36,6 @@ const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
         wallet,
         iden
     } = transfer
-
-    // const address = useRef(null)
 
     return (
         <div className='transfer-item'>
@@ -73,12 +60,12 @@ const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
                     height={26}
                     style={{marginRight: 14}}
                 />
-                <a style={{marginTop: 20}} href={loook_link}><h3>Отслеживать пополнение</h3></a>
+                <a style={{marginTop: 20}} href={loook_link && loook_link}><h3>Отслеживать пополнение</h3></a>
             </div>
 
             {
                 status === 'waiting'
-                    ? <h3>Адрес актуален: <b style={{color: 'yellow'}}>{Math.floor(remainder_time / 60)}</b> минут</h3>
+                    ? <h3>Адрес актуален: <b style={{color: 'yellow'}}>{Math.floor(remainder_time ? (remainder_time / 60) : 0)}</b> минут</h3>
                     : status === 'finish'
                         ? <h3>Пополнено на <b>{amount}</b></h3>
                         :
@@ -102,7 +89,7 @@ const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
                 // ref={address}
                 className='transfer-address'
                 onClick={() => {
-                    navigator.clipboard.writeText(wallet)
+                    navigator.clipboard.writeText(wallet ? wallet : '')
                         .then(() => alert('Адрес скопирован в буфер обмена'))
                 }}
             >
@@ -122,7 +109,7 @@ const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
                     style={{marginRight: 14}}
                 />
                 <h3
-                    onClick={() => sendAddress && sendAddress(wallet)}
+                    onClick={() => sendAddress && sendAddress(wallet ? wallet : '')}
                     style={{
                         cursor: 'pointer',
                         marginTop: 10
@@ -140,14 +127,9 @@ const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
 const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
     const {
         amount,
-        remainder_time,
-        loook_link,
-        status,
-        wallet,
-        iden
+        iden,
+        status
     } = transfer
-    const [account, setAccount] = useState('')
-
 
     return (
         <div className='transfer-item'>
@@ -166,13 +148,11 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
                     alignItems: 'center',
                 }}
             >
-                <img
-                    src={require('../assets/images/purchase/exchange.svg').default}
-                    alt=""
-                    height={26}
-                    style={{marginRight: 14}}
-                />
-                <a style={{marginTop: 20}} href={loook_link}><h3>Сайт пополнения</h3></a>
+                <h3>
+                    Успешно зачислено на баланс:
+                    <p/>
+                    <b style={{color: 'gold'}}>{amount}</b>
+                </h3>
             </div>
 
 
@@ -534,7 +514,7 @@ const Purchase: FC = () => {
     }, [session])
 
     const createTransferUSDT = useCallback(async () => {
-        const {data} = await axios.post<TransferItemTypeUSDT | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
+        const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
 
         if (data === 'session is not active') {
             dispatch(logout())
@@ -551,10 +531,11 @@ const Purchase: FC = () => {
     }, [session])
 
     const createTransferCWD = useCallback(async () => {
-        const {data} = await axios.post<TransferItemTypeCWD | string>(`${process.env.REACT_APP_BASE_URL}/added_cwd`, {
+        const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/added_cwd`, {
             user_id: session,
             user_cwd_account: account
         })
+        return data
         // setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
     }, [session, account])
 
