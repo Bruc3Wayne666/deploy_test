@@ -6,9 +6,19 @@ import {ApiService} from "../api";
 import results from "./Results";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
+import account from "./Account";
 
 
-interface TransferItemType {
+interface TransferItemTypeUSDT {
+    amount?: number
+    loook_link: string
+    remainder_time: number
+    status: string
+    wallet: string
+    iden: number
+}
+
+interface TransferItemTypeCWD {
     amount?: number
     loook_link: string
     remainder_time: number
@@ -19,11 +29,11 @@ interface TransferItemType {
 
 interface TransferListType {
     count: number
-    result: TransferItemType[]
+    result: TransferItemTypeUSDT[]
 }
 
 interface TransferItemProps {
-    transfer: TransferItemType,
+    transfer: TransferItemTypeUSDT,
     sendAddress?: (address: string) => void,
     handlePress?: () => void,
 }
@@ -138,7 +148,6 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
     } = transfer
     const [account, setAccount] = useState('')
 
-    // const address = useRef(null)
 
     return (
         <div className='transfer-item'>
@@ -166,204 +175,247 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
                 <a style={{marginTop: 20}} href={loook_link}><h3>Сайт пополнения</h3></a>
             </div>
 
-            {/*{*/}
-            {/*    status === 'waiting'*/}
-            {/*        ? <h3>Адрес актуален: <b style={{color: 'yellow'}}>{Math.floor(remainder_time / 60)}</b> минут</h3>*/}
-            {/*        : status === 'finish'*/}
-            {/*            ? <h3>Пополнено на <b>{amount}</b></h3>*/}
-            {/*            :*/}
-            {/*            <div*/}
-            {/*                style={{*/}
-            {/*                    display: 'flex',*/}
-            {/*                    alignItems: 'center',*/}
-            {/*                }}*/}
-            {/*            >*/}
-            {/*                <img*/}
-            {/*                    src={require('../assets/images/purchase/times.svg').default}*/}
-            {/*                    alt=""*/}
-            {/*                    height={26}*/}
-            {/*                    style={{marginRight: 14}}*/}
-            {/*                />*/}
-            {/*                <h3 style={{marginTop: 18}}>Адрес не актуален (просрочен)</h3>*/}
-            {/*            </div>*/}
-            {/*}*/}
-            <h3>Переведите средства на аккаунт:</h3>
-            <h3
-                className='transfer-address'
-                onClick={() => {
-                    navigator.clipboard.writeText(wallet)
-                        .then(() => alert('Аккаунт скопирован в буфер обмена'))
-                }}
-            >
-                <span style={{fontSize: 24}}>BEBRA</span>
-            </h3>
-
-            <br/>
-            <p>Введите аккаунт с которого пополняли</p>
-            <input
-                onChange={e => setAccount(e.target.value)}
-                placeholder={account === '' ? 'Введите аккаунт' : 'none'}
-                type="text"
-                value={account}
-            />
-
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                <button
-                    onClick={() => {
-                        if (account === '') return alert('Введите аккаунт')
-                        return alert('Какое-то действие')
-                    }}
-                    style={{
-                        backgroundColor: '#cc9933',
-                        padding: '12px 12px',
-                        borderRadius: 8,
-                        border: 'none',
-                        outline: 'none',
-                        marginBottom: 10
-                }}
-                >
-                    Я пополнил
-                </button>
-            </div>
 
         </div>
     )
 }
 
 
-const Info = React.memo(({createTransfer, method}: { createTransfer: () => void, method: string }) => {
-    return (
-        <div className='pur-info'>
+const Info = React.memo(
+    ({
+         handleChangeAccount,
+         createTransfer,
+         method,
+         account
+     }:
+         {
+             handleChangeAccount: (v: string) => any,
+             createTransfer: () => any,
+             method: string,
+             account: string
+         }) => {
+        return method === 'usd' ? (
 
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
-            >
-                {/*<img*/}
-                {/*    src={require('../assets/images/purchase/cash.svg').default}*/}
-                {/*    alt=""*/}
-                {/*    height={26}*/}
-                {/*    style={{marginRight: 14}}*/}
-                {/*/>*/}
-                <h1 className='header'>Способ пополнения:</h1>
-            </div>
+            <div className='pur-info'>
 
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                    // border: '1px solid white',
-                    // marginTop: -8
-                }}
-            >
-                {/*<img*/}
-                {/*    src={require('../assets/images/purchase/dollar.svg').default}*/}
-                {/*    alt=""*/}
-                {/*    height={26}*/}
-                {/*    style={{marginRight: 14}}*/}
-                {/*/>*/}
-                <h1 className='header' style={{marginTop: -18}}>
-                    <br/><b style={{color: 'yellowgreen'}}>{method === 'usd' ? 'USDT TRC20' : 'CWD'}</b>
-                </h1>
-            </div>
-
-            <br/>
-
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <img
-                    src={require('../assets/images/purchase/exchanger.svg').default}
-                    alt=""
-                    height={26}
-                    style={{marginRight: 14}}
-                />
-
-                <a
-                    href={
-                        method === 'usd'
-                            ? 'https://www.bestchange.ru/qiwi-to-tether-trc20.html'
-                            : 'https://cwd.global/finance-dashboard'
-                    }
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
                 >
-                    <h3 className='exchanger-list'><b style={{color: 'lightgreen'}}>Список обменников</b></h3>
-                </a>
+                    <h1 className='header'>Способ пополнения:</h1>
+                </div>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <h1 className='header' style={{marginTop: -18}}>
+                        <br/><b style={{color: 'yellowgreen'}}>USDT TRC20</b>
+                    </h1>
+                </div>
+
+                <br/>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <img
+                        src={require('../assets/images/purchase/exchanger.svg').default}
+                        alt=""
+                        height={26}
+                        style={{marginRight: 14}}
+                    />
+
+                    <a
+                        href='https://www.bestchange.ru/qiwi-to-tether-trc20.html'
+                    >
+                        <h3 className='exchanger-list'><b style={{color: 'lightgreen'}}>Список обменников</b></h3>
+                    </a>
+                </div>
+
+                <br/>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <img
+                        src={require('../assets/images/purchase/clock.svg').default}
+                        alt=""
+                        height={26}
+                        style={{marginRight: 14}}
+                    />
+                    <h3 style={{marginTop: 8}}>Оплата будет засчитана после 1 подтверждения сетью</h3>
+                </div>
+
+                <br/>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <img
+                        src={require('../assets/images/purchase/account.svg').default}
+                        alt=""
+                        height={26}
+                        style={{marginRight: 14}}
+                    />
+                    <h3 style={{marginTop: 6}}>Для каждого пополнения создавайте новый счёт</h3>
+                </div>
+
+                <br/>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <img
+                        src={require('../assets/images/purchase/support.svg').default}
+                        alt=""
+                        height={26}
+                        style={{marginRight: 14}}
+                    />
+                    <h3 style={{marginTop: 8}}>Не бойтесь, поддержка сайта вас не оставит</h3>
+                </div>
+
+                <br/>
+
+                <button
+                    className='create'
+                    onClick={createTransfer}
+                >
+                    Создать кошелёк USDT
+                </button>
             </div>
+        ) : (
+            <div className='pur-info'>
 
-            <br/>
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <h1 className='header'>Способ пополнения:</h1>
+                </div>
 
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <img
-                    src={require('../assets/images/purchase/clock.svg').default}
-                    alt=""
-                    height={26}
-                    style={{marginRight: 14}}
-                />
-                <h3 style={{marginTop: 8}}>Оплата будет засчитана после 1 подтверждения сетью</h3>
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <h1 className='header' style={{marginTop: -18}}>
+                        <br/><b style={{color: 'yellowgreen'}}>CWD</b>
+                    </h1>
+                </div>
+
+                <br/>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <img
+                        src={require('../assets/images/purchase/exchanger.svg').default}
+                        alt=""
+                        height={26}
+                        style={{marginRight: 14}}
+                    />
+
+                    <a
+                        href='https://cwd.global/finance-dashboard'
+                    >
+                        <h3 className='exchanger-list'><b style={{color: 'lightgreen'}}>Сайт пополнения</b></h3>
+                    </a>
+                </div>
+
+                <br/>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <img
+                        src={require('../assets/images/purchase/support.svg').default}
+                        alt=""
+                        height={26}
+                        style={{marginRight: 14}}
+                    />
+                    <h3 style={{marginTop: 8}}>Не бойтесь, поддержка сайта вас не оставит</h3>
+                </div>
+
+                <br/>
+
+                <div className="transfer-item" style={{border: 'none'}}>
+                    <h3>Переведите средства на аккаунт:</h3>
+                    <h3
+                        className='transfer-address'
+                        onClick={() => {
+                            navigator.clipboard.writeText('timurabs1')
+                                .then(() => alert('Аккаунт скопирован в буфер обмена'))
+                        }}
+                    >
+                        <span style={{fontSize: 24}}>timurabs1</span>
+                    </h3>
+
+                    <br/>
+                    <p>Введите аккаунт с которого пополняли</p>
+                    <input
+                        onChange={e => handleChangeAccount(e.target.value)}
+                        placeholder={account === '' ? 'Введите аккаунт' : 'none'}
+                        type="text"
+                        value={account}
+                    />
+
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <button
+                            onClick={() => {
+                                if (account === '') return alert('Введите аккаунт')
+                                return createTransfer()
+                            }}
+                            style={{
+                                backgroundColor: '#cc9933',
+                                padding: '12px 12px',
+                                borderRadius: 8,
+                                border: 'none',
+                                outline: 'none',
+                                marginBottom: 10
+                            }}
+                        >
+                            Я пополнил
+                        </button>
+                    </div>
+                </div>
             </div>
-
-            <br/>
-
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <img
-                    src={require('../assets/images/purchase/account.svg').default}
-                    alt=""
-                    height={26}
-                    style={{marginRight: 14}}
-                />
-                <h3 style={{marginTop: 6}}>Для каждого пополнения создавайте новый счёт</h3>
-            </div>
-
-            <br/>
-
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <img
-                    src={require('../assets/images/purchase/support.svg').default}
-                    alt=""
-                    height={26}
-                    style={{marginRight: 14}}
-                />
-                <h3 style={{marginTop: 8}}>Не бойтесь, поддержка сайта вас не оставит</h3>
-            </div>
-
-            <br/>
-
-            <button
-                className='create'
-                onClick={createTransfer}
-            >
-                {method === 'usd' ? 'Создать кошелёк USDT' : 'Пополнить в CWD'}
-            </button>
-        </div>
-    )
-})
+        )
+    })
 
 
 const PurchaseMethod: FC<any> = ({
@@ -436,6 +488,7 @@ const Purchase: FC = () => {
     const [transferListCWD, setTransferListCWD] = useState<TransferListType>()
     const [method, setMethod] = useState('usd')
     const dispatch = useAppDispatch()
+    const [account, setAccount] = useState('')
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -446,6 +499,11 @@ const Purchase: FC = () => {
     const handleChangeMethod = (val: string) => {
         if (val === 'cwd') return setMethod('usd')
         return setMethod('cwd')
+    }
+
+    const handleChangeAccount = (val: string) => {
+        console.log(val)
+        setAccount(val)
     }
 
     const sendAddress = (address: string) => {
@@ -475,8 +533,8 @@ const Purchase: FC = () => {
         }
     }, [session])
 
-    const createTransfer = useCallback(async () => {
-        const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
+    const createTransferUSDT = useCallback(async () => {
+        const {data} = await axios.post<TransferItemTypeUSDT | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
 
         if (data === 'session is not active') {
             dispatch(logout())
@@ -492,11 +550,22 @@ const Purchase: FC = () => {
         }
     }, [session])
 
+    const createTransferCWD = useCallback(async () => {
+        const {data} = await axios.post<TransferItemTypeCWD | string>(`${process.env.REACT_APP_BASE_URL}/added_cwd`, {
+            user_id: session,
+            user_cwd_account: account
+        })
+        // setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
+    }, [session, account])
+
     const getTransferList = useCallback(async () => {
         if (!session) return null
-        const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/transfer_list`, {user_id: session})
+        const {data} = await axios.post(
+            `${process.env.REACT_APP_BASE_URL}/${method === 'usd' ? 'transfer_list' : 'transfers_cwd_list'}`,
+            {user_id: session}
+        )
         return data
-    }, [session])
+    }, [session, method])
 
     useEffect(() => {
         getTransferList()
@@ -506,17 +575,23 @@ const Purchase: FC = () => {
                     alert('Сессия истекла. Авторизуйтесь заново')
                     return window.location.href = '/profile'
                 }
-                setTransferListUSDT({...res, result: res.result.reverse()})
+                if (method === 'usd') return setTransferListUSDT({...res, result: res.result.reverse()})
+                else return setTransferListCWD({...res, result: res.result.reverse()})
             })
         const interval = setInterval(() => {
-            getTransferList()
-                .then(res => setTransferListUSDT({...res, result: res.result.reverse()}))
+            if (method === 'usd') {
+                getTransferList()
+                    .then(res => setTransferListUSDT({...res, result: res.result.reverse()}))
+            } else {
+                getTransferList()
+                    .then(res => setTransferListCWD({...res, result: res.result.reverse()}))
+            }
         }, 20000)
         window.scrollTo(0, 0)
 
 
         return () => clearInterval(interval)
-    }, [session])
+    }, [session, method])
 
 
     return (
@@ -526,16 +601,22 @@ const Purchase: FC = () => {
                 handleChangeMethod={handleChangeMethod}
             />
             <Info
-                createTransfer={createTransfer}
+                handleChangeAccount={handleChangeAccount}
+                createTransfer={method === 'usd' ? createTransferUSDT : createTransferCWD}
                 method={method}
+                account={account}
             />
             {
                 method === 'usd'
                     ? transferListUSDT?.result
-                        .map(transfer => <TransferItemUSDT sendAddress={sendAddress} transfer={transfer}/>)
-                    // : transferListCWD?.result
-                    : transferListUSDT?.result
-                        .map(transfer => <TransferItemCWD transfer={transfer}/>)
+                        .map(transfer => (<TransferItemUSDT
+                            sendAddress={sendAddress}
+                            transfer={transfer}
+                        />))
+                    : transferListCWD?.result
+                        .map(transfer => (<TransferItemCWD
+                            transfer={transfer}
+                        />))
             }
         </div>
     );
