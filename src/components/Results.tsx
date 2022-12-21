@@ -565,22 +565,9 @@ const Results: FC<any> = () => {
         const {result} = useAppSelector(state => state.gameReducer)
         const [leagueList, setLeagueList] = useState({})
         const dispatch = useAppDispatch()
-        // const {session} = useAppSelector(state => state.authReducer)
-        // const [profile, setUserInfo] = useState<IProfileState>({
-        //     error: false,
-        //     message: null,
-        //     result: null,
-        // })
         const [isLoading, setIsLoading] = useState(false)
         const [search, setSearch] = useState('')
-        // const [showModal, setShowModal] = useState(false)
-        // const [currentGame, setCurrentGame] = useState<IGame | null>(null)
         const navigate = useNavigate()
-        // const [currentBet, setCurrentBet] = useState({
-        //     name: '',
-        //     kf: 0,
-        //     id: 0
-        // })
         const [params, setParams] = useState({
             sport_name: 'all',
             game_status: 'all',
@@ -635,23 +622,6 @@ const Results: FC<any> = () => {
             [search]
         )
 
-        // const handleChangeShowModal = (value: boolean) => {
-        //     setShowModal(value)
-        // }
-        //
-        // const handleSetCurrentGame = (bid: IGame) => {
-        //     setCurrentGame({...bid})
-        // }
-        //
-        // const handleSetCurrentBet = ({name, kf, id}: { name: string, kf: number, id: number }) => {
-        //     setCurrentBet({name, kf, id})
-        // }
-
-
-        // const fetchUserInfo = useCallback(async (session: string) => {
-        //     return await ApiService.getProfile(session)
-        // }, [session])
-
         const fetchLeagueList = useCallback(async () => {
             const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
                 league_sport: params.sport_name,
@@ -660,14 +630,6 @@ const Results: FC<any> = () => {
             })
             return data
         }, [params])
-
-
-        // useEffect(() => {
-        //     if (session) {
-        //         fetchUserInfo(session)
-        //             .then(res => setUserInfo(res))
-        //     }
-        // }, [session])
 
         useEffect(() => {
             setIsLoading(true)
@@ -689,9 +651,7 @@ const Results: FC<any> = () => {
             return (
                 <div
                     style={{
-                        // height: window.innerWidth <= 1440 ? '80vh' : '',
                         marginTop: window.innerWidth > 1440 ? 160 : '60%',
-                        // border: '1px solid white',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -730,18 +690,6 @@ const Results: FC<any> = () => {
                         <div id="pt-stripe"/>
                     </div>
                     <div id="table-main">
-
-                        {/*{*/}
-                        {/*    currentGame && <ModalForm*/}
-                        {/*        handleChangeShowModal={handleChangeShowModal}*/}
-                        {/*        showModal={showModal}*/}
-                        {/*        currentGame={currentGame}*/}
-                        {/*        bet={currentBet}*/}
-                        {/*        user={profile}*/}
-                        {/*        //@ts-ignore*/}
-                        {/*        session={session}*/}
-                        {/*    />*/}
-                        {/*}*/}
 
                         <Filter
                             handleSearchChange={handleSearchChange}
@@ -801,11 +749,6 @@ const Results: FC<any> = () => {
                         }
                     </div>
                 </div>
-                {/*<RightBar*/}
-                {/*    handleSetCurrentGame={handleSetCurrentGame}*/}
-                {/*    handleChangeShowModal={handleChangeShowModal}*/}
-                {/*    handleSetCurrentBet={handleSetCurrentBet}*/}
-                {/*/>*/}
             </div>
         );
     }

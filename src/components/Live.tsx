@@ -13,7 +13,6 @@ import debounce from "lodash/debounce";
 import isEqual from "lodash/isEqual";
 import {ApiService} from "../api";
 import {getGames} from "../store/reducers/games/gameActions";
-import {log} from "util";
 import {useNavigate} from "react-router-dom";
 
 
@@ -88,27 +87,9 @@ const GameItem:
             <div className="tocir-results">{score}</div>
             <div className="torir-time">
                 <div className="global-ico gi-clock"/>
-                {/*{*/}
-                {/*    (Number(*/}
-                {/*        game*/}
-                {/*            .beautiful_time_start*/}
-                {/*            .split(' ')[0]*/}
-                {/*            .split('-')[2]*/}
-                {/*    ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :*/}
-                {/*        (Number(*/}
-                {/*            game*/}
-                {/*                .beautiful_time_start*/}
-                {/*                .split(' ')[0]*/}
-                {/*                .split('-')[2]*/}
-                {/*        ) - Number(currentDate.getDate())) === 1 ? 'Завтра в' :*/}
-                {/*            game*/}
-                {/*                .beautiful_time_start*/}
-                {/*                .split(' ')[0]*/}
-                {/*}*/}
 
                 Начался в
 
-                {/*<br style={{marginBottom: 8}}/>*/}
                 <br/>
 
                 {beautiful_time_start.split(' ')[1]}
@@ -175,7 +156,6 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
 }
 
 const Live = () => {
-    // const [sportList, setSportList] = useState<any>({})
     const {result} = useAppSelector(state => state.gameReducer)
     const [leagueList, setLeagueList] = useState({})
     const dispatch = useAppDispatch()
@@ -375,41 +355,7 @@ const Live = () => {
                                     </div>
                                 </div>
                                 :
-                                // (result === 1 && isEqual(params, stock)) ?
-                                //     <div
-                                //         style={{
-                                //             // height: window.innerWidth <= 1440 ? '80vh' : '',
-                                //             marginTop: window.innerWidth > 1440 ? 20 : '20%',
-                                //             // border: '1px solid white',
-                                //             display: 'flex',
-                                //             alignItems: 'center',
-                                //             justifyContent: 'center',
-                                //             padding: 16,
-                                //             flexDirection: 'column'
-                                //         }}>
-                                //         <p
-                                //             style={{
-                                //                 fontSize: 18
-                                //             }}
-                                //         >
-                                //             В данный момент нету идущих событий
-                                //         </p>
-                                //         <button
-                                //             onClick={() => navigate(-1)}
-                                //             style={{
-                                //                 marginTop: 12,
-                                //                 backgroundColor: '#cc9933',
-                                //                 padding: '8px 12px',
-                                //                 borderRadius: 8,
-                                //                 border: 'none',
-                                //                 cursor: 'pointer'
-                                //             }}
-                                //         >
-                                //             Вернутся назад
-                                //         </button>
-                                //     </div>
-                                //     :
-                                    <div className="table-one-cat">
+                                <div className="table-one-cat">
                                         {
                                             Object.keys(leagueList)
                                                 .map(sp => {

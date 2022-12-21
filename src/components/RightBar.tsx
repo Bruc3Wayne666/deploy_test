@@ -4,7 +4,6 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import axios from "axios";
 import {useAppSelector} from "../hooks/redux";
-import {login} from "../store/reducers/auth/authActions";
 
 export const RightBar: FC = () => {
     const [{result}, setUserInfo] = useState<IProfileState>({
