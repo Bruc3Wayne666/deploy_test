@@ -257,7 +257,7 @@ const Authorize: FC = () => {
                                             : 20
                             }}
                         >
-                            Забыли пароль? ---
+                            Забыли пароль?
                         </p>
 
                         {/*<p className='suggest-reg'>Ещё нету аккаунта? <span onClick={() => {*/}
