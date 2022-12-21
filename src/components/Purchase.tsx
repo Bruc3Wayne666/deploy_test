@@ -65,7 +65,8 @@ const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
 
             {
                 status === 'waiting'
-                    ? <h3>Адрес актуален: <b style={{color: 'yellow'}}>{Math.floor(remainder_time ? (remainder_time / 60) : 0)}</b> минут</h3>
+                    ? <h3>Адрес актуален: <b
+                        style={{color: 'yellow'}}>{Math.floor(remainder_time ? (remainder_time / 60) : 0)}</b> минут</h3>
                     : status === 'finish'
                         ? <h3>Пополнено на <b>{amount}</b></h3>
                         :
@@ -149,10 +150,11 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
                 }}
             >
                 <h3>
-                    Успешно зачислено на баланс:
+                    <p style={{marginBottom: 10}}>Успешно зачислено на баланс:</p>
                     <p/>
-                    <b style={{color: 'gold'}}>{amount}</b>
+                    <span style={{color: 'gold', fontWeight: 900}}>{amount}</span>
                 </h3>
+                <br/>
             </div>
 
 
@@ -283,7 +285,7 @@ const Info = React.memo(
                 </button>
             </div>
         ) : (
-            <div className='pur-info'>
+            <div className='pur-info' style={{paddingBottom: 0}}>
 
                 <div
                     style={{
@@ -386,7 +388,8 @@ const Info = React.memo(
                                 borderRadius: 8,
                                 border: 'none',
                                 outline: 'none',
-                                marginBottom: 10
+                                marginBottom: 10,
+                                cursor: 'pointer'
                             }}
                         >
                             Я пополнил
