@@ -26,7 +26,7 @@ export class ApiService {
         const {data} = await instance.post('new_user', {
             login: email
         })
-        if (data.user_id === 'We have user with this login') {
+        if (data.error) {
             alert('Такой пользователь уже существует. Если имеются какие-то проблемы, то обратитесть в тех. поддержку.')
         } else {
             alert('Мы выслали пароль на ваш email. Проверьте в разделе СПАМ')
