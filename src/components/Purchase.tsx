@@ -538,7 +538,7 @@ const Purchase: FC = () => {
             user_id: session,
             user_cwd_account: account
         })
-        return data
+        if (data === 'No new additions') return alert('Нету новых пополнений')
         // setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
     }, [session, account])
 
