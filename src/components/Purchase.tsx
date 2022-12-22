@@ -539,7 +539,8 @@ const Purchase: FC = () => {
             user_cwd_account: account
         })
         if (data === 'No new additions') return alert('Нету новых пополнений')
-        // setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
+        // @ts-ignore
+        else setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
     }, [session, account])
 
     const getTransferList = useCallback(async () => {
@@ -562,19 +563,19 @@ const Purchase: FC = () => {
                 if (method === 'usd') return setTransferListUSDT({...res, result: res.result.reverse()})
                 else return setTransferListCWD({...res, result: res.result.reverse()})
             })
-        const interval = setInterval(() => {
-            if (method === 'usd') {
-                getTransferList()
-                    .then(res => setTransferListUSDT({...res, result: res.result.reverse()}))
-            } else {
-                getTransferList()
-                    .then(res => setTransferListCWD({...res, result: res.result.reverse()}))
-            }
-        }, 20000)
+        // const interval = setInterval(() => {
+        //     if (method === 'usd') {
+        //         getTransferList()
+        //             .then(res => setTransferListUSDT({...res, result: res.result.reverse()}))
+        //     } else {
+        //         getTransferList()
+        //             .then(res => setTransferListCWD({...res, result: res.result.reverse()}))
+        //     }
+        // }, 20000)
         window.scrollTo(0, 0)
 
 
-        return () => clearInterval(interval)
+        // return () => clearInterval(interval)
     }, [session, method])
 
 
