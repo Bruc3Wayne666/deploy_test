@@ -168,6 +168,7 @@ const Authorize: FC = () => {
                             }}
                         >
                             <img
+                                alt={''}
                                 src={
                                 passVisible === 'password' ?
                                 require(`../assets/svg/eye.svg`).default :
