@@ -31,7 +31,9 @@ const Profile: FC<any> = (props: any) => {
             color: 'white'
         }
     }
+
     const rank = props.result?.rank
+
     return (
         <div id="lk-mid">
             <div id="lk-lk-info">
@@ -52,9 +54,9 @@ const Profile: FC<any> = (props: any) => {
                         <div id="lk-stat-title">Статус профиля</div>
                         <div id="lk-stat-name" style={{
                             // @ts-ignore
-                            background: status[rank].background,
+                            background: rank && status[rank].background,
                             // @ts-ignore
-                            color: status[rank].color
+                            color: rank && status[rank].color
                         }}>
                             {rank}
                         </div>
