@@ -5,6 +5,7 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
+import { Link } from 'react-router-dom';
 
 
 interface TransferItemType {
@@ -348,6 +349,19 @@ const Info = React.memo(
                     <h3 style={{marginTop: 8}}>Не бойтесь, поддержка сайта вас не оставит</h3>
                 </div>
 
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: 14
+                    }}
+                >
+                    <Link to={'/'}>
+                        <p style={{textDecoration: 'underline'}}>Вы начинающий пользователь?</p>
+                    </Link>
+                </div>
+
                 <br/>
 
                 <div className="transfer-item" style={{border: 'none'}}>
@@ -455,8 +469,9 @@ const PurchaseMethod: FC<any> = ({
                     uncheckedHandleIcon={<div style={{height: '100%'}}><img
                         src={require('../assets/svg/usd.svg').default}
                         alt={''}/></div>}
-                    checkedHandleIcon={<div style={{height: '100%'}}><img
-                        src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
+                    checkedHandleIcon={<div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><img
+                        src={require('../assets/images/gi-coin.png')} width='56%' height='80%' alt={''}/></div>}
+                        // src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
                     checked={method !== 'usd'}
                 />
             </div>

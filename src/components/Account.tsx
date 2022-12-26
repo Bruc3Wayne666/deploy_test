@@ -15,11 +15,11 @@ import {logout} from "../store/reducers/auth/authSlice";
 const Profile: FC<any> = (props: any) => {
     const status = {
         'beginer': {
-            background: 'linear-gradient(123deg, rgba(0,0,0,1) 0%,rgba(122,122,122,0) 50%, rgba(255, 255, 255, 1) 75%, rgba(0,0,0,1) 100%',
+            background: 'linear-gradient(123deg, rgba(0,0,0,1) 0%, rgba(61, 61, 61, 1) 25%, rgba(122,122,122,0.5) 50%, rgba(0,0,0,1) 75%, rgba(0,0,0,1) 100%',
             color: 'white'
         },
         'start': {
-            background: 'linear-gradient(-72deg, #dedede, #ffffff 16%,#dedede 21%, #ffffff 24%,#454545 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%,#ffffff 80%,#dedede 84%,#a1a1a1)',
+            background: 'linear-gradient(-72deg, #dedede, #ffffff 16%,#dedede 21%, #ffffff 24%,#ffffff 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%,#ffffff 80%,#dedede 84%,#a1a1a1)',
             color: '#cc3b39'
         },
         'medium': {
@@ -32,7 +32,8 @@ const Profile: FC<any> = (props: any) => {
         }
     }
 
-    const rank = props.result?.rank
+    // const rank = props.result?.rank
+    const rank = 'start'
 
     return (
         <div id="lk-mid">
