@@ -32,8 +32,8 @@ const Profile: FC<any> = (props: any) => {
         }
     }
 
-    // const rank = props.result?.rank
-    const rank = 'start'
+    const rank = props.result?.rank
+    // const rank = 'start'
 
     return (
         <div id="lk-mid">
