@@ -163,7 +163,8 @@ const Authorize: FC = () => {
                                 width: '100%',
                                 display: 'flex',
                                 justifyContent: 'center',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                position: 'relative'
                             }}
                         >
                             <img
