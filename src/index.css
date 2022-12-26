@@ -386,7 +386,7 @@ header {
 
 .slider-bot-text .global-ico {
     height: 19px;
-    margin-bottom: -3px;
+    margin-bottom: 0;
 }
 
 #dots-wr {

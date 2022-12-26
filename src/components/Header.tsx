@@ -82,7 +82,7 @@ const Header: FC = () => {
                                 </div>
                                 <div className="slider-bot-text">
                                     <div style={{fontWeight: 'bold'}}>
-                                                        <span>2 000
+                                                        <span style={{display: 'flex', alignItems: 'center'}}>2 000
                                                             <div className="global-ico gi-coin"/></span> новым
                                         игрокам<br/>в приложении
                                     </div>
