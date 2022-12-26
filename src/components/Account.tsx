@@ -47,7 +47,7 @@ const Profile: FC<any> = (props: any) => {
                 <div id="lk-lk-bal-stat">
                     <div id="lk-bal">
                         <div>Баланс:</div>
-                        <div><span>{props.result?.balance}</span>
+                        <div style={{display: 'flex', alignItems: 'center'}}><span style={{display: 'block'}}>{props.result?.balance}</span>
                             <div className="global-ico gi-coin-w"/>
                         </div>
                     </div>

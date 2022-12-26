@@ -5,7 +5,6 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
-import {Link} from 'react-router-dom';
 
 
 interface TransferItemType {
