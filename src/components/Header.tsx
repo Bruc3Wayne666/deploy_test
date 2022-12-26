@@ -105,7 +105,7 @@ const Header: FC = () => {
                             <Link to={'profile'}>
                                 <div className="mhslmo-text">
                                     <h3>Новым игрокам в приложении</h3>
-                                    <h4>2 000 <div className="global-ico gi-coin-w"/></h4>
+                                    <h4 style={{display: 'flex', alignItems: 'center'}}>2 000 <div className="global-ico gi-coin-w"/></h4>
                                 </div>
                             </Link>
                         </div>
@@ -116,7 +116,7 @@ const Header: FC = () => {
                             <Link to={'profile'}>
                                 <div className="mhslmo-text">
                                     <h3>Бонус всем новым клиентам</h3>
-                                    <h4>до 15 000 <div className="global-ico gi-coin-w"/></h4>
+                                    <h4 style={{display: 'flex', alignItems: 'center'}}>до 15 000 <div className="global-ico gi-coin-w"/></h4>
                                 </div>
                             </Link>
                         </div>
