@@ -14,10 +14,22 @@ import {logout} from "../store/reducers/auth/authSlice";
 
 const Profile: FC<any> = (props: any) => {
     const status = {
-        'beginer': '#999',
-        'start': 'red',
-        'medium': '#CC9933',
-        'master': 'linear-gradient(137deg, rgba(244,80,23,0.9), rgba(11,14,89,0.9))'
+        'beginer': {
+            background: 'linear-gradient(123deg, rgba(0,0,0,1) 0%,rgba(122,122,122,0) 50%, rgba(255, 255, 255, 1) 75%, rgba(0,0,0,1) 100%',
+            color: 'white'
+        },
+        'start': {
+            background: 'linear-gradient(-72deg, #dedede, #ffffff 16%,#dedede 21%, #ffffff 24%,#454545 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%,#ffffff 80%,#dedede 84%,#a1a1a1)',
+            color: '#cc3b39'
+        },
+        'medium': {
+            background: 'radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%)',
+            color: 'white'
+        },
+        'master': {
+            background: 'linear-gradient(137deg, rgba(244,80,23,0.9), rgba(11,14,89,0.9))',
+            color: 'white'
+        }
     }
     const rank = props.result?.rank
     return (
@@ -40,7 +52,9 @@ const Profile: FC<any> = (props: any) => {
                         <div id="lk-stat-title">Статус профиля</div>
                         <div id="lk-stat-name" style={{
                             // @ts-ignore
-                            background: status[rank]
+                            background: status[rank].background,
+                            // @ts-ignore
+                            color: status[rank].color
                         }}>
                             {rank}
                         </div>
