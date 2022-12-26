@@ -5,7 +5,7 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 interface TransferItemType {
@@ -163,19 +163,76 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
     )
 }
 
+const Help = ({setShowHelp}: { setShowHelp: () => void }) => {
+    return (
+        <div className="purchase">
+            <div className="pur-info">
+                <h1>Инструкция по покупке <span style={{fontWeight: 'bold', color: '#cc9933'}}>CWD</span> для начинающих
+                    пользователей:</h1>
+                <br/>
+                <p><span
+                    style={{
+                        fontWeight: 'bold',
+                        color: '#cc9933',
+                        fontSize: 18
+                    }}
+                >1</span> - Перейти по ссылке для регистрации кошелька</p>
+                <br/>
+                <p><span
+                    style={{
+                        fontWeight: 'bold',
+                        color: '#cc9933',
+                        fontSize: 18
+                    }}
+                >2</span> - Создать кошелек,указав необходимые данные для регистрации. Обязательно! Не потеряйте ваш
+                    пароль от кошелька</p>
+                <br/>
+                <p><span
+                    style={{
+                        fontWeight: 'bold',
+                        color: '#cc9933',
+                        fontSize: 18
+                    }}
+                >3</span> - Переходим во вкладку «финансы»; выбираем «обмен CWD»</p>
+                <br/>
+                <p><span
+                    style={{
+                        fontWeight: 'bold',
+                        color: '#cc9933',
+                        fontSize: 18
+                    }}
+                >4</span> - Далее,во вкладке «купить CWD», необходимо найти рекомендованного обменника crowd-ex и
+                    приобретаем необходимое количество CWD</p>
+                <br/>
+                <p><span style={{fontWeight: 'bold'}}>Примечание</span>: чтобы максимально повысить безопасность ваших средств, четко следуйте инструкции со всеми
+                    ее рекомендациями</p>
+
+                <button
+                    className='create'
+                    onClick={setShowHelp}
+                >
+                    Вернуться назад
+                </button>
+            </div>
+        </div>
+    )
+}
+
 
 const Info = React.memo(
     ({
          handleChangeAccount,
          createTransfer,
          method,
-         account
+         account,
+         setShowHelp
      }:
          {
              handleChangeAccount: (v: string) => any,
              createTransfer: () => any,
              method: string,
-             account: string
+             account: string,
+             setShowHelp: () => void
          }) => {
         return method === 'usd' ? (
 
@@ -315,6 +372,29 @@ const Info = React.memo(
                 <div
                     style={{
                         display: 'flex',
+                        alignItems: 'flex-start',
+                        flexDirection: 'column',
+
+                    }}
+                >
+                    <h3 style={{margin: 'auto'}}>Как переводить средства:</h3>
+                    <br/>
+                    <p style={{marginBottom: 4}}>1 - Вкладка «финансы»</p>
+                    <p style={{marginBottom: 4}}>2 - Кнопка «отправить»</p>
+                    <p style={{marginBottom: 4}}>3 - В строку «имя аккаунта» необходимо ввести <span onClick={() => {
+                        navigator.clipboard.writeText('green-price')
+                            .then(() => alert('Аккаунт скопирован в буфер обмена'))
+                    }} style={{fontWeight: 'bold', color: '#cc9933', cursor: 'pointer'}}>green-price</span></p>
+                    <p style={{marginBottom: 4}}>4 - Указать необходимое количество CWD, которое вы хотите пополнить</p>
+                    <br/>
+                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставка /указать необходимое количество/ CWD</p>
+                </div>
+
+                <br/>
+
+                <div
+                    style={{
+                        display: 'flex',
                         alignItems: 'center',
                     }}
                 >
@@ -357,9 +437,8 @@ const Info = React.memo(
                         marginTop: 14
                     }}
                 >
-                    <Link to={'/'}>
-                        <p style={{textDecoration: 'underline'}}>Вы начинающий пользователь?</p>
-                    </Link>
+                    <p onClick={setShowHelp} style={{textDecoration: 'underline', cursor: 'pointer'}}>Вы начинающий
+                        пользователь?</p>
                 </div>
 
                 <br/>
@@ -369,7 +448,7 @@ const Info = React.memo(
                     <h3
                         className='transfer-address'
                         onClick={() => {
-                            navigator.clipboard.writeText('timurabs1')
+                            navigator.clipboard.writeText('green-price')
                                 .then(() => alert('Аккаунт скопирован в буфер обмена'))
                         }}
                     >
@@ -469,9 +548,10 @@ const PurchaseMethod: FC<any> = ({
                     uncheckedHandleIcon={<div style={{height: '100%'}}><img
                         src={require('../assets/svg/usd.svg').default}
                         alt={''}/></div>}
-                    checkedHandleIcon={<div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><img
+                    checkedHandleIcon={<div
+                        style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><img
                         src={require('../assets/images/gi-coin.png')} width='56%' height='80%' alt={''}/></div>}
-                        // src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
+                    // src={require('../assets/svg/cwd.svg').default} alt={''}/></div>}
                     checked={method !== 'usd'}
                 />
             </div>
@@ -487,6 +567,7 @@ const Purchase: FC = () => {
     const [method, setMethod] = useState('usd')
     const dispatch = useAppDispatch()
     const [account, setAccount] = useState('')
+    const [showHelp, setShowHelp] = useState(false)
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -567,6 +648,8 @@ const Purchase: FC = () => {
         return data
     }, [session, method])
 
+    const handleShowHelp = () => setShowHelp(prevState => !prevState)
+
     useEffect(() => {
         getTransferList()
             .then(res => {
@@ -593,6 +676,7 @@ const Purchase: FC = () => {
         // return () => clearInterval(interval)
     }, [session, method])
 
+    if (showHelp) return <Help setShowHelp={handleShowHelp}/>
 
     return (
         <div className='purchase'>
@@ -601,6 +685,7 @@ const Purchase: FC = () => {
                 handleChangeMethod={handleChangeMethod}
             />
             <Info
+                setShowHelp={handleShowHelp}
                 handleChangeAccount={handleChangeAccount}
                 createTransfer={method === 'usd' ? createTransferUSDT : createTransferCWD}
                 method={method}
