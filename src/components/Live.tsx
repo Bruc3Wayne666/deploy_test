@@ -32,6 +32,7 @@ const LeagueItem: FC<any> = ({filter, result}) => {
                             COUNTRIES[league[2]].svg_url
                         }
                         alt={league[2]}
+                        height={20}
                     />
                 </div>
                 <span>{                        //@ts-ignore

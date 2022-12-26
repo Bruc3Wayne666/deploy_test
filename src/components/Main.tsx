@@ -31,9 +31,9 @@ const LeagueItem:
     return league[3] !== 0 ? (
         <>
             <div className="toc-title">
-                <div className="global-ico gi-star">
+                {/*<div className="global-ico gi-star">*/}
 
-                </div>
+                {/*</div>*/}
                 <div className="global-ico">
                     <img
                         src={
@@ -41,6 +41,7 @@ const LeagueItem:
                             COUNTRIES[league[2]].svg_url
                         }
                         alt={league[2]}
+                        height={20}
                     />
                 </div>
                 <span>{                        //@ts-ignore
