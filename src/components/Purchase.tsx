@@ -272,7 +272,7 @@ const Info = React.memo(
                         src={require('../assets/images/purchase/exchanger.svg').default}
                         alt=""
                         height={26}
-                        style={{marginRight: 14}}
+                        style={{marginRight: 14, marginTop: 8}}
                     />
 
                     <a
