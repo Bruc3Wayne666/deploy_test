@@ -203,7 +203,8 @@ const Help = ({setShowHelp}: { setShowHelp: () => void }) => {
                 >4</span> - Далее,во вкладке «купить CWD», необходимо найти рекомендованного обменника crowd-ex и
                     приобретаем необходимое количество CWD</p>
                 <br/>
-                <p><span style={{fontWeight: 'bold'}}>Примечание</span>: чтобы максимально повысить безопасность ваших средств, четко следуйте инструкции со всеми
+                <p><span style={{fontWeight: 'bold'}}>Примечание</span>: чтобы максимально повысить безопасность ваших
+                    средств, четко следуйте инструкции со всеми
                     ее рекомендациями</p>
 
                 <button
@@ -386,7 +387,8 @@ const Info = React.memo(
                     }} style={{fontWeight: 'bold', color: '#cc9933', cursor: 'pointer'}}>green-price</span></p>
                     <p style={{marginBottom: 4}}>4 - Указать необходимое количество CWD, которое вы хотите пополнить</p>
                     <br/>
-                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставка /указать необходимое количество/ CWD</p>
+                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставка /указать
+                        необходимое количество/ CWD</p>
                 </div>
 
                 <br/>
@@ -567,6 +569,7 @@ const Purchase: FC = () => {
     const dispatch = useAppDispatch()
     const [account, setAccount] = useState('')
     const [showHelp, setShowHelp] = useState(false)
+    const [showAll, setShowAll] = useState(false)
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -677,6 +680,7 @@ const Purchase: FC = () => {
 
     if (showHelp) return <Help setShowHelp={handleShowHelp}/>
 
+    // @ts-ignore
     return (
         <div className='purchase'>
             <PurchaseMethod
@@ -690,17 +694,42 @@ const Purchase: FC = () => {
                 method={method}
                 account={account}
             />
+
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    fontSize: 24,
+                    color: 'floralwhite',
+                    marginBottom: 8,
+                    transition: '.8s'
+                }}
+                onClick={() => setShowAll(prevState => !prevState)}
+            >
+                <span>{showAll ? 'Показать все' : 'Показать последнее'}</span>
+            </div>
+
             {
-                method === 'usd'
-                    ? transferListUSDT?.result
-                        .map(transfer => (<TransferItemUSDT
-                            sendAddress={sendAddress}
-                            transfer={transfer}
-                        />))
-                    : transferListCWD?.result
-                        .map(transfer => (<TransferItemCWD
-                            transfer={transfer}
-                        />))
+                showAll ?
+                    method === 'usd'
+                        ? transferListUSDT?.result[0] && <TransferItemUSDT
+                        sendAddress={sendAddress}
+                        transfer={transferListUSDT.result[0]}
+                    />
+                        : transferListUSDT?.result[0] && <TransferItemCWD
+                        transfer={transferListUSDT.result[0]}
+                    />
+                    :
+                    method === 'usd'
+                        ? transferListUSDT?.result
+                            .map(transfer => (<TransferItemUSDT
+                                sendAddress={sendAddress}
+                                transfer={transfer}
+                            />))
+                        : transferListCWD?.result
+                            .map(transfer => (<TransferItemCWD
+                                transfer={transfer}
+                            />))
             }
         </div>
     );
