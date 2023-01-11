@@ -272,7 +272,7 @@ const Info = React.memo(
                         src={require('../assets/images/purchase/exchanger.svg').default}
                         alt=""
                         height={26}
-                        style={{marginRight: 14, marginTop: 8}}
+                        style={{marginRight: 14, marginTop: 10}}
                     />
 
                     <a
@@ -403,7 +403,7 @@ const Info = React.memo(
                         src={require('../assets/images/purchase/exchanger.svg').default}
                         alt=""
                         height={26}
-                        style={{marginRight: 14}}
+                        style={{marginRight: 14, marginTop: 10}}
                     />
 
                     <a
@@ -696,17 +696,23 @@ const Purchase: FC = () => {
             />
 
             <div
+                className={'util'}
                 style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    fontSize: 24,
+                    fontSize: 18,
                     color: 'floralwhite',
                     marginBottom: 8,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    alignItems: 'center'
                 }}
                 onClick={() => setShowAll(prevState => !prevState)}
             >
-                <span>{showAll ? 'Показать все' : 'Показать последнее'}</span>
+                <span style={{color: '#888', marginRight: 12}}>{showAll ? 'Показать все' : 'Показать последнее'}</span>
+                <img src={require(showAll ?
+                    '../assets/svg/arrow_down.svg' :
+                    '../assets/svg/arrow_up.svg'
+                ).default} alt="" width={22} height={22}/>
             </div>
 
             {
