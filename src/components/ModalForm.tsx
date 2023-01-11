@@ -205,9 +205,17 @@ export const ModalForm: FC<{
                     <div style={{
                         position: 'absolute',
                         top: 3,
-                        fontSize: 12
+                        fontSize: 12,
                     }}>
                         Ваш баланс: {user.result?.balance}
+                    </div>
+                    <div style={{
+                        position: 'absolute',
+                        top: 3,
+                        fontSize: 12,
+                        right: 42
+                    }}>
+                        Минимальная ставка: 150
                     </div>
                     <div className="league">
                         {/*<img src={require('../assets/pngegg.png')} height={16} alt=""/>*/}
