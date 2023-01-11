@@ -85,6 +85,12 @@ export const ModalForm: FC<{
                 sum_bid: String(sumValue)
             })
                 .then(res => {
+                    if (res === 'sum_bid is lower 150') {
+                        setBidSuccess(false)
+                        setPossible(0)
+                        setSumValue(0)
+                        return alert('Сумма ставки должна быть не менее 150')
+                    }
                     setBidSuccess(true)
                     setPossible(0)
                 })
