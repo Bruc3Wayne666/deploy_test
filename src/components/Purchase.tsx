@@ -569,7 +569,7 @@ const Purchase: FC = () => {
     const dispatch = useAppDispatch()
     const [account, setAccount] = useState('')
     const [showHelp, setShowHelp] = useState(false)
-    const [showAll, setShowAll] = useState(false)
+    const [showAll, setShowAll] = useState(true)
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -702,7 +702,7 @@ const Purchase: FC = () => {
                     fontSize: 24,
                     color: 'floralwhite',
                     marginBottom: 8,
-                    transition: '.8s'
+                    cursor: 'pointer'
                 }}
                 onClick={() => setShowAll(prevState => !prevState)}
             >
