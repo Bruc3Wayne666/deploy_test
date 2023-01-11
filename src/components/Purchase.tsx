@@ -722,7 +722,7 @@ const Purchase: FC = () => {
                         sendAddress={sendAddress}
                         transfer={transferListUSDT.result[0]}
                     />
-                        : transferListUSDT?.result[0] && <TransferItemCWD
+                        : transferListCWD?.result[0] && <TransferItemCWD
                         transfer={transferListUSDT.result[0]}
                     />
                     :
