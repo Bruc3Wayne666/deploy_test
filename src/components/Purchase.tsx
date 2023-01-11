@@ -723,7 +723,7 @@ const Purchase: FC = () => {
                         transfer={transferListUSDT.result[0]}
                     />
                         : transferListCWD?.result[0] && <TransferItemCWD
-                        transfer={transferListUSDT.result[0]}
+                        transfer={transferListCWD.result[0]}
                     />
                     :
                     method === 'usd'
