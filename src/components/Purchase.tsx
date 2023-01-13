@@ -5,6 +5,7 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
+import {useLocation, useParams} from "react-router-dom";
 
 
 interface TransferItemType {
@@ -562,6 +563,7 @@ const PurchaseMethod: FC<any> = ({
 
 
 const Purchase: FC = () => {
+    const {pathname} = useLocation()
     const {session} = useAppSelector(state => state.authReducer)
     const [transferListUSDT, setTransferListUSDT] = useState<TransferListType>()
     const [transferListCWD, setTransferListCWD] = useState<TransferListType>()
@@ -569,7 +571,7 @@ const Purchase: FC = () => {
     const dispatch = useAppDispatch()
     const [account, setAccount] = useState('')
     const [showHelp, setShowHelp] = useState(false)
-    const [showAll, setShowAll] = useState(true)
+    // const [showAll, setShowAll] = useState(true)
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -687,36 +689,39 @@ const Purchase: FC = () => {
                 method={method}
                 handleChangeMethod={handleChangeMethod}
             />
-            <Info
-                setShowHelp={handleShowHelp}
-                handleChangeAccount={handleChangeAccount}
-                createTransfer={method === 'usd' ? createTransferUSDT : createTransferCWD}
-                method={method}
-                account={account}
-            />
+            {
+                pathname === '/purchase' &&
+                <Info
+                    setShowHelp={handleShowHelp}
+                    handleChangeAccount={handleChangeAccount}
+                    createTransfer={method === 'usd' ? createTransferUSDT : createTransferCWD}
+                    method={method}
+                    account={account}
+                />
+            }
 
-            <div
-                className={'util'}
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    fontSize: 18,
-                    color: 'floralwhite',
-                    marginBottom: 8,
-                    cursor: 'pointer',
-                    alignItems: 'center'
-                }}
-                onClick={() => setShowAll(prevState => !prevState)}
-            >
-                <span style={{color: '#888', marginRight: 12}}>{showAll ? 'Показать все' : 'Показать последнее'}</span>
-                <img src={require(showAll ?
-                    '../assets/svg/arrow_down.svg' :
-                    '../assets/svg/arrow_up.svg'
-                ).default} alt="" width={22} height={22}/>
-            </div>
+            {/*<div*/}
+            {/*    className={'util'}*/}
+            {/*    style={{*/}
+            {/*        display: 'flex',*/}
+            {/*        justifyContent: 'center',*/}
+            {/*        fontSize: 18,*/}
+            {/*        color: 'floralwhite',*/}
+            {/*        marginBottom: 8,*/}
+            {/*        cursor: 'pointer',*/}
+            {/*        alignItems: 'center'*/}
+            {/*    }}*/}
+            {/*    onClick={() => setShowAll(prevState => !prevState)}*/}
+            {/*>*/}
+            {/*    <span style={{color: '#888', marginRight: 12}}>{showAll ? 'Показать все' : 'Показать последнее'}</span>*/}
+            {/*    <img src={require(showAll ?*/}
+            {/*        '../assets/svg/arrow_down.svg' :*/}
+            {/*        '../assets/svg/arrow_up.svg'*/}
+            {/*    ).default} alt="" width={22} height={22}/>*/}
+            {/*</div>*/}
 
             {
-                showAll ?
+                pathname === '/purchase' ?
                     method === 'usd'
                         ? transferListUSDT?.result[0] && <TransferItemUSDT
                         sendAddress={sendAddress}

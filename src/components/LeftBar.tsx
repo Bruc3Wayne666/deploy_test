@@ -16,7 +16,16 @@ export const LeftBar: FC<any> = () => {
                     <span>Мой профиль</span></Link>
                 <Link to="/purchase" className="lklm-item">
                     <div className="global-ico gi-lk-popvip"/>
-                    <span>Пополнения и выплаты</span></Link>
+                    <span>Пополнить</span></Link>
+                <Link to="/purchase_history" className="lklm-item">
+                    <div className="global-ico gi-lk-popvip"/>
+                    <span>История пополнений</span></Link>
+                <Link to="/income" className="lklm-item">
+                    <div className="global-ico gi-lk-popvip"/>
+                    <span>Выплата</span></Link>
+                <Link to="/income_history" className="lklm-item">
+                    <div className="global-ico gi-lk-popvip"/>
+                    <span>История выплат</span></Link>
                 <Link to="/bets" className={`lklm-item ${pathname === '/bets' && 'active'}`}>
                     <div className="global-ico gi-lk-history"/>
                     <span>История ставок</span></Link>
@@ -68,7 +77,16 @@ export const LeftBarMobile: FC<any> = () => {
                     <span>Мой профиль</span></Link>
                 <Link to="/purchase" className="lklm-item">
                     <div className="global-ico gi-lk-popvip"/>
-                    <span>Пополнения и выплаты</span></Link>
+                    <span>Пополнить</span></Link>
+                <Link to="/purchase_history" className="lklm-item">
+                    <div className="global-ico gi-lk-popvip"/>
+                    <span>История пополнений</span></Link>
+                <Link to="/income" className="lklm-item">
+                    <div className="global-ico gi-lk-popvip"/>
+                    <span>Выплата</span></Link>
+                <Link to="/income_history" className="lklm-item">
+                    <div className="global-ico gi-lk-popvip"/>
+                    <span>История выплат</span></Link>
                 <Link to="/bets" className={`lklm-item ${pathname === '/bets' && 'active'}`}>
                     <div className="global-ico gi-lk-history"/>
                     <span>История ставок</span></Link>

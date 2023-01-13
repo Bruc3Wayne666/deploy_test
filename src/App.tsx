@@ -22,6 +22,7 @@ import CyberSport from "./components/Cybers";
 // import {useAlert} from 'react-alert';
 import {logout, setSession} from "./store/reducers/auth/authSlice";
 import Help from "./components/Help";
+import Income from './components/Income';
 
 
 const App: FC = () => {
@@ -96,6 +97,9 @@ const App: FC = () => {
                             <Route path={'vip'} element={<VIP/>}/>
                             <Route path={'live'} element={<Live/>}/>
                             <Route path={'purchase'} element={<Purchase/>}/>
+                            <Route path={'purchase_history'} element={<Purchase/>}/>
+                            <Route path={'income'} element={<Income/>}/>
+                            <Route path={'income_history'} element={<Income/>}/>
                             <Route path={'cyber'} element={<CyberSport/>}/>
                             <Route path={'help'} element={<Help/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>}/>
@@ -109,6 +113,9 @@ const App: FC = () => {
                             <Route path={'bets'} element={<Authorize/>}/>
                             <Route path={'live'} element={<Live/>}/>
                             <Route path={'purchase'} element={<Authorize/>}/>
+                            <Route path={'purchase_history'} element={<Authorize/>}/>
+                            <Route path={'income'} element={<Authorize/>}/>
+                            <Route path={'income_history'} element={<Authorize/>}/>
                             <Route path={'cyber'} element={<CyberSport/>}/>
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>}/>
                         </Routes>
