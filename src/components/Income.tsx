@@ -453,9 +453,9 @@ const Purchase: FC = () => {
     const createWithDrawal = useCallback(async () => {
         const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/create_withdrawal`, {
             user_id: session,
-            value: 0,
-            wallet_name: '',
-            currency: method
+            value: value,
+            wallet_name: method === 'usd' ? address : account,
+            currency: method.toUpperCase()
         })
     }, [session, account, value, walletName, method])
 
