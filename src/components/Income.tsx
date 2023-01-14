@@ -5,215 +5,91 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
+import results from "./Results";
 
 
-interface TransferItemType {
-    amount: number
-    loook_link?: string
-    remainder_time?: number
+interface DrawalItemType {
+    currency: string
     status: string
-    wallet?: string
-    iden: number
+    value: number
+    wallet_name: string
 }
 
-interface TransferListType {
-    count: number
-    result: TransferItemType[]
+interface DrawalListType {
+    error: boolean
+    results: DrawalItemType[]
 }
 
-interface TransferItemProps {
-    transfer: TransferItemType,
-    handlePress?: () => void,
+interface DrawalItemProps {
+    drawal: DrawalItemType,
 }
 
-// const TransferItemUSDT: FC<TransferItemProps> = ({transfer, sendAddress}) => {
-//     const {
-//         amount,
-//         remainder_time,
-//         loook_link,
-//         status,
-//         wallet,
-//         iden
-//     } = transfer
-//
-//     return (
-//         <div className='transfer-item'>
-//             <div
-//                 style={{
-//                     display: 'flex',
-//                     alignItems: 'center',
-//                 }}
-//             >
-//                 <h4>Идентификатор пополнения #{iden}</h4>
-//             </div>
-//
-//             <div
-//                 style={{
-//                     display: 'flex',
-//                     alignItems: 'center',
-//                 }}
-//             >
-//                 <img
-//                     src={require('../assets/images/purchase/tracker.svg').default}
-//                     alt=""
-//                     height={26}
-//                     style={{marginRight: 14}}
-//                 />
-//                 <a style={{marginTop: 20}} href={loook_link && loook_link}><h3>Отслеживать пополнение</h3></a>
-//             </div>
-//
-//             {
-//                 status === 'waiting'
-//                     ? <h3>Адрес актуален: <b
-//                         style={{color: 'yellow'}}>{Math.floor(remainder_time ? (remainder_time / 60) : 0)}</b> минут</h3>
-//                     : status === 'finish'
-//                         ? <h3>Пополнено на <b>{amount}</b></h3>
-//                         :
-//                         <div
-//                             style={{
-//                                 display: 'flex',
-//                                 alignItems: 'center',
-//                             }}
-//                         >
-//                             <img
-//                                 src={require('../assets/images/purchase/times.svg').default}
-//                                 alt=""
-//                                 height={26}
-//                                 style={{marginRight: 14}}
-//                             />
-//                             <h3 style={{marginTop: 18}}>Адрес не актуален (просрочен)</h3>
-//                         </div>
-//             }
-//             <h3>Адрес для оплаты: </h3>
-//             <h3
-//                 // ref={address}
-//                 className='transfer-address'
-//                 onClick={() => {
-//                     navigator.clipboard.writeText(wallet ? wallet : '')
-//                         .then(() => alert('Адрес скопирован в буфер обмена'))
-//                 }}
-//             >
-//                 <span>{wallet}</span>
-//             </h3>
-//
-//             <div
-//                 style={{
-//                     display: 'flex',
-//                     alignItems: 'center',
-//                 }}
-//             >
-//                 <img
-//                     src={require('../assets/images/purchase/mail.svg').default}
-//                     alt=""
-//                     height={26}
-//                     style={{marginRight: 14}}
-//                 />
-//                 <h3
-//                     onClick={() => sendAddress && sendAddress(wallet ? wallet : '')}
-//                     style={{
-//                         cursor: 'pointer',
-//                         marginTop: 10
-//                     }}
-//                     className='transfer-option'
-//                 >
-//                     <span>Выслать адрес на почту</span>
-//                 </h3>
-//             </div>
-//
-//         </div>
-//     )
-// }
+const DrawalItem: FC<DrawalItemProps> = ({drawal}) => {
+    const {
+        currency,
+        status,
+        value,
+        wallet_name
+    } = drawal
 
-// const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
-//     const {
-//         amount,
-//         iden,
-//         status
-//     } = transfer
-//
-//     return (
-//         <div className='transfer-item'>
-//             <div
-//                 style={{
-//                     display: 'flex',
-//                     alignItems: 'center',
-//                 }}
-//             >
-//                 <h4>Идентификатор пополнения #{iden}</h4>
-//             </div>
-//
-//             <div
-//                 style={{
-//                     display: 'flex',
-//                     alignItems: 'center',
-//                 }}
-//             >
-//                 <h3>
-//                     <p style={{marginBottom: 10}}>Успешно зачислено на баланс:</p>
-//                     <p/>
-//                     <span style={{color: 'gold', fontWeight: 900}}>{amount}</span>
-//                 </h3>
-//                 <br/>
-//             </div>
-//
-//
-//         </div>
-//     )
-// }
-
-const Help = ({setShowHelp}: { setShowHelp: () => void }) => {
     return (
-        <div className="purchase">
-            <div className="pur-info">
-                <h1>Инструкция по покупке <span style={{fontWeight: 'bold', color: '#cc9933'}}>CWD</span> для начинающих
-                    пользователей:</h1>
-                <br/>
-                <p><span
-                    style={{
-                        fontWeight: 'bold',
-                        color: '#cc9933',
-                        fontSize: 18
-                    }}
-                >1</span> - Перейти по ссылке для регистрации кошелька</p>
-                <br/>
-                <p><span
-                    style={{
-                        fontWeight: 'bold',
-                        color: '#cc9933',
-                        fontSize: 18
-                    }}
-                >2</span> - Создать кошелек,указав необходимые данные для регистрации. Обязательно! Не потеряйте ваш
-                    пароль от кошелька</p>
-                <br/>
-                <p><span
-                    style={{
-                        fontWeight: 'bold',
-                        color: '#cc9933',
-                        fontSize: 18
-                    }}
-                >3</span> - Переходим во вкладку «финансы»; выбираем «обмен CWD»</p>
-                <br/>
-                <p><span
-                    style={{
-                        fontWeight: 'bold',
-                        color: '#cc9933',
-                        fontSize: 18
-                    }}
-                >4</span> - Далее,во вкладке «купить CWD», необходимо найти рекомендованного обменника crowd-ex и
-                    приобретаем необходимое количество CWD</p>
-                <br/>
-                <p><span style={{fontWeight: 'bold'}}>Примечание</span>: чтобы максимально повысить безопасность ваших
-                    средств, четко следуйте инструкции со всеми
-                    ее рекомендациями</p>
+        <div className='drawal-item'>
 
-                <button
-                    className='create'
-                    onClick={setShowHelp}
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <img
+                    src={require('../assets/svg/wallet.svg').default}
+                    width={22}
+                    style={{marginRight: 10}}
+                    alt=""
+                />
+                <p>Имя кошелька: <span
+                    style={{fontSize: 22, color: 'lightblue'}}
                 >
-                    Вернуться назад
-                </button>
+                {wallet_name}
+            </span></p>
             </div>
+
+            <br/>
+
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <img
+                    src={
+                        status === 'success'
+                            ? require('../assets/svg/status-success.svg').default
+                            : require('../assets/svg/status-inwork.svg').default
+                    }
+                    width={22}
+                    style={{marginRight: 10}}
+                    alt=""
+                />
+                <p>Статус: <span
+                    style={{fontSize: 22, color: 'lightblue'}}
+                >
+                {status === 'success' ? 'успешно завершено' : 'в процессе'}
+            </span></p>
+            </div>
+
+            <br/>
+
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <p>Сумма вывода: <span
+                    style={{fontSize: 22, color: 'gold', fontWeight: 'bold'}}
+                >
+                {value}
+            </span></p>
+            </div>
+
+            <br/>
+
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <p>Валюта: <span
+                    style={{fontSize: 22, color: 'lightblue'}}
+                >
+                {currency}
+            </span></p>
+            </div>
+
         </div>
     )
 }
@@ -228,7 +104,6 @@ const Info =
          account,
          address,
          value,
-         setShowHelp,
          method
      }:
          {
@@ -239,7 +114,6 @@ const Info =
              account: string,
              address: string,
              value: number,
-             setShowHelp: () => void,
              method: string
          }) => {
         return (
@@ -266,9 +140,9 @@ const Info =
                 <p>Сумма вывода</p>
                 <input
                     onChange={e => handleChangeValue(Number(e.target.value))}
-                    placeholder={''}
+                    placeholder={value === 0 ? '0' : ''}
                     type="number"
-                    value={value}
+                    value={value !== 0 ? value : ''}
                 />
 
                 <br/>
@@ -281,7 +155,12 @@ const Info =
                 >
                     <button
                         onClick={() => {
-                            if (account === '') return alert('Введите аккаунт')
+                            if ((method === 'usd' && address === '') || (method === 'cwd' && account === '')) {
+                                return alert(method === 'usd' ? 'Введите адрес' : 'Введите аккаунт')
+                            }
+                            if (value === 0) {
+                                return alert('Введите сумму для вывода')
+                            }
                             return createWithDrawal()
                         }}
                         style={{
@@ -290,7 +169,7 @@ const Info =
                             borderRadius: 8,
                             border: 'none',
                             outline: 'none',
-                            marginBottom: 10,
+                            marginBottom: 28,
                             cursor: 'pointer'
                         }}
                     >
@@ -312,18 +191,6 @@ const PurchaseMethod: FC<any> = ({
         <div className="purchaseSwitcher">
             <div className="methods">
                 <h2 style={{fontWeight: 600}}>Валюта:&nbsp;</h2>
-                {/*<div*/}
-                {/*    onClick={() => setPurchase('usd')}*/}
-                {/*    className={`method usd ${purchase === 'usd' && 'active'}`}*/}
-                {/*>*/}
-                {/*    USD*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*    onClick={() => setPurchase('cwd')}*/}
-                {/*    className={`method cwd ${purchase === 'cwd' && 'active'}`}*/}
-                {/*>*/}
-                {/*    CWD*/}
-                {/*</div>*/}
 
                 <Switch
                     onChange={() => handleChangeMethod(method)}
@@ -375,10 +242,8 @@ const Purchase: FC = () => {
     const dispatch = useAppDispatch()
     const [account, setAccount] = useState('')
     const [address, setAddress] = useState('')
-    const [showHelp, setShowHelp] = useState(false)
     const [value, setValue] = useState(0)
-    const [walletName, setWalletName] = useState('')
-    // const [showAll, setShowAll] = useState(true)
+    const [drawalsList, setDrawalsList] = useState<DrawalListType>()
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -423,33 +288,6 @@ const Purchase: FC = () => {
         }
     }, [session])
 
-    // const createTransferUSDT = useCallback(async () => {
-    //     const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/create_transfer`, {user_id: session})
-    //
-    //     if (data === 'session is not active') {
-    //         dispatch(logout())
-    //         alert('Сессия истекла. Авторизуйтесь заново')
-    //         return window.location.href = '/profile'
-    //     }
-    //
-    //     if (data === '1') {
-    //         alert('Кошелёк уже создан')
-    //     } else {
-    //         // @ts-ignore
-    //         setTransferListUSDT(prevState => ({...prevState, result: [data, ...prevState?.result]}))
-    //     }
-    // }, [session])
-    //
-    // const createTransferCWD = useCallback(async () => {
-    //     const {data} = await axios.post<TransferItemType | string>(`${process.env.REACT_APP_BASE_URL}/added_cwd`, {
-    //         user_id: session,
-    //         user_cwd_account: account
-    //     })
-    //     if (data === 'No new additions') return alert('Нету новых пополнений')
-    //     // @ts-ignore
-    //     else setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
-    // }, [session, account])
-
     const createWithDrawal = useCallback(async () => {
         const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/create_withdrawal`, {
             user_id: session,
@@ -457,7 +295,9 @@ const Purchase: FC = () => {
             wallet_name: method === 'usd' ? address : account,
             currency: method.toUpperCase()
         })
-    }, [session, account, value, walletName, method])
+
+        await getWithDrawalsList()
+    }, [session, account, value, method])
 
     const getWithDrawalsList = useCallback(async () => {
         if (!session) return null
@@ -465,52 +305,31 @@ const Purchase: FC = () => {
             `${process.env.REACT_APP_BASE_URL}/withdrawals_list`,
             {user_id: session}
         )
-        return data
+        setDrawalsList({...data, results: data.results.reverse()})
     }, [session, method])
-
-    const handleShowHelp = () => setShowHelp(prevState => !prevState)
 
     useEffect(() => {
-        createWithDrawal()
-            .then(res => res)
-        getWithDrawalsList()
-            .then(res => {
-                // if (res === 'session is not active') {
-                //     dispatch(logout())
-                //     alert('Сессия истекла. Авторизуйтесь заново')
-                //     return window.location.href = '/profile'
-                // }
-                // if (method === 'usd') return setTransferListUSDT({...res, result: res.result.reverse()})
-                // else return setTransferListCWD({...res, result: res.result.reverse()})
-            })
-        // const interval = setInterval(() => {
-        //     if (method === 'usd') {
-        //         getTransferList()
-        //             .then(res => setTransferListUSDT({...res, result: res.result.reverse()}))
-        //     } else {
-        //         getTransferList()
-        //             .then(res => setTransferListCWD({...res, result: res.result.reverse()}))
-        //     }
-        // }, 20000)
+        getWithDrawalsList().then()
         window.scrollTo(0, 0)
-
-
-        // return () => clearInterval(interval)
     }, [session, method])
-
-    // if (showHelp) return <Help setShowHelp={handleShowHelp}/>
 
     // @ts-ignore
     return (
         <div className='purchase'>
-            <PurchaseMethod
-                method={method}
-                handleChangeMethod={handleChangeMethod}
-            />
+            {
+                pathname === '/income'
+                    ? <PurchaseMethod
+                        method={method}
+                        handleChangeMethod={handleChangeMethod}
+                    />
+                    : <div style={{display: 'flex', justifyContent: 'center', marginBottom: 22}}>
+                        <h1>История выплат</h1>
+                    </div>
+            }
+
             {
                 pathname === '/income' &&
                 <Info
-                    setShowHelp={handleShowHelp}
                     handleChangeAccount={handleChangeAccount}
                     handleChangeAddress={handleChangeAddress}
                     handleChangeValue={handleChangeValue}
@@ -522,48 +341,29 @@ const Purchase: FC = () => {
                 />
             }
 
-            {/*<div*/}
-            {/*    className={'util'}*/}
-            {/*    style={{*/}
-            {/*        display: 'flex',*/}
-            {/*        justifyContent: 'center',*/}
-            {/*        fontSize: 18,*/}
-            {/*        color: 'floralwhite',*/}
-            {/*        marginBottom: 8,*/}
-            {/*        cursor: 'pointer',*/}
-            {/*        alignItems: 'center'*/}
-            {/*    }}*/}
-            {/*    onClick={() => setShowAll(prevState => !prevState)}*/}
-            {/*>*/}
-            {/*    <span style={{color: '#888', marginRight: 12}}>{showAll ? 'Показать все' : 'Показать последнее'}</span>*/}
-            {/*    <img src={require(showAll ?*/}
-            {/*        '../assets/svg/arrow_down.svg' :*/}
-            {/*        '../assets/svg/arrow_up.svg'*/}
-            {/*    ).default} alt="" width={22} height={22}/>*/}
-            {/*</div>*/}
-
-            {/*{*/}
-            {/*    pathname === '/purchase' ?*/}
-            {/*        method === 'usd'*/}
-            {/*            ? transferListUSDT?.result[0] && <TransferItemUSDT*/}
-            {/*            sendAddress={sendAddress}*/}
-            {/*            transfer={transferListUSDT.result[0]}*/}
-            {/*        />*/}
-            {/*            : transferListCWD?.result[0] && <TransferItemCWD*/}
-            {/*            transfer={transferListCWD.result[0]}*/}
-            {/*        />*/}
-            {/*        :*/}
-            {/*        method === 'usd'*/}
-            {/*            ? transferListUSDT?.result*/}
-            {/*                .map(transfer => (<TransferItemUSDT*/}
-            {/*                    sendAddress={sendAddress}*/}
-            {/*                    transfer={transfer}*/}
-            {/*                />))*/}
-            {/*            : transferListCWD?.result*/}
-            {/*                .map(transfer => (<TransferItemCWD*/}
-            {/*                    transfer={transfer}*/}
-            {/*                />))*/}
-            {/*}*/}
+            {
+                pathname === '/income' &&
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginBottom: 16,
+                        marginTop: 20
+                    }}
+                >
+                    <span>Последняя выплата</span>
+                </div>
+            }
+            {
+                pathname === '/income'
+                    ? drawalsList?.results[0] && <DrawalItem
+                    drawal={drawalsList.results[0]}
+                />
+                    : drawalsList?.results
+                        .map(drawal => (<DrawalItem
+                            drawal={drawal}
+                        />))
+            }
         </div>
     );
 };

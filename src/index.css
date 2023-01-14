@@ -2409,6 +2409,21 @@ ul.active {
     color: white;
 }
 
+.pur-info input {
+    border: none;
+    outline: none;
+    background-color: #222;
+    font-size: 18px;
+    height: 36px;
+    border-radius: 8px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+.pur-info input:focus {
+    border: 1px solid #cc9933;
+}
+
 .transfer-option {
     font-size: 26px;
     /*margin-top: 100px;*/
@@ -2439,6 +2454,17 @@ ul.active {
 .purchaseSwitcher .methods {
     display: flex;
     align-items: center;
+}
+
+.drawal-item {
+    width: 100%;
+    color: white;
+    /*background-color: black;*/
+    background-color: transparent;
+    border: 2px solid #cc9933;
+    border-radius: 24px;
+    padding: 12px 24px;
+    margin-bottom: 12px;
 }
 
 #lk-right.m {

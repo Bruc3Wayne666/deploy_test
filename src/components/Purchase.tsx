@@ -700,26 +700,6 @@ const Purchase: FC = () => {
                 />
             }
 
-            {/*<div*/}
-            {/*    className={'util'}*/}
-            {/*    style={{*/}
-            {/*        display: 'flex',*/}
-            {/*        justifyContent: 'center',*/}
-            {/*        fontSize: 18,*/}
-            {/*        color: 'floralwhite',*/}
-            {/*        marginBottom: 8,*/}
-            {/*        cursor: 'pointer',*/}
-            {/*        alignItems: 'center'*/}
-            {/*    }}*/}
-            {/*    onClick={() => setShowAll(prevState => !prevState)}*/}
-            {/*>*/}
-            {/*    <span style={{color: '#888', marginRight: 12}}>{showAll ? 'Показать все' : 'Показать последнее'}</span>*/}
-            {/*    <img src={require(showAll ?*/}
-            {/*        '../assets/svg/arrow_down.svg' :*/}
-            {/*        '../assets/svg/arrow_up.svg'*/}
-            {/*    ).default} alt="" width={22} height={22}/>*/}
-            {/*</div>*/}
-
             {
                 pathname === '/purchase' ?
                     method === 'usd'
