@@ -288,6 +288,7 @@ const Purchase: FC = () => {
     }, [session])
 
     const createWithDrawal = useCallback(async () => {
+        if (profile.result?.balance && Number(profile.result.balance) < value) return alert('Недостаточно средств на балансе')
         const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/create_withdrawal`, {
             user_id: session,
             value: value,
