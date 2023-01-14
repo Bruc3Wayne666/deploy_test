@@ -72,6 +72,12 @@ const DrawalItem: FC<DrawalItemProps> = ({drawal}) => {
             <br/>
 
             <div style={{display: 'flex', alignItems: 'center'}}>
+                <img
+                    src={require('../assets/svg/money_sum.svg').default}
+                    width={22}
+                    style={{marginRight: 10}}
+                    alt=""
+                />
                 <p>Сумма вывода: <span
                     style={{fontSize: 22, color: 'gold', fontWeight: 'bold'}}
                 >
@@ -82,6 +88,12 @@ const DrawalItem: FC<DrawalItemProps> = ({drawal}) => {
             <br/>
 
             <div style={{display: 'flex', alignItems: 'center'}}>
+                <img
+                    src={require('../assets/svg/crypto.svg').default}
+                    width={22}
+                    style={{marginRight: 10}}
+                    alt=""
+                />
                 <p>Валюта: <span
                     style={{fontSize: 22, color: 'lightblue'}}
                 >
