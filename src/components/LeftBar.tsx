@@ -79,13 +79,13 @@ export const LeftBarMobile: FC<any> = () => {
                     <div className="global-ico gi-lk-popvip"/>
                     <span>Пополнить</span></Link>
                 <Link to="/purchase_history" className="lklm-item">
-                    <div className="global-ico gi-lk-popvip"/>
+                    <div className="global-ico gi-lk-chistory"/>
                     <span>История пополнений</span></Link>
                 <Link to="/income" className="lklm-item">
                     <div className="global-ico gi-lk-popvip"/>
                     <span>Выплата</span></Link>
                 <Link to="/income_history" className="lklm-item">
-                    <div className="global-ico gi-lk-popvip"/>
+                    <div className="global-ico gi-lk-ihistory"/>
                     <span>История выплат</span></Link>
                 <Link to="/bets" className={`lklm-item ${pathname === '/bets' && 'active'}`}>
                     <div className="global-ico gi-lk-history"/>
