@@ -6,7 +6,6 @@ import {ApiService} from "../api";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
 import {useLocation} from "react-router-dom";
-import results from "./Results";
 
 
 interface DrawalItemType {

@@ -208,6 +208,14 @@ body {
     background-image: url(assets/images/gi-lk-popvip.png);
 }
 
+.gi-lk-ihistory {
+    background-image: url(assets/svg/ihistory.svg);
+}
+
+.gi-lk-chistory {
+    background-image: url(assets/svg/chistory.svg);
+}
+
 .gi-lk-history {
     background-image: url(assets/images/gi-lk-history.png);
 }
