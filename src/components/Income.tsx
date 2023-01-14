@@ -257,11 +257,11 @@ const Purchase: FC = () => {
     }
 
     const handleChangeAccount = (val: string) => {
-        setAccount(val)
+        setAccount(val.trim())
     }
 
     const handleChangeAddress = (val: string) => {
-        setAddress(val)
+        setAddress(val.trim())
     }
 
     const handleChangeValue = (val: number) => {
