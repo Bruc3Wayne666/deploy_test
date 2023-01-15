@@ -305,7 +305,7 @@ const Purchase: FC = () => {
             user_id: session,
             value: value,
             wallet_name: method === 'usd' ? address : account,
-            currency: method.toUpperCase()
+            currency: method === 'usd' ? 'USDT' : 'CWD'
         })
 
         await getWithDrawalsList()
