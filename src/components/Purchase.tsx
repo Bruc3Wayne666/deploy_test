@@ -506,18 +506,6 @@ const PurchaseMethod: FC<any> = ({
         <div className="purchaseSwitcher">
             <div className="methods">
                 <h2 style={{fontWeight: 600}}>Валюта:&nbsp;</h2>
-                {/*<div*/}
-                {/*    onClick={() => setPurchase('usd')}*/}
-                {/*    className={`method usd ${purchase === 'usd' && 'active'}`}*/}
-                {/*>*/}
-                {/*    USD*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*    onClick={() => setPurchase('cwd')}*/}
-                {/*    className={`method cwd ${purchase === 'cwd' && 'active'}`}*/}
-                {/*>*/}
-                {/*    CWD*/}
-                {/*</div>*/}
 
                 <Switch
                     onChange={() => handleChangeMethod(method)}
@@ -665,15 +653,7 @@ const Purchase: FC = () => {
                 if (method === 'usd') return setTransferListUSDT({...res, result: res.result.reverse()})
                 else return setTransferListCWD({...res, result: res.result.reverse()})
             })
-        // const interval = setInterval(() => {
-        //     if (method === 'usd') {
-        //         getTransferList()
-        //             .then(res => setTransferListUSDT({...res, result: res.result.reverse()}))
-        //     } else {
-        //         getTransferList()
-        //             .then(res => setTransferListCWD({...res, result: res.result.reverse()}))
-        //     }
-        // }, 20000)
+
         window.scrollTo(0, 0)
 
 

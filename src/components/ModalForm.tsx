@@ -100,7 +100,6 @@ export const ModalForm: FC<{
             alert('Недостаточно средств')
             setPossible(0)
             setSumValue(0)
-            // window.location.href = '/purchase'
         }
     }
 
@@ -129,8 +128,6 @@ export const ModalForm: FC<{
                 justifyContent: 'center'
             },
             content: {
-                // minWidth: 400,
-                // maxWidth: 600,
                 width: window.innerWidth <= 1440 ? 400 : 600,
                 height: 420,
                 position: 'absolute',
@@ -170,11 +167,26 @@ export const ModalForm: FC<{
                     flex: 1
                 }}
             >
-                <img src={require('../assets/icons8-tick-64.png')} alt=""/>
+                {/*<img src={require('../assets/icons8-tick-64.png')} alt=""/>*/}
+
+                <div className="icon icon--order-success svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">
+                        <g fill="none" stroke="#22AE73" strokeWidth="2">
+                            <circle cx="77" cy="77" r="72"
+                                    style={{strokeDasharray: '480px, 480px', strokeDashoffset: '960px'}}/>
+                            <circle id="colored" fill="#22AE73" cx="77" cy="77" r="72"
+                                    style={{strokeDasharray: '480px, 480px', strokeDashoffset: '960px'}}/>
+                            <polyline className="st0" stroke="#fff" strokeWidth="10"
+                                      points="43.5,77.8 63.7,97.9 112.2,49.4 "
+                                      style={{strokeDasharray: '100px, 100px', strokeDashoffset: '200px'}}/>
+                        </g>
+                    </svg>
+                </div>
+
                 <span
                     style={{
-                        fontSize: 30,
-                        marginTop: 60
+                        fontSize: 22,
+                        marginTop: 20
                     }}
                 >
                     Ставка успешно сделана
@@ -182,7 +194,7 @@ export const ModalForm: FC<{
                 <div
                     style={{
                         position: 'absolute',
-                        bottom: 66
+                        bottom: 56
                     }}
                 >
                     <button
@@ -224,15 +236,12 @@ export const ModalForm: FC<{
                         Минимальная ставка: 150
                     </div>
                     <div className="league">
-                        {/*<img src={require('../assets/pngegg.png')} height={16} alt=""/>*/}
                         {league.name}
                     </div>
                     <div className="teams">
                 <span>
-                    {/*<img src={require('../assets/sp.png')} height={24} alt=""/>*/}
                     <div
                         style={{
-                            // border: '1px solid white',
                             display: 'flex',
                             alignItems: 'center',
                         }}
@@ -286,11 +295,10 @@ export const ModalForm: FC<{
                 {
                     (bet.name !== 'П1' && bet.name !== 'П2' && bet.name !== 'НИЧЬЯ') ? 'ТОТАЛ' : '1X2'
                 }
-                &nbsp;
-                 {bet.name}
+                    &nbsp;
+                    {bet.name}
                 </span>
                         <span className='kf'>
-                    {/*{possible === 0 ? bet.kf : possible}*/}
                     {possible}
                 </span>
                     </div>
@@ -309,7 +317,7 @@ export const ModalForm: FC<{
                         }}
                         style={{cursor: 'pointer'}}>-</span>
                             <input type='text' value={sumValue} placeholder={'Введите сумму'} onChange={e => {
-                                if (Number(e.target.value)){
+                                if (Number(e.target.value)) {
                                     setSumValue(Number(e.target.value))
                                 } else if (e.target.value === '') {
                                     setSumValue(0)
