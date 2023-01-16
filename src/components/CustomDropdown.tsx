@@ -30,7 +30,16 @@ interface IBidsFilterDropdownProps {
     period: string;
 }
 
-export const TotalsDropdown: FC<ITotalsDropdownProps> = ({title, showDropdown, setShowDropdown, items, game, handleChangeShowModal, handleSetCurrentGame, handleSetCurrentBet}) => {
+export const TotalsDropdown: FC<ITotalsDropdownProps> = ({
+                                                             title,
+                                                             showDropdown,
+                                                             setShowDropdown,
+                                                             items,
+                                                             game,
+                                                             handleChangeShowModal,
+                                                             handleSetCurrentGame,
+                                                             handleSetCurrentBet
+                                                         }) => {
     return (
         <div className='dropdown-wrapper' style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <button onClick={() => setShowDropdown(!showDropdown)} className="trigger-button">
@@ -142,7 +151,13 @@ export const TotalsDropdown: FC<ITotalsDropdownProps> = ({title, showDropdown, s
     );
 };
 
-export const FilterDropDown: FC<IFilterDropdownProps> = ({title, showDropdown, setShowDropdown, items, changeParams}) => {
+export const FilterDropDown: FC<IFilterDropdownProps> = ({
+                                                             title,
+                                                             showDropdown,
+                                                             setShowDropdown,
+                                                             items,
+                                                             changeParams
+                                                         }) => {
     return (
         <div className='dropdown-wrapper' style={{width: 82}}>
             <button
@@ -178,7 +193,7 @@ export const FilterDropDown: FC<IFilterDropdownProps> = ({title, showDropdown, s
                         // height: "auto",
                         maxHeight: 120,
                         // width: '80%',
-                }}
+                    }}
                 >
 
 
@@ -197,7 +212,7 @@ export const FilterDropDown: FC<IFilterDropdownProps> = ({title, showDropdown, s
                                             cursor: 'pointer',
                                             borderRadius: 2,
                                         }}
-                                     >
+                                    >
                                         {label}
                                     </div>
                                 </li>
@@ -211,12 +226,19 @@ export const FilterDropDown: FC<IFilterDropdownProps> = ({title, showDropdown, s
     );
 }
 
-export const BidsFilterDropDown: FC<IBidsFilterDropdownProps> = ({title, showDropdown, setShowDropdown, items, handleChangePeriod, period}) => {
+export const BidsFilterDropDown: FC<IBidsFilterDropdownProps> = ({
+                                                                     title,
+                                                                     showDropdown,
+                                                                     setShowDropdown,
+                                                                     items,
+                                                                     handleChangePeriod,
+                                                                     period
+                                                                 }) => {
     return (
         <div className='dropdown-wrapper'>
             <button
                 onClick={() => setShowDropdown(!showDropdown)}
-                    className="trigger-button"
+                className="trigger-button"
                 style={{
                     // width: "auto",
                     // fontSize:10,
@@ -250,21 +272,40 @@ export const BidsFilterDropDown: FC<IBidsFilterDropdownProps> = ({title, showDro
             <div style={{display: 'flex', flexDirection: 'row'}}>
 
                 <ul className={showDropdown ? "active" : ""}
-                    style={{
-                        position: 'absolute',
-                        zIndex: 9,
-                        backgroundColor: 'black',
-                        // padding: 4,
-                        borderRadius: 8,
-                        maxHeight: 100,
-                        fontSize: 12,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-evenly',
-                }}>
+                    style={window.innerWidth <= 1440
+                        ? {
+                            position: 'absolute',
+                            zIndex: 9,
+                            backgroundColor: 'transparent',
+                            backdropFilter: 'blur(24px)',
+                            paddingLeft: 4,
+                            paddingRight: 4,
+                            borderRadius: 8,
+                            maxHeight: 240,
+                            fontSize: 16,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-evenly',
+                        }
+                        : {
+                            position: 'absolute',
+                            zIndex: 9,
+                            backgroundColor: 'transparent',
+                            backdropFilter: 'blur(24px)',
+                            paddingLeft: 4,
+                            paddingRight: 4,
+                            borderRadius: 8,
+                            maxHeight: 140,
+                            fontSize: 12,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-evenly',
+                        }
+                    }>
                     {items && items.map(item => {
                             return (
-                                <li style={{cursor: 'pointer', fontSize: 10}} onClick={() => handleChangePeriod(item.value)}>
+                                <li style={{cursor: 'pointer', marginTop: 4}}
+                                    onClick={() => handleChangePeriod(item.value)}>
                                     {item.label}
                                 </li>
                             )

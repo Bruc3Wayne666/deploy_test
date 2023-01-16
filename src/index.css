@@ -1005,6 +1005,11 @@ header {
     justify-content: center;
 }
 
+.frb-one-opt {
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+}
+
 .frb-one-opt:hover {
     color: grey;
 }
