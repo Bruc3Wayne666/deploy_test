@@ -14,7 +14,8 @@ interface TransferItemType {
     remainder_time?: number
     status: string
     wallet?: string
-    iden: number
+    iden: number,
+    username: string
 }
 
 interface TransferListType {
@@ -130,7 +131,8 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
     const {
         amount,
         iden,
-        status
+        status,
+        username
     } = transfer
 
     return (
@@ -142,6 +144,15 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
                 }}
             >
                 <h4>Идентификатор пополнения #{iden}</h4>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
+                <h4>Имя пользователя: <span style={{color: 'lightblue'}}>{username}</span></h4>
             </div>
 
             <div
