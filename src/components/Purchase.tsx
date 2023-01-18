@@ -692,15 +692,47 @@ const Purchase: FC = () => {
                     />
                     :
                     method === 'usd'
-                        ? transferListUSDT?.result
-                            .map(transfer => (<TransferItemUSDT
-                                sendAddress={sendAddress}
-                                transfer={transfer}
-                            />))
-                        : transferListCWD?.result
-                            .map(transfer => (<TransferItemCWD
-                                transfer={transfer}
-                            />))
+                        ? transferListUSDT?.result.length === 0
+                            ? <div style={{
+                                height: '50vh',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                color: 'grey'
+                            }}>
+                                <img
+                                    src={require('../assets/svg/no_history.svg').default}
+                                    alt=""
+                                    height={140}
+                                />
+                                Нету новых пополнений USDT
+                            </div>
+                            : transferListUSDT?.result
+                                .map(transfer => (<TransferItemUSDT
+                                    sendAddress={sendAddress}
+                                    transfer={transfer}
+                                />))
+                        : transferListCWD?.result.length === 0
+                            ? <div style={{
+                                height: '50vh',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                color: 'grey'
+                            }}>
+                                <img
+                                    src={require('../assets/svg/no_history.svg').default}
+                                    alt=""
+                                    height={140}
+                                />
+                                Нету новых пополнений CWD
+                            </div>
+                            : transferListCWD?.result
+                                .map(transfer => (<TransferItemCWD
+                                    transfer={transfer}
+                                />))
             }
         </div>
     );
