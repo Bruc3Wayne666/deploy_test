@@ -196,7 +196,6 @@ const PurchaseMethod: FC<any> = ({
                                      handleChangeMethod,
                                      method
                                  }: { handleChangeMethod: (val: string) => any, method: string }) => {
-    // const [purchase, setPurchase] = useState('usd')
 
     return (
         <div className="purchaseSwitcher">

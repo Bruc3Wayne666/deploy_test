@@ -35,8 +35,8 @@ const LeagueItem: FC<any> = ({filter, result}) => {
                         height={20}
                     />
                 </div>
-                <span>{                        //@ts-ignore
-
+                <span>{
+                    //@ts-ignore
                     COUNTRIES[league[2]].ru_name
                 }. {league[1]}</span>
             </div>
@@ -281,9 +281,7 @@ const Live = () => {
         return (
             <div
                 style={{
-                    // height: window.innerWidth <= 1440 ? '80vh' : '',
                     marginTop: window.innerWidth > 1440 ? 160 : '60%',
-                    // border: '1px solid white',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -357,27 +355,27 @@ const Live = () => {
                                 </div>
                                 :
                                 <div className="table-one-cat">
-                                        {
-                                            Object.keys(leagueList)
-                                                .map(sp => {
-                                                    // @ts-ignore
-                                                    return Object.keys(leagueList[sp])
-                                                        .map(co => {
-                                                            // @ts-ignore
-                                                            return leagueList[sp][co]
-                                                                .map((league: any[]) => {
-                                                                    return <LeagueItem
-                                                                        filter={{
-                                                                            league,
-                                                                            status: params.game_status
-                                                                        }}
-                                                                        result={result}
-                                                                    />
-                                                                })
-                                                        })
-                                                })
-                                        }
-                                    </div>
+                                    {
+                                        Object.keys(leagueList)
+                                            .map(sp => {
+                                                // @ts-ignore
+                                                return Object.keys(leagueList[sp])
+                                                    .map(co => {
+                                                        // @ts-ignore
+                                                        return leagueList[sp][co]
+                                                            .map((league: any[]) => {
+                                                                return <LeagueItem
+                                                                    filter={{
+                                                                        league,
+                                                                        status: params.game_status
+                                                                    }}
+                                                                    result={result}
+                                                                />
+                                                            })
+                                                    })
+                                            })
+                                    }
+                                </div>
                     }
                 </div>
             </div>

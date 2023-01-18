@@ -1,9 +1,6 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {useAppDispatch} from "../hooks/redux";
 import {login, register} from '../store/reducers/auth/authActions';
-
-// @ts-ignore
-// import {useAlert} from 'react-alert';
 import axios from "axios";
 
 
@@ -106,7 +103,6 @@ const Authorize: FC = () => {
                     }}
                 >
                 </div>
-                {/*<button type={'submit'}>Войти</button>*/}
                 <Button value={'Отправить пароль'}/>
 
                 <p
@@ -137,7 +133,6 @@ const Authorize: FC = () => {
                             <img
                                 src={require('../assets/auth_logo.jpeg')}
                                 height={90}
-                                // width={90}
                                 alt="GPBet"
                                 style={{borderRadius: 8}}
                             />
@@ -183,9 +178,6 @@ const Authorize: FC = () => {
                                     position: 'absolute',
                                     marginBottom: 10,
                                     marginLeft: window.innerWidth > 1440 ? 400 : 200
-                                    // left: 8,
-                                    // top: 8,
-                                    // zIndex: 9999
                                 }}
                             />
                             <input
@@ -196,34 +188,12 @@ const Authorize: FC = () => {
                             />
                         </div>
 
-
-                        <div
-                            style={{
-                                fontSize: 16,
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: "center"
-                            }}
-                        >
-                            {/*<p>Запомнить&nbsp;меня</p>*/}
-                            {/*<input*/}
-                            {/*    checked={form.remember}*/}
-                            {/*    style={{*/}
-                            {/*        margin: 'auto',*/}
-                            {/*        marginLeft: 6*/}
-                            {/*    }}*/}
-                            {/*    onChange={e => setForm({...form, remember: e.target.checked})}*/}
-                            {/*    type={'checkbox'}*/}
-                            {/*/>*/}
-                        </div>
                         <div
                             style={{
                                 display: 'flex',
-                                // marginTop: 12
                             }}
                         >
                         </div>
-                        {/*<button type={'submit'}>Войти</button>*/}
                         <Button value={'Войти'}/>
 
                         <button
@@ -261,15 +231,6 @@ const Authorize: FC = () => {
                         >
                             Забыли пароль?
                         </p>
-
-                        {/*<p className='suggest-reg'>Ещё нету аккаунта? <span onClick={() => {*/}
-                        {/*    setType('register')*/}
-                        {/*    setForm({*/}
-                        {/*        login: '',*/}
-                        {/*        password: '',*/}
-                        {/*        remember: false*/}
-                        {/*    })*/}
-                        {/*}}>Зарегистрироваться!</span></p>*/}
                     </>
 
                     :
@@ -285,7 +246,6 @@ const Authorize: FC = () => {
                             <img
                                 src={require('../assets/auth_logo.jpeg')}
                                 height={90}
-                                // width={90}
                                 alt="GPBet"
                                 style={{borderRadius: 8}}
                             />
@@ -307,7 +267,6 @@ const Authorize: FC = () => {
                         >
 
                         </div>
-                        {/*<button style={{width: 240}} type={'submit'}>Зарегистрироваться!</button>*/}
                         <Button value={'Зарегистрироваться!'}/>
 
                         <p style={{marginBottom: 200}}>Уже есть аккаунт? <span onClick={() => {

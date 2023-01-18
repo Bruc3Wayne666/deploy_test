@@ -167,8 +167,6 @@ export const ModalForm: FC<{
                     flex: 1
                 }}
             >
-                {/*<img src={require('../assets/icons8-tick-64.png')} alt=""/>*/}
-
                 <div className="icon icon--order-success svg">
                     <svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">
                         <g fill="none" stroke="#22AE73" strokeWidth="2">
@@ -284,11 +282,8 @@ export const ModalForm: FC<{
                             {away_team}
                     </div>
                     </div>
-                    {/*<img src={require('../assets/cs.png')} height={24} alt=""/>*/}
                 </span>
-                        {/*<div className="status">LIVE</div>*/}
                         <div className="status">НЕ НАЧАЛСЯ</div>
-                        {/*<div className="count">2:0</div>*/}
                     </div>
                     <div className="totals">
                 <span>

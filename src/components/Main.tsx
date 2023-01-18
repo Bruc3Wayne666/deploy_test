@@ -31,9 +31,6 @@ const LeagueItem:
     return league[3] !== 0 ? (
         <>
             <div className="toc-title">
-                {/*<div className="global-ico gi-star">*/}
-
-                {/*</div>*/}
                 <div className="global-ico">
                     <img
                         src={
@@ -44,8 +41,8 @@ const LeagueItem:
                         height={20}
                     />
                 </div>
-                <span>{                        //@ts-ignore
-
+                <span>{
+                    //@ts-ignore
                     COUNTRIES[league[2]].ru_name
                 }. {league[1]}</span>
             </div>
@@ -452,9 +449,7 @@ const Main: FC = () => {
         return (
             <div
                 style={{
-                    // height: window.innerWidth <= 1440 ? '80vh' : '',
                     marginTop: window.innerWidth > 1440 ? 160 : '60%',
-                    // border: '1px solid white',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -573,7 +568,6 @@ const Main: FC = () => {
                                                 .map(co => {
                                                     // @ts-ignore
                                                     return leagueList[sp][co]
-                                                        // eslint-disable-next-line array-callback-return
                                                         .map((league: any[]) => {
                                                             if (params.country === 'all') {
                                                                 return <LeagueItem
@@ -629,10 +623,8 @@ const Main: FC = () => {
                                                 country: 'all'
                                             })}
                                             className="one-rcm-menu">
-                                            {/*<div className="global-ico gi-football">*/}
                                             <img src={require(`../assets/images/${sportGame}.png`)} height={20}
                                                  alt={sportGame} style={{marginRight: 12}}/>
-                                            {/*</div>*/}
                                             <div className="rcm-title">{
                                                 //@ts-ignore
                                                 SPORTS[sportGame].ru_name}</div>

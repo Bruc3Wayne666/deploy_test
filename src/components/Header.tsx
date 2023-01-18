@@ -1,51 +1,7 @@
 import React, {FC} from 'react';
 import {Link} from 'react-router-dom';
-// import {Slide} from 'react-slideshow-image';
 import '../index.css'
 
-// const SimpleSlider: FC<any> = () => {
-// return (
-//     <ImageSlider effectDelay={500} autoPlayDelay={3000}>
-//         <Slide>
-//             <div>
-//                 <span
-//                     style={{fontWeight: 'bold'}}>2 000 <div
-//                     className="global-ico gi-coin"
-//                 /></span> новым игрокам<br/>в приложении
-//             </div>
-//         </Slide>
-//         <Slide>
-//             <div>
-//                 <span
-//                     style={{fontWeight: 'bold'}}><div
-//                     className="global-ico gi-coin"
-//                 /></span> Бонус всем новым клиентам<br/>до 15 000
-//             </div>
-//         </Slide>
-//         <Slide>
-//             <div>
-//                 <span
-//                     style={{fontWeight: 'bold'}}><div
-//                     className="global-ico gi-coin"
-//                 /></span>VIP-кешбек<br/>до 5% каждый месяц
-//             </div>
-//         </Slide>
-//     </ImageSlider>
-// )
-// return (
-//     <div className="slide-container">
-//         <Slide>
-//             {[1,2,3,4,5,6,7,8,9].map((slideImage, index)=> (
-//                 <div className="each-slide" key={index}>
-//                     <div>
-//                         <span>l;k,lkmk</span>
-//                     </div>
-//                 </div>
-//             ))}
-//         </Slide>
-//     </div>
-// )
-// }
 
 const Header: FC = () => {
     return (

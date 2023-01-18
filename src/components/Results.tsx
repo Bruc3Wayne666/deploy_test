@@ -204,50 +204,6 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     )
 }
 
-// const RightBar: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
-//     // const [sportList, setSportList] = useState<any>({})
-//     //
-//     // useEffect(() => {
-//     //     const fetchSportList = async () => {
-//     //         const {data} = await axios.get('http://gpbetapi.ru/sport_list')
-//     //         setSportList(data)
-//     //     }
-//     //     fetchSportList()
-//     // }, [])
-//
-//     return (
-//         <div id="two-right">
-//
-//             <PopEvent
-//                 handleSetCurrentGame={handleSetCurrentGame}
-//                 handleChangeShowModal={handleChangeShowModal}
-//                 handleSetCurrentBet={handleSetCurrentBet}
-//             />
-//             <div id="right-col-menu">
-//                 {
-//                     Object.keys(SPORTS)
-//                         .map(sportGame => {
-//                             if (sportGame !== 'all') {
-//                                 return (
-//                                     <div className="one-rcm-menu">
-//                                         {/*<div className="global-ico gi-football">*/}
-//                                         <img src={require(`../assets/images/${sportGame}.png`)} height={20}
-//                                              alt={sportGame} style={{marginRight: 12}}/>
-//                                         {/*</div>*/}
-//                                         <Link to={`/${sportGame}`}
-//                                               className="rcm-title">{
-//                                             //@ts-ignore
-//                                             SPORTS[sportGame].ru_name}</Link>
-//                                     </div>
-//                                 )
-//                             }
-//                         })
-//                 }
-//             </div>
-//         </div>
-//     )
-// }
-
 const LeagueItem: FC<any> = ({filter, result}) => {
     const {league} = filter
 

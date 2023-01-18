@@ -240,17 +240,6 @@ export const BidsFilterDropDown: FC<IBidsFilterDropdownProps> = ({
                 onClick={() => setShowDropdown(!showDropdown)}
                 className="trigger-button"
                 style={{
-                    // width: "auto",
-                    // fontSize:10,
-                    // border: '1px solid #E6E6E6',
-                    // background: '#087537',
-                    // padding: '6px 8px',
-                    // borderRadius: 5,
-                    // marginRight: 10,
-                    // display: 'flex',
-                    // flexDirection: 'column',
-                    // justifyContent: 'center',
-                    // alignItems: 'center'
                     display: 'flex',
                     justifyContent: 'flex-start',
                     backgroundColor: 'transparent',
