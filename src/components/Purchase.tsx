@@ -637,7 +637,7 @@ const Purchase: FC = () => {
             user_id: session,
             user_cwd_account: account
         })
-        if (data === 'No new additions') return alert('Нету новых пополнений')
+        if (data === 'No new additions') return alert('Нет новых пополнений')
         // @ts-ignore
         else setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
     }, [session, account])
@@ -730,7 +730,7 @@ const Purchase: FC = () => {
                                     alt=""
                                     height={140}
                                 />
-                                Нету новых пополнений USDT
+                                Нет новых пополнений USDT
                             </div>
                             : transferListUSDT?.result
                                 .map(transfer => (<TransferItemUSDT
@@ -751,7 +751,7 @@ const Purchase: FC = () => {
                                     alt=""
                                     height={140}
                                 />
-                                Нету новых пополнений CWD
+                                Нет новых пополнений CWD
                             </div>
                             : transferListCWD?.result
                                 .map(transfer => (<TransferItemCWD

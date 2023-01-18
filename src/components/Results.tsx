@@ -57,7 +57,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                 alignItems: 'center'
             }}>
                 <div className="one-ps-menu">
-                    Нету популярных событий
+                    Нет популярных событий
                 </div>
             </div>
         </div>
@@ -191,7 +191,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
                                 color: 'lightgray'
                             }}
                         >
-                            <h3>Нету матча в текущем виде спорта</h3>
+                            <h3>Нет матча в текущем виде спорта</h3>
                         </div>
                 }
             </div>
@@ -664,7 +664,7 @@ const Results: FC<any> = () => {
                             fontSize: 18
                         }}
                     >
-                        В данный момент нету идущих событий
+                        В данный момент нет идущих событий
                     </p>
                     <button
                         onClick={() => navigate(-1)}

@@ -386,7 +386,7 @@ const Purchase: FC = () => {
                                 alt=""
                                 height={140}
                             />
-                            Нету новых выплат
+                            Нет новых выплат
                         </div>
                         : drawalsList?.results
                             .map(drawal => (<DrawalItem
