@@ -354,6 +354,7 @@ const Purchase: FC = () => {
             }
 
             {
+                drawalsList?.results.length !== 0 &&
                 pathname === '/income' &&
                 <div
                     style={{
@@ -363,7 +364,7 @@ const Purchase: FC = () => {
                         marginTop: 20
                     }}
                 >
-                    <span>Последняя выплата</span>
+                    <p style={{color: 'grey'}}>Последняя выплата:</p>
                 </div>
             }
             {
@@ -371,10 +372,26 @@ const Purchase: FC = () => {
                     ? drawalsList?.results[0] && <DrawalItem
                     drawal={drawalsList.results[0]}
                 />
-                    : drawalsList?.results
-                        .map(drawal => (<DrawalItem
-                            drawal={drawal}
-                        />))
+                    : drawalsList?.results.length === 0
+                        ? <div style={{
+                            height: '50vh',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            color: 'grey'
+                        }}>
+                            <img
+                                src={require('../assets/svg/no_history.svg').default}
+                                alt=""
+                                height={140}
+                            />
+                            Нету новых выплат
+                        </div>
+                        : drawalsList?.results
+                            .map(drawal => (<DrawalItem
+                                drawal={drawal}
+                            />))
             }
         </div>
     );

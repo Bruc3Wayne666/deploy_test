@@ -383,9 +383,9 @@ const Info = React.memo(
                     <p style={{marginBottom: 4}}>1 - Вкладка «финансы»</p>
                     <p style={{marginBottom: 4}}>2 - Кнопка «отправить»</p>
                     <p style={{marginBottom: 4}}>3 - В строку «имя аккаунта» необходимо ввести <span onClick={() => {
-                        navigator.clipboard.writeText('green-price')
+                        navigator.clipboard.writeText('gpbet1')
                             .then(() => alert('Аккаунт скопирован в буфер обмена'))
-                    }} style={{fontWeight: 'bold', color: '#cc9933', cursor: 'pointer'}}>green-price</span></p>
+                    }} style={{fontWeight: 'bold', color: '#cc9933', cursor: 'pointer'}}>gpbet1</span></p>
                     <p style={{marginBottom: 4}}>4 - Указать необходимое количество CWD, которое вы хотите пополнить</p>
                     <br/>
                     <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставка /указать
@@ -450,11 +450,11 @@ const Info = React.memo(
                     <h3
                         className='transfer-address'
                         onClick={() => {
-                            navigator.clipboard.writeText('green-price')
+                            navigator.clipboard.writeText('gpbet1')
                                 .then(() => alert('Аккаунт скопирован в буфер обмена'))
                         }}
                     >
-                        <span style={{fontSize: 24}}>green-price</span>
+                        <span style={{fontSize: 24}}>gpbet1</span>
                     </h3>
 
                     <br/>
@@ -678,6 +678,19 @@ const Purchase: FC = () => {
                     method={method}
                     account={account}
                 />
+            }
+
+            {
+                pathname === '/purchase' &&
+                method === 'usd'
+                    ? transferListUSDT?.result.length !== 0 &&
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
+                        <p style={{color: 'grey'}}>Последнее пополнение:</p>
+                    </div>
+                    : transferListCWD?.result.length !== 0 &&
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
+                        <p style={{color: 'grey'}}>Последнее пополнение:</p>
+                    </div>
             }
 
             {
