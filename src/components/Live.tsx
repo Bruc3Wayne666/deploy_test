@@ -199,7 +199,7 @@ const Live = () => {
             hours: '-'
         },
         search: '-',
-        pic: -1
+        pic: 0
     }
 
     const handleChangeParams = (params: {
@@ -278,7 +278,7 @@ const Live = () => {
         }
         , [params])
 
-    if (result === -1) {
+    if (result === 0 && isEqual(params, stock)) {
         return (
             <div
                 style={{

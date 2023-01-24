@@ -13,6 +13,8 @@ import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import {FilterDropDown} from "./CustomDropdown";
 import Dropdown from "react-dropdown";
+// @ts-ignore
+import isEqual from "lodash/isEqual";
 
 
 const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleSetCurrentBet}) => {
@@ -518,6 +520,23 @@ const Results: FC<any> = () => {
             pic: 1
         })
 
+        const stock = {
+            sport_name: 'all',
+            game_status: 'all',
+            quotes: 'all',
+            country: 'all',
+            league_id: 'all',
+            days: 10,
+            one_day: 0,
+            sort_number: false,
+            beautiful_time_start: {
+                date: '-',
+                hours: '-'
+            },
+            search: '-',
+            pic: 1
+        }
+
         const handleChangeParams = (params: {
             sport_name: string,
             game_status: string,
@@ -581,7 +600,7 @@ const Results: FC<any> = () => {
         }, [params])
 
 
-        if (result === 0) {
+        if (result === 1 && isEqual(params, stock)) {
             window.scrollTo(0, 0)
             return (
                 <div
