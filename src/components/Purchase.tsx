@@ -1,11 +1,11 @@
-import React, {FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import axios from "axios";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {IProfileState} from "../store/reducers/profile/profileSlice";
 import {ApiService} from "../api";
 import {logout} from "../store/reducers/auth/authSlice";
 import Switch from "react-switch";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 
 interface TransferItemType {
@@ -14,7 +14,8 @@ interface TransferItemType {
     remainder_time?: number
     status: string
     wallet?: string
-    iden: number,
+    iden: number
+    ost?: number
     username: string
 }
 
@@ -131,6 +132,7 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
     const {
         amount,
         iden,
+        ost,
         status,
         username
     } = transfer
@@ -152,24 +154,33 @@ const TransferItemCWD: FC<TransferItemProps> = ({transfer, handlePress}) => {
                     alignItems: 'center',
                 }}
             >
-                <h4>Имя пользователя: <span style={{color: 'lightblue'}}>{username}</span></h4>
+                <h4>Имя пользователя: <span
+                    onClick={() => navigator.clipboard.writeText(username)}
+                    style={{color: 'lightblue'}}>{username}</span></h4>
             </div>
 
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <h3>
-                    <p style={{marginBottom: 10}}>Успешно зачислено на баланс:</p>
-                    <p/>
-                    <span style={{color: 'gold', fontWeight: 900}}>{amount}</span>
-                </h3>
-                <br/>
-            </div>
-
-
+            {
+                status === 'in_work'
+                    ? <h3>Адрес актуален: <b
+                        style={{color: 'yellow'}}>{ost}</b> минут</h3>
+                    : status === 'success'
+                        ? <h3>Пополнено на <b>{amount}</b></h3>
+                        :
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <img
+                                src={require('../assets/images/purchase/times.svg').default}
+                                alt=""
+                                height={26}
+                                style={{marginRight: 14}}
+                            />
+                            <h3 style={{marginTop: 18}}>Адрес не актуален (просрочен)</h3>
+                        </div>
+            }
         </div>
     )
 }
@@ -399,8 +410,7 @@ const Info = React.memo(
                     }} style={{fontWeight: 'bold', color: '#cc9933', cursor: 'pointer'}}>gpbet1</span></p>
                     <p style={{marginBottom: 4}}>4 - Указать необходимое количество CWD, которое вы хотите пополнить</p>
                     <br/>
-                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставка /указать
-                        необходимое количество/ CWD</p>
+                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставки 150 CWD</p>
                 </div>
 
                 <br/>
@@ -469,7 +479,7 @@ const Info = React.memo(
                     </h3>
 
                     <br/>
-                    <p>Введите аккаунт с которого пополняли</p>
+                    <p>Введите аккаунт с которого пополните</p>
                     <input
                         onChange={e => handleChangeAccount(e.target.value)}
                         placeholder={account === '' ? 'Введите аккаунт' : 'none'}
@@ -570,7 +580,6 @@ const Purchase: FC = () => {
     const dispatch = useAppDispatch()
     const [account, setAccount] = useState('')
     const [showHelp, setShowHelp] = useState(false)
-    // const [showAll, setShowAll] = useState(true)
 
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -638,8 +647,11 @@ const Purchase: FC = () => {
             user_cwd_account: account
         })
         if (data === 'No new additions') return alert('Нет новых пополнений')
+        if (data === 'There is already an application with this account in the system') return alert('Что здесь надо вывести?')
         // @ts-ignore
-        else setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
+        if (data === '') return alert('Неправильно введён аккаунт')
+        // @ts-ignore
+        setTransferListCWD(prevState => ({...prevState, result: [data, ...prevState?.result]}))
     }, [session, account])
 
     const getTransferList = useCallback(async () => {
@@ -666,9 +678,6 @@ const Purchase: FC = () => {
             })
 
         window.scrollTo(0, 0)
-
-
-        // return () => clearInterval(interval)
     }, [session, method])
 
     if (showHelp) return <Help setShowHelp={handleShowHelp}/>

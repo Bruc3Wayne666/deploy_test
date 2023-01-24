@@ -204,7 +204,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     )
 }
 
-const LeagueItem: FC<any> = ({filter, result}) => {
+const LeagueItem: FC<any> = ({filter, result, f_status}) => {
     const {league} = filter
 
     return (league[3] + league[4] + league[5]) !== 0 ? (
@@ -223,8 +223,8 @@ const LeagueItem: FC<any> = ({filter, result}) => {
                         height={20}
                     />
                 </div>
-                <span>{                        //@ts-ignore
-
+                <span>{
+                    //@ts-ignore
                     COUNTRIES[league[2]].ru_name
                 }. {league[1]}</span>
             </div>
@@ -253,12 +253,12 @@ const LeagueItem: FC<any> = ({filter, result}) => {
                                                         }[status]}
 
                                                         game={result.country[co][sport][status][game]}
+                                                        key={index}
                                                     />
                                             })
                                     })
                             })
                     })
-
             }
         </>
     ) : <></>
@@ -275,7 +275,6 @@ const GameItem:
               status
           }) => {
     const {name, score, beautiful_time_start} = game
-    // const time = new Date(time_start)
 
     const styles = {
         'НЕ НАЧАЛСЯ': 's-orange',
@@ -340,29 +339,6 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
     return (
         <div className="filter-results">
             <div className="fr-bttns">
-
-                {/*<FilterDropDown*/}
-                {/*    title={'Вид спорта'}*/}
-                {/*    showDropdown={showSportDropdown}*/}
-                {/*    setShowDropdown={() => setShowSportDropdown(!showSportDropdown)}*/}
-                {/*    items={*/}
-                {/*    Object.keys(sportList)*/}
-                {/*        .map(sportGame => ({*/}
-                {/*            value: sportGame,*/}
-                {/*            label: sportList[sportGame].ru_name,*/}
-                {/*            className: 'frb-one-opt'*/}
-                {/*        }))*/}
-                {/*    }*/}
-                {/*    changeParams={(val: string) => handleChangeParams({...params, sport_name: val})}*/}
-                {/*/>*/}
-
-                {/*<FilterDropDown*/}
-                {/*    title={'Все события'}*/}
-                {/*    showDropdown={showEventDropdown}*/}
-                {/*    setShowDropdown={() => setShowEventDropdown(!showEventDropdown)}*/}
-                {/*    items={events_opts}*/}
-                {/*    changeParams={(val: string) => handleChangeParams({...params, game_status: val})}*/}
-                {/*/>*/}
 
                 <Dropdown options={
                     Object.keys(sportList)
@@ -538,7 +514,8 @@ const Results: FC<any> = () => {
                 date: '-',
                 hours: '-'
             },
-            search: '-'
+            search: '-',
+            pic: 1
         })
 
         const handleChangeParams = (params: {
@@ -554,7 +531,8 @@ const Results: FC<any> = () => {
                 date: string,
                 hours: string
             },
-            search: string
+            search: string,
+            pic: number
         }) => {
             setParams({...params})
         }
@@ -603,7 +581,7 @@ const Results: FC<any> = () => {
         }, [params])
 
 
-        if (result === 0 || result === null) {
+        if (result === 0) {
             window.scrollTo(0, 0)
             return (
                 <div
@@ -692,12 +670,12 @@ const Results: FC<any> = () => {
                                                             return leagueList[sp][co]
                                                                 .map((league: any[]) => {
                                                                     return <LeagueItem
-                                                                        filter={{
-                                                                            league,
-                                                                            status: params.game_status
-                                                                        }}
-                                                                        result={result}
-                                                                    />
+                                                                            filter={{
+                                                                                league,
+                                                                            }}
+                                                                            f_status={params.game_status}
+                                                                            result={result}
+                                                                        />
                                                                 })
                                                         })
                                                 })

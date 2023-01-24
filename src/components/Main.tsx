@@ -365,7 +365,8 @@ const Main: FC = () => {
         one_day: 0,
         sort_number: false,
         beautiful_time_start: '- -',
-        search: '-'
+        search: '-',
+        pic: 0
     })
     const [currentGame, setCurrentGame] = useState<IGame | null>(null)
     const [currentBet, setCurrentBet] = useState({
@@ -385,7 +386,8 @@ const Main: FC = () => {
         one_day: number,
         sort_number: boolean
         beautiful_time_start: string,
-        search: string
+        search: string,
+        pic: number
     }) => {
         setParams({...params})
     }
@@ -395,7 +397,7 @@ const Main: FC = () => {
     }
 
     const handleChangeShowModal = (value: boolean) => {
-        if (session){
+        if (session) {
             setShowModal(value)
         } else {
             window.location.href = '/profile'
@@ -444,8 +446,8 @@ const Main: FC = () => {
         window.scrollTo(0, 0)
     }, [session])
 
-
-    if (result === 0 || result === null) {
+    // @ts-ignore
+    if (result === 0) {
         return (
             <div
                 style={{
@@ -558,42 +560,43 @@ const Main: FC = () => {
                             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                 <img src={spinner} alt="Loading results..."/>
                             </div>
-                            :
-                            <div className="table-one-cat">
-                                {
-                                    Object.keys(leagueList)
-                                        .map(sp => {
-                                            // @ts-ignore
-                                            return Object.keys(leagueList[sp])
-                                                .map(co => {
-                                                    // @ts-ignore
-                                                    return leagueList[sp][co]
-                                                        .map((league: any[]) => {
-                                                            if (params.country === 'all') {
-                                                                return <LeagueItem
-                                                                    league={league}
-                                                                    result={result}
-                                                                    showParam={showParam}
-                                                                    handleChangeShowModal={handleChangeShowModal}
-                                                                    handleSetCurrentGame={handleSetCurrentGame}
-                                                                    handleSetCurrentBet={handleSetCurrentBet}
-                                                                />
-                                                            } else if (params.country === co) {
-                                                                return <LeagueItem
-                                                                    league={league}
-                                                                    result={result}
-                                                                    showParam={showParam}
-                                                                    handleChangeShowModal={handleChangeShowModal}
-                                                                    handleSetCurrentGame={handleSetCurrentGame}
-                                                                    handleSetCurrentBet={handleSetCurrentBet}
-                                                                />
-                                                            }
-                                                        })
-                                                })
-                                        })
-                                }
+                            : result === 1
+                                ? <h1>[штука что нету матчей у такого спорта]</h1>
+                                : <div className="table-one-cat">
+                                    {
+                                        Object.keys(leagueList)
+                                            .map(sp => {
+                                                // @ts-ignore
+                                                return Object.keys(leagueList[sp])
+                                                    .map(co => {
+                                                        // @ts-ignore
+                                                        return leagueList[sp][co]
+                                                            .map((league: any[]) => {
+                                                                if (params.country === 'all') {
+                                                                    return <LeagueItem
+                                                                        league={league}
+                                                                        result={result}
+                                                                        showParam={showParam}
+                                                                        handleChangeShowModal={handleChangeShowModal}
+                                                                        handleSetCurrentGame={handleSetCurrentGame}
+                                                                        handleSetCurrentBet={handleSetCurrentBet}
+                                                                    />
+                                                                } else if (params.country === co) {
+                                                                    return <LeagueItem
+                                                                        league={league}
+                                                                        result={result}
+                                                                        showParam={showParam}
+                                                                        handleChangeShowModal={handleChangeShowModal}
+                                                                        handleSetCurrentGame={handleSetCurrentGame}
+                                                                        handleSetCurrentBet={handleSetCurrentBet}
+                                                                    />
+                                                                }
+                                                            })
+                                                    })
+                                            })
+                                    }
 
-                            </div>
+                                </div>
                     }
                 </div>
 
@@ -652,7 +655,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
         return data
     }, [sport])
 
-    const fetchSportList = useCallback( async () => {
+    const fetchSportList = useCallback(async () => {
         const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/sport_list`)
         if (Object.keys(data).length >= 2) {
             setSport(Object.keys(data)[1])

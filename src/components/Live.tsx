@@ -79,8 +79,6 @@ const GameItem:
           }) => {
     const {name, score, beautiful_time_start} = game
 
-    const currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-
     return (
         <div className="toc-item-res">
             <div className="tocir-num">{++ind}</div>
@@ -116,13 +114,13 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
                             return ({
                                 value: sportGame,
                                 label: sportList[sportGame].ru_name,
-                                className: 'frb-one-opt'
+                                className: 'frb-one-opt2'
                             })
                         })
                 }
                           placeholder={'Вид спорта'}
                           controlClassName={'frb-one-f'}
-                          menuClassName={'frb-one-opts'}
+                          menuClassName={'frb-one-opts2'}
                           onChange={e => handleChangeParams({...params, sport_name: e.value})}
                 />
 
@@ -184,7 +182,8 @@ const Live = () => {
             date: '-',
             hours: '-'
         },
-        search: '-'
+        search: '-',
+        pic: 0
     })
     const stock = {
         sport_name: 'all',
@@ -199,7 +198,8 @@ const Live = () => {
             date: '-',
             hours: '-'
         },
-        search: '-'
+        search: '-',
+        pic: -1
     }
 
     const handleChangeParams = (params: {
@@ -215,7 +215,8 @@ const Live = () => {
             date: string,
             hours: string
         },
-        search: string
+        search: string,
+        pic: number
     }) => {
         setParams({...params})
     }
@@ -277,7 +278,7 @@ const Live = () => {
         }
         , [params])
 
-    if ((result === 0 || result === null) && !isActive) {
+    if (result === -1) {
         return (
             <div
                 style={{
@@ -335,7 +336,8 @@ const Live = () => {
                                 <img src={spinner} alt="Loading results..."/>
                             </div>
                             :
-                            (result === 1 && !isEqual(params, stock)) ?
+                            // (result === 0 && !isEqual(params, stock)) ?
+                            result === 0 ?
                                 <div className="table-one-cat">
                                     <div style={{
                                         display: 'flex',

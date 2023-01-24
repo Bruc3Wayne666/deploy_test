@@ -55,7 +55,8 @@ export class ApiService {
             one_day: number,
             sort_number: boolean,
             beautiful_time_start: string,
-            search: string
+            search: string,
+            pic?: number
         }
     ): Promise<GamePayloadType> {
         const {data} = await instance.post('game_list', {...params, one_day: -1, days: -1})

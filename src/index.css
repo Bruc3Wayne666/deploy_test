@@ -1010,6 +1010,33 @@ header {
     backdrop-filter: blur(10px);
 }
 
+
+.frb-one-opts2 {
+    position: absolute;
+    /*top: 100%;*/
+    z-index: 99999;
+    /*overflow-y: hidden;*/
+    cursor: pointer;
+    font-size: 9px;
+    background-color: black;
+    /*margin-top: -12px;*/
+    line-height: 20px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 370px;
+    justify-content: center;
+}
+
+.frb-one-opt2 {
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+}
+
 .frb-one-opt:hover {
     color: grey;
 }

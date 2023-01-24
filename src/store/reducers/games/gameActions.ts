@@ -14,7 +14,8 @@ export const getGames = createAsyncThunk(
             one_day,
             sort_number,
             beautiful_time_start,
-            search
+            search,
+            pic
         }: {
             sport_name: string,
             game_status: string,
@@ -25,7 +26,8 @@ export const getGames = createAsyncThunk(
             one_day: number,
             sort_number: boolean,
             beautiful_time_start: string,
-            search: string
+            search: string,
+            pic? : number
         },
         {rejectWithValue}
     ) => {
@@ -40,7 +42,8 @@ export const getGames = createAsyncThunk(
                 one_day,
                 sort_number,
                 beautiful_time_start,
-                search
+                search,
+                pic
             })
         } catch (e) {
             return rejectWithValue(e)
