@@ -647,7 +647,7 @@ const Purchase: FC = () => {
             user_cwd_account: account
         })
         if (data === 'No new additions') return alert('Нет новых пополнений')
-        if (data === 'There is already an application with this account in the system') return alert('Что здесь надо вывести?')
+        if (data === 'There is already an application with this account in the system') return alert('С этого аккаунта уже хотят пополнить баланс')
         // @ts-ignore
         if (data === '') return alert('Неправильно введён аккаунт')
         // @ts-ignore
