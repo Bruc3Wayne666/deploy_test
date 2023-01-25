@@ -299,6 +299,8 @@ const Info = React.memo(
                     />
 
                     <a
+                        target='_blank'
+                        rel='noreferrer'
                         href='https://www.bestchange.ru/qiwi-to-tether-trc20.html'
                     >
                         <h3 className='exchanger-list'><b style={{color: 'lightgreen'}}>Список обменников</b></h3>
@@ -402,15 +404,19 @@ const Info = React.memo(
                 >
                     <h3 style={{margin: 'auto'}}>Как переводить средства:</h3>
                     <br/>
-                    <p style={{marginBottom: 4}}>1 - Вкладка «финансы»</p>
-                    <p style={{marginBottom: 4}}>2 - Кнопка «отправить»</p>
-                    <p style={{marginBottom: 4}}>3 - В строку «имя аккаунта» необходимо ввести <span onClick={() => {
-                        navigator.clipboard.writeText('gpbet1')
-                            .then(() => alert('Аккаунт скопирован в буфер обмена'))
-                    }} style={{fontWeight: 'bold', color: '#cc9933', cursor: 'pointer'}}>gpbet1</span></p>
-                    <p style={{marginBottom: 4}}>4 - Указать необходимое количество CWD, которое вы хотите пополнить</p>
+                    <p style={{marginBottom: 4}}>1 - введите никнейм аккаунта с которого будете пополнять баланс</p>
+                    <p style={{marginBottom: 4}}>2 - создайте окно на сайте </p>
+                    <p style={{marginBottom: 4}}>3 - перейдите на сайт <span style={{cursor: 'pointer', textDecoration: 'underline'}}><a rel={'noreferrer'} target={'_blank'} href={'https://cwd.global'}>cwd.global</a></span></p>
+                    <p style={{marginBottom: 4}}>4 - откройте вкладку «финансы» и нажмите кнопку «отправить»</p>
+                    <p style={{marginBottom: 4}}>5 - в строку «имя аккаунта» необходимо ввести <span
+                        onClick={() => {
+                            navigator.clipboard.writeText('gpbet1')
+                            alert('Имя аккаунта скопировано')
+                        }}
+                        style={{fontWeight: 'bold', color: 'rgb(204, 153, 51)', cursor: 'pointer'}}>gpbet1</span></p>
+                    <p style={{marginBottom: 4}}>6 - указать необходимое количество CWD, на которое вы хотите пополнить</p>
                     <br/>
-                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставки 150 CWD</p>
+                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставки: <span>150</span></p>
                 </div>
 
                 <br/>
@@ -466,7 +472,7 @@ const Info = React.memo(
 
                 <br/>
 
-                <div className="transfer-item" style={{border: 'none'}}>
+                <div className="transfer-item" style={{border: 'none', paddingLeft: 0}}>
                     <h3>Переведите средства на аккаунт:</h3>
                     <h3
                         className='transfer-address'
@@ -508,7 +514,7 @@ const Info = React.memo(
                                 cursor: 'pointer'
                             }}
                         >
-                            Я пополнил
+                            Создать окно
                         </button>
                     </div>
                 </div>
