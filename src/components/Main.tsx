@@ -506,7 +506,7 @@ const Main: FC = () => {
                             SPORTS['all'].ru_name}</div>
                     </div>
                     {
-                        Object.keys(SPORTS)
+                        Object.keys(SPORTS).reverse()
                             .map((sportGame: string) => {
                                 if (sportGame !== 'all') {
                                     return (
@@ -614,7 +614,7 @@ const Main: FC = () => {
                 <div id="right-col-menu">
                     {
                         //@ts-ignore
-                        Object.keys(SPORTS)
+                        Object.keys(SPORTS).reverse()
                             .map(sportGame => {
                                 if (sportGame !== 'all') {
                                     // @ts-ignore
@@ -658,7 +658,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
     const fetchSportList = useCallback(async () => {
         const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/sport_list`)
         if (Object.keys(data).length >= 2) {
-            setSport(Object.keys(data)[1])
+            setSport(Object.keys(data).reverse()[0])
         }
         setSportList(data)
     }, [])
@@ -695,7 +695,7 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
             <div id="pop-sob-title">Популярные события</div>
             <div id="pop-sob-menu">
                 {
-                    Object.keys(sportList)
+                    Object.keys(sportList).reverse()
                         .map(sportGame => {
                             if (sportGame !== 'all') {
                                 return (
