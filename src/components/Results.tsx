@@ -290,7 +290,7 @@ const GameItem:
         <div className="toc-item-res">
             <div className="tocir-num">{++ind}</div>
             <div className="tocir-name">{name}</div>
-            <div className="tocir-results">{score}</div>
+            <div className="tocir-results">{score === null ? '---' : score}</div>
             <div className="torir-time">
                 <div className="global-ico gi-clock"/>
                 {
