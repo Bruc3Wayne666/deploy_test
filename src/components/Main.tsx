@@ -334,9 +334,9 @@ const FilterCase: FC<any> = ({sport, handleChangeShowParam}) => {
                 <div
                     onClick={() => handleChangeShowParam('Исход матча(основное время)')}
                     className="one-fl-case"><span>Исходы</span></div>
-                <div
-                    onClick={() => handleChangeShowParam('ТОТАЛ')}
-                    className="one-fl-case"><span>Тоталы</span></div>
+                {/*<div*/}
+                {/*    onClick={() => handleChangeShowParam('ТОТАЛ')}*/}
+                {/*    className="one-fl-case"><span>Тоталы</span></div>*/}
             </div>
         </div>
     )
@@ -375,6 +375,7 @@ const Main: FC = () => {
         id: 0
     })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
+    // const [showParam, setShowParam] = useState('ТОТАЛЫ')
     const [showModal, setShowModal] = useState(false)
 
     const handleChangeParams = (params: {
