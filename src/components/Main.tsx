@@ -516,7 +516,7 @@ const Main: FC = () => {
                         className="one-rec-menu">
                         <div className="orm-title">{
                             //@ts-ignore
-                            SPORTS['all'].ru_name}</div>
+                            sportList['all'].ru_name}</div>
                     </div>
                     {
                         Object.keys(sportList).reverse()
