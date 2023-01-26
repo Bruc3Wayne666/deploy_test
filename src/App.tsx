@@ -134,4 +134,21 @@ const App: FC = () => {
     )
 }
 
+export const InWork: FC = () => {
+    return (
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', flexDirection: 'column'}}>
+            <img
+                width={200}
+                src={require('./assets/svg/repair.svg').default}
+                alt=""
+            />
+            <br/>
+            <br/>
+            <h2>Ведутся технические работы</h2>
+            <br/>
+            <h4>Приносим свои извинения. Скоро всё будет!</h4>
+        </div>
+    )
+}
+
 export default App
