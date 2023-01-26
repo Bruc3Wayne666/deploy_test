@@ -23,6 +23,7 @@ import CyberSport from "./components/Cybers";
 import {logout, setSession} from "./store/reducers/auth/authSlice";
 import Help from "./components/Help";
 import Income from './components/Income';
+import ChatBox from "./components/ChatBox";
 
 
 const App: FC = () => {
@@ -30,19 +31,24 @@ const App: FC = () => {
     const dispatch = useAppDispatch()
     // const alert = useAlert()
 
+    // useEffect(() => {
+    //     const script = document.createElement('script');
+    //
+    //     script.src = 'https://code.jivo.ru/widget/MgAeR2eRHq';
+    //     script.async = true;
+    //
+    //     document.getElementById('chatbox')?.appendChild(script);
+    //
+    //     return () => {
+    //         document.getElementById('chatbox')?.removeChild(script);
+    //     }
+    // }, [])
 
     useEffect(() => {
         if (localStorage.getItem('isAuth') === 'true') {
             if (localStorage.getItem('password') || localStorage.getItem('login')) {
                 dispatch(logout())
             }
-            // dispatch(login({
-            //     // @ts-ignore
-            //     login: localStorage.getItem('login'),
-            //     // @ts-ignore
-            //     password: localStorage.getItem('password'),
-            //     remember: true
-            // }))
             //@ts-ignore
             else dispatch(setSession(localStorage.getItem('session')))
         }
@@ -123,6 +129,7 @@ const App: FC = () => {
 
             </ContentContainer>
             <TabBar/>
+            {/*<ChatBox/>*/}
         </div>
     )
 }

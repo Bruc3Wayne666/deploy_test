@@ -57,7 +57,7 @@ const HeaderMobile: FC = () => {
 
                 <Link to={'/profile'}>
                     <span style={{color: 'white', fontWeight: 300}}>
-                        {session ? result?.login : 'АВТОРИЗАЦИЯ'}
+                        {session ? 'МОЙ ПРОФИЛЬ' : 'АВТОРИЗАЦИЯ'}
                     </span>
                 </Link>
             </div>

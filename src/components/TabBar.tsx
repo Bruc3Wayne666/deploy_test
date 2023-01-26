@@ -32,12 +32,12 @@ const TabBar: FC<any> = () => {
                     Мои пари
                 </div>
             </Link>
-            <Link to={'/profile'}>
-                <div className={`tabbar-item ${pathname === '/profile' && 'active'}`}>
-                    <img src={require('../assets/svg/profile_tabbar.svg').default} alt="profile"/>
-                    Профиль
-                </div>
-            </Link>
+            {/*<Link to={'/profile'}>*/}
+            {/*    <div className={`tabbar-item ${pathname === '/profile' && 'active'}`}>*/}
+            {/*        <img src={require('../assets/svg/profile_tabbar.svg').default} alt="profile"/>*/}
+            {/*        Профиль*/}
+            {/*    </div>*/}
+            {/*</Link>*/}
         </div>
     );
 };
