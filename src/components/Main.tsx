@@ -377,6 +377,8 @@ const Main: FC = () => {
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     // const [showParam, setShowParam] = useState('ТОТАЛЫ')
     const [showModal, setShowModal] = useState(false)
+    const [sportList, setSportList] = useState<any>({})
+
 
     const handleChangeParams = (params: {
         sport_name: string,
@@ -427,6 +429,16 @@ const Main: FC = () => {
     const fetchUserInfo = useCallback(async (session: string) => {
         return await ApiService.getProfile(session)
     }, [session])
+
+    const fetchSportList = useCallback(async () => {
+        const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/sport_list`)
+        setSportList(data)
+    }, [])
+
+
+    useEffect(() => {
+        fetchSportList()
+    }, [params])
 
 
     useEffect(() => {
@@ -507,7 +519,7 @@ const Main: FC = () => {
                             SPORTS['all'].ru_name}</div>
                     </div>
                     {
-                        Object.keys(SPORTS).reverse()
+                        Object.keys(sportList).reverse()
                             .map((sportGame: string) => {
                                 if (sportGame !== 'all') {
                                     return (
@@ -524,7 +536,7 @@ const Main: FC = () => {
                                             </div>
                                             <div className="orm-title">{
                                                 //@ts-ignore
-                                                SPORTS[sportGame].ru_name}</div>
+                                                sportList[sportGame].ru_name}</div>
                                         </div>
                                     )
                                 }
