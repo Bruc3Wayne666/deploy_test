@@ -89,7 +89,7 @@ export const ModalForm: FC<{
                         setBidSuccess(false)
                         setPossible(0)
                         setSumValue(0)
-                        return alert('Сумма ставки должна быть не менее 150')
+                        return alert('Сумма ставки должна быть не менее 100')
                     }
                     setBidSuccess(true)
                     setPossible(0)
@@ -231,7 +231,7 @@ export const ModalForm: FC<{
                         fontSize: 12,
                         right: 42
                     }}>
-                        Минимальная ставка: 150
+                        Минимальная ставка: 100
                     </div>
                     <div className="league">
                         {league.name}

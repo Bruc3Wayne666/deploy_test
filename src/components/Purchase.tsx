@@ -416,7 +416,7 @@ const Info = React.memo(
                         style={{fontWeight: 'bold', color: 'rgb(204, 153, 51)', cursor: 'pointer'}}>gpbet1</span></p>
                     <p style={{marginBottom: 4}}>6 - указать необходимое количество CWD, на которое вы хотите пополнить</p>
                     <br/>
-                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставки: <span>150</span></p>
+                    <p><span style={{fontWeight: 'bold'}}>Примечание!</span> Минимальная сумма ставки: <span>100</span></p>
                 </div>
 
                 <br/>
