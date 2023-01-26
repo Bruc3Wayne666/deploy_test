@@ -1236,7 +1236,7 @@ export const COUNTRIES = {
 
 export const SPORTS = {
     'all': {'count': 19, 'ru_name': 'Все'},
-    'basketball': {'count': 4, 'ru_name': 'Баскетбол'},
+    // 'basketball': {'count': 4, 'ru_name': 'Баскетбол'},
     'icehockey': {'count': 15, 'ru_name': 'Хоккей'},
     'soccer': {'count': 15, 'ru_name': 'Футбол'}
 }
