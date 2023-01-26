@@ -56,7 +56,9 @@ const DrawalItem: FC<DrawalItemProps> = ({drawal}) => {
                     src={
                         status === 'success'
                             ? require('../assets/svg/status-success.svg').default
-                            : require('../assets/svg/status-inwork.svg').default
+                            : status === 'in work'
+                                ? require('../assets/svg/status-inwork.svg').default
+                                : require('../assets/svg/fail.svg').default
                     }
                     height={22}
                     style={{marginRight: 10}}
@@ -65,7 +67,13 @@ const DrawalItem: FC<DrawalItemProps> = ({drawal}) => {
                 <p>Статус: <span
                     style={{fontSize: 22, color: 'lightblue'}}
                 >
-                {status === 'success' ? 'успешно завершено' : 'в процессе'}
+                {
+                    status === 'success'
+                        ? 'успешно завершено'
+                        : status === 'in work'
+                            ? 'в процессе'
+                            : 'не удалось вывести средства (обратитесь в поддержку)'
+                }
             </span></p>
             </div>
 

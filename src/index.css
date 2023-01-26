@@ -2236,7 +2236,7 @@ ul.active {
     position: fixed;
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     height: 100px;
     align-items: center;
     background-color: #CC9933;
@@ -2257,7 +2257,7 @@ ul.active {
     align-items: center;
     color: #433f38;
     font-size: 14px;
-    margin-right: 16px;
+    margin-right: 14px;
 }
 
 .tabbar-item img {
