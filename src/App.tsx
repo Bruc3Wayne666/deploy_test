@@ -139,7 +139,8 @@ export const InWork: FC = () => {
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', flexDirection: 'column'}}>
             <img
                 width={200}
-                src={require('./assets/svg/repair.svg').default}
+                // src={require('./assets/svg/repair.svg').default}
+                src='https://images.squarespace-cdn.com/content/v1/5a9491275ffd20adbfc1b276/1520298034213-3A61XFIYH7SHL9HCD9RF/repair.gif'
                 alt=""
             />
             <br/>
