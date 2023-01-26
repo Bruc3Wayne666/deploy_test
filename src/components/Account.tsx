@@ -69,7 +69,7 @@ const Profile: FC<any> = (props: any) => {
                     {
                         props.leagues.length === 0 ?
                             <div id="lk-lk-menu-title">
-                                <p style={{marginBottom: 6}}>Нету любимых лиг.</p>
+                                <p style={{marginBottom: 6}}>Нет любимых лиг.</p>
                                 <p>Сделайте ставку.</p>
                             </div>
                             :
