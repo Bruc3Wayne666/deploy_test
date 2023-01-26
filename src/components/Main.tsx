@@ -536,7 +536,7 @@ const Main: FC = () => {
                                             </div>
                                             <div className="orm-title">{
                                                 //@ts-ignore
-                                                sportList[sportGame].ru_name}</div>
+                                                SPORTS[sportGame].ru_name}</div>
                                         </div>
                                     )
                                 }
