@@ -29,7 +29,28 @@ const LeagueItem:
               handleSetCurrentBet
           }) => {
 
-    return league[3] !== 0 ? (
+    let counter = 0
+
+    result && Object.keys(result.country)
+        .map(co => {
+            // @ts-ignore
+            return Object.keys(result.country[co])
+                .map(sport => {
+                    // @ts-ignore
+                    return Object.keys(result.country[co][sport])
+                        .map(status => {
+                            // @ts-ignore
+                            return Object.keys(result.country[co][sport][status])
+                                .map((game, index) => {
+                                    if (result.country[co][sport][status][game].league.id === String(league[0])){
+                                        counter += 1
+                                    }
+                                })
+                        })
+                })
+        })
+
+    return league[3] !== 0 && counter!== 0 ? (
         <>
             <div className="toc-title">
                 <div className="global-ico">

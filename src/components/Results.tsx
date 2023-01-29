@@ -208,8 +208,28 @@ const PopEvent: FC<any> = ({handleSetCurrentGame, handleChangeShowModal, handleS
 
 const LeagueItem: FC<any> = ({filter, result, f_status}) => {
     const {league} = filter
+    let counter = 0
 
-    return (league[3] + league[4] + league[5]) !== 0 ? (
+    result && Object.keys(result.country)
+        .map(co => {
+            // @ts-ignore
+            return Object.keys(result.country[co])
+                .map(sport => {
+                    // @ts-ignore
+                    return Object.keys(result.country[co][sport])
+                        .map(status => {
+                            // @ts-ignore
+                            return Object.keys(result.country[co][sport][status])
+                                .map((game, index) => {
+                                    if (result.country[co][sport][status][game].league.id === String(league[0])) {
+                                        counter += 1
+                                    }
+                                })
+                        })
+                })
+        })
+
+    return ((league[3] + league[4] + league[5]) !== 0 && counter !== 0) ? (
         <>
             <div className="toc-title">
                 <div className="global-ico gi-star">
@@ -688,12 +708,12 @@ const Results: FC<any> = () => {
                                                             return leagueList[sp][co]
                                                                 .map((league: any[]) => {
                                                                     return <LeagueItem
-                                                                            filter={{
-                                                                                league,
-                                                                            }}
-                                                                            f_status={params.game_status}
-                                                                            result={result}
-                                                                        />
+                                                                        filter={{
+                                                                            league,
+                                                                        }}
+                                                                        f_status={params.game_status}
+                                                                        result={result}
+                                                                    />
                                                                 })
                                                         })
                                                 })
