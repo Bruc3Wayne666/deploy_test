@@ -469,7 +469,6 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
             <div className="fr-ticks">
                 <div
                     onClick={() => {
-                        console.log(2)
                         handleChangeParams({...params, sort_number: !params.sort_number})
                     }}
                     className='frt-circle'

@@ -28,6 +28,7 @@ const LeagueItem:
               handleSetCurrentGame,
               handleSetCurrentBet
           }) => {
+
     return league[3] !== 0 ? (
         <>
             <div className="toc-title">
@@ -68,6 +69,7 @@ const LeagueItem:
                                                         handleChangeShowModal={handleChangeShowModal}
                                                         handleSetCurrentGame={handleSetCurrentGame}
                                                         handleSetCurrentBet={handleSetCurrentBet}
+                                                        sport={sport}
                                                     />
                                             })
                                     })
@@ -85,17 +87,21 @@ const GameItem:
         showParam: string,
         handleChangeShowModal: (val: boolean) => void,
         handleSetCurrentGame: (val: IGame) => void,
-        handleSetCurrentBet: ({kf, name, id}: { kf: number, name: string, id: number }) => void
+        handleSetCurrentBet: ({kf, name, id}: { kf: number, name: string, id: number }) => void,
+        sport: string
     }> = ({
               game,
               showParam,
               handleChangeShowModal,
               handleSetCurrentGame,
-              handleSetCurrentBet
+              handleSetCurrentBet,
+              sport
           }) => {
 
     const currentDate = new Date()
     const [showTotals, setShowTotals] = useState(false)
+
+    if (showParam === 'ТОТАЛ' && sport === 'basketball') return <></>
 
     return (
         <div className="toc-item">
@@ -186,24 +192,30 @@ const GameItem:
                                         (game.quotes && game.quotes['Исход матча(основное время)'][1]) && game.quotes['Исход матча(основное время)'][1]["name"]
                                     }
                                 </div>
-                                <div
-                                    onClick={() => {
-                                        handleSetCurrentGame(game)
-                                        handleChangeShowModal(true)
-                                        handleSetCurrentBet({
-                                            name: 'НИЧЬЯ',
-                                            //@ts-ignore
-                                            kf: game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"],
-                                            //@ts-ignore
-                                            id: game.quotes && game.quotes['Исход матча(основное время)'][1]["id"]
-                                        })
-                                    }}
-                                    className="tocirsmt-line"
-                                >
-                                    {
-                                        (game.quotes && game.quotes['Исход матча(основное время)'][1]) && game.quotes["Исход матча(основное время)"][1]["kf"]
-                                    }
-                                </div>
+                                {
+                                    sport === 'basketball'
+                                        ? <div className="tocirsmt-line">
+                                            ---
+                                        </div>
+                                        : <div
+                                            onClick={() => {
+                                                handleSetCurrentGame(game)
+                                                handleChangeShowModal(true)
+                                                handleSetCurrentBet({
+                                                    name: 'НИЧЬЯ',
+                                                    //@ts-ignore
+                                                    kf: game.quotes && game.quotes['Исход матча(основное время)'][1]["kf"],
+                                                    //@ts-ignore
+                                                    id: game.quotes && game.quotes['Исход матча(основное время)'][1]["id"]
+                                                })
+                                            }}
+                                            className="tocirsmt-line"
+                                        >
+                                            {
+                                                (game.quotes && game.quotes['Исход матча(основное время)'][1]) && game.quotes["Исход матча(основное время)"][1]["kf"]
+                                            }
+                                        </div>
+                                }
                             </div>
                             <div className="tocirs-flcol tocirs-koef">
                                 <div className="tocirsmt-title">
@@ -315,7 +327,14 @@ const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
     )
 }
 
-const FilterCase: FC<any> = ({sport, handleChangeShowParam}) => {
+const FilterCase: FC<any> = (
+    {
+        sport,
+        handleChangeShowParam,
+        isToday,
+        handleChangeIsToday
+    },
+) => {
     const sports = {
         'soccer': 'Футбол',
         'icehockey': 'Хоккей',
@@ -329,14 +348,37 @@ const FilterCase: FC<any> = ({sport, handleChangeShowParam}) => {
                 <span>
                     {                // @ts-ignore
                         sports[sport] || 'Все игры'}
-                </span></div>
+                </span>
+            </div>
+            <div className="fr-ticks">
+                <div
+                    className='frt-circle'
+                    onClick={() => {
+                        isToday === true ? handleChangeIsToday(false) : handleChangeIsToday(true)
+                    }}
+                >
+                    {
+                        isToday === false
+                            ? <span className='checked'/>
+                            : <span/>
+                    }
+                    <p style={{fontSize: 8}}>
+                        Игры сегодня
+                    </p>
+                </div>
+            </div>
             <div className="fl-cases">
                 <div
                     onClick={() => handleChangeShowParam('Исход матча(основное время)')}
                     className="one-fl-case"><span>Исходы</span></div>
-                {/*<div*/}
-                {/*    onClick={() => handleChangeShowParam('ТОТАЛ')}*/}
-                {/*    className="one-fl-case"><span>Тоталы</span></div>*/}
+                {/*{*/}
+                {/*    sport !== 'basketball' &&*/}
+                {/*    <div*/}
+                {/*        onClick={() => handleChangeShowParam('ТОТАЛ')}*/}
+                {/*        className="one-fl-case">*/}
+                {/*        <span>Тоталы</span>*/}
+                {/*    </div>*/}
+                {/*}*/}
             </div>
         </div>
     )
@@ -364,7 +406,10 @@ const Main: FC = () => {
         days: 10,
         one_day: 0,
         sort_number: false,
-        beautiful_time_start: '- -',
+        beautiful_time_start: {
+            date: '-',
+            hours: '-'
+        },
         search: '-',
         pic: 0
     })
@@ -375,9 +420,35 @@ const Main: FC = () => {
         id: 0
     })
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
-    // const [showParam, setShowParam] = useState('ТОТАЛЫ')
     const [showModal, setShowModal] = useState(false)
     const [sportList, setSportList] = useState<any>({})
+    const [isToday, setIsToday] = useState(true)
+
+    const handleChangeIsToday = (value: boolean) => {
+        setIsToday(value)
+
+        if (isToday) {
+            setParams(
+                {
+                    ...params,
+                    beautiful_time_start: {
+                        ...params.beautiful_time_start,
+                        date: new Date().toJSON().slice(0, 10)
+                    },
+                }
+            )
+        } else {
+            setParams(
+                {
+                    ...params,
+                    beautiful_time_start: {
+                        date: '-',
+                        hours: '-'
+                    },
+                }
+            )
+        }
+    }
 
 
     const handleChangeParams = (params: {
@@ -388,7 +459,10 @@ const Main: FC = () => {
         days: number,
         one_day: number,
         sort_number: boolean
-        beautiful_time_start: string,
+        beautiful_time_start: {
+            date: string,
+            hours: string
+        },
         search: string,
         pic: number
     }) => {
@@ -443,7 +517,14 @@ const Main: FC = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(getGames({...params, game_status: 'not started'}))
+        dispatch(getGames({
+            ...params,
+            game_status: 'not started',
+            beautiful_time_start: `${
+                params.beautiful_time_start.date
+            } ${params.beautiful_time_start.hours}`,
+            pic: isToday ? 0 : 1
+        }))
         fetchLeagueList()
             .then(res => {
                 setLeagueList(res)
@@ -565,6 +646,10 @@ const Main: FC = () => {
                     <FilterCase
                         sport={params.sport_name}
                         handleChangeShowParam={handleChangeShowParam}
+                        handleChangeParams={handleChangeParams}
+                        params={params}
+                        isToday={isToday}
+                        handleChangeIsToday={handleChangeIsToday}
                     />
 
 
@@ -574,7 +659,23 @@ const Main: FC = () => {
                                 <img src={spinner} alt="Loading results..."/>
                             </div>
                             : result === 1
-                                ? <h1>[штука что нету матчей у такого спорта]</h1>
+                                ? <div className="table-one-cat">
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        flexDirection: 'column'
+                                    }}>
+                                        <img
+                                            width={200}
+                                            height={200}
+                                            src={require('../assets/svg/unfounded.svg').default}
+                                            alt="-_-"
+                                        />
+                                        <h3 style={{color: '#888', marginTop: 20}}>Не найдено матчей по вашим
+                                            критериям</h3>
+                                    </div>
+                                </div>
                                 : <div className="table-one-cat">
                                     {
                                         Object.keys(leagueList)
