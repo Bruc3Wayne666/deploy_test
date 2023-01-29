@@ -32,8 +32,8 @@ root.render(
         {/*<BrowserRouter basename='/deploy_test'>*/}
         <BrowserRouter>
             <AlertProvider template={AlertTemplate} {...options}>
-                {/*<App/>*/}
-                <InWork/>
+                <App/>
+                {/*<InWork/>*/}
             </AlertProvider>
         </BrowserRouter>
     </Provider>

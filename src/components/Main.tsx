@@ -392,14 +392,14 @@ const FilterCase: FC<any> = (
                 <div
                     onClick={() => handleChangeShowParam('Исход матча(основное время)')}
                     className="one-fl-case"><span>Исходы</span></div>
-                {/*{*/}
-                {/*    // sport !== 'basketball' &&*/}
-                {/*    <div*/}
-                {/*        onClick={() => handleChangeShowParam('ТОТАЛ')}*/}
-                {/*        className="one-fl-case">*/}
-                {/*        <span>Тоталы</span>*/}
-                {/*    </div>*/}
-                {/*}*/}
+                {
+                    // sport !== 'basketball' &&
+                    <div
+                        onClick={() => handleChangeShowParam('ТОТАЛ')}
+                        className="one-fl-case">
+                        <span>Тоталы</span>
+                    </div>
+                }
             </div>
         </div>
     )
