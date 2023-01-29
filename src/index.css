@@ -1028,7 +1028,7 @@ header {
     text-align: center;
     display: flex;
     flex-direction: column;
-    width: 370px;
+    width: 80px;
     justify-content: center;
 }
 
@@ -2696,6 +2696,10 @@ ul.active {
         height: 40%;
         font-size: 12px;
         font-weight: bold;
+    }
+
+    .frb-one-opts2 {
+
     }
 
     .totals {

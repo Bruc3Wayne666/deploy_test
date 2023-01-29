@@ -122,7 +122,7 @@ const GameItem:
     const currentDate = new Date()
     const [showTotals, setShowTotals] = useState(false)
 
-    if (showParam === 'ТОТАЛ' && sport === 'basketball') return <></>
+    // if (showParam === 'ТОТАЛ' && sport === 'basketball') return <></>
 
     return (
         <div className="toc-item">
@@ -393,7 +393,7 @@ const FilterCase: FC<any> = (
                     onClick={() => handleChangeShowParam('Исход матча(основное время)')}
                     className="one-fl-case"><span>Исходы</span></div>
                 {/*{*/}
-                {/*    sport !== 'basketball' &&*/}
+                {/*    // sport !== 'basketball' &&*/}
                 {/*    <div*/}
                 {/*        onClick={() => handleChangeShowParam('ТОТАЛ')}*/}
                 {/*        className="one-fl-case">*/}
