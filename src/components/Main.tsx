@@ -270,20 +270,20 @@ const GameItem:
                         <>
                             <div className="totals">
                                 {
-                                    game.quotes &&
-                                    <TotalsDropdown
-                                        title={showTotals ? 'Скрыть' : 'Показать все тоталы'}
-                                        showDropdown={showTotals}
-                                        setShowDropdown={setShowTotals}
-                                        items={
-                                            //@ts-ignore
-                                            game.quotes['ТОТАЛ']
-                                        }
-                                        handleSetCurrentGame={handleSetCurrentGame}
-                                        handleSetCurrentBet={handleSetCurrentBet}
-                                        handleChangeShowModal={handleChangeShowModal}
-                                        game={game}
-                                    />
+                                    (game.quotes && (Object.keys(game.quotes).length !== 0)) ?
+                                        <TotalsDropdown
+                                            title={showTotals ? 'Скрыть' : 'Показать все тоталы'}
+                                            showDropdown={showTotals}
+                                            setShowDropdown={setShowTotals}
+                                            items={
+                                                //@ts-ignore
+                                                game.quotes['ТОТАЛ']
+                                            }
+                                            handleSetCurrentGame={handleSetCurrentGame}
+                                            handleSetCurrentBet={handleSetCurrentBet}
+                                            handleChangeShowModal={handleChangeShowModal}
+                                            game={game}
+                                        /> : <p>Нет тоталов</p>
                                 }
                             </div>
                         </>
