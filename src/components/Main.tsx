@@ -42,7 +42,7 @@ const LeagueItem:
                             // @ts-ignore
                             return Object.keys(result.country[co][sport][status])
                                 .map((game, index) => {
-                                    if (result.country[co][sport][status][game].league.id === String(league[0])){
+                                    if (result.country[co][sport][status][game].league.id === String(league[0])) {
                                         counter += 1
                                     }
                                 })
@@ -50,7 +50,7 @@ const LeagueItem:
                 })
         })
 
-    return league[3] !== 0 && counter!== 0 ? (
+    return league[3] !== 0 && counter !== 0 ? (
         <>
             <div className="toc-title">
                 <div className="global-ico">
@@ -351,6 +351,7 @@ const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
 const FilterCase: FC<any> = (
     {
         sport,
+        showParam,
         handleChangeShowParam,
         isToday,
         handleChangeIsToday
@@ -378,11 +379,7 @@ const FilterCase: FC<any> = (
                         isToday === true ? handleChangeIsToday(false) : handleChangeIsToday(true)
                     }}
                 >
-                    {
-                        isToday === false
-                            ? <span className='checked'/>
-                            : <span/>
-                    }
+                    <span className={isToday && 'checked'}/>
                     <p style={{fontSize: 8}}>
                         Игры сегодня
                     </p>
@@ -391,15 +388,14 @@ const FilterCase: FC<any> = (
             <div className="fl-cases">
                 <div
                     onClick={() => handleChangeShowParam('Исход матча(основное время)')}
-                    className="one-fl-case"><span>Исходы</span></div>
-                {
-                    // sport !== 'basketball' &&
-                    <div
-                        onClick={() => handleChangeShowParam('ТОТАЛ')}
-                        className="one-fl-case">
-                        <span>Тоталы</span>
-                    </div>
-                }
+                    className={`one-fl-case ${showParam !== 'ТОТАЛ' && 'active'}`}>
+                    <span>Исходы</span>
+                </div>
+                <div
+                    onClick={() => handleChangeShowParam('ТОТАЛ')}
+                    className={`one-fl-case ${showParam === 'ТОТАЛ' && 'active'}`}>
+                    <span>Тоталы</span>
+                </div>
             </div>
         </div>
     )
@@ -443,18 +439,24 @@ const Main: FC = () => {
     const [showParam, setShowParam] = useState('Исход матча(основное время)')
     const [showModal, setShowModal] = useState(false)
     const [sportList, setSportList] = useState<any>({})
-    const [isToday, setIsToday] = useState(true)
+    const [isToday, setIsToday] = useState(false)
 
     const handleChangeIsToday = (value: boolean) => {
         setIsToday(value)
-
-        if (isToday) {
+        if (value) {
+            const date = new Date().toLocaleString('ru-RU', {
+                timeZone: 'Europe/Moscow',
+                hourCycle: 'h23',
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            })
             setParams(
                 {
                     ...params,
                     beautiful_time_start: {
                         ...params.beautiful_time_start,
-                        date: new Date().toJSON().slice(0, 10)
+                        date: `${date.split('.')[2]}-${date.split('.')[1]}-${date.split('.')[0]}`
                     },
                 }
             )
@@ -544,7 +546,7 @@ const Main: FC = () => {
             beautiful_time_start: `${
                 params.beautiful_time_start.date
             } ${params.beautiful_time_start.hours}`,
-            pic: isToday ? 0 : 1
+            pic: isToday ? 1 : 0
         }))
         fetchLeagueList()
             .then(res => {
@@ -666,6 +668,7 @@ const Main: FC = () => {
                     />
                     <FilterCase
                         sport={params.sport_name}
+                        showParam={showParam}
                         handleChangeShowParam={handleChangeShowParam}
                         handleChangeParams={handleChangeParams}
                         params={params}
