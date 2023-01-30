@@ -270,7 +270,8 @@ const GameItem:
                         <>
                             <div className="totals">
                                 {
-                                    (game.quotes && (Object.keys(game.quotes).length !== 0)) ?
+                                    //@ts-ignore
+                                    (game.quotes && (Object.keys(game.quotes['ТОТАЛ']).length !== 0)) ?
                                         <TotalsDropdown
                                             title={showTotals ? 'Скрыть' : 'Показать все тоталы'}
                                             showDropdown={showTotals}
