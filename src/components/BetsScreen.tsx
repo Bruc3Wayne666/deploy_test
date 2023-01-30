@@ -78,45 +78,62 @@ const Bets: FC<IBetsProps> = ({handleChangeType, handleChangePeriod, bets, perio
                 </div>
 
                 {
-                    bets.map((bid: any) => (
-                        <div className="lkt-row">
-                            <div className="lktr-date">{bid[6].split(' ')[0]}</div>
-                            <div className="lktr-time">{bid[6].split(' ')[1]}</div>
-                            <div className="lktr-name">
-                                {
-                                    bid[0].split(' VS ')[0]
-                                }
-                                <br/>
-                                {
-                                    bid[0].split(' VS ')[1]
-                                }
-                            </div>
-                            <div className="lktr-type">
-                                {
-                                    bid[1] === 'Исход матча(основное время)'
-                                    ? 'Исход' : 'Тотал'
-                                }
-                            </div>
-                            <div className="lktr-pari-name">{bid[2]}</div>
-                            <div className="lktr-sum">{bid[3]}
-                                <div className="global-ico gi-coin"/>
-                            </div>
-                            <div className="lktr-kf">{bid[4]}</div>
-                            <div
-                                style={{
-                                    padding: 4,
+                    bets && bets.length !== 0
+                        ? bets.map((bid: any) => (
+                            <div className="lkt-row">
+                                <div className="lktr-date">{bid[6].split(' ')[0]}</div>
+                                <div className="lktr-time">{bid[6].split(' ')[1]}</div>
+                                <div className="lktr-name">
+                                    {
+                                        bid[0].split(' VS ')[0]
+                                    }
+                                    <br/>
+                                    {
+                                        bid[0].split(' VS ')[1]
+                                    }
+                                </div>
+                                <div className="lktr-type">
+                                    {
+                                        bid[1] === 'Исход матча(основное время)'
+                                            ? 'Исход' : 'Тотал'
+                                    }
+                                </div>
+                                <div className="lktr-pari-name">{bid[2]}</div>
+                                <div className="lktr-sum">{bid[3]}
+                                    <div className="global-ico gi-coin"/>
+                                </div>
+                                <div className="lktr-kf">{bid[4]}</div>
+                                <div
+                                    style={{
+                                        padding: 4,
+                                        //@ts-ignore
+                                        backgroundColor: res[bid[5]].style,
+                                        borderRadius: 6,
+                                        textAlign: 'center'
+                                    }}
+                                    className="lktr-result">{
                                     //@ts-ignore
-                                    backgroundColor: res[bid[5]].style,
-                                    borderRadius: 6,
-                                    textAlign: 'center'
-                                }}
-                                className="lktr-result">{
-                                //@ts-ignore
-                                res[bid[5]].name
-                            }
+                                    res[bid[5]].name
+                                }
+                                </div>
                             </div>
+                        ))
+                        : <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                            paddingTop: 100
+                        }}>
+                            <img
+                                width={200}
+                                height={200}
+                                src={require('../assets/svg/unfounded.svg').default}
+                                alt="-_-"
+                            />
+                            <h3 style={{color: '#888', marginTop: 20}}>Не найдено ставок по вашим
+                                критериям</h3>
                         </div>
-                    ))
                 }
             </div>
         </div>
