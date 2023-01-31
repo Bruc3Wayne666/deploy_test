@@ -1589,7 +1589,6 @@ header {
 }
 
 
-
 #lk-lk-foot {
     display: flex;
     justify-content: space-around;
@@ -2516,6 +2515,302 @@ ul.active {
     display: none;
 }
 
+
+.admin-panel {
+    background-color: #222222;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-panel .table {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+}
+
+.admin-panel .table .columns {
+    background-color: #444444;
+    display: flex;
+    height: 10%;
+    position: fixed;
+    width: 80%;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    top: 0;
+}
+
+.admin-panel .table .columns .column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-panel .table .columns .column:first-child {
+    flex: 0.5;
+}
+
+
+.admin-panel .table .payouts {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-panel .table .payouts .payout {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    border-bottom: 1px solid #666666;
+}
+
+.admin-panel .table .payouts .payout .column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-panel .table .payouts .payout .column:last-child {
+    font-weight: 600;
+    color: lightgreen;
+}
+
+.admin-panel .table .payouts .payout .column.live span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.admin-panel .table .payouts .payout .column.end span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.admin-panel .table .payouts .payout .column.not.started span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.admin-panel .table .payouts .payout .column:first-child {
+    flex: 0.5;
+}
+
+.admin-panel .table .payouts .payout .column:last-child {
+    cursor: pointer;
+}
+
+.admin-panel-options {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 10%;
+    border: 1px solid white;
+}
+
+.admin-dropdown {
+    cursor: pointer;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cc9933;
+    border-radius: 4px;
+    padding: 2px 4px;
+    border: 1px solid black;
+}
+
+.admin-dropdown-option {
+    /*background-color: #cc9933;*/
+    cursor: pointer;
+    color: black;
+    padding: 4px 8px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*width: 100%;*/
+}
+
+.admin-dropdown-option:hover {
+    text-decoration: underline;
+}
+
+.admin-dropdown-menu {
+    position: absolute;
+    background-color: #cc9933;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 100px;
+    border: 1px solid black;
+}
+
+.admin-auth {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+}
+
+.admin-auth h1 {
+    color: #cc9933;
+}
+
+.admin-auth form {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-auth form input{
+    background-color: #222222;
+    outline: none;
+    border: 1px solid #cc9933;
+    margin-bottom: 8px;
+    color: #cc9933;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.admin-auth form input::placeholder{
+    font-weight: 400;
+    color: #444444;
+}
+
+.admin-auth button {
+    outline: none;
+    background-color: #222222;
+    border: 1px solid #cc9933;
+    font-weight: 400;
+    color: #cc9933;
+    cursor: pointer;
+    transition: .6s;
+    border-radius: 4px;
+}
+
+.admin-auth button:hover {
+    color: #222222;
+    background-color: #cc9933;
+}
+
+.admin-panel-modal {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-panel-modal .window {
+    background-color: #444444;
+    height: 80%;
+    width: 90%;
+    position: relative;
+    border-radius: 8px;
+    overflow-y: scroll;
+}
+
+.admin-panel-modal .close-btn {
+    position: fixed;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: red;
+    display: flex;
+    right: 22px;
+    top: 22px;
+}
+
+.admin-panel-modal .close-btn span {
+    position: absolute;
+    top: 3px;
+    left: 6px;
+}
+
+.admin-panel-modal .window .bid-item {
+    display: flex;
+    border-bottom: 1px solid #222222;
+}
+
+.admin-panel-modal .window .bid-item .field {
+    display: flex;
+}
+
+.admin-panel-modal .window .bid-item .field.win {
+    background-color: green;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.admin-panel-modal .window .bid-item .field.lose {
+    background-color: red;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.admin-panel-modal .window .bid-items .field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-panel-modal .window .bid-items .field:first-child {
+    flex: 0.2;
+}
+
+/*.admin-panel-modal .window .field {*/
+/*    border: 1px solid yellow;*/
+/*}*/
+
+.admin-panel-modal .window .bid-item {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.admin-panel-modal .window .bid-items-header {
+    position: fixed;
+    width: 90%;
+    display: flex;
+    background-color: #222222;
+    height: 40px;
+    top: 24px;
+    border-radius: 8px;
+}
+
+.exit-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: fixed;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 12px;
+    top: 12px;
+    cursor: pointer;
+}
+
 @media (min-width: 1200px) and (orientation: landscape) {
     .tabbar {
         display: none;
@@ -2532,6 +2827,64 @@ ul.active {
     /*body {*/
     /*    max-width: 1080px;*/
     /*}*/
+    .exit-btn {
+        top: 88%;
+        bottom: 0;
+        right: 20px;
+        z-index: 999;
+    }
+
+    .admin-panel .table {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .admin-panel .table .columns {
+        width: 100%;
+    }
+
+    .admin-panel .table .payouts .column:first-child {
+        border-right: 1px solid #444444;
+    }
+
+    .admin-panel .table .payouts .payout {
+        height: 50px;
+    }
+
+    .admin-panel .table .payouts .payout .column:last-child {
+        font-size: 18px;
+    }
+
+    .admin-panel-modal .window {
+        width: 100%;
+        height: 100%;
+        font-size: 10px;
+        top: 40px;
+    }
+
+    .admin-panel-modal .close-btn {
+        width: 32px;
+        height: 32px;
+        z-index: 999;
+        right: 8px;
+        top: 8px;
+    }
+
+    .admin-panel-modal .close-btn span {
+        position: absolute;
+        top: 11px;
+        left: 13px;
+    }
+
+    .admin-panel-modal .window .bid-items-header {
+        width: 100%;
+        position: inherit;
+    }
+
+    .admin-panel-modal .window .bid-item {
+        height: 60px;
+    }
+
     #top-header {
         /*display: flex;*/
         /*flex-direction: column;*/
@@ -3347,11 +3700,11 @@ ul.active {
 
 @keyframes colored-circle {
     0% {
-        opacity:0
+        opacity: 0
     }
 
     100% {
-        opacity:100
+        opacity: 100
     }
 }
 
@@ -3368,7 +3721,221 @@ ul.active {
     -webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
     animation: checkmark-circle 0.6s ease-in-out backwards;
 }
+
 .icon--order-success svg circle#colored {
     -webkit-animation: colored-circle 0.6s ease-in-out 0.7s backwards;
     animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+}
+
+
+
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+}
+
+h4 {
+    margin: 0;
+    font-weight: 500;
+}
+
+.black-font {
+    color: black !important;
+}
+
+.main-container {
+    display: inline-block;
+    vertical-align: middle;
+    width: 250px;
+    height: 50px;
+    border-radius: 100px;
+    background-color: #4d4d4d;
+    position: fixed;
+    z-index: 999;
+    bottom: 5%;
+    left: 2%;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+.switch {
+    height: 44px;
+    width: 80px;
+    background-color: white;
+    border-radius: 100px;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    transition: ease-in;
+}
+
+/*---------------- LEFT ------------------- */
+.switch.left-to-center {
+    animation-name: leftToCenter;
+    animation-duration: 0.5s;
+}
+
+.switch.left-to-right {
+    animation-name: leftToRight;
+    animation-duration: 0.5s;
+}
+
+.switch.left-position {
+    left: 3px;
+}
+
+.left-label {
+    position: absolute;
+}
+
+#left + label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80px;
+    border-radius: 100px;
+}
+
+#left:checked + label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80px;
+    border-radius: 100px;
+}
+
+@keyframes leftToCenter {
+    from {
+        left: 3px;
+    }
+    to {
+        left: 85px;
+    }
+}
+
+@keyframes leftToRight {
+    from {
+        left: 3px;
+    }
+    to {
+        left: 167px;
+    }
+}
+
+/* -------------------- center ------------------ */
+.switch.center-to-left {
+    animation-name: centerToLeft;
+    animation-duration: 0.5s;
+}
+
+.switch.center-to-right {
+    animation-name: centerToRight;
+    animation-duration: 0.5s;
+}
+
+.switch.center-position {
+    left: 85px;
+}
+
+.center-label {
+    position: absolute;
+    left: 85px;
+}
+
+#center + label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80px;
+    border-radius: 100px;
+}
+
+#center:checked + label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80px;
+    border-radius: 100px;
+}
+
+@keyframes centerToLeft {
+    from {
+        left: 85px;
+    }
+    to {
+        left: 3px;
+    }
+}
+
+@keyframes centerToRight {
+    from {
+        left: 85px;
+    }
+    to {
+        right: 1px;
+    }
+}
+
+/* ------------------- RIGHT ------------------- */
+.switch.right-to-left {
+    animation-name: rightToLeft;
+    animation-duration: 0.5s;
+}
+
+.switch.right-to-center {
+    animation-name: rightToCenter;
+    animation-duration: 0.5s;
+}
+
+.switch.right-position {
+    left: 167px;
+}
+
+.right-label {
+    position: absolute;
+    right: 2px;
+}
+
+#right + label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80px;
+    border-radius: 100px;
+}
+
+#right:checked + label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80px;
+    border-radius: 100px;
+}
+
+@keyframes rightToLeft {
+    from {
+        left: 167px;
+    }
+    to {
+        left: 3px;
+    }
+}
+
+@keyframes rightToCenter {
+    from {
+        left: 167px;
+    }
+    to {
+        right: 85px;
+    }
 }

@@ -3,7 +3,7 @@ import './index.css'
 import Header from './components/Header';
 import ContentContainer from "./components/ContentContainer";
 import Account from "./components/Account";
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useLocation} from 'react-router-dom';
 import Results from "./components/Results";
 import BetsScreen from "./components/BetsScreen";
 import VIP from "./components/VIP";
@@ -24,25 +24,29 @@ import {logout, setSession} from "./store/reducers/auth/authSlice";
 import Help from "./components/Help";
 import Income from './components/Income';
 import ChatBox from "./components/ChatBox";
+import AdminPanel from "./components/AdminPanel";
 
 
 const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const dispatch = useAppDispatch()
+    const {pathname} = useLocation()
     // const alert = useAlert()
 
-    // useEffect(() => {
-    //     const script = document.createElement('script');
-    //
-    //     script.src = 'https://code.jivo.ru/widget/MgAeR2eRHq';
-    //     script.async = true;
-    //
-    //     document.getElementById('chatbox')?.appendChild(script);
-    //
-    //     return () => {
-    //         document.getElementById('chatbox')?.removeChild(script);
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (pathname !== '/admin_panel'){
+            const script = document.createElement('script')
+
+            script.src = 'https://code.jivo.ru/widget/MgAeR2eRHq'
+            script.async = true
+
+            document.body.appendChild(script)
+
+            return () => {
+                document.body.removeChild(script)
+            }
+        }
+    }, [])
 
     useEffect(() => {
         if (localStorage.getItem('isAuth') === 'true') {
@@ -86,6 +90,10 @@ const App: FC = () => {
         </div>
     )
 
+    if (pathname === '/admin_panel') {
+        return <AdminPanel/>
+    }
+
     return (
         <div className='App'>
             <HeaderMobile/>
@@ -108,6 +116,7 @@ const App: FC = () => {
                             <Route path={'income_history'} element={<Income/>}/>
                             <Route path={'cyber'} element={<CyberSport/>}/>
                             <Route path={'help'} element={<Help/>}/>
+                            {/*<Route path={'admin_panel'} element={<AdminPanel/>}/>*/}
                             <Route path={'*'} element={<h1>404. Страница появится скоро</h1>}/>
                         </Routes>
                         :
@@ -136,7 +145,13 @@ const App: FC = () => {
 
 export const InWork: FC = () => {
     return (
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', flexDirection: 'column'}}>
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+            flexDirection: 'column'
+        }}>
             <img
                 width={200}
                 // src={require('./assets/svg/repair.svg').default}
