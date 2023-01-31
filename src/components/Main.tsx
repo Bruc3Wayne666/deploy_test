@@ -121,7 +121,20 @@ const GameItem:
 
     const currentDate = new Date()
     const [showTotals, setShowTotals] = useState(false)
+    const {beautiful_time_start} = game
+    const days = {
+        '0': 'Сегодня',
+        '1': 'Затвра',
+        '2': 'Послезавтра',
+        '-30': 'Завтра',
+        '-29': 'Послезавтра'
+    }
 
+    const diff = String(Number(
+        beautiful_time_start
+            .split(' ')[0]
+            .split('-')[2]
+    ) - Number(currentDate.getDate()))
     // if (showParam === 'ТОТАЛ' && sport === 'basketball') return <></>
 
     return (
@@ -131,31 +144,39 @@ const GameItem:
                 <div className="toc-i-time">
                     <div className="tocit-daypart">
                         {
-                            (Number(
-                                game
-                                    .beautiful_time_start
+                            days.hasOwnProperty(diff)
+                                // @ts-ignore
+                                ? days[diff]
+                                : beautiful_time_start
                                     .split(' ')[0]
-                                    .split('-')[2]
-                            ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :
-                                (Number(
-                                    game
-                                        .beautiful_time_start
-                                        .split(' ')[0]
-                                        .split('-')[2]
-                                ) - Number(currentDate.getDate())) === 1 ? 'Завтра в'
-                                    :
-                                    (Number(
-                                        game
-                                            .beautiful_time_start
-                                            .split(' ')[0]
-                                            .split('-')[2]
-                                    ) - Number(currentDate.getDate())) === 2 ? 'Послезавтра в' :
-                                        game
-                                            .beautiful_time_start
-                                            .split(' ')[0]
+                                    .split('-')
+                                    .reverse()
+                                    .join('.')
                         }
+
+
+                        {/*{*/}
+                        {/*    (Number(*/}
+                        {/*        beautiful_time_start*/}
+                        {/*            .split(' ')[0]*/}
+                        {/*            .split('-')[2]*/}
+                        {/*    ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :*/}
+                        {/*        (Number(*/}
+                        {/*            beautiful_time_start*/}
+                        {/*                .split(' ')[0]*/}
+                        {/*                .split('-')[2]*/}
+                        {/*        ) - Number(currentDate.getDate())) === 1 ? 'Завтра в'*/}
+                        {/*            :*/}
+                        {/*            (Number(*/}
+                        {/*                beautiful_time_start*/}
+                        {/*                    .split(' ')[0]*/}
+                        {/*                    .split('-')[2]*/}
+                        {/*            ) - Number(currentDate.getDate())) === 2 ? 'Послезавтра в' :*/}
+                        {/*                beautiful_time_start*/}
+                        {/*                    .split(' ')[0]*/}
+                        {/*}*/}
                     </div>
-                    <div className="tocit-time">{game.beautiful_time_start.split(' ')[1]}</div>
+                    <div className="tocit-time">{beautiful_time_start.split(' ')[1]}</div>
                 </div>
                 <div className="toc-i-teams">
                     <div>
