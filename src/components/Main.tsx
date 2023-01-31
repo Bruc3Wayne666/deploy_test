@@ -123,11 +123,11 @@ const GameItem:
     const [showTotals, setShowTotals] = useState(false)
     const {beautiful_time_start} = game
     const days = {
-        '0': 'Сегодня',
-        '1': 'Затвра',
-        '2': 'Послезавтра',
-        '-30': 'Завтра',
-        '-29': 'Послезавтра'
+        '0': 'Сегодня в',
+        '1': 'Затвра в',
+        '2': 'Послезавтра в',
+        '-30': 'Завтра в',
+        '-29': 'Послезавтра в'
     }
 
     const diff = String(Number(
@@ -135,7 +135,6 @@ const GameItem:
             .split(' ')[0]
             .split('-')[2]
     ) - Number(currentDate.getDate()))
-    // if (showParam === 'ТОТАЛ' && sport === 'basketball') return <></>
 
     return (
         <div className="toc-item">
