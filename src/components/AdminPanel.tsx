@@ -294,6 +294,8 @@ const PayoutItem: FC<PayoutItemProps> = (
         {value: 'success', label: 'Успешно', className: 'admin-dropdown-option'},
     ]
 
+
+
     return (
         <div className='payout'>
             <div className="column">{id}</div>
@@ -306,7 +308,6 @@ const PayoutItem: FC<PayoutItemProps> = (
             </div>
             <div className="column">{our_currency}</div>
             <div
-                onClick={() => handleChangeWithDrawalStatus(id, currentStatus)}
                 className="column"
             >
                 {
@@ -318,7 +319,10 @@ const PayoutItem: FC<PayoutItemProps> = (
                         }
                         controlClassName={'admin-dropdown'}
                         menuClassName={'admin-dropdown-menu'}
-                        onChange={e => setCurrentStatus(e.value)}
+                        onChange={e => {
+                            setCurrentStatus(e.value)
+                            handleChangeWithDrawalStatus(id, e.value)
+                        }}
                     />
                 }</div>
             <div className="column">
