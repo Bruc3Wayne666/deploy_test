@@ -2833,6 +2833,30 @@ ul.active {
     cursor: pointer;
 }
 
+.pages {
+    position: fixed;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    font-size: 44px;
+    font-weight: 900;
+    bottom: 6%;
+    left: 44%;
+    min-width: 140px;
+    justify-content: space-between;
+}
+
+.pages .move {
+    cursor: pointer;
+    background-color: white;
+    color: #222222;
+    width: 30px;
+    height: 30px;
+    font-size: 28px;
+    text-align: center;
+    border-radius: 50%;
+}
+
 @media (min-width: 1200px) and (orientation: landscape) {
     .tabbar {
         display: none;

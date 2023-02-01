@@ -19,6 +19,7 @@ const AdminPanel = () => {
         const [usersInfo, setUsersInfo] = useState([])
         const [isModalOpen, setIsModalOpen] = useState(false)
         const [show, setShow] = useState('')
+        const [page, setPage] = useState(1)
 
         const [form, setForm] = useState({
             login: '',
@@ -102,7 +103,7 @@ const AdminPanel = () => {
             const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/users_info_a`,
                 {
                     user_id: session,
-                    page: 1
+                    page
                 }
             )
             if (data === 'session is not active') {
@@ -126,7 +127,7 @@ const AdminPanel = () => {
                 }
                 fetchData()
             }
-        }, [theme, session])
+        }, [theme, session, page])
 
         const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault()
@@ -143,6 +144,10 @@ const AdminPanel = () => {
                     <Switcher setTheme={setTheme}/>
 
                     <ExitBtn dispatch={dispatch}/>
+
+                    {
+                        theme === 'players' && <Pages setPage={setPage} page={page}/>
+                    }
 
                     {
                         isModalOpen && <Modal
@@ -535,9 +540,12 @@ const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show, option}) => {
                     <div className="field" style={{flex: 0.6}}>{transfer.user_login}</div>
                     <div className="field" style={{flex: 0.4}}>{transfer.user_cwd_acccount}</div>
                     <div className="field" style={{flex: 0.35}}>{transfer.user_id}</div>
-                    <div className="field" style={{flex: 0.55}}>{transfer.wallet_adress === null ? '---' : transfer.wallet_adress}</div>
-                    <div className="field" style={{flex: 0.4}}>{transfer.wallet_private_key === null ? '---' : transfer.wallet_private_key}</div>
-                    <div className="field" style={{flex: 0.3}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
+                    <div className="field"
+                         style={{flex: 0.55}}>{transfer.wallet_adress === null ? '---' : transfer.wallet_adress}</div>
+                    <div className="field"
+                         style={{flex: 0.4}}>{transfer.wallet_private_key === null ? '---' : transfer.wallet_private_key}</div>
+                    <div className="field"
+                         style={{flex: 0.3}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
                 </>
             }
             {
@@ -551,8 +559,10 @@ const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show, option}) => {
                     }</div>
                     <div className="field" style={{flex: 0.3}}>{transfer.our_currency}</div>
                     <div className="field" style={{flex: 0.3}}>{transfer.user_id}</div>
-                    <div className="field" style={{flex: 0.4}}>{transfer.wallet_name === null ? '---' : transfer.wallet_name}</div>
-                    <div className="field" style={{flex: 0.7}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
+                    <div className="field"
+                         style={{flex: 0.4}}>{transfer.wallet_name === null ? '---' : transfer.wallet_name}</div>
+                    <div className="field"
+                         style={{flex: 0.7}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
                 </>
             }
 
@@ -624,11 +634,13 @@ const Modal: FC<ModalProps> = ({setIsOpen, userInfoBids, userTransfers, show}) =
                     }
                     {
                         (userTransfers && show === 'transfer' && option === 'input')
-                        && userTransfers.input.map(transfer => <ModalBidItem option={option} show={show} transfer={transfer}/>)
+                        && userTransfers.input.map(transfer => <ModalBidItem option={option} show={show}
+                                                                             transfer={transfer}/>)
                     }
                     {
                         (userTransfers && show === 'transfer' && option === 'output')
-                        && userTransfers.output.map(transfer => <ModalBidItem option={option} show={show} transfer={transfer}/>)
+                        && userTransfers.output.map(transfer => <ModalBidItem option={option} show={show}
+                                                                              transfer={transfer}/>)
                     }
                 </div>
             </div>
@@ -679,6 +691,25 @@ const ExitBtn: FC<any> = ({dispatch}) => {
                 width={40}
                 height={40}
             />
+        </div>
+    )
+}
+
+const Pages: FC<any> = ({setPage, page}: { setPage: (v: number) => void, page: number }) => {
+    return (
+        <div className="pages">
+            <div
+                onClick={() => {
+                    if (page === 1) {
+                        return
+                    }
+                    setPage(page - 1)
+                }}
+                className="move">{'<'}</div>
+            {page}
+            <div
+                onClick={() => setPage(page + 1)}
+                className="move">{'>'}</div>
         </div>
     )
 }
