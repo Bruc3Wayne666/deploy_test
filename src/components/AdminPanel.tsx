@@ -343,7 +343,8 @@ const PayoutItem: FC<PayoutItemProps> = (
                     />
                 }</div>
             <div className="column">
-                {format(new Date(beatifull_time), 'dd-mm-yyyy hh:mm')}
+                {beatifull_time.slice(4,25)}
+                {/*{format(new Date(beatifull_time), 'dd-mm-yyyy hh:mm')}*/}
             </div>
             <div
                 onClick={() => {
@@ -550,7 +551,8 @@ const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show, option}) => {
                     <div className="field"
                          style={{flex: 0.4}}>{transfer.wallet_private_key === null ? '---' : transfer.wallet_private_key}</div>
                     <div className="field"
-                         style={{flex: 0.3}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
+                         style={{flex: 0.3}}>{transfer.beatifull_time.slice(4,25)}</div>
+                         {/*style={{flex: 0.3}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>*/}
                 </>
             }
             {
@@ -567,7 +569,8 @@ const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show, option}) => {
                     <div className="field"
                          style={{flex: 0.4}}>{transfer.wallet_name === null ? '---' : transfer.wallet_name}</div>
                     <div className="field"
-                         style={{flex: 0.7}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
+                         style={{flex: 0.7}}>{transfer.beatifull_time.slice(4,25)}</div>
+                         {/*style={{flex: 0.7}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>*/}
                 </>
             }
 
