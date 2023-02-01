@@ -15,6 +15,7 @@ const AdminPanel = () => {
         const [drawalsList, setDrawalsList] = useState([])
         const [userInfoBids, setUserInfoBids] = useState([])
         const [gamesInfo, setGamesInfo] = useState([])
+        const [usersInfo, setUsersInfo] = useState([])
         const [isModalOpen, setIsModalOpen] = useState(false)
 
         const [form, setForm] = useState({
@@ -54,7 +55,7 @@ const AdminPanel = () => {
             const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/user_info_bids_a`,
                 {
                     user_id: session,
-                    client_id: id
+                    client_id: id,
                 }
             )
             if (data === 'session is not active') {
@@ -92,6 +93,20 @@ const AdminPanel = () => {
             setGamesInfo(data.games)
         }
 
+        const getUsersInfo = async () => {
+            const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/users_info_a`,
+                {
+                    user_id: session,
+                    page: 1
+                }
+            )
+            if (data === 'session is not active') {
+                alert('Сессия истекла')
+                return dispatch(setSession(''))
+            }
+            setUsersInfo(data.users)
+        }
+
 
         useEffect(() => {
             if (session) {
@@ -100,6 +115,8 @@ const AdminPanel = () => {
                         getWithDrawalsList()
                     } else if (theme === 'games') {
                         getGamesInfo()
+                    } else {
+                        getUsersInfo()
                     }
                 }
                 fetchData()
@@ -178,8 +195,9 @@ const AdminPanel = () => {
                                                 setIsModalOpen={setIsModalOpen}
                                             />)
                                         : theme === 'players'
-                                            ? drawalsList
-                                                .map(player => <PlayerItem player={player}/>)
+                                            ? usersInfo
+                                                .map(player => <PlayerItem getUserInfoBids={getUserInfoBids}
+                                                                           player={player}/>)
                                             : gamesInfo
                                                 .map(game => <GameItem game={game}/>)
                                 }
@@ -228,15 +246,12 @@ interface PayoutItemProps {
 
 interface PlayerItemProps {
     player: {
-        beatifull_time: string
-        client_id: number
-        currency: string
+        balance: number
+        email: string
         id: number
-        our_currency: number
-        status: string
-        time_stamp: number
-        wallet_name: string
-    }
+        profit: number
+    },
+    getUserInfoBids: (v: number) => void
 }
 
 interface GameItemProps {
@@ -321,31 +336,27 @@ const PayoutItem: FC<PayoutItemProps> = (
 }
 
 
-const PlayerItem: FC<PlayerItemProps> = ({player}) => {
+const PlayerItem: FC<PlayerItemProps> = ({player, getUserInfoBids}) => {
     const {
-        currency,
+        balance,
+        email,
         id,
-        our_currency,
-        status,
-        wallet_name
+        profit
     } = player
-
-    const statuses = {
-        'in work': 'В процессе',
-        'fail': 'Провал',
-        'success': 'Успешно'
-    }
 
     return (
         <div className='payout'>
             <div className="column">{id}</div>
-            <div className="column">{currency}</div>
-            <div className="column">{wallet_name}</div>
-            <div className="column">{our_currency}</div>
-            <div className="column">{
-                // @ts-ignore
-                statuses[status]
-            }</div>
+            <div className="column">{email}</div>
+            <div className="column">{balance}</div>
+            <div className="column">{profit}</div>
+            <div className="column">---</div>
+            <div
+                onClick={() => {
+                    getUserInfoBids(id)
+                }}
+                className="column">шо сюда выводить?
+            </div>
         </div>
     )
 }
@@ -452,8 +463,10 @@ const Modal: FC<ModalProps> = ({setIsOpen, userInfoBids}) => {
                         <div className="field" style={{flex: 0.4}}>Время</div>
                     </div>
                     {
-                        userInfoBids && userInfoBids
-                            ?.map(bid => <ModalBidItem bid={bid}/>)
+                        userInfoBids
+                        && userInfoBids.length !== 0
+                            ? userInfoBids.map(bid => <ModalBidItem bid={bid}/>)
+                            : <div><h1>Пусто</h1></div>
                     }
                 </div>
             </div>
@@ -475,7 +488,7 @@ const Switcher = ({setTheme}: { setTheme: (v: string) => void }) => {
         center: {
             title: "Выплаты",
             value: "income"
-        }
+        },
     };
 
     // @ts-ignore
