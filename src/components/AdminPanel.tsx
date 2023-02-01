@@ -13,10 +13,12 @@ const AdminPanel = () => {
         const dispatch = useAppDispatch()
         const [theme, setTheme] = useState('games')
         const [drawalsList, setDrawalsList] = useState([])
-        const [userInfoBids, setUserInfoBids] = useState([])
+        const [userInfoBids, setUserInfoBids] = useState(null)
+        const [userTransfers, setUserTransfers] = useState(null)
         const [gamesInfo, setGamesInfo] = useState([])
         const [usersInfo, setUsersInfo] = useState([])
         const [isModalOpen, setIsModalOpen] = useState(false)
+        const [show, setShow] = useState('')
 
         const [form, setForm] = useState({
             login: '',
@@ -25,7 +27,7 @@ const AdminPanel = () => {
         })
 
 
-        const handleChangeWithDrawalStatus = async (id: number, status: string) => {
+        const handleChangeWithDrawalStatus = async (id: number, status: string, setCurrentStatus: (v: string) => void) => {
             const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/change_withdrawal_status_a`,
                 {
                     user_id: session,
@@ -37,6 +39,7 @@ const AdminPanel = () => {
                 alert('Сессия истекла')
                 return dispatch(setSession(''))
             }
+            setCurrentStatus(status)
             alert(data)
         }
 
@@ -77,7 +80,9 @@ const AdminPanel = () => {
                 alert('Сессия истекла')
                 return dispatch(setSession(''))
             }
-            alert(data)
+
+            setUserTransfers(data.transfers)
+            setIsModalOpen(true)
         }
 
         const getGamesInfo = async () => {
@@ -143,15 +148,11 @@ const AdminPanel = () => {
                         isModalOpen && <Modal
                             setIsOpen={setIsModalOpen}
                             userInfoBids={userInfoBids}
+                            userTransfers={userTransfers}
+                            show={show}
                         />
                     }
-                    {/*<div className='admin-panel-options'>*/}
-                    {/*    <div className="admin-panel-option">Игры</div>*/}
-                    {/*    <div className="admin-panel-option">Игроки</div>*/}
-                    {/*    <div className="admin-panel-option">Выплаты</div>*/}
-                    {/*    <br/>*/}
-                    {/*    <div className="admin-panel-option">[сделать как апи будет готово]</div>*/}
-                    {/*</div>*/}
+
                     <div className='admin-panel'>
                         <div className='table'>
                             <div className='columns'>
@@ -196,8 +197,12 @@ const AdminPanel = () => {
                                             />)
                                         : theme === 'players'
                                             ? usersInfo
-                                                .map(player => <PlayerItem getUserInfoBids={getUserInfoBids}
-                                                                           player={player}/>)
+                                                .map(player => <PlayerItem
+                                                    getUserTransfer={getUserTransfer}
+                                                    getUserInfoBids={getUserInfoBids}
+                                                    player={player}
+                                                    setShow={setShow}
+                                                />)
                                             : gamesInfo
                                                 .map(game => <GameItem game={game}/>)
                                 }
@@ -238,7 +243,7 @@ interface PayoutItemProps {
         time_stamp: number
         wallet_name: string
     },
-    handleChangeWithDrawalStatus: (v1: number, v2: string) => void
+    handleChangeWithDrawalStatus: (v1: number, v2: string, v3: (v: string) => void) => void
     getUserInfoBids: (v: number) => void
     getUserTransfer: (v: number) => void
     setIsModalOpen: (v: boolean) => void
@@ -252,6 +257,8 @@ interface PlayerItemProps {
         profit: number
     },
     getUserInfoBids: (v: number) => void
+    getUserTransfer: (v: number) => void
+    setShow: (v: string) => void
 }
 
 interface GameItemProps {
@@ -295,7 +302,6 @@ const PayoutItem: FC<PayoutItemProps> = (
     ]
 
 
-
     return (
         <div className='payout'>
             <div className="column">{id}</div>
@@ -320,8 +326,7 @@ const PayoutItem: FC<PayoutItemProps> = (
                         controlClassName={'admin-dropdown'}
                         menuClassName={'admin-dropdown-menu'}
                         onChange={e => {
-                            handleChangeWithDrawalStatus(id, e.value)
-                            setCurrentStatus(e.value)
+                            handleChangeWithDrawalStatus(id, e.value, setCurrentStatus)
                         }}
                     />
                 }</div>
@@ -340,7 +345,7 @@ const PayoutItem: FC<PayoutItemProps> = (
 }
 
 
-const PlayerItem: FC<PlayerItemProps> = ({player, getUserInfoBids}) => {
+const PlayerItem: FC<PlayerItemProps> = ({player, getUserInfoBids, getUserTransfer, setShow}) => {
     const {
         balance,
         email,
@@ -354,12 +359,19 @@ const PlayerItem: FC<PlayerItemProps> = ({player, getUserInfoBids}) => {
             <div className="column">{email}</div>
             <div className="column">{balance}</div>
             <div className="column">{profit}</div>
-            <div className="column">---</div>
             <div
                 onClick={() => {
+                    setShow('transfer')
+                    getUserTransfer(id)
+                }}
+                className="column">Показать
+            </div>
+            <div
+                onClick={() => {
+                    setShow('bids')
                     getUserInfoBids(id)
                 }}
-                className="column">шо сюда выводить?
+                className="column">Показать
             </div>
         </div>
     )
@@ -411,66 +423,158 @@ interface IBidItem {
 
 interface ModalProps {
     setIsOpen: (v: boolean) => void
-    userInfoBids?: IBidItem[]
+    userInfoBids?: IBidItem[] | null
+    userTransfers?: {
+        input: {
+            amount: number,
+            amount_cwd: number,
+            amount_usd: number,
+            beatifull_time: string,
+            id: number,
+            status: string,
+            time: number,
+            type: string,
+            user_cwd_acccount: string,
+            user_id: number,
+            user_login: string,
+            wallet_adress: string | null,
+            wallet_private_key: string | null
+        }[]
+        output: any[]
+    } | null
+    show: string
 }
 
 interface ModalBidItemProps {
-    bid: IBidItem
+    bid?: IBidItem
+    transfer?: {
+        amount: number,
+        amount_cwd: number,
+        amount_usd: number,
+        beatifull_time: string,
+        id: number,
+        status: string,
+        time: number,
+        type: string,
+        user_cwd_acccount: string,
+        user_id: number,
+        user_login: string,
+        wallet_adress: string | null,
+        wallet_private_key: string | null
+    }
+    // | {
+    //     amount: number
+    // }
+    show: string
 }
 
-const ModalBidItem: FC<ModalBidItemProps> = ({bid}) => {
-    const {
-        id,
-        kf,
-        name_kot,
-        name_sob,
-        name_ukot,
-        status,
-        summa,
-        time_place
-    } = bid
+const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show}) => {
 
     return (
         <div className='bid-item'>
-            <div className="field" style={{color: 'gold'}}>{id}</div>
-            <div className="field" style={{flex: 0.3, color: 'skyblue', fontWeight: 600}}>{kf}</div>
-            <div className="field" style={{flex: 0.42}}>{name_kot}</div>
-            <div className="field" style={{flex: 1}}>{name_sob}</div>
-            <div className="field" style={{flex: 0.6}}>{name_ukot}</div>
-            <div className={`field ${status === 'win' ? 'win' : 'lose'}`} style={{flex: 0.2}}>
-                {
-                    status === 'win' ? 'Выигрыш' : 'Проигрыш'
-                }
-            </div>
-            <div className="field" style={{flex: 0.3, color: 'lightgreen', fontWeight: 600}}>{summa}</div>
-            <div className="field" style={{flex: 0.4}}>{time_place}</div>
+            {
+                (bid && show === 'bids') &&
+                <>
+                    <div className="field" style={{color: 'gold'}}>{bid.id}</div>
+                    <div className="field" style={{flex: 0.3, color: 'skyblue', fontWeight: 600}}>{bid.kf}</div>
+                    <div className="field" style={{flex: 0.42}}>{bid.name_kot}</div>
+                    <div className="field" style={{flex: 1}}>{bid.name_sob}</div>
+                    <div className="field" style={{flex: 0.6}}>{bid.name_ukot}</div>
+                    <div className={`field ${bid.status === 'win' ? 'win' : 'lose'}`} style={{flex: 0.2}}>
+                        {
+                            bid.status === 'win' ? 'Выигрыш' : 'Проигрыш'
+                        }
+                    </div>
+                    <div className="field" style={{flex: 0.3, color: 'lightgreen', fontWeight: 600}}>{bid.summa}</div>
+                    <div className="field" style={{flex: 0.4}}>{bid.time_place}</div>
+                </>
+            }
+
+            {
+                (transfer && show === 'transfer') &&
+                <>
+                    <div className="field" style={{flex: 0.2}}>{transfer.id}</div>
+                    <div className="field" style={{flex: 0.2}}>{transfer.amount}</div>
+                    <div className="field" style={{flex: 0.35}}>{transfer.amount_cwd}</div>
+                    <div className="field" style={{flex: 0.35}}>{transfer.amount_usd}</div>
+                    <div className="field" style={{flex: 0.3}}>{transfer.status}</div>
+                    <div className="field" style={{flex: 0.2}}>{transfer.type}</div>
+                    <div className="field" style={{flex: 0.6}}>{transfer.user_login}</div>
+                    <div className="field" style={{flex: 0.4}}>{transfer.user_cwd_acccount}</div>
+                    <div className="field" style={{flex: 0.35}}>{transfer.user_id}</div>
+                    <div className="field" style={{flex: 0.55}}>{transfer.wallet_adress === null ? '---' : transfer.wallet_adress}</div>
+                    <div className="field" style={{flex: 0.4}}>{transfer.wallet_private_key === null ? '---' : transfer.wallet_private_key}</div>
+                    <div className="field" style={{flex: 0.3}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
+                </>
+            }
+
         </div>
     )
 }
 
-const Modal: FC<ModalProps> = ({setIsOpen, userInfoBids}) => {
+const Modal: FC<ModalProps> = ({setIsOpen, userInfoBids, userTransfers, show}) => {
+    const [option, setOption] = useState('input')
 
     return (
         <div className='admin-panel-modal'>
             <div className="window">
                 <div onClick={() => setIsOpen(false)} className='close-btn'><span>&times;</span></div>
-
+                {
+                    show === 'transfer' &&
+                    <button className='switchb' onClick={() => setOption(option === 'input' ? 'output' : 'input')}>
+                        {option === 'input' ? 'Показать выводы' : 'Показать пополнения'}
+                    </button>
+                }
                 <div className='bid-items'>
                     <div className='bid-items-header'>
-                        <div className="field">ID</div>
-                        <div className="field" style={{flex: 0.3}}>Коэффициент</div>
-                        <div className="field" style={{flex: 0.42}}>Название котировки</div>
-                        <div className="field" style={{flex: 1}}>Имя события</div>
-                        <div className="field" style={{flex: 0.6}}>Исход</div>
-                        <div className="field" style={{flex: 0.2}}>Статус</div>
-                        <div className="field" style={{flex: 0.3}}>Сумма</div>
-                        <div className="field" style={{flex: 0.4}}>Время</div>
+                        {
+                            (userInfoBids && show === 'bids') &&
+                            <>
+                                <div className="field">ID</div>
+                                <div className="field" style={{flex: 0.3}}>Коэффициент</div>
+                                <div className="field" style={{flex: 0.42}}>Название котировки</div>
+                                <div className="field" style={{flex: 1}}>Имя события</div>
+                                <div className="field" style={{flex: 0.6}}>Исход</div>
+                                <div className="field" style={{flex: 0.2}}>Статус</div>
+                                <div className="field" style={{flex: 0.3}}>Сумма</div>
+                                <div className="field" style={{flex: 0.4}}>Время</div>
+                            </>
+                        }
+                        {
+                            (userTransfers && show === 'transfer' && option === 'input') &&
+                            <>
+                                <div className="field" style={{flex: 0.2}}>ID</div>
+                                <div className="field" style={{flex: 0.2}}>Кол-во</div>
+                                <div className="field" style={{flex: 0.35}}>Кол-во CWD</div>
+                                <div className="field" style={{flex: 0.35}}>Кол-во USD</div>
+                                <div className="field" style={{flex: 0.3}}>Статус</div>
+                                <div className="field" style={{flex: 0.2}}>Валюта</div>
+                                <div className="field" style={{flex: 0.6}}>Логин</div>
+                                <div className="field" style={{flex: 0.4}}>Аккаунт</div>
+                                <div className="field" style={{flex: 0.35}}>ID игрока</div>
+                                <div className="field" style={{flex: 0.55}}>Кошелёк</div>
+                                <div className="field" style={{flex: 0.4}}>Приватный ключ</div>
+                                <div className="field" style={{flex: 0.3}}>Дата</div>
+                            </>
+                        }
+                        {
+                            (userTransfers && show === 'transfer' && option === 'output') &&
+                            <>
+                                <div className='field'>OUTPUT</div>
+                            </>
+                        }
                     </div>
                     {
-                        userInfoBids
-                        && userInfoBids.length !== 0
-                            ? userInfoBids.map(bid => <ModalBidItem bid={bid}/>)
-                            : <div><h1>Пусто</h1></div>
+                        (userInfoBids && show === 'bids')
+                        && userInfoBids.map(bid => <ModalBidItem show={show} bid={bid}/>)
+                    }
+                    {
+                        (userTransfers && show === 'transfer' && option === 'input')
+                        && userTransfers.input.map(transfer => <ModalBidItem show={show} transfer={transfer}/>)
+                    }
+                    {
+                        (userTransfers && show === 'transfer' && option === 'output')
+                        && userTransfers.output.map(transfer => <ModalBidItem show={show} transfer={transfer}/>)
                     }
                 </div>
             </div>
@@ -511,7 +615,6 @@ const Switcher = ({setTheme}: { setTheme: (v: string) => void }) => {
         </div>
     );
 }
-
 
 const ExitBtn: FC<any> = ({dispatch}) => {
     return (
