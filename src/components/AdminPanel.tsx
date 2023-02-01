@@ -172,7 +172,7 @@ const AdminPanel = () => {
                                             <div className='column'>Статус</div>
                                             <div className='column'>Дата</div>
                                             <div className='column'>Транзакции игрока</div>
-                                            <div className='column'>Ссылка на игрока</div>
+                                            <div className='column'>Ставки игрока</div>
                                         </>
                                         : theme === 'players'
                                             ? <>
@@ -347,16 +347,16 @@ const PayoutItem: FC<PayoutItemProps> = (
             </div>
             <div
                 onClick={() => {
-                    setShow('bids')
-                    getUserInfoBids(client_id)
+                    setShow('transfer')
+                    getUserTransfer(client_id)
                 }}
                 className="column">
                 Показать
             </div>
             <div
                 onClick={() => {
-                    setShow('transfer')
-                    getUserTransfer(client_id)
+                    setShow('bids')
+                    getUserInfoBids(client_id)
                 }}
                 className="column">
                 Показать
