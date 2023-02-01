@@ -440,7 +440,16 @@ interface ModalProps {
             wallet_adress: string | null,
             wallet_private_key: string | null
         }[]
-        output: any[]
+        output: {
+            beatifull_time: string
+            currency: string
+            id: number
+            our_currency: number
+            status: string
+            time_stamp: number
+            user_id: number
+            wallet_name: string
+        }[]
     } | null
     show: string
 }
@@ -448,27 +457,34 @@ interface ModalProps {
 interface ModalBidItemProps {
     bid?: IBidItem
     transfer?: {
-        amount: number,
-        amount_cwd: number,
-        amount_usd: number,
+        amount?: number,
+        amount_cwd?: number,
+        amount_usd?: number,
         beatifull_time: string,
-        id: number,
-        status: string,
-        time: number,
-        type: string,
-        user_cwd_acccount: string,
+        time?: number,
+        type?: string,
+        user_cwd_acccount?: string,
         user_id: number,
-        user_login: string,
-        wallet_adress: string | null,
-        wallet_private_key: string | null
+        user_login?: string,
+        wallet_adress?: string | null,
+        wallet_private_key?: string | null
+        currency?: string
+        id: number
+        our_currency?: number
+        status?: string
+        time_stamp?: number
+        wallet_name?: string
     }
-    // | {
-    //     amount: number
-    // }
     show: string
+    option?: string
 }
 
-const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show}) => {
+const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show, option}) => {
+    const statuses = {
+        'in work': 'В процессе',
+        'fail': 'Провал',
+        'success': 'Успешно'
+    }
 
     return (
         <div className='bid-item'>
@@ -491,13 +507,16 @@ const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show}) => {
             }
 
             {
-                (transfer && show === 'transfer') &&
+                (transfer && show === 'transfer' && option === 'input') &&
                 <>
                     <div className="field" style={{flex: 0.2}}>{transfer.id}</div>
                     <div className="field" style={{flex: 0.2}}>{transfer.amount}</div>
                     <div className="field" style={{flex: 0.35}}>{transfer.amount_cwd}</div>
                     <div className="field" style={{flex: 0.35}}>{transfer.amount_usd}</div>
-                    <div className="field" style={{flex: 0.3}}>{transfer.status}</div>
+                    <div className="field" style={{flex: 0.3}}>{
+                        //@ts-ignore
+                        statuses[transfer.status]
+                    }</div>
                     <div className="field" style={{flex: 0.2}}>{transfer.type}</div>
                     <div className="field" style={{flex: 0.6}}>{transfer.user_login}</div>
                     <div className="field" style={{flex: 0.4}}>{transfer.user_cwd_acccount}</div>
@@ -505,6 +524,21 @@ const ModalBidItem: FC<ModalBidItemProps> = ({bid, transfer, show}) => {
                     <div className="field" style={{flex: 0.55}}>{transfer.wallet_adress === null ? '---' : transfer.wallet_adress}</div>
                     <div className="field" style={{flex: 0.4}}>{transfer.wallet_private_key === null ? '---' : transfer.wallet_private_key}</div>
                     <div className="field" style={{flex: 0.3}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
+                </>
+            }
+            {
+                (transfer && show === 'transfer' && option === 'output') &&
+                <>
+                    <div className="field" style={{flex: 0.1}}>{transfer.id}</div>
+                    <div className="field" style={{flex: 0.2}}>{transfer.currency}</div>
+                    <div className="field" style={{flex: 0.3}}>{
+                        //@ts-ignore
+                        statuses[transfer.status]
+                    }</div>
+                    <div className="field" style={{flex: 0.3}}>{transfer.our_currency}</div>
+                    <div className="field" style={{flex: 0.3}}>{transfer.user_id}</div>
+                    <div className="field" style={{flex: 0.4}}>{transfer.wallet_name === null ? '---' : transfer.wallet_name}</div>
+                    <div className="field" style={{flex: 0.7}}>{format(new Date(transfer.beatifull_time), 'dd-mm-yyyy')}</div>
                 </>
             }
 
@@ -560,7 +594,13 @@ const Modal: FC<ModalProps> = ({setIsOpen, userInfoBids, userTransfers, show}) =
                         {
                             (userTransfers && show === 'transfer' && option === 'output') &&
                             <>
-                                <div className='field'>OUTPUT</div>
+                                <div className="field" style={{flex: 0.1}}>ID</div>
+                                <div className="field" style={{flex: 0.2}}>Валюта</div>
+                                <div className="field" style={{flex: 0.3}}>Статус</div>
+                                <div className="field" style={{flex: 0.3}}>Наша валюта</div>
+                                <div className="field" style={{flex: 0.3}}>ID игрока</div>
+                                <div className="field" style={{flex: 0.4}}>Кошелёк</div>
+                                <div className="field" style={{flex: 0.7}}>Дата</div>
                             </>
                         }
                     </div>
@@ -570,11 +610,11 @@ const Modal: FC<ModalProps> = ({setIsOpen, userInfoBids, userTransfers, show}) =
                     }
                     {
                         (userTransfers && show === 'transfer' && option === 'input')
-                        && userTransfers.input.map(transfer => <ModalBidItem show={show} transfer={transfer}/>)
+                        && userTransfers.input.map(transfer => <ModalBidItem option={option} show={show} transfer={transfer}/>)
                     }
                     {
                         (userTransfers && show === 'transfer' && option === 'output')
-                        && userTransfers.output.map(transfer => <ModalBidItem show={show} transfer={transfer}/>)
+                        && userTransfers.output.map(transfer => <ModalBidItem option={option} show={show} transfer={transfer}/>)
                     }
                 </div>
             </div>
