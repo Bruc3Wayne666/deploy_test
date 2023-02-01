@@ -320,8 +320,8 @@ const PayoutItem: FC<PayoutItemProps> = (
                         controlClassName={'admin-dropdown'}
                         menuClassName={'admin-dropdown-menu'}
                         onChange={e => {
-                            setCurrentStatus(e.value)
                             handleChangeWithDrawalStatus(id, e.value)
+                            setCurrentStatus(e.value)
                         }}
                     />
                 }</div>
