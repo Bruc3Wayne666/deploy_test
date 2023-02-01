@@ -149,6 +149,7 @@ const AdminPanel = () => {
                             setIsOpen={setIsModalOpen}
                             userInfoBids={userInfoBids}
                             userTransfers={userTransfers}
+                            userTransfer={userTransfers}
                             show={show}
                         />
                     }
@@ -165,6 +166,7 @@ const AdminPanel = () => {
                                             <div className='column'>Сумма вывода</div>
                                             <div className='column'>Статус</div>
                                             <div className='column'>Дата</div>
+                                            <div className='column'>Транзакции игрока</div>
                                             <div className='column'>Ссылка на игрока</div>
                                         </>
                                         : theme === 'players'
@@ -180,6 +182,7 @@ const AdminPanel = () => {
                                                 <div className='column'>ID</div>
                                                 <div className='column'>Название</div>
                                                 <div className='column'>Статус</div>
+                                                <div className='column'>Счёт</div>
                                                 <div className='column'>Прибыль с мат</div>
                                             </>
                                 }
@@ -266,7 +269,8 @@ interface GameItemProps {
         id: number
         name: string
         profit: number
-        status: string
+        status: string,
+        score: string
     }
 }
 
@@ -275,7 +279,7 @@ const PayoutItem: FC<PayoutItemProps> = (
         drawal,
         handleChangeWithDrawalStatus,
         getUserInfoBids,
-        getUserTransfer,
+        getUserTransfer
     }
 ) => {
     const {
@@ -338,7 +342,14 @@ const PayoutItem: FC<PayoutItemProps> = (
                     getUserInfoBids(client_id)
                 }}
                 className="column">
-                {client_id}
+                Показать
+            </div>
+            <div
+                onClick={() => {
+                    getUserTransfer(client_id)
+                }}
+                className="column">
+                Показать
             </div>
         </div>
     )
@@ -382,7 +393,8 @@ const GameItem: FC<GameItemProps> = ({game}) => {
         id,
         name,
         profit,
-        status
+        status,
+        score
     } = game
 
     const statuses = {
@@ -403,6 +415,7 @@ const GameItem: FC<GameItemProps> = ({game}) => {
                     }
                 </span>
             </div>
+            <div className="column">{score}</div>
             <div className="column">{profit}</div>
         </div>
     )
@@ -423,6 +436,7 @@ interface IBidItem {
 
 interface ModalProps {
     setIsOpen: (v: boolean) => void
+    userTransfer: any
     userInfoBids?: IBidItem[] | null
     userTransfers?: {
         input: {
