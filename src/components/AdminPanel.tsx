@@ -202,6 +202,7 @@ const AdminPanel = () => {
                                                 getUserInfoBids={getUserInfoBids}
                                                 getUserTransfer={getUserTransfer}
                                                 setIsModalOpen={setIsModalOpen}
+                                                setShow={setShow}
                                             />)
                                         : theme === 'players'
                                             ? usersInfo
@@ -255,6 +256,7 @@ interface PayoutItemProps {
     getUserInfoBids: (v: number) => void
     getUserTransfer: (v: number) => void
     setIsModalOpen: (v: boolean) => void
+    setShow: (v: string) => void
 }
 
 interface PlayerItemProps {
@@ -284,7 +286,8 @@ const PayoutItem: FC<PayoutItemProps> = (
         drawal,
         handleChangeWithDrawalStatus,
         getUserInfoBids,
-        getUserTransfer
+        getUserTransfer,
+        setShow
     }
 ) => {
     const {
@@ -344,6 +347,7 @@ const PayoutItem: FC<PayoutItemProps> = (
             </div>
             <div
                 onClick={() => {
+                    setShow('bids')
                     getUserInfoBids(client_id)
                 }}
                 className="column">
@@ -351,6 +355,7 @@ const PayoutItem: FC<PayoutItemProps> = (
             </div>
             <div
                 onClick={() => {
+                    setShow('transfer')
                     getUserTransfer(client_id)
                 }}
                 className="column">
