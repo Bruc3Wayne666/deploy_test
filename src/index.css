@@ -862,6 +862,8 @@ header {
     border-radius: 5px;
     text-align: center;
     width: 30%;
+    /*flex: 1;*/
+    /*margin: 4px 3px;*/
 }
 
 .psko-title {
