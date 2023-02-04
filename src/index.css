@@ -1952,6 +1952,21 @@ header {
     /*width: 20%;*/
 }
 
+.check-circle {
+    display: flex;
+    align-items: center;
+}
+
+.check-circle input{
+    outline: none;
+    border: 1px solid white;
+    /*opacity: 0;*/
+}
+
+.check-circle p {
+    font-size: 9px;
+}
+
 
 .modal_info {
     border-radius: 4px;

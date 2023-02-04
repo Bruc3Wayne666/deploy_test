@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGames} from "../store/reducers/games/gameActions";
 import axios from "axios";
@@ -383,6 +383,7 @@ const FilterCase: FC<any> = (
         'icehockey': 'Хоккей',
         'basketball': 'Баскетбол',
     }
+
     return (
         <div className="filter-name-cases">
             <div className="fl-name">
@@ -394,16 +395,22 @@ const FilterCase: FC<any> = (
                 </span>
             </div>
             <div className="fr-ticks">
-                <div
-                    className='frt-circle'
-                    onClick={() => {
+                {/*<div*/}
+                {/*    className='frt-circle'*/}
+                {/*    onClick={() => {*/}
+                {/*        isToday === true ? handleChangeIsToday(false) : handleChangeIsToday(true)*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <span className={isToday && 'checked'}/>*/}
+                {/*    <p style={{fontSize: 8}}>*/}
+                {/*        Игры сегодня*/}
+                {/*    </p>*/}
+                {/*</div>*/}
+                <div className='check-circle'>
+                    <input type="checkbox" value={isToday} onChange={() => {
                         isToday === true ? handleChangeIsToday(false) : handleChangeIsToday(true)
-                    }}
-                >
-                    <span className={isToday && 'checked'}/>
-                    <p style={{fontSize: 8}}>
-                        Игры сегодня
-                    </p>
+                    }}/>
+                    <p>Игры сегодня</p>
                 </div>
             </div>
             <div className="fl-cases">
