@@ -1833,6 +1833,8 @@ header {
 }
 
 .lkconts-one {
+    display: flex;
+    align-items: center;
     font-size: 10px; /*font-family: helB;*/
     font-family: sans-serif;
     margin-bottom: 15px;
@@ -2965,6 +2967,18 @@ ul.active {
     /*body {*/
     /*    max-width: 1080px;*/
     /*}*/
+
+    #lk-contacts {
+        width: 90%;
+        height: 200px;
+        /*display: flex;*/
+        /*flex-direction: column;*/
+    }
+
+    #lk-contacts .lkconts-one {
+        display: flex;
+        font-size: 14px;
+    }
 
     .exit-btn {
         top: 88%;

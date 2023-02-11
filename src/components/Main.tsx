@@ -124,7 +124,7 @@ const GameItem:
     const {beautiful_time_start} = game
     const days = {
         '0': 'Сегодня в',
-        '1': 'Затвра в',
+        '1': 'Завтра в',
         '2': 'Послезавтра в',
         '-30': 'Завтра в',
         '-29': 'Послезавтра в'
@@ -780,7 +780,7 @@ const Main: FC = () => {
                 <div id="right-col-menu">
                     {
                         //@ts-ignore
-                        Object.keys(SPORTS).reverse()
+                        Object.keys(sportList).reverse()
                             .map(sportGame => {
                                 if (sportGame !== 'all') {
                                     // @ts-ignore

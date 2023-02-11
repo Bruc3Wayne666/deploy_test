@@ -22,11 +22,10 @@ const Vip:FC = () => {
                             <div className="lkvcs-one">
                                 <div className="lkvcso-title">Start</div>
                                 <div className="lkvcso-cond">
-                                    <div>Кэшбек 3% фрибетами</div>
+                                    <div style={{fontSize: window.innerWidth < 1440 ? '16px' : ''}}>Кэшбек 3% фрибетами</div>
                                     <div>
                                         <div className="lkcso-sum">сумма ставок</div>
                                         <div>от <span>1 000000</span>
-                                            <div className="global-ico gi-coin"/>
                                         </div>
                                     </div>
                                 </div>
@@ -34,11 +33,10 @@ const Vip:FC = () => {
                             <div className="lkvcs-one">
                                 <div className="lkvcso-title">Medium</div>
                                 <div className="lkvcso-cond">
-                                    <div>Кэшбек 6% фрибетами</div>
+                                    <div style={{fontSize: window.innerWidth < 1440 ? '16px' : ''}}>Кэшбек 6% фрибетами</div>
                                     <div>
                                         <div className="lkcso-sum">сумма ставок</div>
                                         <div>от <span>2 000000</span>
-                                            <div className="global-ico gi-coin"/>
                                         </div>
                                     </div>
                                 </div>
@@ -46,11 +44,10 @@ const Vip:FC = () => {
                             <div className="lkvcs-one">
                                 <div className="lkvcso-title">Master</div>
                                 <div className="lkvcso-cond">
-                                    <div>Кэшбек 7% фрибетами</div>
+                                    <div style={{fontSize: window.innerWidth < 1440 ? '16px' : ''}}>Кэшбек 7% фрибетами</div>
                                     <div>
                                         <div className="lkcso-sum">сумма ставок</div>
                                         <div>от <span>2 500000</span>
-                                            <div className="global-ico gi-coin"/>
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +85,7 @@ const Vip:FC = () => {
                             </div>
                         </div>
                         <div className="slider-logo">
-                            <div className="sll-img"><img src="images/sl-logo.png" alt=""/></div>
+                            {/*<div className="sll-img"><img src={require('../assets/images/logo.png')} alt=""/></div>*/}
                             <div className="sll-text">Крипто-букмекерская<br/>контора</div>
                         </div>
                     </div>
