@@ -1,5 +1,12 @@
-export const COUNTRIES = {
-    'wcfut' :{
+import {SportList} from "../models/ISport";
+
+export type CountriesList = Record<string, {
+    'ru_name': string,
+    'svg_url': string
+}>
+
+export const COUNTRIES: CountriesList = {
+    'wcfut': {
         'ru_name': 'Чемпионат мира',
         'svg_url': 'https://upload.wikimedia.org/wikipedia/ru/e/e3/2022_FIFA_World_Cup.svg'
     },
@@ -1234,7 +1241,8 @@ export const COUNTRIES = {
         }
 }
 
-export const SPORTS = {
+
+export const SPORTS: SportList = {
     'all': {'count': 19, 'ru_name': 'Все'},
     'basketball': {'count': 4, 'ru_name': 'Баскетбол'},
     'icehockey': {'count': 15, 'ru_name': 'Хоккей'},

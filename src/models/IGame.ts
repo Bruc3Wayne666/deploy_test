@@ -6,13 +6,14 @@ export interface IGame {
         name: string;
     };
     name: string;
-    quotes?: {
-        "Исход матча(основное время)": {
+    cc: string;
+    quotes: {
+        'Исход матча(основное время)': {
             id: number;
             kf: number;
             name: string;
         }[],
-        total: {
+        'ТОТАЛ': {
             id: number;
             kf: number;
             name: string;
@@ -26,3 +27,5 @@ export interface IGame {
     home_team: string;
     home_team_logo: string;
 }
+
+export interface IPopEvent extends IGame {}

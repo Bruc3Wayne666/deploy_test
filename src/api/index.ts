@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { AuthPayloadType } from '../store/reducers/auth/authSlice'
-import { GamePayloadType } from '../store/reducers/games/gameSlice';
-import {ProfilePayloadType} from "../store/reducers/profile/profileSlice";
+import { AuthPayloadType } from 'store/entities/auth/authSlice'
+import { GamePayloadType } from 'store/entities/games/gameSlice';
+import {ProfilePayloadType} from "store/entities/profile/profileSlice";
+import {CountriesList} from "../assets/consts";
 
-const instance = axios.create({
+export const instance = axios.create({
 	baseURL: process.env.REACT_APP_BASE_URL
 })
 
@@ -71,6 +72,11 @@ export class ApiService {
             id_kot,
             sum_bid
         })
+        return data
+    }
+
+    static async getCountriesList(): Promise<CountriesList> {
+        const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/country`)
         return data
     }
 }

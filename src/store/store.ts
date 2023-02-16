@@ -1,12 +1,14 @@
 import {configureStore, combineReducers} from '@reduxjs/toolkit'
-import authReducer from "./reducers/auth/authSlice"
-import profileReducer from "./reducers/profile/profileSlice"
-import gameReducer from "./reducers/games/gameSlice"
+import authReducer from "./entities/auth/authSlice"
+import profileReducer from "./entities/profile/profileSlice"
+import gameReducer from "./entities/games/gameSlice"
+import countryReducer from "./entities/countries/countrySlice"
 
 const rootReducer = combineReducers({
 	authReducer,
 	profileReducer,
 	gameReducer,
+	countryReducer
 })
 
 export const setupStore = () => {
