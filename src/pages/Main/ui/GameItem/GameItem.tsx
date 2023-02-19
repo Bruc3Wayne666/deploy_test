@@ -1,6 +1,8 @@
-import {IGame} from "../../../../models/IGame";
+import {IGame} from "models/IGame";
 import React, {FC, useState} from "react";
-import {TotalsDropdown} from "../../../../shared/ui/CustomDropdown/CustomDropdown";
+import {TotalsDropdown} from "shared/ui/CustomDropdown/CustomDropdown";
+import {DateFormater} from "shared/lib/dateFormater";
+
 
 export interface GameItemProps {
     ind: number,
@@ -22,22 +24,10 @@ const GameItem: FC<GameItemProps> = props => {
         sport
     } = props
 
-    const currentDate = new Date()
     const [showTotals, setShowTotals] = useState(false)
     const {beautiful_time_start} = game
-    const days = {
-        '0': 'Сегодня в',
-        '1': 'Завтра в',
-        '2': 'Послезавтра в',
-        '-30': 'Завтра в',
-        '-29': 'Послезавтра в'
-    }
 
-    const diff = String(Number(
-        beautiful_time_start
-            .split(' ')[0]
-            .split('-')[2]
-    ) - Number(currentDate.getDate()))
+    const {day, time} = DateFormater(beautiful_time_start)
 
     return (
         <div className="toc-item">
@@ -45,40 +35,9 @@ const GameItem: FC<GameItemProps> = props => {
                 <div className="global-ico gi-star"/>
                 <div className="toc-i-time">
                     <div className="tocit-daypart">
-                        {
-                            days.hasOwnProperty(diff)
-                                // @ts-ignore
-                                ? days[diff]
-                                : beautiful_time_start
-                                    .split(' ')[0]
-                                    .split('-')
-                                    .reverse()
-                                    .join('.')
-                        }
-
-
-                        {/*{*/}
-                        {/*    (Number(*/}
-                        {/*        beautiful_time_start*/}
-                        {/*            .split(' ')[0]*/}
-                        {/*            .split('-')[2]*/}
-                        {/*    ) - Number(currentDate.getDate())) === 0 ? 'Сегодня в' :*/}
-                        {/*        (Number(*/}
-                        {/*            beautiful_time_start*/}
-                        {/*                .split(' ')[0]*/}
-                        {/*                .split('-')[2]*/}
-                        {/*        ) - Number(currentDate.getDate())) === 1 ? 'Завтра в'*/}
-                        {/*            :*/}
-                        {/*            (Number(*/}
-                        {/*                beautiful_time_start*/}
-                        {/*                    .split(' ')[0]*/}
-                        {/*                    .split('-')[2]*/}
-                        {/*            ) - Number(currentDate.getDate())) === 2 ? 'Послезавтра в' :*/}
-                        {/*                beautiful_time_start*/}
-                        {/*                    .split(' ')[0]*/}
-                        {/*}*/}
+                        {day}
                     </div>
-                    <div className="tocit-time">{beautiful_time_start.split(' ')[1]}</div>
+                    <div className="tocit-time">{time}</div>
                 </div>
                 <div className="toc-i-teams">
                     <div>
