@@ -29,6 +29,8 @@ const GameItem: FC<GameItemProps> = props => {
 
     const {day, time} = DateFormater(beautiful_time_start)
 
+    if (game.quotes === undefined) return <></>
+
     return (
         <div className="toc-item">
             <div className="toc-i-left-side">
@@ -83,7 +85,7 @@ const GameItem: FC<GameItemProps> = props => {
                                     className="tocirsmt-line"
                                 >
                                     {
-                                        game.quotes["Исход матча(основное время)"][0]['kf']
+                                        game.quotes['Исход матча(основное время)'][0]['kf']
                                     }
                                 </div>
                             </div>

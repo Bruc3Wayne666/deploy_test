@@ -14,6 +14,7 @@ import { ApiService } from 'api';
 import { getGames } from 'store/entities/games/gameActions';
 import {COUNTRIES, SPORTS} from 'assets/consts';
 import spinner from 'assets/spinner.svg'
+import {LeagueListType} from "../../../models/LeagueList";
 
 
 const LeagueItem: FC<any> = ({filter, result}) => {
@@ -66,6 +67,9 @@ const LeagueItem: FC<any> = ({filter, result}) => {
     ) : <></>
 }
 
+
+
+
 const GameItem:
     FC<{
         ind: number,
@@ -91,7 +95,7 @@ const GameItem:
                 {beautiful_time_start.split(' ')[1]}
             </div>
             <div className="torir-status">
-                {    // @ts-ignore
+                {
                     <span className={'s-red'}>LIVE</span>
                 }
             </div>
@@ -153,7 +157,7 @@ const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search
 
 export const Live = () => {
     const {result} = useAppSelector(state => state.gameReducer)
-    const [leagueList, setLeagueList] = useState({})
+    const [leagueList, setLeagueList] = useState<LeagueListType>({})
     const dispatch = useAppDispatch()
     const {session} = useAppSelector(state => state.authReducer)
     const navigate = useNavigate()
@@ -357,7 +361,6 @@ export const Live = () => {
                                     {
                                         Object.keys(leagueList)
                                             .map(sp => {
-                                                // @ts-ignore
                                                 return Object.keys(leagueList[sp])
                                                     .map(co => {
                                                         // @ts-ignore

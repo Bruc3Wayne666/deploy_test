@@ -1,17 +1,15 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {Sports} from 'models/ISport';
 import {IGame} from "../../../models/IGame";
 import {getGames} from "./gameActions";
 
+
+export interface ResultType {
+    country: Record<string, Record<string, Record<string, IGame[]>>>
+}
+
 interface IGameState {
     error: boolean,
-    result: {
-        country: Record<string, Record<Sports, {
-            end: IGame[],
-            live: IGame[],
-            'not started': IGame[]
-        }>>
-    } | null | 0 | number
+    result: ResultType | null | 0 | number
 }
 
 const initialState: IGameState = {
@@ -21,30 +19,8 @@ const initialState: IGameState = {
 
 export interface GamePayloadType {
     error: boolean,
-    result: {
-        country: Record<string, Record<Sports, {
-            end: IGame[],
-            live: IGame[],
-            'not started': IGame[]
-        }>>
-    } | null | 0 | number
+    result: ResultType | null | 0 | number
 }
-
-// {
-// ru?: { // переделать чтобы несколько стран было (enum)
-//     basketball?: {
-//         end: IGame[],
-//         live: IGame[],
-//         "not started": IGame[]
-//     }
-// },
-// gb?: { // переделать чтобы несколько стран было (enum)
-// basketball?: {
-//     end: IGame[],
-//     live: IGame[],
-//     "not started": IGame[]
-// }
-// }
 
 
 export const gameSlice = createSlice({
@@ -52,9 +28,6 @@ export const gameSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        // [login.pending.type]: state => {
-        // 	state.
-        // }
         [getGames.fulfilled.type]: (state, action: PayloadAction<GamePayloadType>) => {
             state.error = false
             state.result = action.payload.result

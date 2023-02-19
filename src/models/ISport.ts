@@ -9,3 +9,9 @@ export enum Sports {
     ICEHOCKEY = "icehockey",
     SOCCER = "soccer",
 }
+
+export enum Status {
+    'end' = 'end',
+    'live' = 'live',
+    'not started' = 'not started'
+}

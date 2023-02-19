@@ -1,29 +1,20 @@
-import {IGame} from "../../../../models/IGame";
 import React, {FC} from "react";
 import {COUNTRIES} from "../../../../assets/consts";
-import GameItem from "../GameItem/GameItem";
 import {ResultType} from "../../../../store/entities/games/gameSlice";
-import {Sports, Status} from "../../../../models/ISport";
+import GameItem from "../GameItem/GameItem";
+
 
 export interface LeagueItemProps {
-    result: ResultType,
-    league: any,
-    showParam: string,
-    handleChangeShowModal: (val: boolean) => void,
-    handleSetCurrentGame: (val: IGame) => void,
-    handleSetCurrentBet: ({kf, name, id}: { kf: number, name: string, id: number }) => void
+    f_status: string
+    result: ResultType
+    filter: {
+        league: any
+    }
 }
 
-const LeagueItem: FC<LeagueItemProps> = props => {
-    const {
-        result,
-        league,
-        showParam,
-        handleChangeShowModal,
-        handleSetCurrentGame,
-        handleSetCurrentBet
-    } = props
-
+const LeagueItem: FC<any> = props => {
+    const {filter, result, f_status} = props
+    const {league} = filter
     let counter = 0
 
     result && Object.keys(result.country)
@@ -42,9 +33,12 @@ const LeagueItem: FC<LeagueItemProps> = props => {
                 })
         })
 
-    return league[3] !== 0 && counter !== 0 ? (
+    return ((league[3] + league[4] + league[5]) !== 0 && counter !== 0) ? (
         <>
             <div className="toc-title">
+                <div className="global-ico gi-star">
+
+                </div>
                 <div className="global-ico">
                     <img
                         src={
@@ -72,12 +66,15 @@ const LeagueItem: FC<LeagueItemProps> = props => {
                                                     ) &&
                                                     <GameItem
                                                         ind={index}
+                                                        // @ts-ignore
+                                                        status={{
+                                                            'not started': 'НЕ НАЧАЛСЯ',
+                                                            'live': 'LIVE',
+                                                            'end': 'ЗАВЕРШЁН'
+                                                        }[status]}
+
                                                         game={result.country[co][sport][status][index]}
-                                                        showParam={showParam}
-                                                        handleChangeShowModal={handleChangeShowModal}
-                                                        handleSetCurrentGame={handleSetCurrentGame}
-                                                        handleSetCurrentBet={handleSetCurrentBet}
-                                                        sport={sport}
+                                                        key={index}
                                                     />
                                             })
                                     })

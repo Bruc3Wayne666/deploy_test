@@ -9,15 +9,15 @@ import {ApiService} from "api";
 import spinner from "assets/spinner.svg";
 import {SPORTS} from 'assets/consts'
 import {useLocation, useNavigate} from "react-router-dom";
-import {LeagueListType} from "../../../../models/LeagueList";
-import {SportList} from "../../../../models/ISport";
+import {LeagueListType} from "models/LeagueList";
+import {SportList} from "models/ISport";
 import LeagueItem from '../LeagueItem/LeagueItem';
 import PopEvent from 'widgets/PopEvent/ui/PopEvent';
 import FilterCountry from '../FilterCountry/FilterCountry';
 import FilterCase, { ChangeParams, ParamsType } from '../FilterCase/FilterCase';
 
 
-export const Main: FC = () => {
+export const Main = () => {
     const {pathname} = useLocation()
     const [profile, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -299,7 +299,7 @@ export const Main: FC = () => {
                                             критериям</h3>
                                     </div>
                                 </div>
-                                : <div className="table-one-cat">
+                                : ((typeof result !== 'number') && (result !== null)) && <div className="table-one-cat">
                                     {
                                         Object.keys(leagueList)
                                             .map(sp => {

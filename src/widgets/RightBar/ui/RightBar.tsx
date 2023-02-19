@@ -31,7 +31,7 @@ export const RightBar: FC = () => {
             fetchUserInfo(session)
                 .then(res => setUserInfo(res))
         }
-    }, [result?.rassilka, session])
+    }, [session])
 
     return (
         <div id="lk-right">
@@ -99,7 +99,7 @@ export const RightBarMobile: FC = () => {
             fetchUserInfo(session)
                 .then(res => setUserInfo(res))
         }
-    }, [result?.rassilka, session])
+    }, [session])
 
     return (
         <div id="lk-right" className="m">

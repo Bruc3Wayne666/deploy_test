@@ -2,7 +2,6 @@ import React, {FC, useEffect} from 'react'
 import './styles/index.css'
 import {Route, Routes, useLocation} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
-import {login} from "store/entities/auth/authActions";
 
 // @ts-ignore
 // import {useAlert} from 'react-alert';
@@ -31,7 +30,6 @@ const App: FC = () => {
     const {session} = useAppSelector(state => state.authReducer)
     const dispatch = useAppDispatch()
     const {pathname} = useLocation()
-    // const alert = useAlert()
 
     useEffect(() => {
         if (pathname !== '/admin_panel') {

@@ -1,1 +1,1 @@
-export {Results} from './ui/Results'
+export {Results} from './ui/Results/Results'
