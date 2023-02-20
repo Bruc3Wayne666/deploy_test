@@ -4,7 +4,6 @@ import { getProfile } from './profileActions'
 export interface IProfileState {
     error: boolean,
     message: null | string,
-    // login: null | string,
     result: {
         balance: string,
         login: string,
@@ -38,13 +37,9 @@ export const profileSlice = createSlice({
             state.error = false
             state.message = null
             state.result = null
-            // state.result = null
         }
     },
     extraReducers: {
-        // [login.pending.type]: state => {
-        // 	state.
-        // }
         [getProfile.fulfilled.type]: (state, action: PayloadAction<ProfilePayloadType>) => {
             state.error = false
             state.result = action.payload.result

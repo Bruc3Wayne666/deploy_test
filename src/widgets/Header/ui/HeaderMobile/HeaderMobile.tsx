@@ -1,8 +1,8 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import {useAppSelector} from "../../../../hooks/redux";
-import {IProfileState} from "../../../../store/entities/profile/profileSlice";
-import {ApiService} from "../../../../api";
+import {useAppSelector} from "hooks/redux";
+import {IProfileState} from "store/entities/profile/profileSlice";
+import {ApiService} from "api";
 
 
 const HeaderMobile: FC = () => {
@@ -13,14 +13,9 @@ const HeaderMobile: FC = () => {
         result: null,
     })
 
-    const fetchUserInfo = useCallback((async (session: string) => {
-        return await ApiService.getProfile(session)
-    }), [session])
-
-
     useEffect(() => {
         if (session) {
-            fetchUserInfo(session)
+            ApiService.getProfile(session)
                 .then(res => setUserInfo(res))
         }
     }, [session])

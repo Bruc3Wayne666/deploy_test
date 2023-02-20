@@ -3,7 +3,6 @@ import {useAppDispatch, useAppSelector} from "hooks/redux";
 import {getGames} from "store/entities/games/gameActions";
 import {IGame} from "models/IGame";
 import spinner from 'assets/spinner.svg'
-import axios from "axios";
 import {COUNTRIES, SPORTS} from "assets/consts";
 import {Link, useNavigate} from "react-router-dom";
 // @ts-ignore
@@ -16,12 +15,12 @@ import Dropdown from "react-dropdown";
 // @ts-ignore
 import isEqual from "lodash/isEqual";
 import LeagueItem from '../LeagueItem/LeagueItem';
-import {LeagueListType} from "../../../../models/LeagueList";
-import {SportList} from "../../../../models/ISport";
+import {LeagueListType} from "models/LeagueList";
+import {SportList} from "models/ISport";
 import ResultFilter from '../ResultFilter/ResultFilter';
 
 
-export const Results = () => {
+const Results = () => {
     const [sportList, setSportList] = useState<SportList>({})
     const {result} = useAppSelector(state => state.gameReducer)
     const [leagueList, setLeagueList] = useState<LeagueListType>({})
@@ -102,15 +101,6 @@ export const Results = () => {
         [search]
     )
 
-    const fetchLeagueList = useCallback(async () => {
-        const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
-            league_sport: params.sport_name,
-            league_cc: 'all',
-            status: params.game_status
-        })
-        return data
-    }, [params])
-
     useEffect(() => {
         setIsLoading(true)
         dispatch(getGames({
@@ -119,7 +109,7 @@ export const Results = () => {
                 params.beautiful_time_start.date
             } ${params.beautiful_time_start.hours}`
         }))
-        fetchLeagueList()
+        ApiService.getLeagueList(params.sport_name, 'all', params.game_status)
             .then(res => {
                 setLeagueList(res)
                 setIsLoading(false)
@@ -209,10 +199,8 @@ export const Results = () => {
                                     {
                                         Object.keys(leagueList)
                                             .map(sp => {
-                                                // @ts-ignore
                                                 return Object.keys(leagueList[sp])
                                                     .map(co => {
-                                                        // @ts-ignore
                                                         return leagueList[sp][co]
                                                             .map((league: any[]) => {
                                                                 return <LeagueItem
@@ -233,3 +221,6 @@ export const Results = () => {
         </div>
     );
 };
+
+
+export default Results

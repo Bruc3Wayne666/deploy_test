@@ -3,8 +3,6 @@ import './styles/index.css'
 import {Route, Routes, useLocation} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
 
-// @ts-ignore
-// import {useAlert} from 'react-alert';
 import {logout, setSession} from "store/entities/auth/authSlice";
 import {Account} from 'pages/Account';
 import {AdminPanel} from 'pages/AdminPanel';

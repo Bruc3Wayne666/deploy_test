@@ -1,7 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
-import {IGame} from "models/IGame";
-import axios from "axios";
-import Dropdown from "react-dropdown";
+import React, {useCallback, useEffect, useState} from 'react';
 
 // @ts-ignore
 import debounce from "lodash/debounce";
@@ -12,150 +9,14 @@ import {useAppDispatch, useAppSelector} from "hooks/redux";
 import { IProfileState } from 'store/entities/profile/profileSlice';
 import { ApiService } from 'api';
 import { getGames } from 'store/entities/games/gameActions';
-import {COUNTRIES, SPORTS} from 'assets/consts';
+import {SPORTS} from 'assets/consts';
 import spinner from 'assets/spinner.svg'
-import {LeagueListType} from "../../../models/LeagueList";
+import {LeagueListType} from "models/LeagueList";
+import LeagueItem from '../LeagueItem/LeagueItem';
+import Filter from '../Filter/Filter';
 
 
-const LeagueItem: FC<any> = ({filter, result}) => {
-    const {league} = filter
-
-    return league[4] !== 0 ? (
-        <>
-            <div className="toc-title">
-                <div className="global-ico gi-star">
-
-                </div>
-                <div className="global-ico">
-                    <img
-                        src={
-                            //@ts-ignore
-                            COUNTRIES[league[2]].svg_url
-                        }
-                        alt={league[2]}
-                        height={20}
-                    />
-                </div>
-                <span>{
-                    //@ts-ignore
-                    COUNTRIES[league[2]].ru_name
-                }. {league[1]}</span>
-            </div>
-            {
-                result && Object.keys(result.country)
-                    .map(co => {
-                        return Object.keys(result.country[co])
-                            .map(sport => {
-                                return Object.keys(result.country[co][sport])
-                                    .map(status => {
-                                        return Object.keys(result.country[co][sport][status])
-                                            .map((game, index) => {
-                                                return (
-                                                        result.country[co][sport][status][game].league.id === String(league[0])
-                                                    ) &&
-                                                    <GameItem
-                                                        ind={index}
-                                                        game={result.country[co][sport][status][game]}
-                                                    />
-                                            })
-                                    })
-                            })
-                    })
-
-            }
-        </>
-    ) : <></>
-}
-
-
-
-
-const GameItem:
-    FC<{
-        ind: number,
-        game: IGame
-    }> = ({
-              ind,
-              game
-          }) => {
-    const {name, score, beautiful_time_start} = game
-
-    return (
-        <div className="toc-item-res">
-            <div className="tocir-num">{++ind}</div>
-            <div className="tocir-name">{name}</div>
-            <div className="tocir-results">{score}</div>
-            <div className="torir-time">
-                <div className="global-ico gi-clock"/>
-
-                Начался в
-
-                <br/>
-
-                {beautiful_time_start.split(' ')[1]}
-            </div>
-            <div className="torir-status">
-                {
-                    <span className={'s-red'}>LIVE</span>
-                }
-            </div>
-        </div>
-    )
-}
-
-
-const Filter: FC<any> = ({handleSearchChange, handleChangeParams, params, search, sportList}) => {
-    return (
-        <div className="filter-results">
-            <div className="fr-bttns">
-
-                <Dropdown options={
-                    Object.keys(sportList)
-                        .map(sportGame => {
-                            return ({
-                                value: sportGame,
-                                label: sportList[sportGame].ru_name,
-                                className: 'frb-one-opt2'
-                            })
-                        })
-                }
-                          placeholder={'Вид спорта'}
-                          controlClassName={'frb-one-f'}
-                          menuClassName={'frb-one-opts2'}
-                          onChange={e => handleChangeParams({...params, sport_name: e.value})}
-                />
-
-            </div>
-            <div className="fr-ticks">
-                <div
-                    onClick={() => {
-                        console.log(2)
-                        handleChangeParams({...params, sort_number: !params.sort_number})
-                    }}
-                    className='frt-circle'
-                >
-                    <span className={params.sort_number && 'checked'}/>
-                    Сортировать по номеру
-                </div>
-            </div>
-            <div className="fr-search">
-                <input
-                    placeholder={'Поиск'}
-                    style={{
-                        border: 'none',
-                        outline: 'none',
-                        backgroundColor: 'transparent',
-                    }}
-                    onChange={handleSearchChange}
-                    type="text"
-                    value={search}
-                />
-            </div>
-        </div>
-    )
-}
-
-export const Live = () => {
+const Live = () => {
     const {result} = useAppSelector(state => state.gameReducer)
     const [leagueList, setLeagueList] = useState<LeagueListType>({})
     const dispatch = useAppDispatch()
@@ -242,22 +103,9 @@ export const Live = () => {
         [search]
     )
 
-    const fetchUserInfo = useCallback(async (session: string) => {
-        return await ApiService.getProfile(session)
-    }, [session])
-
-    const fetchLeagueList = useCallback(async () => {
-        const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
-            league_sport: params.sport_name,
-            league_cc: 'all',
-            status: 'live'
-        })
-        return data
-    }, [params])
-
     useEffect(() => {
         if (session) {
-            fetchUserInfo(session)
+            ApiService.getProfile(session)
                 .then(res => setUserInfo(res))
         }
         window.scrollTo(0, 0)
@@ -271,7 +119,7 @@ export const Live = () => {
                 } ${params.beautiful_time_start.hours}`
             }))
 
-            fetchLeagueList()
+            ApiService.getLeagueList(params.sport_name, 'all', 'live')
                 .then(res => {
                     setLeagueList(res)
                     setIsLoading(false)
@@ -337,7 +185,6 @@ export const Live = () => {
                                 <img src={spinner} alt="Loading results..."/>
                             </div>
                             :
-                            // (result === 0 && !isEqual(params, stock)) ?
                             result === 0 ?
                                 <div className="table-one-cat">
                                     <div style={{
@@ -349,7 +196,7 @@ export const Live = () => {
                                         <img
                                             width={200}
                                             height={200}
-                                            src={require('../../../assets/svg/unfounded.svg').default}
+                                            src={require('../../../../assets/svg/unfounded.svg').default}
                                             alt="-_-"
                                         />
                                         <h3 style={{color: '#888', marginTop: 20}}>Не найдено матчей по вашим
@@ -363,7 +210,6 @@ export const Live = () => {
                                             .map(sp => {
                                                 return Object.keys(leagueList[sp])
                                                     .map(co => {
-                                                        // @ts-ignore
                                                         return leagueList[sp][co]
                                                             .map((league: any[]) => {
                                                                 return <LeagueItem
@@ -384,3 +230,5 @@ export const Live = () => {
         </div>
     );
 };
+
+export default Live

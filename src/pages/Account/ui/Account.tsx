@@ -7,33 +7,41 @@ import {useAppDispatch, useAppSelector} from "hooks/redux";
 import {IProfileState} from 'store/entities/profile/profileSlice';
 import {ApiService} from "api";
 import spinner from 'assets/spinner.svg'
-import axios from "axios";
 import {COUNTRIES} from "assets/consts";
 import {logout} from "store/entities/auth/authSlice";
 
 
-const Profile: FC<any> = (props: any) => {
-    const status = {
-        'beginer': {
-            background: 'linear-gradient(123deg, rgba(0,0,0,1) 0%, rgba(61, 61, 61, 1) 25%, rgba(122,122,122,0.5) 50%, rgba(0,0,0,1) 75%, rgba(0,0,0,1) 100%',
-            color: 'white'
-        },
-        'start': {
-            background: 'linear-gradient(-72deg, #dedede, #ffffff 16%,#dedede 21%, #ffffff 24%,#ffffff 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%,#ffffff 80%,#dedede 84%,#a1a1a1)',
-            color: '#cc3b39'
-        },
-        'medium': {
-            background: 'radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%)',
-            color: 'white'
-        },
-        'master': {
-            background: 'linear-gradient(137deg, rgba(244,80,23,0.9), rgba(11,14,89,0.9))',
-            color: 'white'
-        }
+const status = {
+    'beginer': {
+        background: 'linear-gradient(123deg, rgba(0,0,0,1) 0%, rgba(61, 61, 61, 1) 25%, rgba(122,122,122,0.5) 50%, rgba(0,0,0,1) 75%, rgba(0,0,0,1) 100%',
+        color: 'white'
+    },
+    'start': {
+        background: 'linear-gradient(-72deg, #dedede, #ffffff 16%,#dedede 21%, #ffffff 24%,#ffffff 27%, #dedede 36%, #ffffff 45%, #ffffff 60%, #dedede 72%,#ffffff 80%,#dedede 84%,#a1a1a1)',
+        color: '#cc3b39'
+    },
+    'medium': {
+        background: 'radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%)',
+        color: 'white'
+    },
+    'master': {
+        background: 'linear-gradient(137deg, rgba(244,80,23,0.9), rgba(11,14,89,0.9))',
+        color: 'white'
     }
+}
 
-    const rank = props.result?.rank
-    // const rank = 'start'
+interface ProfileProps {
+    result: {
+        balance: string,
+        login: string,
+        rassilka: number,
+        rank: string
+    } | null,
+    leagues: string[]
+}
+
+const Profile: FC<ProfileProps> = props => {
+    const {result} = props
 
     return (
         <div id="lk-mid">
@@ -42,24 +50,32 @@ const Profile: FC<any> = (props: any) => {
                     <div id="lk-ava">
                         <img src={require('../../../assets/images/ava.png')} alt={''}/>
                     </div>
-                    <div id="lk-name">{props.result?.login}</div>
+                    <div id="lk-name">{result?.login}</div>
                 </div>
                 <div id="lk-lk-bal-stat">
                     <div id="lk-bal">
                         <div>Баланс:</div>
-                        <Link to={'/purchase'} style={{display: 'flex', alignItems: 'center'}}><span style={{display: 'block'}}>{props.result?.balance}</span>
+                        <Link
+                            to={'/purchase'}
+                            style={{display: 'flex', alignItems: 'center'}}
+                        >
+                            <span
+                                style={{display: 'block'}}
+                            >
+                                {result?.balance}
+                            </span>
                             <div className="global-ico gi-coin-w"/>
                         </Link>
                     </div>
                     <div id="lk-stat">
                         <div id="lk-stat-title">Статус профиля</div>
                         <div id="lk-stat-name" style={{
-                            // @ts-ignore
-                            background: rank && status[rank].background,
-                            // @ts-ignore
-                            color: rank && status[rank].color
+                            //@ts-ignore
+                            background: result?.rank && status[result.rank].background,
+                            //@ts-ignore
+                            color: result?.rank && status[result.rank].color
                         }}>
-                            {rank}
+                            {result?.rank}
                         </div>
                     </div>
                 </div>
@@ -76,21 +92,21 @@ const Profile: FC<any> = (props: any) => {
                             <>
                                 <div id="lk-lk-menu-title">Любимые лиги</div>
                                 {
-                                    props.leagues && props.leagues
-                                        .map((league: any) => (
-                                            <Link style={{display: 'flex', alignItems: 'center'}} className="lkm-item"
-                                                  to="/">
-                                                <img src={
-                                                    //@ts-ignore
-                                                    COUNTRIES[league[1]].svg_url}
-                                                     alt={league[1]}
-                                                     height={12}
-                                                     style={{marginRight: 4}}
+                                    props.leagues
+                                        .map(league => (
+                                            <Link
+                                                style={{display: 'flex', alignItems: 'center'}}
+                                                className="lkm-item"
+                                                to="/"
+                                            >
+                                                <img
+                                                    src={COUNTRIES[league[1]].svg_url}
+                                                    alt={league[1]}
+                                                    height={12}
+                                                    style={{marginRight: 4}}
                                                 />
-                                                {
-                                                    //@ts-ignore
-                                                    COUNTRIES[league[1]].ru_name}.&nbsp;{league[0]
-                                            }</Link>
+                                                {COUNTRIES[league[1]].ru_name}.&nbsp;{league[0]}
+                                            </Link>
                                         ))
                                 }
                             </>
@@ -104,7 +120,7 @@ const Profile: FC<any> = (props: any) => {
     )
 }
 
-const Account: FC<any> = () => {
+const Account = () => {
     const dispatch = useAppDispatch()
     const [{result}, setUserInfo] = useState<IProfileState>({
         error: false,
@@ -112,14 +128,12 @@ const Account: FC<any> = () => {
         result: null,
     })
     const {session} = useAppSelector(state => state.authReducer)
-    const [favoriteLeagues, setFavoriteLeagues] = useState([])
+    const [favoriteLeagues, setFavoriteLeagues] = useState<string[]>([])
     const [isLoading, setIsLoading] = useState(false)
 
     const fetchUserInfo = useCallback(async (session: string) => {
         const data = await ApiService.getProfile(session)
-        const leagues = await axios.post(`${process.env.REACT_APP_BASE_URL}/favourite_league`, {
-            user_id: session
-        })
+        const leagues = await ApiService.getFavouriteLeague(session)
 
         // @ts-ignore
         if (data === 'session is not active') {
@@ -127,7 +141,7 @@ const Account: FC<any> = () => {
             return alert('Сессия истекла. Авторизуйтесь заново')
         }
         setUserInfo(data)
-        setFavoriteLeagues(leagues.data)
+        setFavoriteLeagues(leagues)
     }, [session])
 
 

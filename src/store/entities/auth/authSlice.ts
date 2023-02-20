@@ -20,8 +20,6 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {
 		logout(state) {
-			// localStorage.removeItem('login')
-			// localStorage.removeItem('password')
 			localStorage.removeItem('isAuth')
 			localStorage.removeItem('session')
 			localStorage.clear()
@@ -34,24 +32,13 @@ export const authSlice = createSlice({
 		}
 	},
 	extraReducers: {
-		// [login.pending.type]: state => {
-		// 	state.
-		// }
 		[login.fulfilled.type]: (state, action: PayloadAction<AuthPayloadType>) => {
 			state.error = ''
 			state.session = action.payload.user_id
 		},
 		[login.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.error = action.payload
-		},
-		// [register.fulfilled.type]: (state, action: PayloadAction<AuthPayloadType>) => {
-		// 	state.error = ''
-		// 	state.session = action.payload.user_id
-		// },
-		// [register.rejected.type]: (state, action: PayloadAction<string>) => {
-		// 	state.error = action.payload
-		// }
-
+		}
 	},
 })
 

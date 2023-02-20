@@ -1,28 +1,35 @@
-import React, {FC, useCallback, useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {IGame} from "models/IGame";
 // @ts-ignore
 import Modal from 'react-modal';
 import {IProfileState} from "store/entities/profile/profileSlice";
 import {ApiService} from "api";
-import axios from "axios";
 import {logout} from "store/entities/auth/authSlice";
 import {useAppDispatch} from "hooks/redux";
 
 
-export const ModalForm: FC<{
-    handleChangeShowModal: (val: boolean) => void, showModal: boolean, currentGame: IGame, bet: {
+interface ModalFormProps {
+    handleChangeShowModal: (val: boolean) => void,
+    showModal: boolean,
+    currentGame: IGame,
+    bet: {
         name: string,
         kf: number,
         id: number
-    }, user: IProfileState, session: string
-}> = ({
-          handleChangeShowModal,
-          showModal,
-          currentGame,
-          bet,
-          user,
-          session
-      }) => {
+    },
+    user: IProfileState,
+    session: string
+}
+
+export const ModalForm: FC<ModalFormProps> = props => {
+    const {
+        handleChangeShowModal,
+        showModal,
+        currentGame,
+        bet,
+        user,
+        session
+    } = props
     const {
         league,
         away_team,
@@ -41,13 +48,9 @@ export const ModalForm: FC<{
 
     const dispatch = useAppDispatch()
 
-    const fetchUserInfo = useCallback(async (session: string) => {
-        return await ApiService.getProfile(session)
-    }, [session])
-
     useEffect(() => {
         if (session) {
-            fetchUserInfo(session)
+            ApiService.getProfile(session)
                 .then(res => {
                     // @ts-ignore
                     if (res === 'session is not active') {
@@ -61,14 +64,8 @@ export const ModalForm: FC<{
     }, [session])
 
     useEffect(() => {
-        const fetchPossible = async () => {
-            const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/kf_kot`, {
-                id_kot: String(bet.id),
-                sum_bid: sumValue
-            })
-            setPossible(data)
-        }
-        fetchPossible()
+        ApiService.getPossible(String(bet.id), sumValue)
+            .then(res => setPossible(res))
     }, [sumValue, currentGame])
 
     useEffect(() => {

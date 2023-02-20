@@ -1,1 +1,1 @@
-export {Results} from './ui/Results/Results'
+export {ResultsAsync as Results} from './ui/Results/Results.async'

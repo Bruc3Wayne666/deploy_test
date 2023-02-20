@@ -1,7 +1,6 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "hooks/redux";
 import {getGames} from "store/entities/games/gameActions";
-import axios from "axios";
 import {IGame} from "models/IGame";
 import {ModalForm} from 'widgets/ModalForm/ui/ModalForm';
 import {IProfileState} from "store/entities/profile/profileSlice";
@@ -14,7 +13,7 @@ import {SportList} from "models/ISport";
 import LeagueItem from '../LeagueItem/LeagueItem';
 import PopEvent from 'widgets/PopEvent/ui/PopEvent';
 import FilterCountry from '../FilterCountry/FilterCountry';
-import FilterCase, { ChangeParams, ParamsType } from '../FilterCase/FilterCase';
+import FilterCase, {ChangeParams, ParamsType} from '../FilterCase/FilterCase';
 
 
 export const Main = () => {
@@ -113,32 +112,6 @@ export const Main = () => {
         setCurrentBet({name, kf, id})
     }
 
-
-    const fetchLeagueList = useCallback(async () => {
-        const {data} = await axios.post(`${process.env.REACT_APP_BASE_URL}/league_list`, {
-            league_sport: params.sport_name,
-            league_cc: 'all',
-            status: 'not started'
-        })
-        return data
-    }, [params])
-
-
-    const fetchUserInfo = useCallback(async (session: string) => {
-        return await ApiService.getProfile(session)
-    }, [session])
-
-    const fetchSportList = useCallback(async () => {
-        const {data} = await axios.get(`${process.env.REACT_APP_BASE_URL}/sport_list`)
-        setSportList(data)
-    }, [])
-
-
-    useEffect(() => {
-        fetchSportList()
-    }, [params])
-
-
     useEffect(() => {
         setIsLoading(true)
         dispatch(getGames({
@@ -149,7 +122,9 @@ export const Main = () => {
             } ${params.beautiful_time_start.hours}`,
             pic: isToday ? 1 : 0
         }))
-        fetchLeagueList()
+        ApiService.getSportList()
+            .then(res => setSportList(res))
+        ApiService.getLeagueList(params.sport_name, 'all', 'not started')
             .then(res => {
                 setLeagueList(res)
                 setIsLoading(false)
@@ -158,7 +133,7 @@ export const Main = () => {
 
     useEffect(() => {
         if (session) {
-            fetchUserInfo(session)
+            ApiService.getProfile(session)
                 .then(res => setUserInfo(res))
         }
         window.scrollTo(0, 0)
@@ -300,38 +275,38 @@ export const Main = () => {
                                     </div>
                                 </div>
                                 : ((typeof result !== 'number') && (result !== null)) && <div className="table-one-cat">
-                                    {
-                                        Object.keys(leagueList)
-                                            .map(sp => {
-                                                return Object.keys(leagueList[sp])
-                                                    .map((co, id) => {
-                                                        return leagueList[sp][co]
-                                                            .map((league: any[]) => {
-                                                                if (params.country === 'all') {
-                                                                    return <LeagueItem
-                                                                        league={league}
-                                                                        result={result}
-                                                                        showParam={showParam}
-                                                                        handleChangeShowModal={handleChangeShowModal}
-                                                                        handleSetCurrentGame={handleSetCurrentGame}
-                                                                        handleSetCurrentBet={handleSetCurrentBet}
-                                                                    />
-                                                                } else if (params.country === co) {
-                                                                    return <LeagueItem
-                                                                        league={league}
-                                                                        result={result}
-                                                                        showParam={showParam}
-                                                                        handleChangeShowModal={handleChangeShowModal}
-                                                                        handleSetCurrentGame={handleSetCurrentGame}
-                                                                        handleSetCurrentBet={handleSetCurrentBet}
-                                                                    />
-                                                                }
-                                                            })
-                                                    })
-                                            })
-                                    }
+                                {
+                                    Object.keys(leagueList)
+                                        .map(sp => {
+                                            return Object.keys(leagueList[sp])
+                                                .map((co, id) => {
+                                                    return leagueList[sp][co]
+                                                        .map((league: any[]) => {
+                                                            if (params.country === 'all') {
+                                                                return <LeagueItem
+                                                                    league={league}
+                                                                    result={result}
+                                                                    showParam={showParam}
+                                                                    handleChangeShowModal={handleChangeShowModal}
+                                                                    handleSetCurrentGame={handleSetCurrentGame}
+                                                                    handleSetCurrentBet={handleSetCurrentBet}
+                                                                />
+                                                            } else if (params.country === co) {
+                                                                return <LeagueItem
+                                                                    league={league}
+                                                                    result={result}
+                                                                    showParam={showParam}
+                                                                    handleChangeShowModal={handleChangeShowModal}
+                                                                    handleSetCurrentGame={handleSetCurrentGame}
+                                                                    handleSetCurrentBet={handleSetCurrentBet}
+                                                                />
+                                                            }
+                                                        })
+                                                })
+                                        })
+                                }
 
-                                </div>
+                            </div>
                     }
                 </div>
 
