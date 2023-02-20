@@ -1,3 +1,5 @@
+const days = ['Сегодня в', 'Завтра в', 'Послезавтра в']
+
 export const DateFormater = (date: string) => {
     const [date_YYYY_MM_DD, date_hh_mm] = date.split(' ')
     const gameDate = new Date(
@@ -7,13 +9,13 @@ export const DateFormater = (date: string) => {
     )
     const currentDate = new Date()
     //@ts-ignore
-    const diff = Math.abs(Math.round((gameDate - currentDate) / (86400 * 1000)))
+    const diff = Math.abs(Math.ceil((gameDate - currentDate) / (86400 * 1000)))
     const day = diff === 0
-        ? 'Сегодня в'
+        ? days[diff]
         : diff === 1
-            ? 'Завтра в'
+            ? days[diff]
             : diff === 2
-                ? 'Послезавтра в'
+                ? days[diff]
                 : date_YYYY_MM_DD.split('-').join('.')
     return {
         day,
