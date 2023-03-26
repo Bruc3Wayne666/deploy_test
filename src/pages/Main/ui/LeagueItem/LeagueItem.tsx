@@ -48,15 +48,21 @@ const LeagueItem: FC<LeagueItemProps> = props => {
                 <div className="global-ico">
                     <img
                         src={
-                            COUNTRIES[league[2]].svg_url
+                            COUNTRIES[league[2]].ru_name !== ''
+                                ? `${COUNTRIES[league[2]].svg_url}`
+                                : `${COUNTRIES[league[1]].svg_url}`
                         }
                         alt={league[2]}
                         height={20}
                     />
                 </div>
-                <span>{
-                    COUNTRIES[league[2]].ru_name
-                }. {league[1]}</span>
+                <span>
+                    {
+                        COUNTRIES[league[2]].ru_name !== ''
+                            ? `${COUNTRIES[league[2]].ru_name}. ${league[1]}`
+                            : `${league[1]}`
+                    }
+                </span>
             </div>
             {
                 result && Object.keys(result.country)

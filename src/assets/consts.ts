@@ -6,9 +6,22 @@ export type CountriesList = Record<string, {
 }>
 
 export const COUNTRIES: CountriesList = {
+    // 'wcfut': {
+    //     'ru_name': 'Чемпионат мира',
+    //     'svg_url': 'https://upload.wikimedia.org/wikipedia/ru/e/e3/2022_FIFA_World_Cup.svg'
+    // },
     'wcfut': {
-        'ru_name': 'Чемпионат мира',
-        'svg_url': 'https://upload.wikimedia.org/wikipedia/ru/e/e3/2022_FIFA_World_Cup.svg'
+        'ru_name': '',
+        'svg_url': 'https://www.svgrepo.com/show/275957/planet-earth-global.svg'
+    },
+    'Euro 2024 Qualifying': {
+        'ru_name': '',
+        'svg_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/archive/6/6c/20220510234650%21UEFA_Euro_2024_logo.svg/120px-UEFA_Euro_2024_logo.svg.png'
+        // 'svg_url': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/UEFA_Euro_2024_logo.svg/416px-UEFA_Euro_2024_logo.svg.png'
+    },
+    'Международный матч': {
+        'ru_name': '',
+        'svg_url': 'https://www.svgrepo.com/show/275957/planet-earth-global.svg'
     },
     'all':
         {

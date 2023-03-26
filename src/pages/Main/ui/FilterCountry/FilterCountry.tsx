@@ -39,7 +39,10 @@ const FilterCountry: FC<any> = ({handleChangeParams, params}) => {
                                                     style={{marginBottom: 6}}
                                                 />
                                                 {
-                                                    COUNTRIES[co].ru_name
+                                                    COUNTRIES[co].ru_name !== ''
+                                                        ? `${COUNTRIES[co].ru_name}`
+                                                        : 'Мировые события'
+                                                        // : `${co.toUpperCase()}`
                                                 }
                                             </div>
                                         </div>
